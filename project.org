@@ -1,0 +1,3 @@
+#+title: Project Management & Notes
+
+* TODO Determine goals of the project.
