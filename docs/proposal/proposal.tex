@@ -1,0 +1,135 @@
+% !TEX TS-program = xelatex
+% !TEX encoding = UTF-8 Unicode
+\documentclass[10pt, a4paper]{article}
+\usepackage{fontspec}
+
+% Document data
+\title{Final Year Project Proposal:\\
+  Data-Driven Self-Awareness Model for Robotics Systems}
+\date{7 October 2011} 
+\author{Jeremiah M. Via}
+
+% Set up fonts
+\usepackage{xunicode}
+\usepackage{xltxtra}
+\defaultfontfeatures{Mapping=tex-text}
+\setromanfont [Ligatures={Common}, Numbers={OldStyle}]{Linux Libertine O}
+
+
+% Layout
+\usepackage[xetex]{geometry}
+\geometry{a4paper, textheight=8.5in}
+
+% ------------------------------------------------------------------ %
+% BEGIN DOCUMENT                                                     %
+% ------------------------------------------------------------------ %
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+  Fault-detection in robotics systems is a difficult task. Robotics
+  systems are continually becoming more complex and thus subtle errors
+  are hard to diagnose. Traditional approaches have relied on
+  explicitly modeling component faults in code, but this technique
+  does not scale to complex robots operating in dynamic
+  environments. A new technique involves making the robot self-aware
+  to the internal state of its various components. The aim of this
+  project is to measure the efficacy of a probabilistic self-awareness
+  model for robotics systems on two robotics middlewares, ROS and
+  CAST, and if time allows, extend the model using a neural network,
+  and then compare the two approaches. During this project, I will be
+  collaborating with the creator of the original approach.
+\end{abstract}
+
+
+\section*{Description}
+
+This is a project with a heavy research bias. It involves implementing
+software to connect the CAST and ROS robotics middlewares to
+state-of-the-art software for data-driven fault detection and then
+measuring how well this fault-detection system performs on these
+middlewares. It also involves extending this technique with a
+different machine learning approach, neural networks. My hypothesis is
+that neural networks should generalize better than the current
+approach.
+
+This software has multiple uses. It can be used during development as
+a debugging tool for the developer. They can see if their software is
+causing the robot to enter faulty states casued by any number of
+things. More interestingly, this information can be fed back to the
+robot's planning system. This is what truly creates that idea of
+self-awareness. A robot which can determine if its components are not
+running correctly can take action to overcome these faults, and is
+thus much more robust. This is of critical importance when robots are
+working around humans.
+
+\subsection*{User Specification}
+% – User specification (intended user(s))
+
+This software is intended for robotics researchers and possibly those
+developing industrial robots. It will require a minimal understanding
+of machine learning to successfully incorporate into a robotics
+system. As such, this software will target expert computer users at
+the cutting-edge of robotics. I hope to make the software as intuitive
+as possible
+
+\subsection*{Functional Specification}
+% – Brief functional specification (what software will do)
+% • Essential
+% • Optional (if time allows)
+
+In order to measure the efficacy of the probabilistic self-awareness
+model, a brdge will have to be written to connect the two middlewares
+to the system which implements the probabilistic model. This is
+absolutely essential.
+
+
+\subsection*{Non-Functional Specification}
+% – Brief non-functional specification (mandatory software,
+% hardware, databases, speed, network access, etc)
+% – Resources (software, hardware, information, databases, ...)
+
+In order to complete this project, acess to robots will be necessary
+to verify results gathered in simulation.
+
+\section*{Approach}
+% should be ambitous and provide several fall-back positions but with
+% substantial and self-contained core
+
+% Project plan, in weeks, considering: information gathering and
+% learning new skills, specification, design, implementation,
+% software testing, user testing, evaluation, etc; do not forget to
+% include preparation for project inspection and project
+% presentation, write-up and holiday (!)
+
+I am taking 70 credits in the first term as well as applying for PhD
+positions in the US, so my output will be less than the second
+term. My goals for the first term are to have implemented the
+connection to both middlewares and to have collect enough data to
+analyze the efficacy of the probabilistic model. Also, since I am
+taking the neural computation module, I will use this term to get a
+strong enough background in neural networks to be able to implement
+them.
+
+Second term will be markedly lighter. I will use this time to
+implement the neural network for the data-driven technique. Because it
+can be difficult to create neural networks, I will start with the
+simplest kind appropriate for the task. As I get results, I will try
+to make improvements on the neural network architecture. This approach
+means I will always have a working system which can classify the
+system state. As I get working neural networks, I will be able to
+collect results to determine their efficacy.
+
+Additionally, towards the end of second term, I will create a
+presentation. I will have to determine what is the best appraoch for
+this. Fault-detection is inherently not very visual, so I may present
+graphs of the system state over time and run a quick example of a
+robot having a fault in simulation. This is idea will become more
+refined as the presentation approaches.
+
+During the Spring holiday, I plan to wrap up my project. I will write
+up my report
+
+\end{document}
+
