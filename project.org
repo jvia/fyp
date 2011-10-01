@@ -1,3 +1,16 @@
 #+title: Project Management & Notes
 
-* TODO Determine goals of the project.
+* Language
+
+  Quick summary
+
+  | Language | Notes |
+  |----------+-------|
+  | C++      |       |
+  | Python   |       |
+  | Lisp     |       |
+  | Clojure  |       |
+  | Java     |       |
+  | Lua      |       |
+  | Haskell  |       |
+
