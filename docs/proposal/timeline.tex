@@ -1,0 +1,63 @@
+\documentclass{article}
+\usepackage{gantt}
+\begin{document}
+\thispagestyle{empty}
+
+\begin{figure}
+  \scalebox{0.8}{
+    \begin{gantt}[
+      xunitlength=0.5cm,
+      fontsize=\small,
+      titlefontsize=\small,
+      drawledgerline=true]{22}{28}
+
+      % ------------------------------------------------------------------ %
+      % GANTT TITLE BAR                                                    %
+      % ------------------------------------------------------------------ %
+      \begin{ganttitle}
+        \titleelement{2011}{12}
+        \titleelement{2012}{16}
+      \end{ganttitle}
+      \begin{ganttitle}
+        \numtitle{41}{1}{52}{1}
+        \numtitle{1}{1}{16}{1}
+      \end{ganttitle}
+
+      % ------------------------------------------------------------------ %
+      % GANTT TASKS                                                        %
+      % ------------------------------------------------------------------ %
+      %% TERM ONE
+      \ganttbar{Meet with Dr Tino for advice}{0}{1}
+      \ganttbarcon{Get NN books}{1}{1}
+      \ganttbarcon{Read NN literature}{2}{8}
+      \ganttbar{CAST bridge}{0}{2}
+      \ganttbarcon{Simple CAST data}{2}{2}
+      \ganttbarcon{Complex CAST data}{4}{4}
+      \ganttbar{ROS bridge}{0}{2}
+      \ganttbarcon{Simple ROS data}{2}{2}
+      \ganttbarcon{Complex ROS data}{4}{4}
+      \ganttbarcon{Data analysis}{8}{2}
+      \ganttcon{8}{7}{8}{11}
+
+      %% WINTER BREAK
+      \ganttbar[color=red]{Winter break (No work)}{10}{4}
+
+      %% TERM TWO
+      \ganttcon{10}{4}{14}{13}
+      \ganttbar{Neural network implementation}{14}{4}
+      \ganttbarcon{CAST bridge}{18}{1}
+      \ganttbarcon{CAST data}{19}{3}
+      \ganttcon{18}{13}{18}{16}
+      \ganttbar{ROS bridge}{18}{1}
+      \ganttbarcon{ROS data}{19}{3}
+      \ganttcon{22}{15}{22}{18}
+      \ganttcon{22}{17}{22}{18}
+      \ganttbar{Data analysis}{22}{2}
+      \ganttbar[color=red]{Spring Break}{23}{4}
+      \ganttcon{24}{18}{24}{20}
+      \ganttbar{Disseration}{24}{2}
+      \ganttmilestonecon[color=cyan]{Deadline}{26}
+    \end{gantt}
+  }  
+\end{figure}
+\end{document}
