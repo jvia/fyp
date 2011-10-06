@@ -2,23 +2,26 @@
 % !TEX encoding = UTF-8 Unicode
 \documentclass[10pt, a4paper]{article}
 \usepackage{fontspec}
-
-% Document data
-\title{Final Year Project Proposal:\\
-  Data-Driven Self-Awareness Model for Robotics Systems}
-\date{7 October 2011} 
-\author{Jeremiah M. Via}
-
 % Set up fonts
 \usepackage{xunicode}
 \usepackage{xltxtra}
 \defaultfontfeatures{Mapping=tex-text}
 \setromanfont [Ligatures={Common}, Numbers={OldStyle}]{Linux Libertine O}
-
-
 % Layout
 \usepackage[xetex]{geometry}
 \geometry{a4paper, textheight=8.5in}
+
+% ------------------------------------------------------------------ %
+% DOCUMENT DATA                                                      %
+% ------------------------------------------------------------------ %
+\title{
+  {\small Final Year Project Proposal:}\\
+  {A Data-Driven Self-Awareness Model for Robotics Systems}}
+\author{
+  Jeremiah M. Via \\ 
+  \small{Supervised by Nick Hawes}}
+\date{7 October 2011}
+
 
 % ------------------------------------------------------------------ %
 % BEGIN DOCUMENT                                                     %
@@ -28,18 +31,18 @@
 \maketitle
 
 \begin{abstract}
-  Fault-detection in robotics systems is a difficult task. Robotics
-  systems are continually becoming more complex and thus subtle errors
-  are hard to diagnose. Traditional approaches have relied on
-  explicitly modeling component faults in code, but this technique
-  does not scale to complex robots operating in dynamic
-  environments. A new technique involves making the robot self-aware
-  to the internal state of its various components. The aim of this
-  project is to measure the efficacy of a probabilistic self-awareness
-  model for robotics systems on two robotics middlewares, ROS and
-  CAST, and if time allows, extend the model using a neural network,
-  and then compare the two approaches. During this project, I will be
-  collaborating with the creator of the original approach.
+  Fault-detection in robotics systems is a difficult task. They are
+  continually becoming more complex and thus subtle errors are hard to
+  diagnose. Traditional approaches have relied on explicitly modeling
+  component faults in code, but this technique does not scale to
+  complex robots operating in dynamic environments. A new technique
+  involves making the robot self-aware to the internal state of its
+  various components. The aim of this project is to measure the
+  efficacy of a probabilistic self-awareness model for robotics
+  systems on two robotics middlewares, ROS and CAST, and if time
+  allows, extend the model using a neural network, and then compare
+  the two approaches. During this project, I will be collaborating
+  with the creator of the original approach.
 \end{abstract}
 
 
@@ -56,7 +59,7 @@ approach.
 
 This software has multiple uses. It can be used during development as
 a debugging tool for the developer. They can see if their software is
-causing the robot to enter faulty states casued by any number of
+causing the robot to enter faulty states caused by any number of
 things. More interestingly, this information can be fed back to the
 robot's planning system. This is what truly creates that idea of
 self-awareness. A robot which can determine if its components are not
@@ -65,43 +68,42 @@ thus much more robust. This is of critical importance when robots are
 working around humans.
 
 \subsection*{User Specification}
-% – User specification (intended user(s))
 
 This software is intended for robotics researchers and possibly those
 developing industrial robots. It will require a minimal understanding
 of machine learning to successfully incorporate into a robotics
 system. As such, this software will target expert computer users at
 the cutting-edge of robotics. I hope to make the software as intuitive
-as possible
+as possible, but given that this is a machine learning system, it
+might be difficult.
 
 \subsection*{Functional Specification}
-% – Brief functional specification (what software will do)
-% • Essential
-% • Optional (if time allows)
 
 In order to measure the efficacy of the probabilistic self-awareness
-model, a brdge will have to be written to connect the two middlewares
+model, a bridge will have to be written to connect the two middlewares
 to the system which implements the probabilistic model. This is
-absolutely essential.
+absolutely essential. Additionally, I will have to create a bridge to
+connect the system I write. 
 
+If time allows, I hope to create a neural network which can perform
+the task. It does not matter if it performs well, but I would like to
+know that is it possible. With enough time it would then be possible
+to create an optimized neural network which performed well at the
+task. That being said, I truly do hope I can implement a
+well-functioning neural network as I think it would be very
+interesting to see.
 
 \subsection*{Non-Functional Specification}
-% – Brief non-functional specification (mandatory software,
-% hardware, databases, speed, network access, etc)
-% – Resources (software, hardware, information, databases, ...)
 
-In order to complete this project, acess to robots will be necessary
-to verify results gathered in simulation.
+In order to complete this project, access to robots will be necessary
+to verify results gathered in simulation. After data has been
+gathered in simulation, a few data points can be collected on real
+robots, although this is not so important since it is the messages
+passing through the system which are of interest. Other than that, no
+additional materials need to be provided by the school. All the
+software required is freely available.
 
 \section*{Approach}
-% should be ambitous and provide several fall-back positions but with
-% substantial and self-contained core
-
-% Project plan, in weeks, considering: information gathering and
-% learning new skills, specification, design, implementation,
-% software testing, user testing, evaluation, etc; do not forget to
-% include preparation for project inspection and project
-% presentation, write-up and holiday (!)
 
 I am taking 70 credits in the first term as well as applying for PhD
 positions in the US, so my output will be less than the second
@@ -122,14 +124,20 @@ system state. As I get working neural networks, I will be able to
 collect results to determine their efficacy.
 
 Additionally, towards the end of second term, I will create a
-presentation. I will have to determine what is the best appraoch for
+presentation. I will have to determine what is the best approach for
 this. Fault-detection is inherently not very visual, so I may present
 graphs of the system state over time and run a quick example of a
 robot having a fault in simulation. This is idea will become more
 refined as the presentation approaches.
 
-During the Spring holiday, I plan to wrap up my project. I will write
-up my report
-
+During the Spring holiday, I plan to finish the project. I will write
+my report from the detailed notes I plan to take. This technique
+worked very well for team Java and it allowed me to create a nice
+report.
 \end{document}
 
+%%% Local Variables:
+%%% TeX-engine: xetex
+%%% End:
+
+%  LocalWords:  middleware Hawes xelatex middlewares ROS
