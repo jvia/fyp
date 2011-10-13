@@ -1,0 +1,71 @@
+% !TEX TS-program = xelatex
+% !TEX encoding = UTF-8 Unicode
+\documentclass[10pt, a4paper]{report}
+\usepackage{fontspec}
+% Set up fonts
+\usepackage{xunicode}
+\usepackage{xltxtra}
+\defaultfontfeatures{Mapping=tex-text}
+\setromanfont [Ligatures={Common}, Numbers={OldStyle}]{Linux Libertine O}
+% Layout
+\usepackage[xetex]{geometry}
+\geometry{a4paper, textheight=8.5in}
+% title page stuff
+\usepackage{setspace}
+\usepackage{graphicx}
+
+% ------------------------------------------------------------------ %
+% DOCUMENT DATA                                                      %
+% ------------------------------------------------------------------ %
+
+% ------------------------------------------------------------------ %
+% BEGIN DOCUMENT                                                     %
+% ------------------------------------------------------------------ %
+\begin{document}
+\begin{titlepage}
+  %% Set the line spacing to 1 for the title page.
+  \begin{spacing}{1}
+    \begin{large}
+      \begin{center}
+        \mbox{}
+        \vfill
+        \begin{sc}
+          A Data-Driven Self-Awareness Model for Robotics Systems \\
+        \end{sc}
+        \vfill
+        Jeremiah M. Via \\
+        Supervisor: Nick Hawes \\
+        \vspace*{4mm}
+        \includegraphics[width=50mm]{crest.png}\\
+        Submitted in conformity with the requirements\\
+        for the degree of Artificial Intelligence \& Computer Science\\
+        School of Computer Science\\
+        University of Birmingham\\
+        \vfill
+        Copyright {\copyright} 2012 School of Computer Science, University of Birmingham\\
+        \vspace*{.2in}
+      \end{center}
+    \end{large}
+  \end{spacing}
+\end{titlepage}
+
+\tableofcontents
+\include{tex/abstract}
+\include{tex/acknowledgments}
+\include{tex/introduction}
+\include{tex/background}
+\include{tex/specification}
+\include{tex/implementation}
+\include{tex/management}
+\include{tex/evaluation}
+\include{tex/conclusion}
+
+\bibliographystyle{agsm}
+\bibliography{references.bib}
+\end{document}
+
+
+%%% Local Variables:
+%%% TeX-engine: xetex
+%%% TeX-master: t
+%%% End:
