@@ -1,33 +1,107 @@
 #+title: Project Management & Notes
+#+infojs_opt: view:info toc:nil
+#+style: <style> body { margin: 0 20% 0 20%; width: 60%; } </style>
+
+* Project
+
+  This is my final year project.
+
+* Language
+
+  - Python
+    - Pros
+      - best supported ROS language
+      - neural network libraries: http://pybrain.org/
+      - numpy/scipy
+    - Cons
+      - don't know it very well
+      - not functional
+  - Lisp
+    - Pros
+      - functional
+      - fun to program
+      - comfortable programming
+    - Cons
+      - no neural network library
+      - possibly not as integrate as Python
 
 * Logbook
-** 2011-10-03
-** 2011-10-10
-** 2011-10-17
-** 2011-10-24
-** 2011-10-31
-** 2011-11-07
-** 2011-11-14
-** 2011-11-21
-** 2011-11-28
-** 2011-12-05
-** 2011-12-12
-** 2011-12-19
-** 2011-12-26
-** 2012-01-02
-** 2012-01-09
-** 2012-01-16
-** 2012-01-23
-** 2012-01-30
-** 2012-02-06
-** 2012-02-13
-** 2012-02-20
-** 2012-02-27
-** 2012-03-05
-** 2012-03-12
-** 2012-03-19
-** 2012-03-26
-** 2012-04-02
-** 2012-04-09
-** 2012-04-16
 
+  Weekly logs from the project.
+  
+** 2011-10-03
+
+   - Dora experiments
+
+** 2011-10-10
+
+   I investigated how I will publish message signatures from ROS to
+   aucom and my system. At first, I looked at using Java since writing
+   a networking client is something I know how to do. Unfortunately,
+   significant portions of rosjava are unimplemented (and without any
+   mention in the documentation). I next considered Python, since it
+   is probably the most tightly integrated language into ROS. There
+   are a lot of ways to access the Master node, but after reading more
+   documentation, I saw that the Master node simple helps other nodes
+   find each other. After the connection is made, all communication is
+   peer-to-peer. This seriously threw a wrench in my plans for
+   automatic publishing of all topics.
+
+   After more consideration, I decided to only listen to topics
+   provided by a configuration file or commands line argument. This is
+   probably the better approach, because a learned model can work on
+   only part of the system. There is still the tricky bit of taking
+   this list, importing all of the relevant msgs, and then registering
+   a separate callback function for each event type. There are a
+   number of ways to solve this: 1) Use Lisp macros to generate
+   callback functions at runtime. This could be pretty simple since
+   the callback only has to do something like
+
+   #+BEGIN_SRC lisp
+     (publish timestamp topic-name topic-type)
+   #+END_SRC
+
+   which would be easy to generate as a macro. Other approaches are
+   not likely to be as nice as this one.
+   
+   --------
+
+   I met with Peter Tino for advice about using a neural network to
+   classify system state.  He told me not to necessarily limit myself
+   to using a neural network, as there might be other approaches that
+   could work more easily. Some examples he mentioned were one-class
+   learning, support vector machines, and a graph kernel. I will have
+   to look into these approaches. He stressed that the most important
+   thing I have to figure out is how to represent the data. Temporal
+   data is complex and I must spend time figuring out a representation
+   from which I can learn.
+
+** COMMENT 2011-10-17
+** COMMENT 2011-10-24
+** COMMENT 2011-10-31
+** COMMENT 2011-11-07
+** COMMENT 2011-11-14
+** COMMENT 2011-11-21
+** COMMENT 2011-11-28
+** COMMENT 2011-12-05
+** COMMENT 2011-12-12
+** COMMENT 2011-12-19
+** COMMENT 2011-12-26
+** COMMENT 2012-01-02
+** COMMENT 2012-01-09
+** COMMENT 2012-01-16
+** COMMENT 2012-01-23
+** COMMENT 2012-01-30
+** COMMENT 2012-02-06
+** COMMENT 2012-02-13
+** COMMENT 2012-02-20
+** COMMENT 2012-02-27
+** COMMENT 2012-03-05
+** COMMENT 2012-03-12
+** COMMENT 2012-03-19
+** COMMENT 2012-03-26
+** COMMENT 2012-04-02
+** COMMENT 2012-04-09
+** COMMENT 2012-04-16
+* COMMENT Appendix
+#  LocalWords:  SRC
