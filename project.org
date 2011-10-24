@@ -76,7 +76,19 @@
    data is complex and I must spend time figuring out a representation
    from which I can learn.
 
-** COMMENT 2011-10-17
+** 2011-10-17
+
+   Met with Nick & Marc this week and got some brief feedback
+   regarding my project proposal. Marc said I should have been more
+   explicit in my time line, in that the events I listed on my Gantt
+   chart are not specific enough for someone who is not me, because
+   they won't know what these events mean. Ela commented that I did
+   not determine my criteria for success, which is an excellent point
+   I had not considered. Marc said that I should avoid selecting any
+   criteria that can be answered with a yes or no question. Rather, I
+   should select criteria which allows me to compare on multiple
+   dimensions.
+
 ** COMMENT 2011-10-24
 ** COMMENT 2011-10-31
 ** COMMENT 2011-11-07
@@ -104,4 +116,5 @@
 ** COMMENT 2012-04-09
 ** COMMENT 2012-04-16
 * COMMENT Appendix
-#  LocalWords:  SRC
+
+#  LocalWords:  SRC Gantt Ela
