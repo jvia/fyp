@@ -1,0 +1,552 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/*
+ * ProbabilityChartFrame.java
+ *
+ * Created on 20.11.2009, 16:12:46
+ */
+
+package aucom.gui.charts;
+
+import java.awt.GridBagLayout;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.concurrent.ScheduledExecutorService;
+
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.data.xy.XYDataItem;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
+import aucom.data.Score;
+import aucom.util.MonitorableArrayList;
+
+public class ProbabilityChartFrame extends javax.swing.JFrame implements
+		ListDataListener {
+	private static final long serialVersionUID = 1L;
+	XYSeriesCollection dataset = new XYSeriesCollection();
+	LinkedHashMap<Comparable, LinkedHashMap<Long, Score>> tmp;
+	private JFreeChart chart;
+	private List<Score> externDataset;
+	private int updateRate;// milliseconds
+	private ScheduledExecutorService updateService;
+	/** Creates new form ProbabilityChartFrame */
+	public ProbabilityChartFrame(MonitorableArrayList<Score> inData) {
+		initComponents();
+		initChart(inData);
+	}
+
+	public void syncDataWithDataSet() {
+		if (this.isVisible()) {
+			List<Score> scoreToDisplay = getDisplayableScores();
+			List<Score> scoreToHide = getHideableScores();
+			for (Score score : scoreToDisplay) {
+				addV(score);
+			}
+			for (Score score : scoreToHide) {
+				removeV(score);
+			}
+		}
+
+	}
+
+	public List<Score> getHideableScores() {
+		int from = new Long(visibleDataSlider.getValue()).intValue();
+		int to = from + rangeSlider.getValue() - 1;
+		return getScoresNotInRange(externDataset, from, to);
+	}
+	public long getFromTimestamp(){
+		return visibleDataSlider.getValue();
+	}
+	public long getToTimestamp(){
+		return getFromTimestamp()+rangeSlider.getValue();
+	}
+	public List<Score> getDisplayableScores() {
+		int from_new = visibleDataSlider.getValue();
+		int to_new = from_new + rangeSlider.getValue() - 1;
+//		System.out.println("DisplayableScores from" + from + " to "+ to);
+		return getScoresInRange(externDataset, from_new, to_new);
+	}
+
+	public List<Score> getScoresNotInRange(List<Score> data, int from, int to) {
+		List<Score> list = new ArrayList<Score>();
+		for (Score score : externDataset) {
+			int timestamp = ((Long) score.getTimestamp()).intValue();
+//			System.out.println("NOT IN RANGE from " + from + " to " + to + " " +
+//			timestamp);
+			if (timestamp < from || timestamp > to) {
+				list.add(score);
+			}
+		}
+		// System.out.println("numScores NOT in range: " + list.size());
+		return list;
+	}
+
+	public List<Score> getScoresInRange(List<Score> data, int from, int to) {
+		List<Score> list = new ArrayList<Score>();
+		for (Score score : externDataset) {
+			int timestamp = ((Long) score.getTimestamp()).intValue();
+			// System.out.println("IN RANGE " + from + " " + to + " " +
+			// timestamp);
+			// System.out.println("from >= timestamp" + (from >= timestamp));
+			// System.out.println("timestamp <= to" + (timestamp <= to));
+			if (timestamp >= from && timestamp <= to) {
+				list.add(score);
+			}
+		}
+		// System.out.println("numScores in range: " + list.size());
+		return list;
+	}
+
+	public void contentsChanged(ListDataEvent e) {
+		System.out.println("contentsChanged");
+		// throw new NotImplementedException();
+	}
+
+	public void updateSliderRanges() {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				if (externDataset.size() > 0) {
+					int firstElement = ((Long) externDataset.get(0).getTimestamp()).intValue();
+					int lastElement = ((Long) externDataset.get(externDataset.size() - 1).getTimestamp()).intValue();
+					visibleDataSlider.setMinimum(firstElement);
+					visibleDataSlider.setMaximum(lastElement);
+					if(showHeadCheckbox.isSelected()){
+						visibleDataSlider.setValue(visibleDataSlider.getMaximum()-rangeSlider.getValue());
+					}
+					/*
+					 * We prohibit longer views than 3 seconds 
+					 * due to performances problems!
+					 */
+					rangeSlider.setMaximum(Math.min(lastElement - firstElement + 1, 3000));
+				}
+			}
+		});
+	}
+
+	public void intervalAdded(ListDataEvent e) {
+		// update slider range
+		Score ss = externDataset.get(externDataset.size()-1);
+		Comparable seriesName = ss.getDatasetName();
+		long index = ss.getTimestamp();
+		if(!tmp.containsKey(seriesName))
+			tmp.put(seriesName, new LinkedHashMap<Long, Score>());
+		tmp.get(seriesName).put(index, ss);
+
+		updateSliderRanges();
+		/*
+		 * As it is always only one element in each call of 
+		 * this method which is added to the monitored list, 
+		 * we can just apply our modifications to this element 
+		 * and check whether it is visible or not. Note, it is always the last element which has been added 
+		 */
+//		assertEquals(e.getIndex0(), e.getIndex1());
+		synchronized (externDataset) {
+			Score s = externDataset.get(e.getIndex0());
+			long timestamp = s.getTimestamp();
+			long from = getFromTimestamp();
+			long to = getToTimestamp();
+			boolean displayable = isInRange(from, to, timestamp);
+			/*
+			 * conditioned on 'displayable' decide whether 
+			 * to add the point to the dataset of the XYlineChart or not 
+			 */
+			if(displayable)
+				addV(s);
+		}
+		syncDataWithDataSet();
+	}
+	public boolean isInRange(long  left, long right, long val){
+		return val >= left && val <= right;
+	}
+	public void intervalRemoved(ListDataEvent e) {
+	}
+
+	public void initChart(MonitorableArrayList<Score> inData) {
+		inData.addListDataListener(this);
+		tmp = new LinkedHashMap<Comparable, LinkedHashMap<Long,Score>>();
+		externDataset = Collections.synchronizedList(inData);
+		dataset = new XYSeriesCollection();
+		setChart(ChartFactory.createXYLineChart("Probabilities", "Time",
+				"Score", dataset, PlotOrientation.VERTICAL, true, true, true));
+		XYPlot plot = (XYPlot)getChart().getXYPlot();
+		NumberAxis axis = (NumberAxis)plot.getRangeAxis();
+		axis.setNumberFormatOverride(new DecimalFormat(""));
+		chartPanel.setLayout(new GridBagLayout());
+		ChartPanel tmp = new ChartPanel(chart);
+		chartPanel.add(tmp);
+		chartPanel.validate();
+		if (externDataset.size() != 0) {
+			addValues(externDataset);
+		}
+//		updateService = Executors.newScheduledThreadPool(1);
+//		updateService.scheduleAtFixedRate(new Runnable() {
+//			public void run() {
+//				if(isVisible()){
+//				updateSliderRanges();
+//				syncDataWithDataSet();
+//				}
+//			}
+//		}, 100, 500, TimeUnit.MILLISECONDS);
+	}
+
+	public void removeV(final Score inScore) {
+		SwingUtilities.invokeLater(new Runnable() {
+
+			public void run() {
+				removeValue(inScore);
+			}
+		});
+	}
+
+	public void addV(final Score inScore) {
+		SwingUtilities.invokeLater(new Runnable() {
+
+			public void run() {
+				addValue(inScore);
+			}
+		});
+	}
+
+	public void addValue(Score inScore) {
+		if (inScore != null) {
+			XYDataItem item = inScore.asXYDataItem();
+			Comparable seriesName = inScore.getDataSet();
+			XYSeries series;
+			synchronized (dataset) {
+				if (dataset.indexOf(seriesName) == -1) {
+					series = new XYSeries(seriesName);
+					System.out.println("new series : " + seriesName);
+					dataset.addSeries(series);
+				} else {
+					if (dataset.getSeries(seriesName).indexOf(item.getX()) < 0) {
+						// System.out.println("ADDING: "+ inScore);
+						series = dataset.getSeries(seriesName);
+						series.add(item);
+					} else {
+						int index = dataset.getSeries(seriesName).indexOf(
+								item.getX());
+						if (((Double) dataset.getSeries(seriesName).getX(index))
+								.intValue() != item.getYValue()) {
+							dataset.getSeries(seriesName).remove(index);
+							dataset.getSeries(seriesName).add(item);
+						}
+					}
+				}
+				if(!tmp.containsKey(seriesName)){
+					tmp.put(seriesName, new LinkedHashMap<Long, Score>());
+				}
+				tmp.get(seriesName).put(inScore.getTimestamp(), inScore);
+
+			}
+		} else {
+			System.out.println("warning inScore is null");
+		}
+	}
+
+	public void removeValue(Score inScore) {
+		if (inScore != null) {
+			int timestamp = ((Long) inScore.getTimestamp()).intValue();
+			Comparable setType = (String) inScore.getDataSet();
+			synchronized (dataset) {
+				if (dataset.indexOf(setType) != -1) {
+					if (dataset.getSeries(setType).indexOf(timestamp) >= 0) {
+						// System.out.println("REMOVE: " + inScore);
+						XYSeries series = dataset.getSeries(setType);
+						series.remove(new Integer(timestamp));
+					}
+				}
+			}
+		}
+	}
+
+	public void addValues(List<Score> inScores) {
+		for (Score score : inScores) {
+			addValue(score);
+		}
+	}
+
+	public void setChart(JFreeChart chart) {
+		this.chart = chart;
+	}
+
+	public JFreeChart getChart() {
+		return chart;
+	}
+
+	public String toString() {
+		String out = "rowKey:";
+		return out;
+	}
+
+	/**
+	 * This method is called from within the constructor to initialize the form.
+	 * WARNING: Do NOT modify this code. The content of this method is always
+	 * regenerated by the Form Editor.
+	 */
+	@SuppressWarnings("unchecked")
+	// <editor-fold defaultstate="collapsed"
+	// <editor-fold defaultstate="collapsed"
+	// <editor-fold defaultstate="collapsed"
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        rangeSlider = new javax.swing.JSlider();
+        visibleDataSlider = new javax.swing.JSlider();
+        chartPanel = new javax.swing.JPanel();
+        showHeadCheckbox = new javax.swing.JCheckBox();
+
+        setResizable(false);
+
+        rangeSlider.setMaximum(1000);
+        rangeSlider.setMinimum(1);
+        rangeSlider.setOrientation(javax.swing.JSlider.VERTICAL);
+        rangeSlider.setPaintLabels(true);
+        rangeSlider.setValue(1);
+        rangeSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rangeSliderStateChanged(evt);
+            }
+        });
+
+        visibleDataSlider.setPaintLabels(true);
+        visibleDataSlider.setValue(0);
+        visibleDataSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                visibleDataSliderStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout chartPanelLayout = new javax.swing.GroupLayout(chartPanel);
+        chartPanel.setLayout(chartPanelLayout);
+        chartPanelLayout.setHorizontalGroup(
+            chartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 652, Short.MAX_VALUE)
+        );
+        chartPanelLayout.setVerticalGroup(
+            chartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 361, Short.MAX_VALUE)
+        );
+
+        showHeadCheckbox.setText("ShowHead");
+        showHeadCheckbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showHeadCheckboxActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(visibleDataSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(showHeadCheckbox))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(chartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rangeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(36, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rangeSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+                    .addComponent(chartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(visibleDataSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(showHeadCheckbox)))
+                .addContainerGap(87, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+        private void showHeadCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showHeadCheckboxActionPerformed
+
+        }//GEN-LAST:event_showHeadCheckboxActionPerformed
+    private void updateDataSet(){
+    	int from = (int)getFromTimestamp();
+    	int to = (int)getToTimestamp();
+    	List<XYSeries> l = dataset.getSeries();
+    	for(XYSeries series: l){
+    		Comparable seriesName = series.getKey(); 
+    		int minX = (int)series.getMinX();
+    		int maxX = (int)series.getMaxX();
+    		if(minX < from){
+    			if(!series.isEmpty())
+    				series.remove(0);
+    		}else if(minX > from){
+    			/*
+    			 * current dataset contains less vaslues on the lefthand site
+    			 */
+    			for(int i=from ;i<=minX;i++){
+    				if(tmp.get(seriesName).containsKey(i)){
+    					Score s = tmp.get(seriesName).get(i);
+    					series.add(s.asXYDataItem());
+    				}
+    			}
+    		}
+    		/*
+    		 * Check whether the max value of the current visible set is smaller than the new range value
+    		 * if this is the case we can check whether another point has to be plotted 
+    		 */
+    		if(maxX<to){
+    			for(int i=maxX+1;i<=to;i++){
+    				if(tmp.get(seriesName).containsKey(i)){
+    					Score s = tmp.get(seriesName).get(i);
+    					series.add(s.asXYDataItem());
+    				}
+    			}
+    		}else if(maxX>to){
+    			
+    		}
+    	}
+    }
+	private void rangeSliderStateChanged(javax.swing.event.ChangeEvent evt) {// GEN-FIRST:event_rangeSliderStateChanged
+		javax.swing.JSlider slider = (javax.swing.JSlider)evt.getSource();
+		int value  = slider.getValue();
+		int diff = value-lastValueRangeSlider; // if >0 slider moves up els moves down
+		/*
+		 * if we moved up we have to add score with the index value+visibledataslidervalue to the series
+		 * if we move down we have to delete the score with the index  lastValueRangeSlider
+		 * afterwards update lastValueRangeSlider
+		 */
+    	List<XYSeries> l = dataset.getSeries();
+    	for(XYSeries series: l){
+    		if(diff>0){
+    			int index = value + visibleDataSlider.getValue(); 
+    			Comparable seriesName = series.getKey();
+    			if(tmp.get(seriesName).containsKey(index)){
+    				Score s = tmp.get(seriesName).get(index);
+    				series.add(s.asXYDataItem());
+    			}
+    		}else if(diff<0){
+    			Comparable seriesName = series.getKey();
+    			if(tmp.get(seriesName).containsKey(lastValueRangeSlider) && series.indexOf(new Integer(lastValueRangeSlider))>=0){
+    				series.remove(new Integer(lastValueRangeSlider));
+    			}
+    		}
+    	}
+    	lastValueRangeSlider = value;
+	}// GEN-LAST:event_rangeSliderStateChanged
+
+	private void visibleDataSliderStateChanged(javax.swing.event.ChangeEvent evt) {// GEN-FIRST:event_visibleDataSliderStateChanged
+		javax.swing.JSlider slider = (javax.swing.JSlider)evt.getSource();
+		int value  = slider.getValue();
+		int diff = value-lastValueVisibleSlider; // if >0 slider moves right else moves left
+		/*
+		 * if we moved right we have to add score with the index value+rangeslidervalue to the series
+		 * and we have to remove the score with the index lastValueVisibleSlider 
+		 * if we move left we have to remove the score with the index lastValueVisibleSlider+rangeslidervalue
+		 * and we add the score with the index value   
+		 * afterwards update lastValueVisibleSlider
+		 */
+    	List<XYSeries> l = dataset.getSeries();
+    	for(XYSeries series: l){
+    		if(diff>0){
+    			int index1 = value + rangeSlider.getValue();
+    			int index2 = lastValueVisibleSlider;
+    			Comparable seriesName = series.getKey();
+    			if(tmp.get(seriesName).containsKey(index1)){
+    				Score s = tmp.get(seriesName).get(index1);
+    				series.add(s.asXYDataItem());
+    				if(series.indexOf(index2)>=0){
+    					series.remove(new Integer(index2));
+    				}
+    			}
+    		}else if(diff <0){
+    			int index1 = value;
+    			int index2 = lastValueVisibleSlider + rangeSlider.getValue();
+    			Comparable seriesName = series.getKey();
+    			if(tmp.get(seriesName).containsKey(index2) ){
+    				Score s = tmp.get(seriesName).get(index1);
+    				series.add(s.asXYDataItem());
+    				if(series.indexOf(index2)>=0){
+    					series.remove(new Integer(index2));
+    				}
+    			}
+    			
+    		}
+    	}
+    	lastValueVisibleSlider = value;
+	}// GEN-LAST:event_visibleDataSliderStateChanged
+
+	/**
+	 * @param args
+	 *            the command line arguments
+	 */
+	public static void main(String args[]) {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				MonitorableArrayList<Score> s = new MonitorableArrayList<Score>(
+						new ArrayList<Score>());
+				s.add(new Score(0.1, 1, "avg", "a", -1));
+				s.add(new Score(0.2, 2, "avg", "a", -1));
+				s.add(new Score(0.3, 3, "avg", "a", -1));
+				s.add(new Score(0.4, 4, "avg", "a", -1));
+				s.add(new Score(0.5, 5, "avg", "a", -1));
+				s.add(new Score(0.6, 6, "avg", "a", -1));
+				s.add(new Score(0.7, 7, "avg", "a", -1));
+				s.add(new Score(0.8, 8, "avg", "a", -1));
+				s.add(new Score(0.9, 9, "avg", "a", -1));
+				ProbabilityChartFrame p = new ProbabilityChartFrame(s);
+				p.setDefaultCloseOperation(EXIT_ON_CLOSE);
+				p.setVisible(true);
+
+			}
+		});
+	}
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel chartPanel;
+    private javax.swing.JSlider rangeSlider;
+    private javax.swing.JCheckBox showHeadCheckbox;
+    private javax.swing.JSlider visibleDataSlider;
+    // End of variables declaration//GEN-END:variables
+	private int lastValueRangeSlider=0;
+	private int lastValueVisibleSlider=0;
+}
