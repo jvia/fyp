@@ -1,107 +1,143 @@
-#+title: Project Management & Notes
-#+infojs_opt: view:info toc:nil
-#+style: <style> body { margin: 0 20% 0 20%; width: 60%; } </style>
+#+title:     Final-Year Project
+#+author:    Jeremiah Via
+#+email:     jeremiah.via@gmail.com
+#+options:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+options:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+infojs_opt: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+startup: hidestars indent
 
 * Project
 
-  This is my final year project.
-
-* Language
-
-  - Python
-    - Pros
-      - best supported ROS language
-      - neural network libraries: http://pybrain.org/
-      - numpy/scipy
-    - Cons
-      - don't know it very well
-      - not functional
-  - Lisp
-    - Pros
-      - functional
-      - fun to program
-      - comfortable programming
-    - Cons
-      - no neural network library
-      - possibly not as integrate as Python
+This is my final year project.
 
 * Logbook
 
-  Weekly logs from the project.
-  
+Weekly logs from the project.
+
 ** 2011-10-03
 
    - Dora experiments
 
 ** 2011-10-10
 
-   I investigated how I will publish message signatures from ROS to
-   aucom and my system. At first, I looked at using Java since writing
-   a networking client is something I know how to do. Unfortunately,
-   significant portions of rosjava are unimplemented (and without any
-   mention in the documentation). I next considered Python, since it
-   is probably the most tightly integrated language into ROS. There
-   are a lot of ways to access the Master node, but after reading more
-   documentation, I saw that the Master node simple helps other nodes
-   find each other. After the connection is made, all communication is
-   peer-to-peer. This seriously threw a wrench in my plans for
-   automatic publishing of all topics.
+I investigated how I will publish message signatures from ROS to
+aucom and my system. At first, I looked at using Java since writing
+a networking client is something I know how to do. Unfortunately,
+significant portions of rosjava are unimplemented (and without any
+mention in the documentation). I next considered Python, since it
+is probably the most tightly integrated language into ROS. There
+are a lot of ways to access the Master node, but after reading more
+documentation, I saw that the Master node simple helps other nodes
+find each other. After the connection is made, all communication is
+peer-to-peer. This seriously threw a wrench in my plans for
+automatic publishing of all topics.
 
-   After more consideration, I decided to only listen to topics
-   provided by a configuration file or commands line argument. This is
-   probably the better approach, because a learned model can work on
-   only part of the system. There is still the tricky bit of taking
-   this list, importing all of the relevant msgs, and then registering
-   a separate callback function for each event type. There are a
-   number of ways to solve this: 1) Use Lisp macros to generate
-   callback functions at runtime. This could be pretty simple since
-   the callback only has to do something like
+After more consideration, I decided to only listen to topics
+provided by a configuration file or commands line argument. This is
+probably the better approach, because a learned model can work on
+only part of the system. There is still the tricky bit of taking
+this list, importing all of the relevant msgs, and then registering
+a separate callback function for each event type. There are a
+number of ways to solve this: 1) Use Lisp macros to generate
+callback functions at runtime. This could be pretty simple since
+the callback only has to do something like
 
-   #+BEGIN_SRC lisp
+#+BEGIN_SRC lisp
      (publish timestamp topic-name topic-type)
-   #+END_SRC
+#+END_SRC
 
-   which would be easy to generate as a macro. Other approaches are
-   not likely to be as nice as this one.
-   
-   --------
+which would be easy to generate as a macro. Other approaches are
+not likely to be as nice as this one.
 
-   I met with Peter Tino for advice about using a neural network to
-   classify system state.  He told me not to necessarily limit myself
-   to using a neural network, as there might be other approaches that
-   could work more easily. Some examples he mentioned were one-class
-   learning, support vector machines, and a graph kernel. I will have
-   to look into these approaches. He stressed that the most important
-   thing I have to figure out is how to represent the data. Temporal
-   data is complex and I must spend time figuring out a representation
-   from which I can learn.
+--------
+
+I met with Peter Tino for advice about using a neural network to
+classify system state.  He told me not to necessarily limit myself
+to using a neural network, as there might be other approaches that
+could work more easily. Some examples he mentioned were one-class
+learning, support vector machines, and a graph kernel. I will have
+to look into these approaches. He stressed that the most important
+thing I have to figure out is how to represent the data. Temporal
+data is complex and I must spend time figuring out a representation
+from which I can learn.
 
 ** 2011-10-17
 
-   Met with Nick & Marc this week and got some brief feedback
-   regarding my project proposal. Marc said I should have been more
-   explicit in my time line, in that the events I listed on my Gantt
-   chart are not specific enough for someone who is not me, because
-   they won't know what these events mean. Ela commented that I did
-   not determine my criteria for success, which is an excellent point
-   I had not considered. Marc said that I should avoid selecting any
-   criteria that can be answered with a yes or no question. Rather, I
-   should select criteria which allows me to compare on multiple
-   dimensions.
+Met with Nick & Marc this week and got some brief feedback
+regarding my project proposal. Marc said I should have been more
+explicit in my time line, in that the events I listed on my Gantt
+chart are not specific enough for someone who is not me, because
+they won't know what these events mean. Ela commented that I did
+not determine my criteria for success, which is an excellent point
+I had not considered. Marc said that I should avoid selecting any
+criteria that can be answered with a yes or no question. Rather, I
+should select criteria which allows me to compare on multiple
+dimensions.
 
-** COMMENT 2011-10-24
-** COMMENT 2011-10-31
-** COMMENT 2011-11-07
-** COMMENT 2011-11-14
-** COMMENT 2011-11-21
-** COMMENT 2011-11-28
-** COMMENT 2011-12-05
-** COMMENT 2011-12-12
-** COMMENT 2011-12-19
-** COMMENT 2011-12-26
-** COMMENT 2012-01-02
-** COMMENT 2012-01-09
+** TODO COMMENT 2011-10-24
+** TODO COMMENT 2011-10-31
+** TODO COMMENT 2011-11-07
+** TODO COMMENT 2011-11-14
+** TODO COMMENT 2011-11-21
+** TODO COMMENT 2011-11-28
+** TODO COMMENT 2011-12-05
+** 2012-01-09
+*** Wednesday
+
+Started worked on ROS-CAST connection. I created all of the
+necessary classes and now I need to fill in the method stubs.
+
+*** Thursday
+
+Met with Nick today. We talked about the project and which direction
+to head. Some of the things we talked about:
+
+- Heart beat
+  - what can it be used for
+  - limitations on training and testing
+- What kind of variations in training can aucom take?
+  - Flat curve, i.e., random events like faces cannot be predicted
+
+An important point he mentioned was what kind of story I want to tell
+with my project. I need to provide a deeper understanding and go
+beyond what Raphael, i.e., don't just implement on other systems. 
+
+He suggested that I start from the beginning so I can find a goal for
+aucom. I should determine what it can and cannot do and relate these
+to real-life scenarios. Essentially, I need to find the story that
+says "his system can't do X, this is how we extended it so it could do
+X".
+
+An interesting problem is determining how well the system scales. 
+
 ** COMMENT 2012-01-16
+
+Quantitative:
+
+- Determine memory & cpu 
+- compare to score
+- experiments on the score
+
+Qualitative:
+- What changes by doing it this way?
+- Is there anything I may lose, however subtle?
+
+Is it even possible to model the numbers across new chains?
+
+
+3-chain run with dynamic start, i.e., start t random times and see how
+it effects the scoring over time.
+
+Overall testing:
+- Wireless connectivity (throttling network connectivity)
+- Camera lead falls out
+- Component lockup
+
+
+coding:
+- set non-conecteds ones to 0
+- thrn try bigger change
+
 ** COMMENT 2012-01-23
 ** COMMENT 2012-01-30
 ** COMMENT 2012-02-06
@@ -111,10 +147,6 @@
 ** COMMENT 2012-03-05
 ** COMMENT 2012-03-12
 ** COMMENT 2012-03-19
-** COMMENT 2012-03-26
-** COMMENT 2012-04-02
-** COMMENT 2012-04-09
-** COMMENT 2012-04-16
 * COMMENT Appendix
 
 #  LocalWords:  SRC Gantt Ela
