@@ -1,6 +1,6 @@
 package org.bham.aucom.data;
 
-import static org.bham.aucom.util.Constants.LOWESTPROBABILITY;
+import static org.bham.aucom.util.Constants.LOWEST_PROBABILITY;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,7 +70,7 @@ public class TemporalProbabilityFeature extends TemporalDurationFeature {
 	public double getProbabilityFor(DataType eventType) {
 		if (isUnknownEventType(eventType)) {
 			System.out.println("Warning: unknown predecessor");
-			return LOWESTPROBABILITY;
+			return LOWEST_PROBABILITY;
 		}
 		return this.getDataTypeToProbabilityMapping().get(eventType);
 	}
@@ -82,7 +82,7 @@ public class TemporalProbabilityFeature extends TemporalDurationFeature {
 	        }
 	    }
         System.out.println("Warning: unknown predecessor");
-        return LOWESTPROBABILITY;
+        return LOWEST_PROBABILITY;
 	}
 
 	/*

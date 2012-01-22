@@ -26,7 +26,7 @@ public class Constants {
     public static final String DATASET_ID = "dataSetId";
     public static final String DATASET_INDEX = "dataSetIndex";
     public static final String LAST_EVENT = "lastEventOfThisSource";
-    public static final float LOWESTPROBABILITY = Float.MIN_NORMAL;
+    public static final float LOWEST_PROBABILITY = Float.MIN_NORMAL;
     public static final String TRAIN = "train";
     public static final String SCORE = "score";
     public static final String TEST = "test";

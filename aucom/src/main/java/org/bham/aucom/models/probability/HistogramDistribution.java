@@ -1,6 +1,6 @@
 package org.bham.aucom.models.probability;
 
-import static org.bham.aucom.util.Constants.LOWESTPROBABILITY;
+import static org.bham.aucom.util.Constants.LOWEST_PROBABILITY;
 
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -52,7 +52,7 @@ public class HistogramDistribution implements ProbabilityDistribution{
 			numValues++;
 //			System.out.println("###################" + val);
 		}
-		boolean valid = sum >= 1.0d - LOWESTPROBABILITY &  sum <= 1.0d + LOWESTPROBABILITY; 
+		boolean valid = sum >= 1.0d - LOWEST_PROBABILITY &  sum <= 1.0d + LOWEST_PROBABILITY;
 		if(!valid)
 			System.out.println("Warning histogram dist not valid. Is: "+ sum + " with " + numValues + "bins but should be 1.0d ");
 		return valid;
@@ -79,7 +79,7 @@ public class HistogramDistribution implements ProbabilityDistribution{
 		return new HistogramDistributionIterator(this);
 	}
 	public double getProbByBinNumber(int binNumber) {
-		double probability = LOWESTPROBABILITY;
+		double probability = LOWEST_PROBABILITY;
 		if (this.content.containsBinWithNumber(binNumber)) {
 			double numElements = this.content.getSumValues();
 			double binValue = this.content.getValueOfBinWithNumber(binNumber);
@@ -88,7 +88,7 @@ public class HistogramDistribution implements ProbabilityDistribution{
 		return probability;
 	}
 	public double getProbByBinLabel(String binLabel) {
-		double probability = LOWESTPROBABILITY;
+		double probability = LOWEST_PROBABILITY;
 		if (this.content.containsBinWithNumber(1)) {
 			double numElements = this.content.getSumValues();
 			double binValue = this.content.getValueOfBinWithNumber(1);

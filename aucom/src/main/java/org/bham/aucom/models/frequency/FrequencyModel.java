@@ -1,6 +1,6 @@
 package org.bham.aucom.models.frequency;
 
-import static org.bham.aucom.util.Constants.LOWESTPROBABILITY;
+import static org.bham.aucom.util.Constants.LOWEST_PROBABILITY;
 
 import java.util.LinkedHashMap;
 
@@ -26,7 +26,7 @@ public class FrequencyModel {
     public double getProbability(Integer classId)
     {
         if (!getData().containsKey(classId))
-            return LOWESTPROBABILITY;
+            return LOWEST_PROBABILITY;
         return getData().get(classId).doubleValue() / getNumValues();
     }
 

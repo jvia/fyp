@@ -73,7 +73,7 @@ public class GenerateTemporalProbabilityFeature extends AbstractAucomTransformNo
     private double normalizePredecessorProbability(double probabilityOfPredecessor, double maxProbability) {
         double normalizedPredecessorProbability;
         normalizedPredecessorProbability = probabilityOfPredecessor;
-        if (maxProbability == Constants.LOWESTPROBABILITY) {
+        if (maxProbability == Constants.LOWEST_PROBABILITY) {
             System.out.println("TestModel: maxProbability is " + maxProbability);
         } else {
             normalizedPredecessorProbability /= maxProbability;

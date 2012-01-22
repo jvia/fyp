@@ -1,6 +1,6 @@
 package org.bham.aucom.models.markov;
 
-import static org.bham.aucom.util.Constants.LOWESTPROBABILITY;
+import static org.bham.aucom.util.Constants.LOWEST_PROBABILITY;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -51,12 +51,12 @@ public class MarkovChain {
 	}
 	public double getInitialProbability(int classId){
 		if(!initial.containsKey(classId))
-			return LOWESTPROBABILITY;
+			return LOWEST_PROBABILITY;
 		return (double)initial.get(classId)/(double)getNumInitialElements();
 	}
 	public double getTransitionProbability(int fromt, int to){
 		if(!transitions.containsKey(fromt, to))
-			return LOWESTPROBABILITY;
+			return LOWEST_PROBABILITY;
 		return (double)transitions.get(fromt, to)/(double)getNumTransitionElements(fromt);
 	}
 	public double getProbability(ArrayList<Integer> classIds){

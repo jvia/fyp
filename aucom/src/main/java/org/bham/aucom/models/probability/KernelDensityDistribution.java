@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
-import static org.bham.aucom.util.Constants.LOWESTPROBABILITY;
+import static org.bham.aucom.util.Constants.LOWEST_PROBABILITY;
 
 public class KernelDensityDistribution implements ProbabilityDistribution {
     private static final long serialVersionUID = 1378894184156772597L;
@@ -18,36 +18,36 @@ public class KernelDensityDistribution implements ProbabilityDistribution {
     double maxProbabilityValue = 0.0d;
     private double maxSeenValue = 0.0d;
     private HashMap<Double, Double> queriedValues = new HashMap<Double, Double>();
-    Double tmpValue = 0.0;
+
     public KernelDensityDistribution(double precision) {
-        this.estimator = new KernelEstimator(precision);
+        estimator = new KernelEstimator(precision);
     }
 
     public KernelDensityDistribution(double precision, double[] values) {
-        this.estimator = new KernelEstimator(precision);
+        estimator = new KernelEstimator(precision);
         update(values);
     }
 
     @Override
     public double getEntropy() {
-        if (this.entropy == Double.MIN_VALUE) {
-            double[] means = this.estimator.getMeans();
-            for (int i = 0; i < this.estimator.getNumKernels(); i++) {
+        if (entropy == Double.MIN_VALUE) {
+            double[] means = estimator.getMeans();
+            for (int i = 0; i < estimator.getNumKernels(); i++) {
                 if (Double.isNaN(getProbability(means[i]) * log(getProbability(means[i]), 2))) {
-                    Logger.getLogger(this.getClass().getCanonicalName()).severe("not a number entropy value ");
-                    Logger.getLogger(this.getClass().getCanonicalName()).severe("prob " + (getProbability(means[i])));
-                    Logger.getLogger(this.getClass().getCanonicalName()).severe("logprob " + (log(getProbability(means[i]), 2)));
-                    return LOWESTPROBABILITY;
+                    Logger.getLogger(getClass().getCanonicalName()).severe("not a number entropy value ");
+                    Logger.getLogger(getClass().getCanonicalName()).severe("prob " + (getProbability(means[i])));
+                    Logger.getLogger(getClass().getCanonicalName()).severe("logprob " + (log(getProbability(means[i]), 2)));
+                    return LOWEST_PROBABILITY;
                 }
-                this.entropy += getProbability(means[i]) * log(getProbability(means[i]), 2);
-                // Logger.getLogger(this.getClass().getCanonicalName()).info("prob for "
-                // +means[i]+ " is " + this.estimator.getProbability(means[i]));
+                entropy += getProbability(means[i]) * log(getProbability(means[i]), 2);
+                // Logger.getLogger(getClass().getCanonicalName()).info("prob for "
+                // +means[i]+ " is " + estimator.getProbability(means[i]));
             }
-            if (Double.isNaN(this.entropy))
-                Logger.getLogger(this.getClass().getCanonicalName()).info("num kernels " + this.estimator.getNumKernels() + " entropy " + (-this.entropy));
-            this.entropy = -this.entropy;
+            if (Double.isNaN(entropy))
+                Logger.getLogger(getClass().getCanonicalName()).info("num kernels " + estimator.getNumKernels() + " entropy " + (-entropy));
+            entropy = -entropy;
         }
-        return this.entropy;
+        return entropy;
     }
 
     public double log(double value, double base) {
@@ -56,11 +56,9 @@ public class KernelDensityDistribution implements ProbabilityDistribution {
 
     @Override
     public double getProbability(double val) {
-        if (!this.getQueriedValues().containsKey(val)) {
-            this.getQueriedValues().put(val, this.estimator.getProbability(val));
-        } else {
-        }
-        return this.getQueriedValues().get(val);
+        if (!getQueriedValues().containsKey(val))
+            getQueriedValues().put(val, estimator.getProbability(val));
+        return getQueriedValues().get(val);
     }
 
     @Override
@@ -70,57 +68,56 @@ public class KernelDensityDistribution implements ProbabilityDistribution {
 
     @Override
     public void update(double[] val) {
-        this.queriedValues.clear();
+        queriedValues.clear();
         for (double aVal : val) {
-            this.estimator.addValue(aVal, this.weight);
+            estimator.addValue(aVal, weight);
         }
         Arrays.sort(val);
-        this.setMaxSeenValue(val[val.length - 1]);
+        setMaxSeenValue(val[val.length - 1]);
         double[] samples = sampleProbability();
         Arrays.sort(samples);
-        this.maxProbabilityValue = samples[samples.length - 1];
+        maxProbabilityValue = samples[samples.length - 1];
         // System.out.println("distribution trained with " +val.length+
-        // "  max value is " +this.maxProbabilityValue);
-        this.count += val.length;
+        // "  max value is " +maxProbabilityValue);
+        count += val.length;
     }
 
     @Override
     public int getCount() {
-        return this.count;
+        return count;
     }
 
     @Override
     public double[] sampleProbability() {
         double sample[] = sample();
         double[] sampleProbabilities = new double[sample.length];
-        for (int i = 0; i < sample.length; i++) {
-            sampleProbabilities[i] = this.getProbability(sample[i]);
-        }
+
+        for (int i = 0; i < sample.length; i++)
+            sampleProbabilities[i] = getProbability(sample[i]);
+
         return sampleProbabilities;
     }
 
     @Override
     public double expectedValue() {
-        // TODO Auto-generated method stub
         return 0;
     }
 
     @Override
     public double variance() {
-        // TODO Auto-generated method stub
         return 0;
     }
 
     @Override
     public double[] sample() {
-        this.estimator.getPrecision();
-        this.estimator.getNumKernels();
-        double[] means = this.estimator.getMeans();
+        estimator.getPrecision();
+        estimator.getNumKernels();
+        double[] means = estimator.getMeans();
         int numberSample = 800;
-        this.estimator.getStdDev();
-        Arrays.sort(means, 0, this.estimator.getNumKernels() - 1);
+        estimator.getStdDev();
+        Arrays.sort(means, 0, estimator.getNumKernels() - 1);
         double currentValue = 0.0d;
-        double highestValue = this.getMaxSeenValue() * 10;
+        double highestValue = getMaxSeenValue() * 10;
         double sampleRange = highestValue - currentValue;
         double stepSize = sampleRange / numberSample;
         double[] samples = new double[numberSample];
@@ -134,11 +131,11 @@ public class KernelDensityDistribution implements ProbabilityDistribution {
 
     @Override
     public double getMaxProbability() {
-        return this.maxProbabilityValue;
+        return maxProbabilityValue;
     }
 
     public HashMap<Double, Double> getQueriedValues() {
-        return this.queriedValues;
+        return queriedValues;
     }
 
     void setMaxSeenValue(double maxSeenValue) {
@@ -146,6 +143,6 @@ public class KernelDensityDistribution implements ProbabilityDistribution {
     }
 
     public double getMaxSeenValue() {
-        return this.maxSeenValue;
+        return maxSeenValue;
     }
 }
