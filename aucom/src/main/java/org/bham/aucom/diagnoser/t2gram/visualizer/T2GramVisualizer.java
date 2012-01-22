@@ -1,27 +1,23 @@
 package org.bham.aucom.diagnoser.t2gram.visualizer;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
 import org.bham.aucom.Presentable;
-import org.bham.aucom.diagnoser.t2gram.detector.T2GramDetector;
+import org.bham.aucom.diagnoser.Detector;
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.gui.charts.VisualizerScoreChart;
 import org.bham.aucom.util.Constants;
 
+import javax.swing.*;
+import java.awt.*;
+
 
 public class T2GramVisualizer implements Presentable {
 	JPanel panel;
-	T2GramDetector detector;
+	Detector detector;
 	JFrame scoreChartFrame;
 	VisualizerScoreChart scoreChart;
 	T2GramVisualizerGraph graph;
 
-	public T2GramVisualizer(T2GramDetector inDetector) {
+	public T2GramVisualizer(Detector inDetector) {
 		detector = inDetector;
 	}
 

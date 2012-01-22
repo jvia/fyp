@@ -9,10 +9,8 @@ import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.data.management.DataAlreadyExistsException;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.data.util.SlidingWindow;
-import org.bham.aucom.diagnoser.AbstractDetector.DetectorStatus;
 import org.bham.aucom.diagnoser.*;
 import org.bham.aucom.diagnoser.t2gram.KDEProbabilityFactory;
-import org.bham.aucom.diagnoser.t2gram.detector.T2GramDetector;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.AnomalyClassifier;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.StatisticalAnomalyClassifier;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.optimizer.ClassifierOptimizer;
@@ -31,7 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CrossValidateExperiment implements Experiment {
-    HashMap<T2GramDetector, String> detectors;
+    HashMap<Detector, String> detectors;
     private List<TimeSeries<Observation>> timeSeries;
     private File workingDirectory;
     private ModelTrainer trainer;
@@ -40,7 +38,7 @@ public class CrossValidateExperiment implements Experiment {
     Logger logger;
 
     public CrossValidateExperiment(File inWorkingDirectory, String inName) {
-        detectors = new LinkedHashMap<T2GramDetector, String>();
+        detectors = new LinkedHashMap<Detector, String>();
         timeSeries = new ArrayList<TimeSeries<Observation>>();
         workingDirectory = inWorkingDirectory;
         trainer = new ModelTrainer();
@@ -70,7 +68,7 @@ public class CrossValidateExperiment implements Experiment {
 
     }
 
-    private void optimizeModelParameter(T2GramDetector detector, TimeSeries<Observation> obsTs) {
+    private void optimizeModelParameter(Detector detector, TimeSeries<Observation> obsTs) {
         logger.log(Level.FINE, "optimizing parameters of " + detector);
         ClassifierOptimizer optimizer = new ClassifierOptimizer(detector);
         optimizer.setTimeSeries(obsTs);
@@ -88,7 +86,7 @@ public class CrossValidateExperiment implements Experiment {
             }
             if (m != null) {
                 logger.log(Level.CONFIG, "adding model ");
-                T2GramDetector detector = new T2GramDetector();
+                Detector detector = new Detector();
                 detector.setModel(m);
                 detector.setClassificator(new StatisticalAnomalyClassifier(0.0, 0.0));
                 detector.setSlidingWindow(new SlidingWindow(100, 50));
@@ -208,7 +206,7 @@ public class CrossValidateExperiment implements Experiment {
     @Override
     public void process() {
         int i = 1, j = 1, k = 1;
-        for (T2GramDetector detector : detectors.keySet()) {
+        for (Detector detector : detectors.keySet()) {
             j = 1;
             for (TimeSeries<Observation> obsTs : timeSeries) {
                 AnomalyClassifier acBefore = detector.getClassificator().duplicate();
@@ -303,7 +301,7 @@ public class CrossValidateExperiment implements Experiment {
         }
     }
 
-    private TimeSeries<Classification> evaluate(final T2GramDetector detector, TimeSeries<Observation> evaluateTs) {
+    private TimeSeries<Classification> evaluate(final Detector detector, TimeSeries<Observation> evaluateTs) {
         final Object waitObj = new Object();
         try {
             logger.log(Level.FINE, "detector status before starting " + detector.getCurrentStatus() + " input size " + evaluateTs.size());
@@ -312,10 +310,10 @@ public class CrossValidateExperiment implements Experiment {
                 @Override
                 public void handleDetectorStatusChangedEvent(DetectorStatusChangedEvent evt) {
                     Logger.getLogger(CrossValidateExperiment.this.getClass().getCanonicalName()).log(Level.FINE, "got DetectorStatusChangedEvent " + evt);
-                    if (evt.getCurrentStatus().equals(DetectorStatus.RUNNING)) {
+                    if (evt.getCurrentStatus().equals(Detector.DetectorStatus.RUNNING)) {
                         Logger.getLogger(CrossValidateExperiment.this.getClass().getCanonicalName()).log(Level.FINE, "detector started");
                     }
-                    if (evt.getPreviousStatus().equals(DetectorStatus.RUNNING) && evt.getCurrentStatus().equals(DetectorStatus.READY)) {
+                    if (evt.getPreviousStatus().equals(Detector.DetectorStatus.RUNNING) && evt.getCurrentStatus().equals(Detector.DetectorStatus.READY)) {
                         synchronized (waitObj) {
                             detector.removeStatusListener(this);
                             waitObj.notifyAll();

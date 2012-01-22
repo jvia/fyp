@@ -30,6 +30,7 @@ import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.data.management.DataAlreadyExistsException;
 import org.bham.aucom.data.timeseries.TimeSeriesStatusListener;
 import org.bham.aucom.data.timeseries.TimeseriesStatusEvent;
+import org.bham.aucom.diagnoser.Detector;
 import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.system.FactoryManagerInitalizationException;
@@ -42,10 +43,10 @@ import org.bham.aucom.util.ExampleFileFilter;
  */
 public class T2GramDetectorPanel extends javax.swing.JPanel implements TimeSeriesStatusListener {
 	private static final long serialVersionUID = 0L;
-	T2GramDetector detector;
+	Detector detector;
 
 	/* Creates new form MonitorPanel */
-	public T2GramDetectorPanel(T2GramDetector inDetector) {
+	public T2GramDetectorPanel(Detector inDetector) {
 		detector = inDetector;
 		initComponents();
 		appendDetectorInfoToTextArea();

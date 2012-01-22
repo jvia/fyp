@@ -5,8 +5,8 @@ import org.bham.aucom.data.ClassificationTimeSeriesDescriptiveStatistics;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.Score;
 import org.bham.aucom.data.timeseries.TimeSeries;
+import org.bham.aucom.diagnoser.Detector;
 import org.bham.aucom.diagnoser.Model;
-import org.bham.aucom.diagnoser.t2gram.detector.T2GramDetector;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.AnomalyClassifier;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.StatisticalAnomalyClassifier;
 import org.bham.aucom.fts.graph.AbstractAucomGraph.GraphStatus;
@@ -27,10 +27,10 @@ public class ClassifierOptimizer implements Presentable, GraphStatusListener {
     OptimizerGraph optimizationGraph = null;
     ObservationToScoreGraph obsToScoreGraph = null;
     TimeSeries<Score> scoreTs = null;
-    private T2GramDetector detector;
+    private Detector detector;
     ClassifierOptimizationMethod optimizationMethod;
 
-    public ClassifierOptimizer(T2GramDetector inDetector) {
+    public ClassifierOptimizer(Detector inDetector) {
         setDetector(inDetector);
         obsToScoreGraph = new ObservationToScoreGraph();
         obsToScoreGraph.addGraphListener(this);
@@ -254,11 +254,11 @@ public class ClassifierOptimizer implements Presentable, GraphStatusListener {
         return p;
     }
 
-    public T2GramDetector getDetector() {
+    public Detector getDetector() {
         return detector;
     }
 
-    public void setDetector(T2GramDetector detector) {
+    public void setDetector(Detector detector) {
         this.detector = detector;
     }
 

@@ -11,7 +11,6 @@ import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.data.util.SlidingWindow;
 import org.bham.aucom.diagnoser.*;
 import org.bham.aucom.diagnoser.t2gram.KDEProbabilityFactory;
-import org.bham.aucom.diagnoser.t2gram.detector.T2GramDetector;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.StatisticalAnomalyClassifier;
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.system.SystemConnectionFailedException;
@@ -32,7 +31,7 @@ import java.util.logging.Logger;
 public class CastExperiment implements Experiment {
 
     private ModelTrainer trainer;
-    private T2GramDetector faultDetector;
+    private Detector faultDetector;
     private CastSystemConnection cast;
 
     private String name;
@@ -261,8 +260,8 @@ public class CastExperiment implements Experiment {
      * @param model the learned model
      * @return a new fault detector
      */
-    private T2GramDetector createDetector(Model model) {
-        T2GramDetector detector = new T2GramDetector();
+    private Detector createDetector(Model model) {
+        Detector detector = new Detector();
         detector.setModel(model);
         detector.setClassificator(new StatisticalAnomalyClassifier(0.5, 0.25));
         detector.setSlidingWindow(new SlidingWindow(100, 50));

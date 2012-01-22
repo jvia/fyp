@@ -11,6 +11,7 @@
 
 package org.bham.aucom.diagnoser.t2gram.detector;
 
+import org.bham.aucom.diagnoser.Detector;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.*;
 
 import javax.swing.*;
@@ -24,10 +25,10 @@ import java.awt.event.ActionListener;
  */
 public class ClassifierSelectionPanel extends javax.swing.JPanel implements ActionListener {
     private static final long serialVersionUID = 0L;
-    T2GramDetector model;
+    Detector model;
     AnomalyClassifierFactory acFactory;
 
-    public ClassifierSelectionPanel(T2GramDetector inModel) {
+    public ClassifierSelectionPanel(Detector inModel) {
         initComponents();
         model = inModel;
         acFactory = new AnomalyClassifierFactory();

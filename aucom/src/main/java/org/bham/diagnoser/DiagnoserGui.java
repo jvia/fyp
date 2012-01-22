@@ -11,10 +11,10 @@
 package org.bham.diagnoser;
 
 import org.bham.aucom.Presentable;
+import org.bham.aucom.diagnoser.Detector;
 import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.diagnoser.ModelTrainer;
 import org.bham.aucom.diagnoser.t2gram.KDEProbabilityFactory;
-import org.bham.aucom.diagnoser.t2gram.detector.T2GramDetector;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.optimizer.ClassifierOptimizer;
 import org.bham.aucom.diagnoser.t2gram.visualizer.T2GramVisualizer;
 import org.bham.aucom.system.FactoryManagerInitalizationException;
@@ -196,7 +196,7 @@ public class DiagnoserGui extends javax.swing.JFrame {
 //					gui.registerPresentable(DataManager.getInstance());
                         gui.registerPresentable(new Recorder(connection));
                         gui.registerPresentable(new ModelTrainer(new Model(new KDEProbabilityFactory())));
-                        T2GramDetector t2gdetector = new T2GramDetector();
+                        Detector t2gdetector = new Detector();
                         gui.registerPresentable(t2gdetector);
                         gui.registerPresentable(new ClassifierOptimizer(t2gdetector));
                         gui.registerPresentable(new T2GramVisualizer(t2gdetector));
