@@ -23,7 +23,7 @@ public class CalculateFrequency<TIn extends AbstractData> extends AbstractAucomT
 		totalEventCounter++;
 		long currentTimestamp = System.currentTimeMillis();
 		if(currentTimestamp - lastProcessingTime > windowSize){
-			frequencyStatistics.addValue(Double.valueOf(eventcounter)/Double.valueOf(windowSize));
+			frequencyStatistics.addValue((double) eventcounter / (double) windowSize);
 			eventcounter = 0;
 			lastProcessingTime = currentTimestamp;
 		}

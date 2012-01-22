@@ -54,9 +54,9 @@ public class EventView {
 		double lastDrawingTimestamp = 0; 
 		info("firstTimestamp " + firstTimestamp + "|lastTimestamp "+ lastTimestamp);
 
-		int length = new Integer(intervalsize).toString().toCharArray().length;
+		int length = Integer.toString(intervalsize).toCharArray().length;
 		info("org " +intervalsize);
-		intervalsize=  (int)((Integer.valueOf(String.valueOf(new Integer(intervalsize).toString().toCharArray()[0]))+1)*Math.pow(10, length-1));
+		intervalsize=  (int)((Integer.valueOf(String.valueOf(Integer.toString(intervalsize).toCharArray()[0]))+1)*Math.pow(10, length-1));
 		info("corrected " +intervalsize);
 		double minXdifference = 0.035*intervalsize;
 		numberRows = (int)(lastTimestamp-firstTimestamp)/intervalsize;

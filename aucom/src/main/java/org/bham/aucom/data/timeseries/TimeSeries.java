@@ -159,8 +159,8 @@ public abstract class TimeSeries<T extends AbstractData> extends AbstractLinkabl
     {
         Object[] elements_tmp= this.list.toArray();
         Collection<T> out = new ArrayList<T>();
-        for(int i = 0; i< elements_tmp.length; i++){
-            out.add((T)elements_tmp[i]);
+        for (Object anElements_tmp : elements_tmp) {
+            out.add((T) anElements_tmp);
         }
         return out ;
     }

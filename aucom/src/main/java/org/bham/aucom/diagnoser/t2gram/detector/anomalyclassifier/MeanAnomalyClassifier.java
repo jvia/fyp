@@ -15,7 +15,7 @@ public class MeanAnomalyClassifier extends AbstractAnomalyClassifier {
 	}
 
 	public void setMeanValue(double in) {
-		this.parameters.put("mean", new Double(in));
+		this.parameters.put("mean", in);
 	}
 
 	public double getMeanValue() {

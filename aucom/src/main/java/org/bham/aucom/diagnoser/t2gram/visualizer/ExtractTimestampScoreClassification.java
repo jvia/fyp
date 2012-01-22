@@ -18,6 +18,6 @@ public class ExtractTimestampScoreClassification extends AbstractTransformNode<C
 		if(firstTs == -1L){
 			firstTs = input.getTimestamp();
 		}
-		return new Triple<Long, Double, SystemFaultStatus>(Long.valueOf(input.getTimestamp() - firstTs), Double.valueOf(input.getValue()), input.getStatus());
+		return new Triple<Long, Double, SystemFaultStatus>(input.getTimestamp() - firstTs, input.getValue(), input.getStatus());
 	}
 }

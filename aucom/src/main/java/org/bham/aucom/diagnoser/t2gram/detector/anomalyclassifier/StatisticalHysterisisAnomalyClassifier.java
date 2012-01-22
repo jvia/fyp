@@ -14,8 +14,8 @@ public class StatisticalHysterisisAnomalyClassifier extends AbstractAnomalyClass
 
 	public StatisticalHysterisisAnomalyClassifier(Double mean, Double variance) {
 		super("StatisticalHysterisisThreshold");
-		this.mean = mean.doubleValue();
-		this.variance = variance.doubleValue();
+		this.mean = mean;
+		this.variance = variance;
 	}
 
 	@Override

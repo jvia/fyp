@@ -53,7 +53,7 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
 	public double[] getValuesFromTrainingData(Integer firstKey, Integer secondKey) {
 		double[] values = new double[this.trainingData.get(firstKey, secondKey).size()];
 		for (int i = 0; i < values.length; i++) {
-			values[i] = this.trainingData.get(firstKey, secondKey).get(i).doubleValue();
+			values[i] = this.trainingData.get(firstKey, secondKey).get(i);
 		}
 		return values;
 	}
@@ -111,7 +111,7 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
 	private double[] getDurationsAsDoubleArray(HashMatrix<Integer, Integer, ArrayList<Double>> values, Tupel<Integer, Integer> t) {
 		double[] d = new double[values.get(t.getFirstElement(), t.getSecondElement()).size()];
 		for (int j = 0; j < values.get(t.getFirstElement(), t.getSecondElement()).size(); j++) {
-			d[j] = values.get(t.getFirstElement(), t.getSecondElement()).get(j).doubleValue();
+			d[j] = values.get(t.getFirstElement(), t.getSecondElement()).get(j);
 		}
 		return d;
 	}
@@ -128,12 +128,12 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
 			TemporalDurationFeature f = input.get(i);
 			for (DataType precedessor : f.getPredecessors()) {
 				Logger.getLogger(this.getClass().getCanonicalName()).log(Level.FINE, "output size " + input.size() + " predecessors " + f.getPredecessors().size());
-				Integer predecessorEventType = Integer.valueOf(precedessor.getEventType());
-				Integer currentEventType = Integer.valueOf(f.getEventType());
+				Integer predecessorEventType = precedessor.getEventType();
+				Integer currentEventType = f.getEventType();
 				if (!out.containsKey(predecessorEventType, currentEventType)) {
 					out.put(predecessorEventType, currentEventType, new ArrayList<Double>());
 				}
-				out.get(predecessorEventType, currentEventType).add(Double.valueOf(f.getDurationFor(precedessor)));
+				out.get(predecessorEventType, currentEventType).add((double) f.getDurationFor(precedessor));
 			}
 		}
 		} catch (Exception e) {
@@ -163,7 +163,7 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
 		if (panel == null) {
 			panel = new TrainerPanel(this);
 			panel.setName("Trainer");
-			panel.setPreferredSize(new Dimension(Constants.DEFAULTPRESENTABEWIDTH, Constants.DEFAULTPRESENTABELHEIGHT));
+			panel.setPreferredSize(new Dimension(Constants.DEFAULT_PRESENTABLE_WIDTH, Constants.DEFAULT_PRESENTABLE_HEIGHT));
 		}
 		return panel;
 	}

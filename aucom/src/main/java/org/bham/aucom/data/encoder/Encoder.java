@@ -76,7 +76,7 @@ public abstract class Encoder implements Serializable {
     			return null;
     		}
     		try {
-    			instance = (Encoder) Encoder.class.forName(encoderClass).newInstance();
+    			instance = (Encoder) Class.forName(encoderClass).newInstance();
     		} catch (Exception exception) {
     			instance = null;
     		}

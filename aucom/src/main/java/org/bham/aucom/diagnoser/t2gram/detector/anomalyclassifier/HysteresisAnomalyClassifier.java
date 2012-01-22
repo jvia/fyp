@@ -8,8 +8,8 @@ import org.bham.aucom.data.timeseries.AnomalyClassifierStatusEvent;
 
 public class HysteresisAnomalyClassifier extends AbstractAnomalyClassifier {
 	private static final long serialVersionUID = 1L;
-	private Double lower = new Double(0.0);
-	private Double upper = new Double(0.0);
+	private Double lower = 0.0;
+	private Double upper = 0.0;
 	private boolean isLastElementSatisfies = true;
 
 	public HysteresisAnomalyClassifier(Double lower, Double upper) {
@@ -22,7 +22,7 @@ public class HysteresisAnomalyClassifier extends AbstractAnomalyClassifier {
 	@Override
 	public boolean satisfies(Score s) {
 		Double currentThreshold = getCurrentThreshold();
-		boolean isSatisfies = s.getValue() >= currentThreshold.doubleValue();
+		boolean isSatisfies = s.getValue() >= currentThreshold;
 		this.setLastElementSatisfies(isSatisfies);
 		return isSatisfies;
 	}

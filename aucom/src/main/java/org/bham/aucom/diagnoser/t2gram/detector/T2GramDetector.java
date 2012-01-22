@@ -68,7 +68,7 @@ public class T2GramDetector extends AbstractDetector {
         if (panel == null) {
             panel = new T2GramDetectorPanel(this);
             panel.setName("Detector");
-            panel.setPreferredSize(new Dimension(Constants.DEFAULTPRESENTABEWIDTH, 160));
+            panel.setPreferredSize(new Dimension(Constants.DEFAULT_PRESENTABLE_WIDTH, 160));
         }
         return panel;
     }

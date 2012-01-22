@@ -126,8 +126,8 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
 
     protected double alg_calculateSumEntropy(double[] values) {
         double sum = 0.0d;
-        for (int i = 0; i < values.length; i++) {
-            sum += values[i];
+        for (double value : values) {
+            sum += value;
         }
         return sum;
     }

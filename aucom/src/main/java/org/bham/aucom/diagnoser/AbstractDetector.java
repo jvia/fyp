@@ -133,7 +133,7 @@ abstract public class AbstractDetector implements Detector, Presentable{
 		JPanel p = new JPanel();
 		p.setName("DefaultDetectorPanel");
 		p.add(new JLabel("default"));
-		p .setPreferredSize(new Dimension(Constants.DEFAULTPRESENTABEWIDTH, 40));
+		p .setPreferredSize(new Dimension(Constants.DEFAULT_PRESENTABLE_WIDTH, 40));
 		return p;
 	}
 

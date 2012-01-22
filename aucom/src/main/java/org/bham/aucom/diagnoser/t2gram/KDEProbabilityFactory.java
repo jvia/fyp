@@ -12,11 +12,11 @@ public class KDEProbabilityFactory extends ProbabilityFactory {
 	UUID id;
 
 	public KDEProbabilityFactory() {
-		this(new Double(1.0));
+		this(1.0);
 	}
 
 	public KDEProbabilityFactory(Double precision) {
-		this.setPrecision(precision.doubleValue());
+		this.setPrecision(precision);
 		this.id = UUID.randomUUID();
 	}
 
@@ -26,7 +26,7 @@ public class KDEProbabilityFactory extends ProbabilityFactory {
 	}
 
 	private void setPrecision(double precision) {
-		this.parameters.put("precision", new Double(precision));
+		this.parameters.put("precision", precision);
 	}
 
 	private double getPrecision() {

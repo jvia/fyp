@@ -26,7 +26,7 @@ public class XmlToClassificationTimeSeriesConverter extends XmlToTimeSeriesConve
 	}
 
 	private SystemFaultStatus getSystemStatus(Element e) {
-		String systemStatusString = ((Element)e.query("./ts:classification", this.getContext()).get(0)).getAttributeValue("systemstatus");
+		String systemStatusString = ((Element)e.query("./ts:classification", getContext()).get(0)).getAttributeValue("systemstatus");
 		return Enum.valueOf(SystemFaultStatus.class, systemStatusString);
 	}
 

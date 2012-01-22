@@ -174,7 +174,7 @@ abstract public class SystemConnection implements Presentable {
     {
         if (panel == null) {
             panel = new DefaultSystemConnectionPanel(this);
-            panel.setPreferredSize(new Dimension(Constants.DEFAULTPRESENTABEWIDTH, Constants.DEFAULTPRESENTABELHEIGHT));
+            panel.setPreferredSize(new Dimension(Constants.DEFAULT_PRESENTABLE_WIDTH, Constants.DEFAULT_PRESENTABLE_HEIGHT));
             panel.setName(name);
         }
         return panel;

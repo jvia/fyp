@@ -18,7 +18,7 @@ public class ModelReport {
         T2GramModelImp model = new ModelReport().loadModel(new File(args[0]));
         ArrayList<Tupel<Integer, Integer>> tupel = model.getTransitionMatrix().keySet();
         ProbabilityDistribution prob = model.getTransitionMatrix().get(tupel.get(0).getFirstElement(), tupel.get(0).getSecondElement());
-        Logger.getLogger(new ModelReport().getClass().getCanonicalName()).info("Distribution: " + prob.getClass().getCanonicalName());
+        Logger.getLogger(ModelReport.class.getCanonicalName()).info("Distribution: " + prob.getClass().getCanonicalName());
     }
 
     private T2GramModelImp loadModel(File file) {

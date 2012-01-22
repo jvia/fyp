@@ -75,8 +75,8 @@ public class OptimizeClassifierExperiment implements Experiment {
     }
 
     /**
-     * perform optimization of the classificator for the detector in the
-     * preprocess step
+     * perform optimization of the classifier for the detector in the
+     * pre-process step
      */
 
     @Override

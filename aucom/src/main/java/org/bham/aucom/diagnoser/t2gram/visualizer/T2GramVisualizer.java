@@ -39,7 +39,7 @@ public class T2GramVisualizer implements Presentable {
 		if (panel == null) {
 			panel = new T2GramVisualizerPanel(this);
 			panel.setName("Visualizer");
-			panel.setPreferredSize(new Dimension(Constants.DEFAULTPRESENTABEWIDTH, 40));
+			panel.setPreferredSize(new Dimension(Constants.DEFAULT_PRESENTABLE_WIDTH, 40));
 
 		}
 		return panel;

@@ -181,8 +181,8 @@ public class CrossValidateExperiment implements Experiment {
         };
         String observationFileNames[] = workingDirectory.list(observationFiler);
         logger.log(Level.FINE, "getting " + observationFileNames.length + " observationfiles from " + workingDirectory);
-        for (int i = 0; i < observationFileNames.length; i++) {
-            File file = new File(workingDirectory.getAbsolutePath() + File.separator + observationFileNames[i]);
+        for (String observationFileName : observationFileNames) {
+            File file = new File(workingDirectory.getAbsolutePath() + File.separator + observationFileName);
             logger.log(Level.FINE, "adding " + file.getAbsolutePath() + " to training files");
             TimeSeries<Observation> ts;
             try {

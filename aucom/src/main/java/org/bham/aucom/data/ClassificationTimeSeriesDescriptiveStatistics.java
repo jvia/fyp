@@ -222,7 +222,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 	 * @return true if the time-series has a time-stamp for an induced fault
 	 */
 	public boolean hasInducedFaultTimestamp() {
-		return getFautlTimestamp() != Long.MAX_VALUE;
+		return Long.MAX_VALUE != getFautlTimestamp();
 	}
 
 	/**
@@ -340,7 +340,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		synchronized (getTimeSeries()) {
 			for (int i = 0; i < this.getTimeSeries().size(); i++) {
 				Score s = this.getTimeSeries().get(i);
-				double meanValue = Double.valueOf(s.getAttributeValue(StatisticalAnomalyClassifier.THRESHOLD_USED)).doubleValue();
+				double meanValue = Double.valueOf(s.getAttributeValue(StatisticalAnomalyClassifier.THRESHOLD_USED));
 				double tmpDiff = Math.max(s.getValue() - meanValue, 0);
 				distance += Math.pow(tmpDiff, 2);
 			}

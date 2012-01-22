@@ -133,16 +133,16 @@ public class SourceScopeTypeEncoder extends Encoder {
 	protected String getGenerator(Element in) {
 		String generator = "";
 		if (in.getAttribute(SOURCE_TYPE) != null) {
-			generator = in.getAttribute(SOURCE_TYPE).getValue().toString();
+			generator = in.getAttribute(SOURCE_TYPE).getValue();
 		} else if (in.getAttribute("generator") != null) {
-			generator = in.getAttribute("generator").getValue().toString();
+			generator = in.getAttribute("generator").getValue();
 		} else {
 			Nodes nodes = in.query("./GENERATOR");
 			if (nodes.size() > 0) {
 				Node node = in.query("./GENERATOR").get(0);
 				generator = node.getValue();
 			} else if (generator.equals("") && in.getAttribute("source") != null) {
-				generator = in.getAttribute("source").getValue().toString();
+				generator = in.getAttribute("source").getValue();
 			}
 		}
 		return generator;
@@ -151,11 +151,11 @@ public class SourceScopeTypeEncoder extends Encoder {
 	protected String getmemoryName(Element in) {
 		String memoryName = "";
 		if (in.getAttribute(SCOPE_TYPE) != null) {
-			memoryName = in.getAttribute(SCOPE_TYPE).getValue().toString();
+			memoryName = in.getAttribute(SCOPE_TYPE).getValue();
 		} else if (in.getAttribute("memoryName") != null) {
-			memoryName = in.getAttribute("memoryName").getValue().toString();
+			memoryName = in.getAttribute("memoryName").getValue();
 		} else if (in.getAttribute("memoryname") != null) {
-			memoryName = in.getAttribute("memoryname").getValue().toString();
+			memoryName = in.getAttribute("memoryname").getValue();
 		}
 		return memoryName;
 	}
@@ -229,7 +229,7 @@ public class SourceScopeTypeEncoder extends Encoder {
 		if (this.classes.values().size() == 0) {
 			return 1;
 		}
-		return new TreeSet<Integer>(this.classes.values()).last().intValue() + 1;
+		return new TreeSet<Integer>(this.classes.values()).last() + 1;
 	}
 
 	@Override
@@ -239,7 +239,7 @@ public class SourceScopeTypeEncoder extends Encoder {
 
 	private String decodeToString(int inId) {
 		for (String key : this.classes.keySet()) {
-			if (inId == this.classes.get(key).intValue())
+			if (inId == this.classes.get(key))
 				return key;
 		}
 		return "";
@@ -250,17 +250,17 @@ public class SourceScopeTypeEncoder extends Encoder {
 		if (isEncodingMissing(d)) {
 			if (createMissingEncoding) {
 				createEncodingFor(d);
-				encoding = this.classes.get(d).intValue();
+				encoding = this.classes.get(d);
 			}
 		} else {
-			encoding = this.classes.get(d).intValue();
+			encoding = this.classes.get(d);
 		}
 		return encoding;
 	}
 
 	public void createEncodingWithName(String inName) {
 		int nextKey = getNextKey();
-		this.classes.put(inName, Integer.valueOf(nextKey));
+		this.classes.put(inName, nextKey);
 	}
 
 	@Override
@@ -288,7 +288,7 @@ public class SourceScopeTypeEncoder extends Encoder {
 	public void createEncodingFor(String str) {
 		if (isEncodingMissing(str)) {
 			int nextKey = getNextKey();
-			getEncoding().put(str, Integer.valueOf(nextKey));
+			getEncoding().put(str, nextKey);
 		}
 	}
 

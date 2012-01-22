@@ -79,7 +79,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel{
 					+ " allready registered");
 		}
 		XYSeries s = new XYSeries(sequence.toString());
-		this.series.put(sequence, new Tupel<XYSeries, Integer>(s, new Integer(0)));
+		this.series.put(sequence, new Tupel<XYSeries, Integer>(s, 0));
 		// s.setNotify(false);
 		this.dataset.addSeries(s);
 		this.sequencesListModel.addElement(sequence);
@@ -184,12 +184,12 @@ public class ProbabilityChartFrame extends javax.swing.JPanel{
 			if (this.dataset.indexOf("Threshold") != -1) {
 				XYSeries series = this.dataset.getSeries("Threshold");
 				if (!series.isEmpty()) {
-					Double min = new Double(series.getMinX());
-					Double max = new Double(series.getMaxX());
+					Double min = series.getMinX();
+					Double max = series.getMaxX();
 					if (series.indexOf(min) != -1)
-						series.remove(new Double(min));
+						series.remove((double) min);
 					if (series.indexOf(max) != -1)
-						series.remove(new Double(max));
+						series.remove((double) max);
 				}
 			}
 		}
@@ -206,12 +206,12 @@ public class ProbabilityChartFrame extends javax.swing.JPanel{
 			}
 			series = this.dataset.getSeries("Threshold");
 			if (!series.isEmpty()) {
-				Double min = new Double(series.getMinX());
-				Double max = new Double(series.getMaxX());
+				Double min = series.getMinX();
+				Double max = series.getMaxX();
 				if (series.indexOf(min) != -1)
-					series.remove(new Double(min));
+					series.remove((double) min);
 				if (series.indexOf(max) != -1)
-					series.remove(new Double(max));
+					series.remove((double) max);
 			}
 			final double min_x = this.dataset.getDomainLowerBound(false);
 			final double max_x = this.dataset.getDomainUpperBound(false);

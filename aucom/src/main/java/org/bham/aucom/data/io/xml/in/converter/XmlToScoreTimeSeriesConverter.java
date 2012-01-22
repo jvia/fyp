@@ -34,9 +34,9 @@ public class XmlToScoreTimeSeriesConverter extends XmlToTimeSeriesConverter<Scor
 		Element[] elements = getXmlElementsOfScoresInThisRange(e);
 		if (elements.length != 0) {
 			ArrayList<Score> scores = new ArrayList<Score>();
-			for (int i = 0; i < elements.length; i++) {
-				scores.add(createDataFromElement(elements[i]));
-			}
+            for (Element element : elements) {
+                scores.add(createDataFromElement(element));
+            }
 			return new RangeScore(scores);
 		}
 		Logger.getLogger(this.getClass().getCanonicalName()).info("warning no elements in this range score element");
@@ -48,7 +48,7 @@ public class XmlToScoreTimeSeriesConverter extends XmlToTimeSeriesConverter<Scor
 		Element scoreElement = (Element) e.query("./ts:score[@type='singlescore']", getContext()).get(0);
 		if (scoreElement.getAttribute("value") != null) {
 			String scoreAsString = scoreElement.getAttributeValue("value");
-			score = Double.valueOf(scoreAsString).doubleValue();
+			score = Double.valueOf(scoreAsString);
 		}
 		return score;
 	}

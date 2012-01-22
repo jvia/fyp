@@ -72,13 +72,13 @@ public class TemporalProbabilityFeature extends TemporalDurationFeature {
 			System.out.println("Warning: unknown predecessor");
 			return LOWESTPROBABILITY;
 		}
-		return this.getDataTypeToProbabilityMapping().get(eventType).doubleValue();
+		return this.getDataTypeToProbabilityMapping().get(eventType);
 	}
 
 	public double getProbabilityFor(int eventTypeId) {
 	    for(DataType dtp: this.getDataTypeToProbabilityMapping().keySet()){
 	        if(dtp.getEventType() == eventTypeId){
-	            return this.getDataTypeToProbabilityMapping().get(dtp).doubleValue();
+	            return this.getDataTypeToProbabilityMapping().get(dtp);
 	        }
 	    }
         System.out.println("Warning: unknown predecessor");

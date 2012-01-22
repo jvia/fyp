@@ -147,15 +147,4 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
 		return factory;
 	}
 
-	@Override
-	public void addModelListener() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removeModelListener() {
-		// TODO Auto-generated method stub
-		
-	}
 }

@@ -119,7 +119,7 @@ public class DataSequenceStatistics {
 
 	public int getCountForSources(String source) {
 		if (this.sources.containsKey(source))
-			return this.sources.get(source).intValue();
+			return this.sources.get(source);
 		return 0;
 	}
 

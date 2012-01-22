@@ -100,8 +100,7 @@ public class StatisticalAnomalyClassifier extends AbstractAnomalyClassifier {
     private double calculateVarianceValue(List<Score> sequence) {
         double var = 0.0d;
         double calculatedMean = calculateMeanOnHistoryElements(sequence);
-        for (int i = 0; i < sequence.size(); i++) {
-            Score s = sequence.get(i);
+        for (Score s : sequence) {
             var += Math.pow(calculatedMean - s.getValue(), 2);
         }
         if (sequence.size() == 1)
@@ -113,10 +112,9 @@ public class StatisticalAnomalyClassifier extends AbstractAnomalyClassifier {
 
     public double calculateMeanOnHistoryElements(List<Score> sequence) {
         double calculatedMean = 0.0d;
-        for (int i = 0; i < sequence.size(); i++) {
-            Score s = sequence.get(i);
+        for (Score s : sequence)
             calculatedMean += s.getValue();
-        }
+
         return calculatedMean / sequence.size();
     }
 

@@ -2,10 +2,10 @@ package org.bham.aucom.data;
 
 public class ConsistentObservationChecker {
 	public boolean check(Observation observationToCheck){
-		if(observationToCheck == null){
+		if(null == observationToCheck){
 			return false;
 		}
-		boolean timestampOK = observationToCheck.getTimestamp() != -1;
+		boolean timestampOK = -1 != observationToCheck.getTimestamp();
 		boolean contentOK = observationToCheck.getContent() != null;
 		return timestampOK && contentOK;
 	}

@@ -76,8 +76,8 @@ public class TrainModelOnSingleFileExperiment implements Experiment {
         };
         String observationFileNames[] = workingDirectory.list(observationFiler);
         Logger.getLogger(this.getClass().getCanonicalName()).info("getting " + observationFileNames.length + " observationfiles from " + workingDirectory);
-        for (int i = 0; i < observationFileNames.length; i++) {
-            File trainingFile = new File(workingDirectory.getAbsolutePath() + File.separator + observationFileNames[i]);
+        for (String observationFileName : observationFileNames) {
+            File trainingFile = new File(workingDirectory.getAbsolutePath() + File.separator + observationFileName);
             Logger.getLogger(this.getClass().getCanonicalName()).info("adding " + trainingFile.getAbsolutePath() + " to training files");
             trainingFiles.add(trainingFile);
         }

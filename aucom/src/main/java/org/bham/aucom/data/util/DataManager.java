@@ -166,7 +166,7 @@ public class DataManager implements Presentable {
         if (panel == null) {
             panel = new DataManagerPanel(this);
             panel.setName("DataManager");
-            panel.setPreferredSize(new Dimension(Constants.DEFAULTPRESENTABEWIDTH, 100));
+            panel.setPreferredSize(new Dimension(Constants.DEFAULT_PRESENTABLE_WIDTH, 100));
         }
         return panel;
     }

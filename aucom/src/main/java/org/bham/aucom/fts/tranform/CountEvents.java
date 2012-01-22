@@ -15,7 +15,7 @@ public class CountEvents extends AbstractTransformNode<DataType,DataType>{
 	protected DataType transform(DataType input) throws Exception {
 		int numElements = 0;
 		if(this.sequence.containsAttribute(DataAttributes.NUMBER_OF_ELEMENTS)){
-			numElements = Integer.valueOf(this.sequence.getAttributeValue(DataAttributes.NUMBER_OF_ELEMENTS)).intValue();
+			numElements = Integer.valueOf(this.sequence.getAttributeValue(DataAttributes.NUMBER_OF_ELEMENTS));
 		}
 		numElements++;
 		this.sequence.addAttribute(DataAttributes.NUMBER_OF_ELEMENTS, String.valueOf(numElements));

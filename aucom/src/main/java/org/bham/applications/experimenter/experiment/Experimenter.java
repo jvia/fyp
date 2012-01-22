@@ -4,8 +4,8 @@ import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
 import nu.xom.*;
-import org.bham.aucom.util.AucomFormatter;
 import org.bham.applications.experimenter.data.Result;
+import org.bham.aucom.util.AucomFormatter;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,15 +48,16 @@ public class Experimenter {
         this.results = new LinkedList<Result>();
     }
 
-    public void load(File xmlExperimentDescription) throws ValidityException, ParsingException, IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void load(File xmlExperimentDescription) throws ParsingException, IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         System.out.println("loading experiment descriptions ...");
         experiments.addAll(createExperiments(xmlExperimentDescription));
     }
 
-    private LinkedList<Experiment> createExperiments(File xmlExperimentDescription) throws ValidityException, ParsingException, IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-        Document doc = getExperimentDocumentFromfile(xmlExperimentDescription);
+    private LinkedList<Experiment> createExperiments(File xmlExperimentDescription) throws ParsingException, IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+        Document doc = getExperimentDocumentFromFile(xmlExperimentDescription);
         Element[] experimentDefinitions = getExperimentDefinitionsFromDocument(doc);
         LinkedList<Experiment> exp = new LinkedList<Experiment>();
+
         if (experimentDefinitions.length == 1) {
             System.out.println("found " + experimentDefinitions.length + " experiment definition");
         } else if (experimentDefinitions.length > 1) {
@@ -64,12 +65,13 @@ public class Experimenter {
         } else {
             System.out.println("no  experiment definitions found in " + xmlExperimentDescription.getAbsolutePath());
         }
-        for (int i = 0; i < experimentDefinitions.length; i++) {
+
+        for (Element experimentDefinition : experimentDefinitions) {
             Experiment ex = null;
             try {
-                ex = getFactory(experimentDefinitions[i]).createExperiment(experimentDefinitions[i]);
+                ex = getFactory(experimentDefinition).createExperiment(experimentDefinition);
             } catch (Exception e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                e.printStackTrace();
             }
             if (ex != null) {
                 exp.add(ex);
@@ -87,7 +89,7 @@ public class Experimenter {
         return experimentDefinitions;
     }
 
-    private Document getExperimentDocumentFromfile(File xmlExperimentDescription) throws ValidityException, ParsingException, IOException {
+    private Document getExperimentDocumentFromFile(File xmlExperimentDescription) throws ParsingException, IOException {
         Builder b = new Builder();
         return b.build(xmlExperimentDescription);
     }
@@ -162,14 +164,11 @@ public class Experimenter {
         }
     }
 
-    /**
-     *
-     */
     private static void setAucomLogFormatter() {
         Handler[] h = Logger.getLogger("").getHandlers();
         AucomFormatter formatter = new AucomFormatter();
-        for (int i = 0; i < h.length; i++) {
-            h[i].setFormatter(formatter);
+        for (Handler aH : h) {
+            aH.setFormatter(formatter);
         }
     }
 }

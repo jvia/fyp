@@ -14,10 +14,10 @@ public class GetDataTypesFromObsTimeSeries {
 	}
 	public static void main(String[] args) {
 		if(args.length>0){
-			List<File> files = new LinkedList<File>(); 
-			for(int i = 0; i < args.length;i++){
-				files.add(new File(args[i]));
-			}
+			List<File> files = new LinkedList<File>();
+            for (String arg : args) {
+                files.add(new File(arg));
+            }
 		new GetDataTypesFromObsTimeSeries(files);
 		}
 	}

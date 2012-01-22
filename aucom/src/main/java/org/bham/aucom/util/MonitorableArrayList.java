@@ -37,25 +37,25 @@ public class MonitorableArrayList<E> extends ArrayList<E> implements Serializabl
 	void notifyListeners(int from, int to) {
 		ListDataEvent le = new ListDataEvent(backedList,
 				ListDataEvent.CONTENTS_CHANGED, from, to);
-		for (int i = 0; i < listeners.size(); i++) {
-			(listeners.get(i)).contentsChanged(le);
-		}
+        for (ListDataListener listener : listeners) {
+            listener.contentsChanged(le);
+        }
 	}
 
 	void notifyListenersRemove(int from, int to) {
 		ListDataEvent le = new ListDataEvent(backedList,
 				ListDataEvent.INTERVAL_REMOVED, from, to);
-		for (int i = 0; i < listeners.size(); i++) {
-			(listeners.get(i)).intervalRemoved(le);
-		}
+        for (ListDataListener listener : listeners) {
+            listener.intervalRemoved(le);
+        }
 	}
 
 	void notifyListenersAdd(int from, int to) {
 		ListDataEvent le = new ListDataEvent(backedList,
 				ListDataEvent.INTERVAL_ADDED, from, to);
-		for (int i = 0; i < listeners.size(); i++) {
-			(listeners.get(i)).intervalAdded(le);
-		}
+        for (ListDataListener listener : listeners) {
+            listener.intervalAdded(le);
+        }
 	}
 
 	// REMAINDER ARE OVERRIDES JUST TO CALL NOTIFYLISTENERS

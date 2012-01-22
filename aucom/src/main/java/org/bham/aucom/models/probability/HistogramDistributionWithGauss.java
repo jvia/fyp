@@ -65,9 +65,9 @@ public class HistogramDistributionWithGauss implements ProbabilityDistribution{
 	public HistogramDistributionWithGauss(String inName, double inBinSize, double[] vals) {
 		setName(inName);
 		this.content = new HistogramData(inBinSize);
-		for(int i=0;i<vals.length;i++){
-			this.content.put(vals[i]);
-		}
+        for (double val : vals) {
+            this.content.put(val);
+        }
 		info("new distribution " + getName() + " binsize " + getBinSize() + " number values " + vals.length);
 	}
 
@@ -173,9 +173,9 @@ public class HistogramDistributionWithGauss implements ProbabilityDistribution{
 	}
 	@Override
 	public void update(double[] val) {
-		for(int i=0;i<val.length;i++){
-			put(val[i]);
-		}
+        for (double aVal : val) {
+            put(aVal);
+        }
 	}
 	public void severe(String  msg){
 		Logger.getLogger(this.getClass().getName()).severe(msg);

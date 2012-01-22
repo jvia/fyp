@@ -19,7 +19,7 @@ public class CountDifferentClasses extends AbstractTransformNode<DataType, DataT
 		String attributeName = DataAttributes.NUMBER_OF_ELEMENTS + classId;
 		long numOccurances = 1;
 		if (this.sequence.containsAttribute(attributeName)) {
-			numOccurances = Long.valueOf(this.sequence.getAttributeValue(attributeName)).longValue() + 1;
+			numOccurances = Long.valueOf(this.sequence.getAttributeValue(attributeName)) + 1;
 		}
 		this.sequence.addAttribute(attributeName, String.valueOf(numOccurances));
 		return null;

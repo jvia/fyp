@@ -15,9 +15,9 @@ public class CountFrequencyForClasses extends AbstractTransformNode<DataType, Da
 	protected DataType transform(DataType input) throws Exception {
 		String classFrequencyName = DataAttributes.FREQUENCY + input.getEventType();
 		String numOfElementsForClassName = DataAttributes.NUMBER_OF_ELEMENTS + input.getEventType();
-		double numOfElementsForClassValue = Double.valueOf(this.sequence.getAttributeValue(numOfElementsForClassName)).doubleValue();
+		double numOfElementsForClassValue = Double.valueOf(this.sequence.getAttributeValue(numOfElementsForClassName));
 		String durationName = DataAttributes.DURATION;
-		double durationValue = Double.valueOf(this.sequence.getAttributeValue(durationName)).doubleValue();
+		double durationValue = Double.valueOf(this.sequence.getAttributeValue(durationName));
 		double frequency = numOfElementsForClassValue / durationValue *1000.0;
 		this.sequence.addAttribute(classFrequencyName, String.valueOf(frequency));
 		return null;
