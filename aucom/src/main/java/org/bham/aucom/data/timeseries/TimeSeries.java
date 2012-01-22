@@ -230,4 +230,8 @@ public abstract class TimeSeries<T extends AbstractData> extends AbstractLinkabl
         }
         return tail;
     }
+
+    public synchronized void remove(int i) {
+        // TODO code this
+    }
 }

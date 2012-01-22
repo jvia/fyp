@@ -115,7 +115,7 @@ public class XcfFacesOutBoostDetector {
     public static ArrayList<Element> generateBoostDetectoor(long duration, long offset) {
         ArrayList<Element> boostDetector = new ArrayList<Element>();
         long timestamp = offset;
-        Element tmp = null;
+        Element tmp;
         int counter = 0;
         while (timestamp < duration) {
             timestamp += (long) (400 + (50 - Math.random() * 50));
