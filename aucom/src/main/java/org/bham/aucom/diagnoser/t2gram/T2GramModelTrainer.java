@@ -27,12 +27,12 @@ import org.bham.aucom.util.Tuple;
 
 public class T2GramModelTrainer extends AbstractModelTrainer implements GraphStatusListener {
 	JPanel panel;
-	T2GramModelI model;
+	Model model;
 	T2GramTrainerGraph graph;
 	private HashMatrix<Integer, Integer, ArrayList<Double>> trainingData;
 	private LinkedHashMap<String, DataType> lastTrainOccurances;
 
-	public T2GramModelTrainer(T2GramModelI inModel) {
+	public T2GramModelTrainer(Model inModel) {
 		model = inModel;
 		graph = new T2GramTrainerGraph();
 		graph.addGraphListener(this);
@@ -89,7 +89,7 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
 		}
 	}
 
-	private void updateModel(T2GramModelI model2, Integer firstElement, Integer secondElement, double[] durations) {
+	private void updateModel(Model model2, Integer firstElement, Integer secondElement, double[] durations) {
 		createDistributionInModelIfMissing(model, firstElement, secondElement);
 		model.getDistributionFor(firstElement, secondElement).update(durations);
 	}
@@ -97,7 +97,7 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
 	/*
 	 * @param t
 	 */
-	private void createDistributionInModelIfMissing(T2GramModelI inModel, Integer firstElement, Integer secondElement) {
+	private void createDistributionInModelIfMissing(Model inModel, Integer firstElement, Integer secondElement) {
 		if (!inModel.hasDistributionFor(firstElement, secondElement)) {
 			inModel.addDistribution(firstElement, secondElement, inModel.getDistributionFactory().create());
 		}
@@ -175,7 +175,7 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
 
 	@Override
 	public void setModel(Model inModel) throws ClassCastException {
-		model = (T2GramModelI) inModel;
+		model = (Model) inModel;
 	}
 
 	@Override

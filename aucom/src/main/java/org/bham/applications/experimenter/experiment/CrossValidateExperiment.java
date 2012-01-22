@@ -12,8 +12,6 @@ import org.bham.aucom.data.util.SlidingWindow;
 import org.bham.aucom.diagnoser.AbstractDetector.DetectorStatus;
 import org.bham.aucom.diagnoser.*;
 import org.bham.aucom.diagnoser.t2gram.KDEProbabilityFactory;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelImp;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelTrainer;
 import org.bham.aucom.diagnoser.t2gram.detector.T2GramDetector;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.AnomalyClassifier;
@@ -83,7 +81,7 @@ public class CrossValidateExperiment implements Experiment {
     private void createDetectors() {
         logger.log(Level.CONFIG, "creating detectors");
         for (TimeSeries<Observation> ts : timeSeries) {
-            T2GramModelI m;
+            Model m;
             if (modelFileIsMissing(ts)) {
                 m = train(ts);
             } else {
@@ -105,13 +103,13 @@ public class CrossValidateExperiment implements Experiment {
         }
     }
 
-    private T2GramModelI loadModelFor(TimeSeries<Observation> ts) {
+    private Model loadModelFor(TimeSeries<Observation> ts) {
         logger.log(Level.FINE, "loading model for " + ts);
         String filepath = FileOperator.getPath(new File(ts.getAttributeValue("file")));
         String filename = FileOperator.getName(new File(ts.getAttributeValue("file")));
         File modelFile = new File(filepath + File.separator + filename + ".ml");
         try {
-            return (T2GramModelI) AucomIO.getInstance().readFaultDetectionModel(modelFile);
+            return AucomIO.getInstance().readFaultDetectionModel(modelFile);
         } catch (FileNotFoundException e) {
             logger.log(Level.WARNING, "file " + modelFile.getAbsolutePath() + " not found");
         } catch (ValidityException e) {
@@ -135,7 +133,7 @@ public class CrossValidateExperiment implements Experiment {
         return !modelFile.exists();
     }
 
-    private T2GramModelI train(TimeSeries<Observation> ts) {
+    private Model train(TimeSeries<Observation> ts) {
         logger.log(Level.FINE, "training model for " + ts);
         final Object obj = new Object();
         trainer.reset();
@@ -152,7 +150,7 @@ public class CrossValidateExperiment implements Experiment {
             }
         });
         try {
-            trainer.setModel(new T2GramModelImp(new KDEProbabilityFactory()));
+            trainer.setModel(new Model(new KDEProbabilityFactory()));
             trainer.start(ts);
             synchronized (obj) {
                 logger.log(Level.FINE, "waiting ");
@@ -162,7 +160,7 @@ public class CrossValidateExperiment implements Experiment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return (T2GramModelI) trainer.getModel();
+        return trainer.getModel();
     }
 
     @SuppressWarnings("unchecked")

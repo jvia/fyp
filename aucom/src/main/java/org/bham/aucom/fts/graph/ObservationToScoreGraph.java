@@ -5,83 +5,79 @@ import org.bham.aucom.data.Score;
 import org.bham.aucom.data.timeseries.ScoreTimeSeries;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.diagnoser.Model;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
 import org.bham.aucom.fts.sink.TimeSeriesSink;
 import org.bham.aucom.fts.source.TimeSeriesSource;
-import org.bham.aucom.fts.tranform.CalcEntropyAvgScore;
-import org.bham.aucom.fts.tranform.EncodeData;
-import org.bham.aucom.fts.tranform.GenerateTemporalDurationFeature;
-import org.bham.aucom.fts.tranform.GenerateTemporalProbabilityFeature;
-import org.bham.aucom.fts.tranform.TemporalDurationFeatureGenerator;
+import org.bham.aucom.fts.tranform.*;
 
 
 public class ObservationToScoreGraph extends AbstractAucomGraph {
-	TimeSeriesSource<Observation> source;
-	EncodeData observationToDataType;
-	GenerateTemporalDurationFeature dataTypeToDurationFeature;
-	GenerateTemporalProbabilityFeature durationFeatureToProbabilityFeature;
-	CalcEntropyAvgScore probabilityFeatureToScore;
-	TimeSeriesSink<Score> sink;
+    TimeSeriesSource<Observation> source;
+    EncodeData observationToDataType;
+    GenerateTemporalDurationFeature dataTypeToDurationFeature;
+    GenerateTemporalProbabilityFeature durationFeatureToProbabilityFeature;
+    CalcEntropyAvgScore probabilityFeatureToScore;
+    TimeSeriesSink<Score> sink;
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public ObservationToScoreGraph() {
-		super("ObservationToScoreGraph");
-		initGraph();
-	}
+    public ObservationToScoreGraph() {
+        super("ObservationToScoreGraph");
+        initGraph();
+    }
 
-	@Override
-	protected void initGraph() {
-		source = new TimeSeriesSource<Observation>("Observation source");
-		observationToDataType = new EncodeData();
-		dataTypeToDurationFeature = new GenerateTemporalDurationFeature();
-		durationFeatureToProbabilityFeature = new GenerateTemporalProbabilityFeature();
-		probabilityFeatureToScore = new CalcEntropyAvgScore();
-		sink = new TimeSeriesSink<Score>(new ScoreTimeSeries());
-		graph.connect(source, observationToDataType);
-		graph.connect(observationToDataType, dataTypeToDurationFeature);
-		graph.connect(dataTypeToDurationFeature, durationFeatureToProbabilityFeature);
-		graph.connect(durationFeatureToProbabilityFeature, probabilityFeatureToScore);
-		graph.connect(probabilityFeatureToScore, sink);
-	}
+    @Override
+    protected void initGraph() {
+        source = new TimeSeriesSource<Observation>("Observation source");
+        observationToDataType = new EncodeData();
+        dataTypeToDurationFeature = new GenerateTemporalDurationFeature();
+        durationFeatureToProbabilityFeature = new GenerateTemporalProbabilityFeature();
+        probabilityFeatureToScore = new CalcEntropyAvgScore();
+        sink = new TimeSeriesSink<Score>(new ScoreTimeSeries());
+        graph.connect(source, observationToDataType);
+        graph.connect(observationToDataType, dataTypeToDurationFeature);
+        graph.connect(dataTypeToDurationFeature, durationFeatureToProbabilityFeature);
+        graph.connect(durationFeatureToProbabilityFeature, probabilityFeatureToScore);
+        graph.connect(probabilityFeatureToScore, sink);
+    }
 
-	@Override
-	protected String getReason() {
-		if (durationFeatureToProbabilityFeature == null) {
-			return "graph not initialized properly";
-		}
-		if (durationFeatureToProbabilityFeature.getModel() == null) {
-			return "model missing";
-		}
-		return "unexpected reason";
-	}
+    @Override
+    protected String getReason() {
+        if (durationFeatureToProbabilityFeature == null) {
+            return "graph not initialized properly";
+        }
+        if (durationFeatureToProbabilityFeature.getModel() == null) {
+            return "model missing";
+        }
+        return "unexpected reason";
+    }
 
-	@Override
-	public boolean preconditionsSatisfied() {
-		boolean satisfied = durationFeatureToProbabilityFeature.getModel() != null;
-		satisfied &= source.getInput() != null;
-		return satisfied;
-	}
+    @Override
+    public boolean preconditionsSatisfied() {
+        boolean satisfied = durationFeatureToProbabilityFeature.getModel() != null;
+        satisfied &= source.getInput() != null;
+        return satisfied;
+    }
 
-	@Override
-	protected void cleanUp() {
-		if (durationFeatureToProbabilityFeature != null) {
-			durationFeatureToProbabilityFeature.setModel(null);
-		}
-	}
+    @Override
+    protected void cleanUp() {
+        if (durationFeatureToProbabilityFeature != null) {
+            durationFeatureToProbabilityFeature.setModel(null);
+        }
+    }
 
-	public void setInput(TimeSeries<Observation> ts) {
-		source.setInput(ts);
-	}
-	public TimeSeries<Score> getOutput(){
-		return sink.getOutput();
-	}
+    public void setInput(TimeSeries<Observation> ts) {
+        source.setInput(ts);
+    }
 
-	public void setModel(Model inModel) {
-		if(inModel != null){
-			durationFeatureToProbabilityFeature.setModel((T2GramModelI) inModel);
-			dataTypeToDurationFeature.setGenerator(new TemporalDurationFeatureGenerator(((T2GramModelI) inModel).getDimensions()));
-			probabilityFeatureToScore.setModel((T2GramModelI)inModel);
-		}
-	}
+    public TimeSeries<Score> getOutput() {
+        return sink.getOutput();
+    }
+
+    public void setModel(Model inModel) {
+        if (inModel != null) {
+            durationFeatureToProbabilityFeature.setModel(inModel);
+            dataTypeToDurationFeature.setGenerator(new TemporalDurationFeatureGenerator(inModel.getDimensions()));
+            probabilityFeatureToScore.setModel(inModel);
+        }
+    }
 }

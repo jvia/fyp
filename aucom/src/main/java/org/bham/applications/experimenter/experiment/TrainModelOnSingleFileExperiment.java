@@ -2,20 +2,19 @@ package org.bham.applications.experimenter.experiment;
 
 import nu.xom.ParsingException;
 import nu.xom.ValidityException;
+import org.bham.applications.experimenter.data.Result;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.data.management.DataAlreadyExistsException;
 import org.bham.aucom.data.timeseries.TimeSeries;
+import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.diagnoser.ModelTrainerListener;
 import org.bham.aucom.diagnoser.StatusChangedEvent;
 import org.bham.aucom.diagnoser.TrainerStatus;
 import org.bham.aucom.diagnoser.t2gram.KDEProbabilityFactory;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelImp;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelTrainer;
 import org.bham.aucom.util.FileOperator;
 import org.bham.aucom.util.Tuple;
-import org.bham.applications.experimenter.data.Result;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -27,14 +26,14 @@ import java.util.logging.Logger;
 
 public class TrainModelOnSingleFileExperiment implements Experiment {
     List<File> trainingFiles;
-    List<Tuple<T2GramModelI, File>> models;
+    List<Tuple<Model, File>> models;
     private File workingDirectory;
     private T2GramModelTrainer trainer;
 
     public TrainModelOnSingleFileExperiment(File inWorkingDirectory) {
         workingDirectory = inWorkingDirectory;
-        trainer = new T2GramModelTrainer(new T2GramModelImp(new KDEProbabilityFactory()));
-        models = new ArrayList<Tuple<T2GramModelI, File>>();
+        trainer = new T2GramModelTrainer(new Model(new KDEProbabilityFactory()));
+        models = new ArrayList<Tuple<Model, File>>();
         trainingFiles = new ArrayList<File>();
     }
 
@@ -106,14 +105,14 @@ public class TrainModelOnSingleFileExperiment implements Experiment {
                 TimeSeries<Observation> ts = (TimeSeries<Observation>) AucomIO.getInstance().readTimeSeries(f);
                 File outputFile = new File(FileOperator.getPath(f) + File.separator + FileOperator.getName(f) + ".ml");
                 Logger.getLogger(this.getClass().getCanonicalName()).info("training " + FileOperator.getName(outputFile) + " with " + ts.size() + " elements");
-                trainer.setModel(new T2GramModelImp(new KDEProbabilityFactory()));
+                trainer.setModel(new Model(new KDEProbabilityFactory()));
                 trainer.start(ts);
                 synchronized (obj) {
                     Logger.getLogger(this.getClass().getCanonicalName()).info("waiting ");
                     obj.wait();
                     Logger.getLogger(this.getClass().getCanonicalName()).info("waiting done ");
                 }
-                models.add(new Tuple<T2GramModelI, File>((T2GramModelI) trainer.getModel(), outputFile));
+                models.add(new Tuple<Model, File>(trainer.getModel(), outputFile));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (ValidityException e) {
@@ -133,9 +132,10 @@ public class TrainModelOnSingleFileExperiment implements Experiment {
 
     @Override
     public void postprocess() {
-        for (Tuple<T2GramModelI, File> t : models) {
+        for (Tuple<Model, File> t : models) {
             Logger.getLogger(this.getClass().getCanonicalName()).info("saving model to " + t.getSecondElement().getAbsolutePath());
-            AucomIO.getInstance().writeFaultDetectionModel(t.getFirstElement(), t.getSecondElement());
+            AucomIO.getInstance().writeFaultDetectionModel(t.getFirstElement(),
+                                                           t.getSecondElement());
         }
     }
 }

@@ -2,7 +2,6 @@ package org.bham.aucom.gui.charts;
 
 import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.diagnoser.t2gram.ProbabilityDistribution;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
 import org.bham.aucom.util.HashMatrix;
 import org.bham.aucom.util.Tuple;
 import org.jfree.chart.ChartFactory;
@@ -30,9 +29,8 @@ public class ModelEntropyView extends JPanel {
 
     private DefaultCategoryDataset extractEntropyValues(Model main) {
         DefaultCategoryDataset out = new DefaultCategoryDataset();
-        T2GramModelI model = (T2GramModelI) main;
-        HashMatrix<Integer, Integer, ProbabilityDistribution> distribution = model
-                .getTransitionMatrix();
+        HashMatrix<Integer, Integer, ProbabilityDistribution> distribution = main.getTransitionMatrix();
+
         for (Tuple<Integer, Integer> tuple : distribution.keySet()) {
             out.addValue(distribution.get(tuple.getFirstElement(),
                                           tuple.getSecondElement()).getEntropy(), "entropy", tuple

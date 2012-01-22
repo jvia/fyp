@@ -10,26 +10,9 @@
  */
 package org.bham.diagnoser;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-
 import org.bham.aucom.Presentable;
+import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.diagnoser.t2gram.KDEProbabilityFactory;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelImp;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelTrainer;
 import org.bham.aucom.diagnoser.t2gram.detector.T2GramDetector;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.optimizer.ClassifierOptimizer;
@@ -45,16 +28,23 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
- * 
  * @author biron
  */
 public class DiagnoserGui extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 1L;
 
-    public DiagnoserGui(SystemConnection inConnection)
-    {
+    public DiagnoserGui(SystemConnection inConnection) {
         presentables = new ArrayList<Presentable>();
         try {
             initComponents();
@@ -66,10 +56,10 @@ public class DiagnoserGui extends javax.swing.JFrame {
             exception.printStackTrace();
         }
     }
+
     List<Presentable> presentables;
 
-    public void registerPresentable(Presentable newPresentable)
-    {
+    public void registerPresentable(Presentable newPresentable) {
         presentables.add(newPresentable);
         newPresentable.getPanel().setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), newPresentable.getPanel().getName()));
         presentablesTabbedPane.addTab(newPresentable.getPanel().getName(), newPresentable.getPanel());
@@ -78,20 +68,19 @@ public class DiagnoserGui extends javax.swing.JFrame {
         validateTree();
     }
 
-    public void deregisterPresentable(Presentable newPresentable)
-    {
+    public void deregisterPresentable(Presentable newPresentable) {
         presentables.remove(newPresentable);
 //		presentablesTabbedPane.removeTabAt()
 //		presentablesPanel.remove(newPresentable.getPanel());
 //		presentablesPanel.remove(presentablesPanel.getComponentCount()-1);
         validateTree();
     }
+
     XYSeries frequencySeries;
     JLabel currentFrequencyLabel;
     JLabel numberRecordedEventsLabel;
 
-    protected JButton makeNavigationButton(String imgLocation, String actionCommand, String toolTipText, String altText, ActionListener buttonActionListener)
-    {
+    protected JButton makeNavigationButton(String imgLocation, String actionCommand, String toolTipText, String altText, ActionListener buttonActionListener) {
         // Look for the image.
         URL imageURL = Recorder.class.getResource(imgLocation);
 
@@ -111,8 +100,7 @@ public class DiagnoserGui extends javax.swing.JFrame {
         return button;
     }
 
-    private void customizeComponents()
-    {
+    private void customizeComponents() {
         this.frequencySeries = new XYSeries("frequencies");
         JFreeChart frequencyChart = ChartFactory.createXYLineChart("", "", "", new XYSeriesCollection(this.frequencySeries), PlotOrientation.VERTICAL, false, false, false);
         frequencyChart.setBackgroundPaint(Color.black);
@@ -163,6 +151,7 @@ public class DiagnoserGui extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 formKeyReleased(evt);
             }
+
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 formKeyTyped(evt);
             }
@@ -178,28 +167,23 @@ public class DiagnoserGui extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formKeyTyped(java.awt.event.KeyEvent evt)
-    {// GEN-FIRST:event_formKeyTyped
+    private void formKeyTyped(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_formKeyTyped
     }// GEN-LAST:event_formKeyTyped
 
-    private void formKeyReleased(java.awt.event.KeyEvent evt)
-    {// GEN-FIRST:event_formKeyReleased
+    private void formKeyReleased(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_formKeyReleased
         // TODO add your handling code here:
     }// GEN-LAST:event_formKeyReleased
 
     /**
-     * @param args
-     *            the command line arguments
+     * @param args the command line arguments
      */
-    public static void main(String args[])
-    {
+    public static void main(String args[]) {
         Logger.getLogger(DiagnoserGui.class.getName()).setLevel(Level.OFF);
         if (args.length == 1) {
             java.awt.EventQueue.invokeLater(new Runnable() {
 
                 @Override
-                public void run()
-                {
+                public void run() {
                     try {
                         // TODO read configuration from xml file
                         SystemConnection connection = null;
@@ -211,7 +195,7 @@ public class DiagnoserGui extends javax.swing.JFrame {
                         DiagnoserGui gui = new DiagnoserGui(connection);
 //					gui.registerPresentable(DataManager.getInstance());
                         gui.registerPresentable(new Recorder(connection));
-                        gui.registerPresentable(new T2GramModelTrainer(new T2GramModelImp(new KDEProbabilityFactory())));
+                        gui.registerPresentable(new T2GramModelTrainer(new Model(new KDEProbabilityFactory())));
                         T2GramDetector t2gdetector = new T2GramDetector();
                         gui.registerPresentable(t2gdetector);
                         gui.registerPresentable(new ClassifierOptimizer(t2gdetector));
@@ -228,6 +212,7 @@ public class DiagnoserGui extends javax.swing.JFrame {
             System.out.println("usage: diagnoser systemName");
         }
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane presentablesTabbedPane;
     private javax.swing.JLabel statusLabel;

@@ -2,24 +2,23 @@ package org.bham.applications.experimenter.experiment;
 
 import nu.xom.ParsingException;
 import nu.xom.ValidityException;
+import org.bham.applications.experimenter.data.Result;
 import org.bham.aucom.ActionNotPermittedException;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.data.management.DataAlreadyExistsException;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.data.util.SlidingWindow;
+import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.diagnoser.ModelTrainerListener;
 import org.bham.aucom.diagnoser.StatusChangedEvent;
 import org.bham.aucom.diagnoser.TrainerStatus;
 import org.bham.aucom.diagnoser.t2gram.KDEProbabilityFactory;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelImp;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelTrainer;
 import org.bham.aucom.diagnoser.t2gram.detector.T2GramDetector;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.StatisticalAnomalyClassifier;
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.system.SystemConnectionFailedException;
-import org.bham.applications.experimenter.data.Result;
 import org.bham.system.cast.CastSystemConnection;
 
 import java.io.File;
@@ -85,7 +84,7 @@ public class CastExperiment implements Experiment {
     @Override
     public void preprocess() {
         // if there is no model, we have to learn one
-        T2GramModelI model;
+        Model model;
         if (ml.isEmpty()) {
             printBlockMessage(70, "LEARN MODEL");
             model = trainModel(loadObservation(obs));
@@ -119,7 +118,7 @@ public class CastExperiment implements Experiment {
      * @param name  the name of the file
      * @param model the model to save
      */
-    private void saveModel(String wd, String name, T2GramModelI model) {
+    private void saveModel(String wd, String name, Model model) {
         System.out.println("Saving model: " + wd + "/" + name + ".ml");
         AucomIO.getInstance().writeFaultDetectionModel(model, new File(wd + "/" + name + ".ml"));
     }
@@ -201,7 +200,7 @@ public class CastExperiment implements Experiment {
      * @param observation the time eries observation
      * @return the model
      */
-    private T2GramModelI trainModel(TimeSeries<Observation> observation) {
+    private Model trainModel(TimeSeries<Observation> observation) {
         System.out.print("Training model...");
         // use this object to wait here until the training is done
         final Object obj = new Object();
@@ -218,7 +217,7 @@ public class CastExperiment implements Experiment {
 
         // start and wait for training to finish
         try {
-            trainer.setModel(new T2GramModelImp(new KDEProbabilityFactory()));
+            trainer.setModel(new Model(new KDEProbabilityFactory()));
             trainer.start(observation);
             synchronized (obj) {
                 obj.wait();
@@ -227,7 +226,7 @@ public class CastExperiment implements Experiment {
             e.printStackTrace();
         }
         System.out.println("complete.");
-        return (T2GramModelI) trainer.getModel();
+        return (Model) trainer.getModel();
     }
 
     /**
@@ -236,10 +235,10 @@ public class CastExperiment implements Experiment {
      * @param ml the path to the model file
      * @return a model
      */
-    private T2GramModelI loadModelFile(String ml) {
-        T2GramModelI _model = null;
+    private Model loadModelFile(String ml) {
+        Model _model = null;
         try {
-            _model = (T2GramModelI) AucomIO.getInstance().readFaultDetectionModel(new File(ml));
+            _model = (Model) AucomIO.getInstance().readFaultDetectionModel(new File(ml));
         } catch (FileNotFoundException ex) {
             Logger.getLogger(CastExperiment.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DataAlreadyExistsException ex) {
@@ -266,7 +265,7 @@ public class CastExperiment implements Experiment {
      * @param model the learned model
      * @return a new fault detector
      */
-    private T2GramDetector createDetector(T2GramModelI model) {
+    private T2GramDetector createDetector(Model model) {
         T2GramDetector detector = new T2GramDetector();
         detector.setModel(model);
         detector.setClassificator(new StatisticalAnomalyClassifier(0.5, 0.25));

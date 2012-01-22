@@ -13,10 +13,10 @@ import net.sf.xcf.fts.engine.EngineThread;
 import net.sf.xcf.fts.engine.Graph;
 
 import org.bham.aucom.data.Observation;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelImp;
+import org.bham.aucom.diagnoser.Model;
 
 public class TestData {
-    T2GramModelImp model;
+    Model model;
     Graph graph;
     private boolean running;
     LinkedBlockingQueue<Observation> list;

@@ -28,8 +28,8 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import org.bham.aucom.Presentable;
+import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.diagnoser.t2gram.KDEProbabilityFactory;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelImp;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelTrainer;
 import org.bham.aucom.diagnoser.t2gram.detector.T2GramDetector;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.optimizer.ClassifierOptimizer;
@@ -211,7 +211,7 @@ public class DiagnoserGui extends javax.swing.JFrame {
                         DiagnoserGui gui = new DiagnoserGui(connection);
 //					gui.registerPresentable(DataManager.getInstance());
                         gui.registerPresentable(new Recorder(connection));
-                        gui.registerPresentable(new T2GramModelTrainer(new T2GramModelImp(new KDEProbabilityFactory())));
+                        gui.registerPresentable(new T2GramModelTrainer(new Model(new KDEProbabilityFactory())));
                         T2GramDetector t2gdetector = new T2GramDetector();
                         gui.registerPresentable(t2gdetector);
                         gui.registerPresentable(new ClassifierOptimizer(t2gdetector));

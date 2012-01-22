@@ -4,16 +4,16 @@ import org.bham.aucom.data.DataType;
 import org.bham.aucom.data.Score;
 import org.bham.aucom.data.SingleScore;
 import org.bham.aucom.data.TemporalProbabilityFeature;
+import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.diagnoser.t2gram.ProbabilityDistribution;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
 
 import java.util.logging.Logger;
 
 
 public class CalcEntropyAvgScore extends AbstractAucomTransformNode<TemporalProbabilityFeature, Score> {
-    protected T2GramModelI model;
+    protected Model model;
 
-    public CalcEntropyAvgScore(T2GramModelI inModel) {
+    public CalcEntropyAvgScore(Model inModel) {
         super("CalcEnropyAvgScore");
         setModel(inModel);
     }
@@ -150,11 +150,11 @@ public class CalcEntropyAvgScore extends AbstractAucomTransformNode<TemporalProb
         }
     }
 
-    public void setModel(T2GramModelI model) {
+    public void setModel(Model model) {
         this.model = model;
     }
 
-    public T2GramModelI getModel() {
+    public Model getModel() {
         return this.model;
     }
 

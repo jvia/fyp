@@ -6,7 +6,7 @@ import org.bham.aucom.data.Score;
 import org.bham.aucom.data.timeseries.*;
 import org.bham.aucom.data.util.DataManager;
 import org.bham.aucom.data.util.SlidingWindow;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
+import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.AnomalyClassifier;
 import org.bham.aucom.fts.sink.TimeSeriesSink;
 import org.bham.aucom.fts.source.ActionFailedException;
@@ -28,7 +28,7 @@ import static org.bham.aucom.util.Constants.TEST_SOURCE;
 public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatusListener {
     private static final long serialVersionUID = 1L;
     // graph stateful fields
-    private T2GramModelI model;
+    private Model model;
     // transient fields
     private transient TimeSeriesSource<Observation> observationTimeseriesSource;
     private transient TimeSeriesSource<Score> scoreTimeseriesSource;
@@ -60,7 +60,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
      *
      * @param inModel
      */
-    public void setModel(T2GramModelI inModel) {
+    public void setModel(Model inModel) {
         if (inModel == null) {
             throw new IllegalArgumentException("model must not be null");
         }
@@ -121,8 +121,8 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     /*
      * @return
      */
-    public T2GramModelI getModel() {
-        return this.model;
+    public Model getModel() {
+        return model;
     }
 
     public void reset() {
