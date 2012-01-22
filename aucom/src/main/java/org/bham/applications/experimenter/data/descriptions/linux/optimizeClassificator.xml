@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <aucom:experiments xmlns:aucom="http://www.cor-lab.de">
- <aucom:experiment factory="aucom.experiment.OptimizeClassificatorExperimentFactory" name="cast">
+ <aucom:experiment factory="aucom.experiment.OptimizeClassifierExperimentFactory" name="cast">
         <aucom:input>
             <aucom:wd>/homes/rgolombe/experiments/aucom</aucom:wd>
             <aucom:model>updater_equaldist_0-100_sample-1.ml</aucom:model>

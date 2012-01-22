@@ -14,7 +14,7 @@ import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelImp;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelTrainer;
 import org.bham.aucom.util.FileOperator;
-import org.bham.aucom.util.Tupel;
+import org.bham.aucom.util.Tuple;
 import org.bham.applications.experimenter.data.Result;
 
 import java.io.File;
@@ -27,14 +27,14 @@ import java.util.logging.Logger;
 
 public class TrainModelOnSingleFileExperiment implements Experiment {
     List<File> trainingFiles;
-    List<Tupel<T2GramModelI, File>> models;
+    List<Tuple<T2GramModelI, File>> models;
     private File workingDirectory;
     private T2GramModelTrainer trainer;
 
     public TrainModelOnSingleFileExperiment(File inWorkingDirectory) {
         workingDirectory = inWorkingDirectory;
         trainer = new T2GramModelTrainer(new T2GramModelImp(new KDEProbabilityFactory()));
-        models = new ArrayList<Tupel<T2GramModelI, File>>();
+        models = new ArrayList<Tuple<T2GramModelI, File>>();
         trainingFiles = new ArrayList<File>();
     }
 
@@ -113,7 +113,7 @@ public class TrainModelOnSingleFileExperiment implements Experiment {
                     obj.wait();
                     Logger.getLogger(this.getClass().getCanonicalName()).info("waiting done ");
                 }
-                models.add(new Tupel<T2GramModelI, File>((T2GramModelI) trainer.getModel(), outputFile));
+                models.add(new Tuple<T2GramModelI, File>((T2GramModelI) trainer.getModel(), outputFile));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (ValidityException e) {
@@ -133,7 +133,7 @@ public class TrainModelOnSingleFileExperiment implements Experiment {
 
     @Override
     public void postprocess() {
-        for (Tupel<T2GramModelI, File> t : models) {
+        for (Tuple<T2GramModelI, File> t : models) {
             Logger.getLogger(this.getClass().getCanonicalName()).info("saving model to " + t.getSecondElement().getAbsolutePath());
             AucomIO.getInstance().writeFaultDetectionModel(t.getFirstElement(), t.getSecondElement());
         }

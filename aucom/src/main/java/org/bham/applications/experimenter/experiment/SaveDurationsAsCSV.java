@@ -47,7 +47,7 @@ public class SaveDurationsAsCSV implements Experiment {
     List<TimeSeries<TemporalDurationFeature>> temporalDurationFeatureTimeseries;
     File folder;
 
-    /**
+    /*
      * @param inFolder
      */
     public SaveDurationsAsCSV(File inFolder) {
@@ -134,7 +134,7 @@ public class SaveDurationsAsCSV implements Experiment {
 
     }
 
-    /**
+    /*
      * @param tsObs
      * @return
      */

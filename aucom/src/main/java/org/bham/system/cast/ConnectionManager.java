@@ -10,7 +10,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
+/*
  *
  * @author Jeremiah Via <jxv911@cs.bham.ac.uk>
  */
@@ -25,13 +25,12 @@ public class ConnectionManager {
     private ObjectOutputStream output;
     private boolean done;
 
-    /**
+    /*
      * 
      * @param host
      * @param port 
      */
-    public ConnectionManager(String host, int port, LinkedBlockingQueue<String[]> queue)
-    {
+    public ConnectionManager(String host, int port, LinkedBlockingQueue<String[]> queue) {
         LOGGER.setLevel(Level.WARNING);
 
         this.queue = queue;
@@ -46,8 +45,7 @@ public class ConnectionManager {
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 
             @Override
-            public void run()
-            {
+            public void run() {
                 writeToCast(new String[]{"."});
             }
         }));
@@ -55,16 +53,14 @@ public class ConnectionManager {
         processUntilDone();
     }
 
-    /**
+    /*
      * Creates a connection with the default settings
      */
-    public ConnectionManager(LinkedBlockingQueue<String[]> queue)
-    {
+    public ConnectionManager(LinkedBlockingQueue<String[]> queue) {
         this("localhost", 5555, queue);
     }
 
-    public String[] read()
-    {
+    public String[] read() {
         String[] elt = null;
         try {
             elt = queue.take();
@@ -75,23 +71,19 @@ public class ConnectionManager {
         return elt;
     }
 
-    public void shutdown()
-    {
+    public void shutdown() {
         writeToCast(new String[]{"."});
     }
 
-    public boolean isDone()
-    {
+    public boolean isDone() {
         return done;
     }
 
-    private void processUntilDone()
-    {
+    private void processUntilDone() {
         new Thread(new Runnable() {
 
             @Override
-            public void run()
-            {
+            public void run() {
                 done = false;
                 while (!done) {
                     String[] fromCast = readFromCast();
@@ -123,8 +115,7 @@ public class ConnectionManager {
                 }
             }
 
-            private String[] escaped(String[] fromCast)
-            {
+            private String[] escaped(String[] fromCast) {
                 if (fromCast == null)
                     return null;
 
@@ -136,8 +127,7 @@ public class ConnectionManager {
         }).start();
     }
 
-    private void writeToCast(String[] toCast)
-    {
+    private void writeToCast(String[] toCast) {
         try {
             output.writeObject(toCast);
             output.flush();
@@ -146,8 +136,7 @@ public class ConnectionManager {
         }
     }
 
-    private String[] readFromCast()
-    {
+    private String[] readFromCast() {
         String[] fromCast = null;
         try {
             fromCast = (String[]) input.readObject();
@@ -160,13 +149,11 @@ public class ConnectionManager {
         return fromCast;
     }
 
-    private void printCastMessage(String[] cast)
-    {
+    private void printCastMessage(String[] cast) {
         System.out.println(String.format("%-10s %-11s %-20s [%s]", "[" + cast[0] + "]", "[" + cast[1] + "]", "[" + cast[2] + "]", cast[3]));
     }
 
-    private void openSocket()
-    {
+    private void openSocket() {
         int attempt = 0;
         // open socket to talk to cast
         do {
@@ -177,15 +164,14 @@ public class ConnectionManager {
             } catch (UnknownHostException ex) {
                 LOGGER.severe("CAST host does not exist");
             } catch (IOException ex) {
-               // be silent
+                // be silent
             }
         } while (cast == null || !cast.isConnected());
 
-            LOGGER.log(Level.INFO, "Connected after {0} attempts", attempt);
+        LOGGER.log(Level.INFO, "Connected after {0} attempts", attempt);
     }
 
-    private void openStreams()
-    {
+    private void openStreams() {
         // open output stream
         try {
             output = new ObjectOutputStream(cast.getOutputStream());

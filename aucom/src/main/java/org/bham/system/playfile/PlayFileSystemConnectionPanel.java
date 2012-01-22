@@ -30,7 +30,7 @@ import org.bham.aucom.system.SystemConnectionStatusListener;
 public class PlayFileSystemConnectionPanel extends javax.swing.JPanel implements SystemConnectionStatusListener {
 	ScheduledExecutorService service;
 	private PlayFileSystemConnection connection;
-	/** Creates new form XcfRecordSystemConnectionPanel */
+	/* Creates new form XcfRecordSystemConnectionPanel */
 	public PlayFileSystemConnectionPanel(PlayFileSystemConnection inConnection) {
 		initComponents();
 		connection = inConnection;

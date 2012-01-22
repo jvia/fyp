@@ -177,7 +177,7 @@ public abstract class ExperimentFactory {
         return null;
     }
 
-    /**
+    /*
      * @param result
      */
     protected Object getParameterValueFromElement(Element result) {
@@ -232,7 +232,7 @@ public abstract class ExperimentFactory {
     }
 
 
-    /**
+    /*
      * @param trainingFile
      * @throws ConfigurationException
      */
