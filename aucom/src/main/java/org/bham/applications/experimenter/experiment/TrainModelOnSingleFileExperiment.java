@@ -7,12 +7,8 @@ import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.data.management.DataAlreadyExistsException;
 import org.bham.aucom.data.timeseries.TimeSeries;
-import org.bham.aucom.diagnoser.Model;
-import org.bham.aucom.diagnoser.ModelTrainerListener;
-import org.bham.aucom.diagnoser.StatusChangedEvent;
-import org.bham.aucom.diagnoser.TrainerStatus;
+import org.bham.aucom.diagnoser.*;
 import org.bham.aucom.diagnoser.t2gram.KDEProbabilityFactory;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelTrainer;
 import org.bham.aucom.util.FileOperator;
 import org.bham.aucom.util.Tuple;
 
@@ -28,11 +24,11 @@ public class TrainModelOnSingleFileExperiment implements Experiment {
     List<File> trainingFiles;
     List<Tuple<Model, File>> models;
     private File workingDirectory;
-    private T2GramModelTrainer trainer;
+    private ModelTrainer trainer;
 
     public TrainModelOnSingleFileExperiment(File inWorkingDirectory) {
         workingDirectory = inWorkingDirectory;
-        trainer = new T2GramModelTrainer(new Model(new KDEProbabilityFactory()));
+        trainer = new ModelTrainer(new Model(new KDEProbabilityFactory()));
         models = new ArrayList<Tuple<Model, File>>();
         trainingFiles = new ArrayList<File>();
     }

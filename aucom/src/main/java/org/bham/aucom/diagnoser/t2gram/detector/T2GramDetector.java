@@ -11,6 +11,12 @@
 
 package org.bham.aucom.diagnoser.t2gram.detector;
 
+import java.awt.Dimension;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.swing.JPanel;
+
 import org.bham.aucom.data.Classification;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.timeseries.TimeSeries;
@@ -26,11 +32,6 @@ import org.bham.aucom.main.GraphStateChangedEvent;
 import org.bham.aucom.main.GraphStatusListener;
 import org.bham.aucom.util.Constants;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 
 /**
  * @author rgolombe
@@ -45,7 +46,8 @@ public class T2GramDetector extends AbstractDetector {
         detectorGraph.addGraphListener(new GraphStatusListener() {
 
             @Override
-            public void graphStatusChanged(GraphStateChangedEvent evt) {
+            public void graphStatusChanged(GraphStateChangedEvent evt)
+            {
                 if (evt.getPreviousState().equals(GraphStatus.RUNNING) && evt.getNewState().equals(GraphStatus.READY)) {
                     setStatus(DetectorStatus.READY);
                 }
@@ -60,7 +62,8 @@ public class T2GramDetector extends AbstractDetector {
     }
 
     @Override
-    public JPanel getPanel() {
+    public JPanel getPanel()
+    {
         if (panel == null) {
             panel = new T2GramDetectorPanel(this);
             panel.setName("Detector");
@@ -70,37 +73,45 @@ public class T2GramDetector extends AbstractDetector {
     }
 
     @Override
-    public void pause() throws IllegalStateChange {
+    public void pause() throws IllegalStateChange
+    {
         detectorGraph.pause();
     }
 
     @Override
-    public void stop() {
+    public void stop()
+    {
         detectorGraph.stop();
     }
 
-    public void setModel(Model m) throws ClassCastException {
-        detectorGraph.setModel(m);
+    public void setModel(Model m) throws ClassCastException
+    {
+        detectorGraph.setModel((Model) m);
     }
 
-    public void setClassificator(AnomalyClassifier classifierToSet) {
+    public void setClassificator(AnomalyClassifier classifierToSet)
+    {
 
         detectorGraph.setClassifier(classifierToSet);
     }
 
-    public AnomalyClassifier getClassificator() {
+    public AnomalyClassifier getClassificator()
+    {
         return detectorGraph.getClassificator();
     }
 
-    public void setSlidingWindow(SlidingWindow slidingWindow) {
+    public void setSlidingWindow(SlidingWindow slidingWindow)
+    {
         detectorGraph.setSlidingWindow(slidingWindow);
     }
 
-    public Model getModel() {
+    public Model getModel()
+    {
         return detectorGraph.getModel();
     }
 
-    public SlidingWindow getSlidingWindow() {
+    public SlidingWindow getSlidingWindow()
+    {
         if (detectorGraph != null) {
             return detectorGraph.getSlidingWindow();
         }
@@ -108,24 +119,28 @@ public class T2GramDetector extends AbstractDetector {
     }
 
     @Override
-    public void resume() {
+    public void resume()
+    {
         detectorGraph.resume();
     }
 
     @Override
-    public TimeSeries<Classification> getOutput() {
+    public TimeSeries<Classification> getOutput()
+    {
         if (detectorGraph != null) {
             return detectorGraph.getClassificationTimeSeries();
         }
         return null;
     }
 
-    private void t2g(String msg) {
+    private void t2g(String msg)
+    {
         Logger.getLogger(this.getClass().getCanonicalName()).info(msg);
     }
 
     @Override
-    public void start(TimeSeries<Observation> inTimeSeries) throws ActionFailedException {
+    public void start(TimeSeries<Observation> inTimeSeries) throws ActionFailedException
+    {
         if (inTimeSeries.size() == 0) {
             Logger.getLogger(this.getClass().getCanonicalName()).log(Level.WARNING, "input is empty");
         }

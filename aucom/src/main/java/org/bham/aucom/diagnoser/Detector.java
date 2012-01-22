@@ -19,6 +19,6 @@ public interface Detector{
 	public void addDetectionListener(DetectionListener listener);
 	public void removeDetectionListener(DetectionListener listener);
 	public void removeAllDetectionListeners();
-	
+
 	public TimeSeries<Classification> getOutput();
 }

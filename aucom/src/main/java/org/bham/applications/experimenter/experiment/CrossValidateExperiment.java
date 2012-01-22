@@ -12,7 +12,6 @@ import org.bham.aucom.data.util.SlidingWindow;
 import org.bham.aucom.diagnoser.AbstractDetector.DetectorStatus;
 import org.bham.aucom.diagnoser.*;
 import org.bham.aucom.diagnoser.t2gram.KDEProbabilityFactory;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelTrainer;
 import org.bham.aucom.diagnoser.t2gram.detector.T2GramDetector;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.AnomalyClassifier;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.StatisticalAnomalyClassifier;
@@ -35,7 +34,7 @@ public class CrossValidateExperiment implements Experiment {
     HashMap<T2GramDetector, String> detectors;
     private List<TimeSeries<Observation>> timeSeries;
     private File workingDirectory;
-    private T2GramModelTrainer trainer;
+    private ModelTrainer trainer;
     Document results;
     private String name;
     Logger logger;
@@ -44,7 +43,7 @@ public class CrossValidateExperiment implements Experiment {
         detectors = new LinkedHashMap<T2GramDetector, String>();
         timeSeries = new ArrayList<TimeSeries<Observation>>();
         workingDirectory = inWorkingDirectory;
-        trainer = new T2GramModelTrainer();
+        trainer = new ModelTrainer();
         logger = Logger.getLogger(this.getClass().getCanonicalName());
         Element root = new Element("aucom:results", Constants.URI);
         name = inName;

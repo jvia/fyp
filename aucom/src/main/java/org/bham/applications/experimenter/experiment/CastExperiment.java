@@ -9,12 +9,8 @@ import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.data.management.DataAlreadyExistsException;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.data.util.SlidingWindow;
-import org.bham.aucom.diagnoser.Model;
-import org.bham.aucom.diagnoser.ModelTrainerListener;
-import org.bham.aucom.diagnoser.StatusChangedEvent;
-import org.bham.aucom.diagnoser.TrainerStatus;
+import org.bham.aucom.diagnoser.*;
 import org.bham.aucom.diagnoser.t2gram.KDEProbabilityFactory;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelTrainer;
 import org.bham.aucom.diagnoser.t2gram.detector.T2GramDetector;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.StatisticalAnomalyClassifier;
 import org.bham.aucom.fts.source.ActionFailedException;
@@ -35,7 +31,7 @@ import java.util.logging.Logger;
  */
 public class CastExperiment implements Experiment {
 
-    private T2GramModelTrainer trainer;
+    private ModelTrainer trainer;
     private T2GramDetector faultDetector;
     private CastSystemConnection cast;
 
@@ -61,7 +57,7 @@ public class CastExperiment implements Experiment {
         this.obs = obs;
         this.size = size;
 
-        trainer = new T2GramModelTrainer();
+        trainer = new ModelTrainer();
 
         // error checking
         if (obs.isEmpty() && ml.isEmpty()) {

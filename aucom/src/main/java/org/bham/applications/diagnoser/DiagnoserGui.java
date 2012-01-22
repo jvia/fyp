@@ -10,27 +10,10 @@
  */
 package org.bham.applications.diagnoser;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-
 import org.bham.aucom.Presentable;
 import org.bham.aucom.diagnoser.Model;
+import org.bham.aucom.diagnoser.ModelTrainer;
 import org.bham.aucom.diagnoser.t2gram.KDEProbabilityFactory;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelTrainer;
 import org.bham.aucom.diagnoser.t2gram.detector.T2GramDetector;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.optimizer.ClassifierOptimizer;
 import org.bham.aucom.diagnoser.t2gram.visualizer.T2GramVisualizer;
@@ -44,6 +27,15 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * 
@@ -211,7 +203,7 @@ public class DiagnoserGui extends javax.swing.JFrame {
                         DiagnoserGui gui = new DiagnoserGui(connection);
 //					gui.registerPresentable(DataManager.getInstance());
                         gui.registerPresentable(new Recorder(connection));
-                        gui.registerPresentable(new T2GramModelTrainer(new Model(new KDEProbabilityFactory())));
+                        gui.registerPresentable(new ModelTrainer(new Model(new KDEProbabilityFactory())));
                         T2GramDetector t2gdetector = new T2GramDetector();
                         gui.registerPresentable(t2gdetector);
                         gui.registerPresentable(new ClassifierOptimizer(t2gdetector));
