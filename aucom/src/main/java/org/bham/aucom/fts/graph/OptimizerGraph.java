@@ -6,16 +6,16 @@ import org.bham.aucom.data.Classification;
 import org.bham.aucom.data.Score;
 import org.bham.aucom.data.timeseries.ClassificationTimeSeries;
 import org.bham.aucom.data.timeseries.TimeSeries;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.AnomalyClassifier;
 import org.bham.aucom.fts.sink.TimeSeriesSink;
 import org.bham.aucom.fts.source.TimeSeriesSource;
-import org.bham.aucom.fts.tranform.Classificate;
+import org.bham.aucom.fts.tranform.Classify;
 
 
 public class OptimizerGraph extends AbstractAucomGraph {
 	private static final long serialVersionUID = 0L;
 	TimeSeriesSource<Score> source;
-	Classificate classificate;
+	Classify classify;
 	TimeSeriesSink<Classification> sink;
 
 	public OptimizerGraph() {
@@ -31,27 +31,27 @@ public class OptimizerGraph extends AbstractAucomGraph {
 		this.source.addSourceStatusListener(this);
 
 		// node
-		this.classificate = new Classificate();
+		this.classify = new Classify();
 
 		// sink
 		this.sink = new TimeSeriesSink<Classification>(new ClassificationTimeSeries());
 		this.sink.addSinkStatusListener(this);
 
 		// connection
-		this.graph.connect(source, classificate);
-		this.graph.connect(classificate, sink);
+		this.graph.connect(source, classify);
+		this.graph.connect(classify, sink);
 	}
 
 	@Override
 	protected void cleanUp() {
 		this.source.setInput(null);
-		this.classificate.setClassificator(null);
+		this.classify.setClassifier(null);
 		this.sink.setOutput(null);
 	}
 
 	@Override
 	public boolean preconditionsSatisfied() {
-		return classificate.getClassificator() != null;
+		return classify.getClassifier() != null;
 	}
 
 	public void setInput(TimeSeries<Score> input) {
@@ -66,12 +66,12 @@ public class OptimizerGraph extends AbstractAucomGraph {
 		}
 	}
 
-	public AnomalyClassificator getClassificator() {
-		return classificate.getClassificator();
+	public AnomalyClassifier getClassificator() {
+		return classify.getClassifier();
 	}
 
-	public void setClassificator(AnomalyClassificator inAc) {
-		classificate.setClassificator(inAc);
+	public void setClassificator(AnomalyClassifier inAc) {
+		classify.setClassifier(inAc);
 	}
 
 	public TimeSeries<Classification> getOutput() {
@@ -86,7 +86,7 @@ public class OptimizerGraph extends AbstractAucomGraph {
 
 	@Override
 	protected String getReason() {
-		if (classificate.getClassificator() == null) {
+		if (classify.getClassifier() == null) {
 			return "anomaly classificator not set";
 		}
 		return "not ready for unknown reason";

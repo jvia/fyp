@@ -5,7 +5,7 @@ import org.bham.aucom.data.Classification;
 import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.data.management.DataAlreadyExistsException;
 import org.bham.aucom.data.timeseries.TimeSeries;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.StatisticalAnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.StatisticalAnomalyClassifier;
 import org.bham.applications.experimenter.data.Result;
 
 import java.io.File;
@@ -65,7 +65,7 @@ public class ClassificationToCSV implements Experiment {
                 csv.append(String.format("     %9d     %5.3f     %6.3f    %6.0f\n",
                                          classification.getTimestamp(),
                                          classification.getValue(),
-                                         Double.parseDouble(classification.getAttributeValue(StatisticalAnomalyClassificator.THRESHOLD_USED)),
+                                         Double.parseDouble(classification.getAttributeValue(StatisticalAnomalyClassifier.THRESHOLD_USED)),
                                          classification.getStatusAsDouble()));
             }
         } finally {

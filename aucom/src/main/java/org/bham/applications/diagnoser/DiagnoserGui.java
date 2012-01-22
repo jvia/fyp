@@ -34,7 +34,7 @@ import org.bham.aucom.diagnoser.t2gram.KDEProbabilityFactory;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelImp;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelTrainer;
 import org.bham.aucom.diagnoser.t2gram.detector.T2GramDetector;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.optimizer.ClassificatorOptimizer;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.optimizer.ClassifierOptimizer;
 import org.bham.aucom.diagnoser.t2gram.visualizer.T2GramVisualizer;
 import org.bham.aucom.system.FactoryManagerInitalizationException;
 import org.bham.aucom.system.SystemConnection;
@@ -250,7 +250,7 @@ public class DiagnoserGui extends javax.swing.JFrame {
                         gui.registerPresentable(new T2GramModelTrainer(new T2GramModelImp(new KDEProbabilityFactory())));
                         T2GramDetector t2gdetector = new T2GramDetector();
                         gui.registerPresentable(t2gdetector);
-                        gui.registerPresentable(new ClassificatorOptimizer(t2gdetector));
+                        gui.registerPresentable(new ClassifierOptimizer(t2gdetector));
                         gui.registerPresentable(new T2GramVisualizer(t2gdetector));
                         gui.setVisible(true);
                     } catch (SecurityException exception) {

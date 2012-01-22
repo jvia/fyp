@@ -11,14 +11,14 @@
 
 package org.bham.aucom.gui.threshold;
 
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.HysteresisAnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.AnomalyClassifier;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.HysteresisAnomalyClassifier;
 
 /**
  *
  * @author rgolombe
  */
-public class HysteresisThresholdPanel extends AbstractCreateAnomalyClassificatorPanel {
+public class HysteresisThresholdPanel extends AbstractCreateAnomalyClassifierPanel {
 
 	private static final long serialVersionUID = 1L;
 	/** Creates new form HysteresisThresholdPanel */
@@ -26,10 +26,10 @@ public class HysteresisThresholdPanel extends AbstractCreateAnomalyClassificator
         initComponents();
     }
 	@Override
-	public AnomalyClassificator getAnomalyClassificator() throws Exception{
+	public AnomalyClassifier getAnomalyClassifier() throws Exception{
 		Double lower = Double.valueOf(this.lowertextField.getText());
 		Double upper = Double.valueOf(this.upperTextField.getText());
-		return new HysteresisAnomalyClassificator(lower, upper);
+		return new HysteresisAnomalyClassifier(lower, upper);
 	}
     /** This method is called from within the constructor to
      * initialize the form.

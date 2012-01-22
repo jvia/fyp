@@ -22,10 +22,6 @@ public abstract class TimeSeries<T extends AbstractData> extends AbstractLinkabl
     private TimeSeriesType type;
     protected RingBuffer<T> list;
 
-    /**
-     * Empty time-series, has no generator and no 'source'. Both can be
-     * specified by calling {@link setGeneratedFrom} and {@link setGenerator}
-     */
     public TimeSeries() {
         this(UUID.randomUUID());
         list = new RingBuffer<T>();

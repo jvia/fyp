@@ -736,7 +736,7 @@ public class AnalyzerGui extends javax.swing.JFrame implements Observer, WindowL
 //	public void setInfoModelPanel(T2GramSytemModel model) {
 //		// TODO fix the info model panel 
 //		this.modelInfo.setBorder(new TitledBorder("model info: " + model));
-//		this.tresholdTextField.setText(String.valueOf(model.getAnomalyClassificator().toString()));
+//		this.tresholdTextField.setText(String.valueOf(model.getAnomalyClassifier().toString()));
 //		this.modelTrainedLabel.setText("Is trained: " + model.isTrained());
 //		this.statusLabel.setText("Is acting: " + model.isActing());
 //	}

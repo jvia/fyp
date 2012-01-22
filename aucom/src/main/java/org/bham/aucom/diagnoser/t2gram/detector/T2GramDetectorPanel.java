@@ -192,7 +192,7 @@ public class T2GramDetectorPanel extends javax.swing.JPanel implements TimeSerie
         }//GEN-LAST:event_jButton4ActionPerformed
 
         private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-            ClassificatorSelectionPanel t = new ClassificatorSelectionPanel(detector);
+            ClassifierSelectionPanel t = new ClassifierSelectionPanel(detector);
             JFrame f = new JFrame();
             f.add(t);
             f.setLayout(new FlowLayout());

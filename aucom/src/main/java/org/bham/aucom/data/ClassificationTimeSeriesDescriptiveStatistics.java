@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.bham.aucom.data.timeseries.TimeSeries;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.StatisticalAnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.StatisticalAnomalyClassifier;
 import org.bham.aucom.util.Constants;
 
 
@@ -340,7 +340,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		synchronized (getTimeSeries()) {
 			for (int i = 0; i < this.getTimeSeries().size(); i++) {
 				Score s = this.getTimeSeries().get(i);
-				double meanValue = Double.valueOf(s.getAttributeValue(StatisticalAnomalyClassificator.THRESHOLD_USED)).doubleValue();
+				double meanValue = Double.valueOf(s.getAttributeValue(StatisticalAnomalyClassifier.THRESHOLD_USED)).doubleValue();
 				double tmpDiff = Math.max(s.getValue() - meanValue, 0);
 				distance += Math.pow(tmpDiff, 2);
 			}

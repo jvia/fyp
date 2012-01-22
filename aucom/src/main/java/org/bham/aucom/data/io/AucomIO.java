@@ -19,7 +19,7 @@ import org.bham.aucom.data.management.DataAlreadyExistsException;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.data.util.SlidingWindow;
 import org.bham.aucom.diagnoser.Model;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AbstractAnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.AbstractAnomalyClassifier;
 
 public class AucomIO {
 	/*
@@ -34,7 +34,7 @@ public class AucomIO {
 	String defaultTimeSeriesIOType = "xml";
 	private ModelIO faultDetectionModelIO = new ModelIO();
 	private SlindingWindowIO slidingWindowIO = new SlindingWindowIO();
-	private ClassificatorIO classificatorIO = new ClassificatorIO();
+	private ClassifierIO classifierIO = new ClassifierIO();
 	private EncoderIO encoderIO = new EncoderIO();
 
 	// private XmlFileWriter xmlFileWriter = new XmlFileWriter();
@@ -139,12 +139,12 @@ public class AucomIO {
 	 * TimeSeries io
 	 */
 
-	public boolean writeClassificator(AbstractAnomalyClassificator classificator) {
-		return this.classificatorIO.write(classificator, generateFileFor(classificator.getId(), "cl"));
+	public boolean writeClassificator(AbstractAnomalyClassifier classifier) {
+		return this.classifierIO.write(classifier, generateFileFor(classifier.getId(), "cl"));
 	}
 
-	public AbstractAnomalyClassificator readClassificator(String file) throws FileNotFoundException, ValidityException, DataAlreadyExistsException, ParsingException, IOException {
-		return this.classificatorIO.read(new File(getCurrentWorkingDirectory(), file));
+	public AbstractAnomalyClassifier readClassificator(String file) throws FileNotFoundException, ValidityException, DataAlreadyExistsException, ParsingException, IOException {
+		return this.classifierIO.read(new File(getCurrentWorkingDirectory(), file));
 	}
 
 	public boolean writeSlidingWindow(SlidingWindow slidingWindow) {

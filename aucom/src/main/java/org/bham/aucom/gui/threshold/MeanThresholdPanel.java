@@ -11,15 +11,15 @@
 
 package org.bham.aucom.gui.threshold;
 
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.MeanAnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.AnomalyClassifier;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.MeanAnomalyClassifier;
 
 
 /**
  *
  * @author rgolombe
  */
-public class MeanThresholdPanel extends AbstractCreateAnomalyClassificatorPanel {
+public class MeanThresholdPanel extends AbstractCreateAnomalyClassifierPanel {
 
 	private static final long serialVersionUID = 7367566474742305550L;
 	/** Creates new form SimpleMeanThreshold */
@@ -73,8 +73,8 @@ public class MeanThresholdPanel extends AbstractCreateAnomalyClassificatorPanel 
     private javax.swing.JTextField meanTextField;
     // End of variables declaration//GEN-END:variables
 	@Override
-	public AnomalyClassificator getAnomalyClassificator() throws Exception {
+	public AnomalyClassifier getAnomalyClassifier() throws Exception {
 		Double mean = Double.valueOf(this.meanTextField.getText());
-		return new MeanAnomalyClassificator(mean);
+		return new MeanAnomalyClassifier(mean);
 	}
 }

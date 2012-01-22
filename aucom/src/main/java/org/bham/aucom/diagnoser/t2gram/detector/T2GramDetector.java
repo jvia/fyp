@@ -24,7 +24,7 @@ import org.bham.aucom.data.util.SlidingWindow;
 import org.bham.aucom.diagnoser.AbstractDetector;
 import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.AnomalyClassifier;
 import org.bham.aucom.fts.graph.AbstractAucomGraph.GraphStatus;
 import org.bham.aucom.fts.graph.DetectorGraph;
 import org.bham.aucom.fts.source.ActionFailedException;
@@ -90,13 +90,13 @@ public class T2GramDetector extends AbstractDetector {
         detectorGraph.setModel((T2GramModelI) m);
     }
 
-    public void setClassificator(AnomalyClassificator classificatorToSet)
+    public void setClassificator(AnomalyClassifier classifierToSet)
     {
 
-        detectorGraph.setClassificator(classificatorToSet);
+        detectorGraph.setClassificator(classifierToSet);
     }
 
-    public AnomalyClassificator getClassificator()
+    public AnomalyClassifier getClassificator()
     {
         return detectorGraph.getClassificator();
     }

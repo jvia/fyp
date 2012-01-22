@@ -16,20 +16,13 @@ import org.bham.aucom.data.timeseries.TimeseriesStatusEvent;
 import org.bham.aucom.data.util.DataManager;
 import org.bham.aucom.data.util.SlidingWindow;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.AnomalyClassifier;
 import org.bham.aucom.fts.sink.TimeSeriesSink;
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.fts.source.IllegalStateChange;
 import org.bham.aucom.fts.source.TimeSeriesSource;
-import org.bham.aucom.fts.tranform.CalcEntropyAvgScore;
-import org.bham.aucom.fts.tranform.CalcMeanvalue;
-import org.bham.aucom.fts.tranform.Classificate;
-import org.bham.aucom.fts.tranform.CountDataTypes;
-import org.bham.aucom.fts.tranform.CropTimestampFromData;
-import org.bham.aucom.fts.tranform.EncodeData;
-import org.bham.aucom.fts.tranform.GenerateTemporalDurationFeature;
-import org.bham.aucom.fts.tranform.GenerateTemporalProbabilityFeature;
-import org.bham.aucom.fts.tranform.TemporalDurationFeatureGenerator;
+import org.bham.aucom.fts.tranform.*;
+import org.bham.aucom.fts.tranform.Classify;
 
 
 /**
@@ -51,7 +44,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     private transient GenerateTemporalProbabilityFeature test;
     private transient TimeSeriesSink<Classification> sink;
     private transient CalcMeanvalue mean;
-    private transient Classificate anomalyClassification;
+    private transient Classify anomalyClassification;
     private transient CropTimestampFromData<Observation> cropTimestampFromData;
 
     /**
@@ -70,10 +63,10 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
 
     /**
      * @param model
-     * @param classificator
+     * @param classifier
      * @param slidingWindow
      */
-    private void setMonitorState(T2GramModelI model, AnomalyClassificator classificator, SlidingWindow slidingWindow)
+    private void setMonitorState(T2GramModelI model, AnomalyClassifier classifier, SlidingWindow slidingWindow)
     {
         if (getStatus().equals(GraphStatus.RUNNING)) {
             try {
@@ -83,7 +76,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
             }
         }
         setModel(model);
-        setClassificator(classificator);
+        setClassificator(classifier);
         if (model == null) {
             return ;
         } else {
@@ -121,11 +114,11 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
 	}
     /**
      * 
-     * @param classificatorToSet
+     * @param classifierToSet
      */
-    public void setClassificator(AnomalyClassificator classificatorToSet)
+    public void setClassificator(AnomalyClassifier classifierToSet)
     {
-        this.anomalyClassification.setClassificator(classificatorToSet);
+        this.anomalyClassification.setClassifier(classifierToSet);
     }
 
     /**
@@ -146,7 +139,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
 		this.calculateScore = new CalcEntropyAvgScore();
 		this.mean = new CalcMeanvalue();
 		this.mean.setSlidingWindow(new SlidingWindow(100, 50));
-		this.anomalyClassification = new Classificate();
+		this.anomalyClassification = new Classify();
 		this.sink = new TimeSeriesSink<Classification>(new ClassificationTimeSeries());
 		DataManager.getInstance().addTimeSeries(sink.getOutput());
 		sink.getOutput().addTimeSeriesStatusListener(this);
@@ -211,9 +204,9 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
      * 
      * @return
      */
-    public AnomalyClassificator getClassificator()
+    public AnomalyClassifier getClassificator()
     {
-        return this.anomalyClassification.getClassificator();
+        return this.anomalyClassification.getClassifier();
     }
 
     /**
@@ -308,13 +301,13 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     }
 
     /**
-     * Determines if the {@link Classificate} classificator is ready.
+     * Determines if the {@link org.bham.aucom.fts.tranform.Classify} classificator is ready.
      * 
      * @return true if ready
      */
     private boolean anomalyDetectorIsReady()
     {
-        return anomalyClassification.getClassificator() != null;
+        return anomalyClassification.getClassifier() != null;
     }
 
     /**

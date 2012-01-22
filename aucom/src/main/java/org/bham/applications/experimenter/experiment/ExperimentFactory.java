@@ -3,7 +3,7 @@ package org.bham.applications.experimenter.experiment;
 import nu.xom.*;
 import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.diagnoser.t2gram.ProbabilityFactory;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.AnomalyClassifier;
 
 import javax.naming.ConfigurationException;
 import java.io.File;
@@ -73,16 +73,16 @@ public abstract class ExperimentFactory {
         return getAttributeValueFromExperimentElement(xmlElement, "type");
     }
 
-    protected AnomalyClassificator getThresholdFromElement(Element xmlElement) {
+    protected AnomalyClassifier getThresholdFromElement(Element xmlElement) {
         Class<?> thresholdClass = getThresholdClassFromElement(xmlElement);
         Element thresholdElement = (Element) xmlElement.query("./aucom:model/aucom:Threshold", this.context).get(0);
         Class<?>[] parameterClasses = getParameterClassesFromElement(thresholdElement);
         Constructor<?> thresholdConstructor;
-        AnomalyClassificator threshold = null;
+        AnomalyClassifier threshold = null;
         try {
             thresholdConstructor = thresholdClass.getConstructor(parameterClasses);
             Object[] parameterValues = getParameterValuesFromElement(thresholdElement);
-            threshold = (AnomalyClassificator) thresholdConstructor.newInstance(parameterValues);
+            threshold = (AnomalyClassifier) thresholdConstructor.newInstance(parameterValues);
         } catch (SecurityException exception) {
             exception.printStackTrace();
         } catch (NoSuchMethodException exception) {

@@ -11,7 +11,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="2.2"></aucom:parameter>
                 <aucom:parameter name="variance" type="java.lang.Double" value="0.1"></aucom:parameter>
             </aucom:Threshold>
@@ -27,7 +27,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="2.2"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -43,7 +43,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="2.4"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -59,7 +59,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="2.4"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -75,7 +75,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="2.6"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -91,7 +91,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="2.6"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -107,7 +107,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="2.8"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -123,7 +123,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="2.8"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -139,7 +139,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="3.0"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -155,7 +155,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="3.0"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -171,7 +171,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="3.2"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -187,7 +187,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="3.2"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -203,7 +203,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="3.4"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -219,7 +219,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="3.4"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -235,7 +235,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="3.6"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -251,7 +251,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="3.6"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -267,7 +267,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="3.8"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -283,7 +283,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="3.8"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -299,7 +299,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="4.0"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -315,7 +315,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="4.0"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -331,7 +331,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="4.2"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -347,7 +347,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="4.2"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -363,7 +363,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="4.4"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -379,7 +379,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="4.4"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -395,7 +395,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="4.6"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -411,7 +411,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="4.6"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -427,7 +427,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="4.8"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -443,7 +443,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="4.8"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -459,7 +459,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="5.0"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -475,7 +475,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="5.0"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -491,7 +491,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="5.2"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -507,7 +507,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="5.2"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -523,7 +523,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="5.4"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -539,7 +539,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="5.4"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -555,7 +555,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="5.6"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -571,7 +571,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="5.6"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -587,7 +587,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="5.8"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -603,7 +603,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="5.8"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -619,7 +619,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="6.0"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>
@@ -635,7 +635,7 @@
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
                 <aucom:parameter name="precision" type="java.lang.Double" value="100.0"></aucom:parameter>
             </aucom:distribution>
-            <aucom:Threshold type="aucom.models.classificator.StatisticalHysterisisAnomalyClassificator">
+            <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
                 <aucom:parameter name="mean" type="java.lang.Double" value="6.0"></aucom:parameter>
                 <aucom:parameter name="avarage" type="java.lang.Double" value="0.0"></aucom:parameter>
             </aucom:Threshold>

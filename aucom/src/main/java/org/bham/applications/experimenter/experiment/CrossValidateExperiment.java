@@ -15,11 +15,11 @@ import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelImp;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelTrainer;
 import org.bham.aucom.diagnoser.t2gram.detector.T2GramDetector;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.StatisticalAnomalyClassificator;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.optimizer.ClassificatorOptimizer;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.optimizer.ClassificatorOptimizerStatusEvent;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.optimizer.ClassificatorOptimizerStatusListener;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.AnomalyClassifier;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.StatisticalAnomalyClassifier;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.optimizer.ClassifierOptimizer;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.optimizer.ClassifierOptimizerStatusEvent;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.optimizer.ClassifierOptimizerStatusListener;
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.util.Constants;
 import org.bham.aucom.util.FileOperator;
@@ -75,8 +75,8 @@ public class CrossValidateExperiment implements Experiment {
 
     private void optimizeModelParameter(T2GramDetector detector, TimeSeries<Observation> obsTs) {
         logger.log(Level.FINE, "optimizing parameters of " + detector);
-        ClassificatorOptimizer optimizer = new ClassificatorOptimizer(detector);
-        optimizer.setTimeseries(obsTs);
+        ClassifierOptimizer optimizer = new ClassifierOptimizer(detector);
+        optimizer.setTimeSeries(obsTs);
         waitForOptimizerToFinish(optimizer);
     }
 
@@ -93,7 +93,7 @@ public class CrossValidateExperiment implements Experiment {
                 logger.log(Level.CONFIG, "adding model ");
                 T2GramDetector detector = new T2GramDetector();
                 detector.setModel(m);
-                detector.setClassificator(new StatisticalAnomalyClassificator(0.0, 0.0));
+                detector.setClassificator(new StatisticalAnomalyClassifier(0.0, 0.0));
                 detector.setSlidingWindow(new SlidingWindow(100, 50));
                 detectors.put(detector, ts.getAttributeValue("file"));
             }
@@ -218,7 +218,7 @@ public class CrossValidateExperiment implements Experiment {
         for (T2GramDetector detector : detectors.keySet()) {
             j = 1;
             for (TimeSeries<Observation> obsTs : timeSeries) {
-                AnomalyClassificator acBefore = detector.getClassificator().duplicate();
+                AnomalyClassifier acBefore = detector.getClassificator().duplicate();
                 optimizeModelParameter(detector, obsTs);
                 logger.log(Level.FINE, "initial ac: " + acBefore + " optimized ac: " + detector.getClassificator());
                 k = 1;
@@ -365,12 +365,12 @@ public class CrossValidateExperiment implements Experiment {
         }
     }
 
-    private void waitForOptimizerToFinish(ClassificatorOptimizer optimizer) {
+    private void waitForOptimizerToFinish(ClassifierOptimizer optimizer) {
         final Object waiterObj = new Object();
         try {
-            optimizer.addStatusListener(new ClassificatorOptimizerStatusListener() {
+            optimizer.addStatusListener(new ClassifierOptimizerStatusListener() {
                 @Override
-                public void classificatorOptimizatorStatusChanged(ClassificatorOptimizerStatusEvent st) {
+                public void classifierOptimizerStatusChanged(ClassifierOptimizerStatusEvent st) {
                     if (st.isFinished()) {
                         synchronized (waiterObj) {
                             waiterObj.notify();
