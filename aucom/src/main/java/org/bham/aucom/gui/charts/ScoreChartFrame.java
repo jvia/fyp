@@ -250,8 +250,7 @@ public class ScoreChartFrame extends javax.swing.JFrame implements
 
 	@Override
 	public String toString() {
-		String out = "rowKey:";
-		return out;
+        return "rowKey:";
 	}
 
 	/**

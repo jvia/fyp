@@ -33,8 +33,7 @@ public class SingleScore extends Score {
     @Override
     public String toString()
     {
-        String str = "[ts:" + getTimestamp() + ":scr:" + getValue() + "]";
-        return str;
+        return "[ts:" + getTimestamp() + ":scr:" + getValue() + "]";
     }
 
     /**

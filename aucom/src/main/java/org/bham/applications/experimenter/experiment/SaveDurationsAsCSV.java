@@ -4,6 +4,7 @@
 package org.bham.applications.experimenter.experiment;
 
 import nu.xom.ParsingException;
+import org.bham.applications.experimenter.data.Result;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.TemporalDurationFeature;
 import org.bham.aucom.data.encoder.Encoder;
@@ -20,7 +21,6 @@ import org.bham.aucom.main.GraphStateChangedEvent;
 import org.bham.aucom.main.GraphStatusListener;
 import org.bham.aucom.util.Constants;
 import org.bham.aucom.util.FileOperator;
-import org.bham.applications.experimenter.data.Result;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -69,18 +69,13 @@ public class SaveDurationsAsCSV implements Experiment {
 
             @Override
             public boolean accept(File arg0, String arg1) {
-                if (arg0 == null) {
-                    return false;
-                }
-
-                boolean isObservationFile = arg1.endsWith(".obs");
-                return isObservationFile;
+                return arg0 != null && arg1.endsWith(".obs");
             }
         };
         String observationFileNames[] = folder.list(observationFiler);
         System.out.println("getting " + observationFileNames.length + " observationfiles from " + folder);
-        for (int i = 0; i < observationFileNames.length; i++) {
-            File observationFile = new File(folder.getAbsolutePath() + File.separator + observationFileNames[i]);
+        for (String observationFileName : observationFileNames) {
+            File observationFile = new File(folder.getAbsolutePath() + File.separator + observationFileName);
             System.out.println("adding " + observationFile.getAbsolutePath() + " to observation files");
             TimeSeries<Observation> obsTs = (TimeSeries<Observation>) AucomIO.getInstance().readTimeSeries(observationFile);
             obsTs.addAttribute(SAVEFILE, FileOperator.getPath(observationFile) + File.separator + FileOperator.getName(observationFile) + ".csv");

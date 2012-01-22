@@ -129,8 +129,7 @@ public class DataManager implements Presentable {
 
     public TimeSeries<Score> deriveScoreSequenceFrom(TimeSeries<Score> sequenceToDeriveFrom,
             String nameOfDerivedSequence) {
-        TimeSeries<Score> derivedSequence = null;
-        return derivedSequence;
+        return null;
     }
 
     // TODO need functions for other test elements, too

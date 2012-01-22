@@ -89,9 +89,7 @@ public class ScoreView extends javax.swing.JFrame {
 		try {
 			TimeSeries<Score> score = (TimeSeries<Score>) AucomIO.getInstance().readTimeSeriesRelativeToCurrentWorking(f.getName()); 
 			id = score.getId();
-			@SuppressWarnings("unchecked")
-			TimeSeries<Score> l = (TimeSeries<Score>)DataManager.getInstance().getTimeSeriesById(id);
-	    	return l;
+            return (TimeSeries<Score>)DataManager.getInstance().getTimeSeriesById(id);
 		} catch (FileNotFoundException exception) {
 			// TODO Auto-generated catch block
 			exception.printStackTrace();

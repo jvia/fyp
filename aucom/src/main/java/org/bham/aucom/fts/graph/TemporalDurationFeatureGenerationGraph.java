@@ -14,7 +14,7 @@ import org.bham.aucom.fts.tranform.TemporalDurationFeatureGenerator;
 
 /**
  * This class represents a graph based
- * 
+ *
  * @author rgolombe
  * @version 0.1
  */
@@ -31,8 +31,7 @@ public class TemporalDurationFeatureGenerationGraph extends AbstractAucomGraph {
     }
 
     @Override
-    protected void initGraph()
-    {
+    protected void initGraph() {
         source = new TimeSeriesSource<Observation>("observations");
         source.addSourceStatusListener(this);
         encodeData = new EncodeData();
@@ -45,58 +44,53 @@ public class TemporalDurationFeatureGenerationGraph extends AbstractAucomGraph {
     }
 
     @Override
-    protected void cleanUp()
-    {
+    protected void cleanUp() {
         source.reset();
         generateDurationFeature.setGenerator(null);
         sink.setOutput(null);
     }
 
 
-    public TimeSeries<TemporalDurationFeature> getOutTimeSeries()
-    {
-        if(sink != null){
+    public TimeSeries<TemporalDurationFeature> getOutTimeSeries() {
+        if (sink != null) {
             return sink.getOutput();
         }
         return null;
     }
 
     @Override
-    public boolean preconditionsSatisfied()
-    {
-        if (generateDurationFeature.getGenerator() == null) {
-            return false;
-        }
-        return true;
+    public boolean preconditionsSatisfied() {
+        return generateDurationFeature.getGenerator() != null;
     }
 
     @Override
-    protected String getReason()
-    {
+    protected String getReason() {
         return "not implemented yet";
     }
-    public void setGenerator(TemporalDurationFeatureGenerator inGenerator){
-        if(generateDurationFeature != null){
+
+    public void setGenerator(TemporalDurationFeatureGenerator inGenerator) {
+        if (generateDurationFeature != null) {
             generateDurationFeature.setGenerator(inGenerator);
         }
     }
-    public TemporalDurationFeatureGenerator getGenerator(){
-        if(generateDurationFeature != null){
+
+    public TemporalDurationFeatureGenerator getGenerator() {
+        if (generateDurationFeature != null) {
             return generateDurationFeature.getGenerator();
         }
         return null;
     }
-    public void setInputAndResetGraph(TimeSeries<Observation> inObsTs)
-    {
-            try {
-                pause();
-                sink.setOutput(new TemporalDurationFeatureTimeSeries());
-                generateDurationFeature.reset();
-                source.setInput(inObsTs);
-                resume();
-            } catch (IllegalStateChange e) {
-                e.printStackTrace();
-            }
+
+    public void setInputAndResetGraph(TimeSeries<Observation> inObsTs) {
+        try {
+            pause();
+            sink.setOutput(new TemporalDurationFeatureTimeSeries());
+            generateDurationFeature.reset();
+            source.setInput(inObsTs);
+            resume();
+        } catch (IllegalStateChange e) {
+            e.printStackTrace();
+        }
     }
 
 }

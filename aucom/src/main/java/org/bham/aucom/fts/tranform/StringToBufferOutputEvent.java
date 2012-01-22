@@ -7,8 +7,7 @@ public class StringToBufferOutputEvent extends AbstractTransformNode<String, Buf
 	@Override
 	protected BufferOutputEvent transform(String arg0) throws Exception {
 		try {
-			BufferOutputEvent event = new BufferOutputEvent(arg0.getBytes());
-			return event;
+            return new BufferOutputEvent(arg0.getBytes());
 		} catch (Exception exception) {
 			exception.printStackTrace();
 			return null;

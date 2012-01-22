@@ -33,8 +33,7 @@ public class HistogramDistributionWithGauss implements ProbabilityDistribution{
 
 		@Override
 		public Double next() {
-			double d = this.dist.getProbByBinNumber(this.it.next().getBinNumber());
-			return d;
+            return this.dist.getProbByBinNumber(this.it.next().getBinNumber());
 		}
 
 		@Override

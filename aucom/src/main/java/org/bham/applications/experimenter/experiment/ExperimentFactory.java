@@ -12,18 +12,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.UUID;
 
+import static java.lang.Integer.valueOf;
+
 public abstract class ExperimentFactory {
-    Builder builder = new Builder();
     protected XPathContext context = new XPathContext("aucom", "http://www.cor-lab.de");
 
     public abstract Experiment createExperiment(Element experimentDescription) throws Exception;
 
 
-    /**
-     * @param trainingFiles
-     * @param trainingDataIds
-     * @throws Exception
-     */
     protected LinkedList<UUID> loadFiles(LinkedList<String> trainingFiles) throws Exception {
         LinkedList<UUID> f = new LinkedList<UUID>();
         for (String trainingFile : trainingFiles) {
@@ -32,9 +28,6 @@ public abstract class ExperimentFactory {
         return f;
     }
 
-    /**
-     * @param xmlElement
-     */
     protected void setWorkingDirectoryIfPresentInExperimentDescription(Element xmlElement) {
         String workingDirectory = getWorkingDirectoryFromElement(xmlElement);
         if (workingDirectory != null) {
@@ -44,14 +37,12 @@ public abstract class ExperimentFactory {
 
     protected int getIntervalSizeFromElement(Element xmlElement) {
         Element slidingWindowElement = (Element) xmlElement.query("./aucom:model/aucom:SlidingWindow", this.context).get(0);
-        int size = Integer.valueOf(slidingWindowElement.getAttributeValue("size")).intValue();
-        return size;
+        return valueOf(slidingWindowElement.getAttributeValue("size"));
     }
 
     protected int getIntervalOverlapSize(Element xmlElement) {
         Element slidingWindowElement = (Element) xmlElement.query("./aucom:model/aucom:SlidingWindow", this.context).get(0);
-        int overlap = Double.valueOf(slidingWindowElement.getAttributeValue("overlap")).intValue();
-        return overlap;
+        return Double.valueOf(slidingWindowElement.getAttributeValue("overlap")).intValue();
     }
 
 
@@ -246,10 +237,7 @@ public abstract class ExperimentFactory {
      * @throws ConfigurationException
      */
     protected boolean validateFile(File trainingFile) {
-        if (!trainingFile.exists() || !trainingFile.isFile()) {
-            return false;
-        }
-        return true;
+        return !(!trainingFile.exists() || !trainingFile.isFile());
     }
 
 

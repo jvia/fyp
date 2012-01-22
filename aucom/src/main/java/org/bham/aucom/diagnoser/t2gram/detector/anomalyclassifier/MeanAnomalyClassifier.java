@@ -24,8 +24,7 @@ public class MeanAnomalyClassifier extends AbstractAnomalyClassifier {
 
 	@Override
 	public String toString() {
-		String str = "" + this.parameters.get("mean");
-		return str;
+        return "" + this.parameters.get("mean");
 	}
 
 	@Override

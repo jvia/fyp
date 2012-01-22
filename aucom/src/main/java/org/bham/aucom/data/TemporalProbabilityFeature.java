@@ -106,10 +106,9 @@ public class TemporalProbabilityFeature extends TemporalDurationFeature {
 		TemporalDurationFeature f = createRandomTemporalDurationFeature();
 		LinkedHashMap<DataType, Double> probabilities = new LinkedHashMap<DataType, Double>();
 		for(DataType dtp : f.getPredecessors()){
-			probabilities.put(dtp, Double.valueOf(Math.random()));
+			probabilities.put(dtp, Math.random());
 		}
-		TemporalProbabilityFeature ff = new TemporalProbabilityFeature(f, probabilities);
-		return ff;
+        return new TemporalProbabilityFeature(f, probabilities);
 	}
 	@Override
 	public Object copy() {

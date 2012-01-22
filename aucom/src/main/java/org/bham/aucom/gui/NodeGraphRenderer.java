@@ -19,8 +19,7 @@ public class NodeGraphRenderer extends StandardXYItemRenderer {
 		XYSeriesCollection set = (XYSeriesCollection)p.getDataset();
 		XYSeries s = set.getSeries(series);
 		NodeGraphXYDataItem itm = (NodeGraphXYDataItem)s.getDataItem(item);
-		Image img = RedGreenGradientImageGenerator.getImage(itm.getVal(), itm.getClassId());
-		return img;
+        return RedGreenGradientImageGenerator.getImage(itm.getVal(), itm.getClassId());
 	}
 
 }

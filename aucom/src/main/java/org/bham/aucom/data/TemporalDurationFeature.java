@@ -119,7 +119,6 @@ public class TemporalDurationFeature extends DataType {
 		for (DataType d : this.predecessorIdToDurationsMapping.keySet()) {
 			predecessorIdToDurationsMapping_copy.put((DataType) d.copy(), this.predecessorIdToDurationsMapping.get(d));
 		}
-		TemporalDurationFeature tdf_copy = new TemporalDurationFeature(dtp_copy, predecessorIdToDurationsMapping_copy);
-		return tdf_copy;
+        return new TemporalDurationFeature(dtp_copy, predecessorIdToDurationsMapping_copy);
 	}
 }

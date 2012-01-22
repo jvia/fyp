@@ -38,8 +38,7 @@ public class XmlToTemporalProbabilityFeatureTimeSeriesConverter extends XmlToTim
 	@Override
 	public
 	TimeSeries<TemporalProbabilityFeature> createTimeSeries(UUID id, UUID generatorID, UUID generatedFromID, ArrayList<TemporalProbabilityFeature> items) {
-		TemporalProbabilityFeatureTimeSeries tpfts = new TemporalProbabilityFeatureTimeSeries(generatorID, generatedFromID, id, items);
-		return tpfts;
+        return new TemporalProbabilityFeatureTimeSeries(generatorID, generatedFromID, id, items);
 	}
 
 }

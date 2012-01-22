@@ -17,8 +17,7 @@ public class XmlToTemporalDurationFeatureTimeSeriesConverter extends XmlToTimeSe
 	public TemporalDurationFeature createDataFromElement(Element e) {
 		DataType  dtt = new XmlToDatatypeTimeSeriesConverter().createDataFromElement(e);
 		LinkedHashMap<DataType, Long> durations = getDurationsFrom(e);
-		TemporalDurationFeature tdf = new TemporalDurationFeature(dtt, durations);
-		return tdf;
+        return new TemporalDurationFeature(dtt, durations);
 	}
 	private LinkedHashMap<DataType, Long> getDurationsFrom(Element e) {
 		Nodes nodes = getPredecessorsNodes(e); 

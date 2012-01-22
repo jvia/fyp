@@ -40,8 +40,6 @@ class PopupDatasetListener extends MouseAdapter {
 		if (selectedIndex == -1) {
 			if (freeSpacePopupMenu != null && e.isPopupTrigger()) {
 				freeSpacePopupMenu.show(e.getComponent(), e.getX(), e.getY());
-			} else {
-				return;
 			}
 
 		} else {

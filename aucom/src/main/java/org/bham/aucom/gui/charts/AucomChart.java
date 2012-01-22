@@ -141,8 +141,7 @@ public class AucomChart extends javax.swing.JFrame {
 
 	public Range getVisibleIntervalDomainAxis() {
 		XYPlot plot = (XYPlot) this.chart.getPlot();
-		Range range = plot.getDomainAxis().getRange();
-		return range;
+        return plot.getDomainAxis().getRange();
 
 	}
 

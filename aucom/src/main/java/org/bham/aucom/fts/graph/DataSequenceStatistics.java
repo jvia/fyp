@@ -35,8 +35,7 @@ public class DataSequenceStatistics {
 	}
 
 	public long getDurationInSeconds() {
-		long durationInSeconds = this.duration / 1000;
-		return durationInSeconds;
+        return this.duration / 1000;
 	}
 
 	public String getDurationAsString() {

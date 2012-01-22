@@ -64,8 +64,7 @@ public class GenerateTemporalProbabilityFeature extends AbstractAucomTranformNod
         }
         
         Logger.getLogger(this.getClass().getCanonicalName()).info("tested " + dataToTest);
-        TemporalProbabilityFeature out = new TemporalProbabilityFeature(dataToTest, datatypeToProbabilities);
-        return out;
+        return new TemporalProbabilityFeature(dataToTest, datatypeToProbabilities);
     }
 
     /**

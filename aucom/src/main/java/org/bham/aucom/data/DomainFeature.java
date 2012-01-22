@@ -46,7 +46,6 @@ public class DomainFeature extends Tupel<String, String> {
      */
     public Object copy()
     {
-        DomainFeature df_copy = new DomainFeature(getFirstElement(), getSecondElement());
-        return df_copy;
+        return new DomainFeature(getFirstElement(), getSecondElement());
     }
 }

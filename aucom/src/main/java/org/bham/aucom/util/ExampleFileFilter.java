@@ -121,7 +121,7 @@ public class ExampleFileFilter extends FileFilter {
 	    String extension = getExtension(f);
 	    if(extension != null && filters.get(getExtension(f)) != null) {
 		return true;
-	    };
+	    }
 	}
 	return false;
     }
@@ -138,7 +138,7 @@ public class ExampleFileFilter extends FileFilter {
 	    int i = filename.lastIndexOf('.');
 	    if(i>0 && i<filename.length()-1) {
 		return filename.substring(i+1).toLowerCase();
-	    };
+	    }
 	}
 	return null;
     }

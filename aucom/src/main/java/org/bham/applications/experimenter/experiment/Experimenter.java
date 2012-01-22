@@ -153,7 +153,6 @@ public class Experimenter {
                     }
                 } else {
                     System.out.println("no such file " + experimentDescription.getAbsolutePath());
-                    return;
                 }
             } else {
                 System.out.println("no such file " + experimentDescription.getAbsolutePath());

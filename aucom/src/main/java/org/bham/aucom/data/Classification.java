@@ -109,8 +109,7 @@ public class Classification extends Score {
 	@Override
 	public Object copy() {
 		Score score_copy = (Score)score.copy();
-		Classification cl_copy = new Classification(score_copy, this.status); 
-		return cl_copy;
+        return new Classification(score_copy, this.status);
 	}
 	@Override
 	public void markAsFirstElement() {

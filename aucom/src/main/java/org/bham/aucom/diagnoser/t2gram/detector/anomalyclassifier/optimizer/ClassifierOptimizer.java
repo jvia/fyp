@@ -62,8 +62,7 @@ public class ClassifierOptimizer implements Presentable, GraphStatusListener {
 		if (scoreTs == null) {
 			setModel(getDetector().getModel());
 			obsToScoreGraph.start();
-			return;
-		}
+        }
 	}
 
 	public void stop() {

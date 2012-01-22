@@ -33,8 +33,7 @@ public class HistogramDistribution implements ProbabilityDistribution{
 
 		@Override
 		public Double next() {
-			double d = this.dist.getProbByBinNumber(this.it.next().getBinNumber());
-			return d;
+            return this.dist.getProbByBinNumber(this.it.next().getBinNumber());
 		}
 
 		@Override
@@ -165,9 +164,7 @@ public class HistogramDistribution implements ProbabilityDistribution{
 	@Override
 	public double getProbability(double val) {
 		int binNumber = this.content.getBinNumberForValue(val);
-		double prob = getProbByBinNumber(binNumber); 
-		//info("calulacting probability for " + val + " bin is " + binNumber +  " probability is " + prob);
-		return prob;
+		return getProbByBinNumber(binNumber);
 	}
 	@Override
 	public String getType() {

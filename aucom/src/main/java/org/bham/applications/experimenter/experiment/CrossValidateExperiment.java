@@ -176,8 +176,7 @@ public class CrossValidateExperiment implements Experiment {
                     return false;
                 }
 
-                boolean isObservationFile = arg1.endsWith(".obs");
-                return isObservationFile;
+                return arg1.endsWith(".obs");
             }
         };
         String observationFileNames[] = workingDirectory.list(observationFiler);

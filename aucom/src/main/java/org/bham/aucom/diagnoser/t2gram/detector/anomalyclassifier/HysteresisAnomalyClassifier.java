@@ -85,8 +85,7 @@ public class HysteresisAnomalyClassifier extends AbstractAnomalyClassifier {
 	@Override
 	public boolean equals(Object obj) {
 		HysteresisAnomalyClassifier inObj = (HysteresisAnomalyClassifier) obj;
-		boolean equal = this.lower.equals(inObj.getLower()) && this.upper.equals(inObj.getUpper());
-		return equal;
+        return this.lower.equals(inObj.getLower()) && this.upper.equals(inObj.getUpper());
 	}
 
 	@Override

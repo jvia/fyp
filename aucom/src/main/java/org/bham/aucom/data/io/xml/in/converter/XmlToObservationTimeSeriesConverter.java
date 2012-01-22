@@ -49,7 +49,6 @@ public class XmlToObservationTimeSeriesConverter extends XmlToTimeSeriesConverte
 		if(nodes.size() == 0){
 			return new Element("emptyConcent");
 		}
-		Element contentValueElement  = (Element)nodes .get(0);
-		return contentValueElement;
+        return (Element)nodes .get(0);
 	}
 }
