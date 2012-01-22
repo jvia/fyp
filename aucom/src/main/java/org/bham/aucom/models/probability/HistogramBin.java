@@ -37,10 +37,6 @@ public class HistogramBin implements Serializable {
         value = 0;
     }
 
-    public void setBorders(double inLowBorder, double inHighBorder) {
-
-    }
-
     /**
      * @param binLabel
      *            the binLabel to set

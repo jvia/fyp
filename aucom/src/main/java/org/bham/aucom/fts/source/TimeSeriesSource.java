@@ -38,7 +38,7 @@ public class TimeSeriesSource<T extends AbstractData> extends AucomSourceAdapter
 	@Override
 	protected T iNextItem() throws Exception {
 		Logger.getLogger(this.getClass().getCanonicalName()).info(" next element called, queue size " + getQueue().size());
-		T element = null;
+		T element;
 		element = this.getQueue().take();
 		if(element != null && element.isMarkedAsLastElement()){
 			setsendLastElement();

@@ -1,6 +1,7 @@
 package org.bham.applications.experimenter.experiment;
 
 import nu.xom.*;
+import org.bham.applications.experimenter.data.Result;
 import org.bham.aucom.data.Classification;
 import org.bham.aucom.data.ClassificationTimeSeriesDescriptiveStatistics;
 import org.bham.aucom.data.Observation;
@@ -23,7 +24,6 @@ import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.optimizer.Clas
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.util.Constants;
 import org.bham.aucom.util.FileOperator;
-import org.bham.applications.experimenter.data.Result;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -172,11 +172,8 @@ public class CrossValidateExperiment implements Experiment {
 
             @Override
             public boolean accept(File arg0, String arg1) {
-                if (arg0 == null) {
-                    return false;
-                }
+                return arg0 != null && arg1.endsWith(".obs");
 
-                return arg1.endsWith(".obs");
             }
         };
         String observationFileNames[] = workingDirectory.list(observationFiler);

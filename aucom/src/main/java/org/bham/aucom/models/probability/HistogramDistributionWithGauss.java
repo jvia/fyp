@@ -100,7 +100,7 @@ public class HistogramDistributionWithGauss implements ProbabilityDistribution{
 
 	@Override
 	public String toString() {
-		String out = "";
+		String out;
 		out = this.content.toString();
 		return out;
 	}
@@ -133,7 +133,7 @@ public class HistogramDistributionWithGauss implements ProbabilityDistribution{
 		return calcEntropy(this.content.getValueOfBinWithNumber(binNumber));
 	}
 	private double calcEntropy(double inValue){
-		return (double)(inValue * Math.log(1/inValue)/Math.log(2));
+		return inValue * Math.log(1/inValue)/Math.log(2);
 	}
 	public void setBinSize(double binSize) {
 		this.content.setBinSize(binSize);
@@ -161,7 +161,7 @@ public class HistogramDistributionWithGauss implements ProbabilityDistribution{
 				info("Warning: prob shoudn't be equals to smallest prob possible!");
 			double mu = this.content.getBinSize()*0.5f + nearestBinNumber*this.content.getBinSize();
 			double sigma = this.content.getBinSize()*2;
-			double factor = (double)Gaussian.phi((val-mu)/sigma); 
+			double factor = Gaussian.phi((val-mu)/sigma);
 			info("no bin present for "+val+ " applying factor " + factor +" gauss on nearest probability value " +prob);
 			prob*=factor;
 		}

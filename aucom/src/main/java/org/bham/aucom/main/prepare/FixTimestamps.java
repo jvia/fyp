@@ -40,7 +40,7 @@ public class FixTimestamps {
 	private Builder builder;
 
 	public ArrayList<Element> extractXml(File inFile) {
-		Document doc = null;
+		Document doc;
 		ArrayList<Element> list = null;
 		if (this.builder == null) {
 			this.builder = new Builder();
@@ -137,7 +137,7 @@ public class FixTimestamps {
 
 	private long getTimestamp(Element in) throws NumberFormatException {
 		String timestamp = "";
-		long out = 0L;
+		long out;
 		if (in.getAttribute("timestamp") != null) {
 			timestamp = in.getAttribute("timestamp").getValue();
 		} else if (in.getAttribute(TIMESTAMP) != null) {
@@ -153,13 +153,13 @@ public class FixTimestamps {
 
 	private long getAlternativeTimestamp(Element in) throws NumberFormatException {
 		String timestamp = "";
-		long out = 0L;
+		long out;
 		String name = in.getLocalName();
 		if (name.equals("speech_hyp")) {
 			XPathContext context = new XPathContext("xcf", "");
 			Nodes nodes = in.query("//TIMESTAMP", context);
 			if (nodes.size() > 0) {
-				timestamp = ((Element) nodes.get(0)).getValue();
+				timestamp = nodes.get(0).getValue();
 			}
 		} else if (name.equals("PERSON") || name.equals("PERCEPTS")) {
 			XPathContext context = new XPathContext("xcf", "");

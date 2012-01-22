@@ -103,7 +103,7 @@ public class HistogramDistribution implements ProbabilityDistribution{
 
 	@Override
 	public String toString() {
-		String out = "";
+		String out;
 		out = this.content.toString();
 		return out;
 	}

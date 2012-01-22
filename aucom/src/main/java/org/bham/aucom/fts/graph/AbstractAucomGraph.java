@@ -68,7 +68,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
     /**
      * Unregisters the listener from listening to GraphStatusChangedEvents
      *
-     * @param the listener to unregister
+     * @param listener to unregister
      */
     public void removeMyEventListener(GraphStatusListener listener) {
         this.listenerList.remove(GraphStatusListener.class, listener);
@@ -87,7 +87,8 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
     }
 
     /**
-     * fts Graph construction function. It is expected that after calling this function the topology of the fts graph used
+     * fts Graph construction function. It is expected that after calling this function the topology of the fts graph
+     * used
      * by this implementation of the AbstractAucomGraph is established.
      */
     protected abstract void initGraph();
@@ -98,7 +99,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
         Object[] listeners = this.listenerList.getListenerList();
         for (int i = 0; i < listeners.length; i += 2) {
             if (listeners[i] == GraphStatusListener.class) {
-                Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, getGraphName() + " nfires to " + (GraphStatusListener) listeners[i + 1]);
+                Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, getGraphName() + " nfires to " + listeners[i + 1]);
                 ((GraphStatusListener) listeners[i + 1]).graphStatusChanged(evt);
             }
         }
@@ -138,7 +139,8 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
     }
 
     /**
-     * Utility function. Offers a convenient mean to check whether the status of this graph object is {@link #GraphStatus
+     * Utility function. Offers a convenient mean to check whether the status of this graph object is {@link
+     * #GraphStatus
      * NOTREADY}
      *
      * @return
@@ -148,7 +150,8 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
     }
 
     /**
-     * Utility function. Offers a convenient mean to check whether the status of this graph object is {@link #GraphStatus
+     * Utility function. Offers a convenient mean to check whether the status of this graph object is {@link
+     * #GraphStatus
      * RUNNING}
      *
      * @return
@@ -162,7 +165,8 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
      * satisfied and starts the fts graph
      *
      * @throws ActionFailedException When 1) the graph status is {@link GraphStatus STOPPED} 2) preconditions are not
-     *                               satisfied i.e., {@link #preconditionsSatisfied()} returns false  3) an exception has
+     *                               satisfied i.e., {@link #preconditionsSatisfied()} returns false  3) an exception
+     *                               has
      *                               been caught while starting the fts graph.
      */
     public void start() throws ActionFailedException {
@@ -385,7 +389,8 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
     }
 
     /**
-     * SinkStatusEvent handling function. Changes {@link #currentStatus} to READY if a sink node notifies about receiving
+     * SinkStatusEvent handling function. Changes {@link #currentStatus} to READY if a sink node notifies about
+     * receiving
      * last element ({@link #NodeStatus RECEIVEDLASTELEMENT}) and if {@link #currentStatus} is RUNNING
      */
     @Override

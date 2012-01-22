@@ -32,46 +32,6 @@ public class AnomalyRecognition {
         playerModel = loadModel(playerModelFile);
     }
 
-    public void test(File f) {
-
-    }
-
-    public static void main(String[] args) {
-
-    }
-
-    //	public void save(File f, ScoreSequence sequence){
-//		System.out.println("saving to : " +f);
-//		FileWriter writer;
-//		DecimalFormat formatter = new DecimalFormat("0.00000000"); 
-//		try {
-//			writer = new FileWriter(f);
-//			for (int i = 0; i< sequence.size(); i++) {
-//				Score s = sequence.get(i);
-//				String outpurString = "";
-//				outpurString += s.getTimestamp();
-//				outpurString += ";";
-//				try {
-//					outpurString += formatter.parse(formatter.format(s.getValue()));
-//				} catch (ParseException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				outpurString += ";";
-//				outpurString += s.getAbnormal();
-//				outpurString += ";";
-//				outpurString += s.getClassId();
-//				outpurString += "\n";
-//				writer.write(outpurString);
-//			}
-//			writer.close();
-//		} catch (IOException e) {
-//			Logger.getLogger(this.getClass().getCanonicalName())
-//					.severe(
-//							"couldn't write to file "
-//									+ f.getAbsolutePath());
-//		}
-//}
     private T2GramModelImp loadModel(File file) {
         ObjectInputStream in;
 

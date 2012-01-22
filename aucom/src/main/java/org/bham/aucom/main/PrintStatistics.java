@@ -54,7 +54,6 @@ public class PrintStatistics {
     public static void main(String[] args) {
         PrintStatistics statisticsPrinter = new PrintStatistics();
         for (String arg : args) {
-            UUID id;
             try {
                 TimeSeries<DataType> ts = (TimeSeries<DataType>) AucomIO.getInstance().readTimeSeriesRelativeToCurrentWorking(arg);
                 DataManager.getInstance().addTimeSeries(ts);

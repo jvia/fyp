@@ -22,7 +22,7 @@ public class ScoreListCellRenderer extends JLabel implements ListCellRenderer {
 			int index, boolean isSelected, boolean hasFocus) {
 		String s="undefined";
 		if(value!=null)
-			s = ((TimeSeries<Score>)value).toString();
+			s = value.toString();
 		setText(s);
 		if (isSelected) {
 			setBackground(list.getSelectionBackground());

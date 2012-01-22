@@ -63,7 +63,7 @@ public class HysteresisAnomalyClassifier extends AbstractAnomalyClassifier {
 	}
 
 	@Override
-	public void setClassificator(AnomalyClassifier threshold) throws ClassCastException {
+	public void setClassifier(AnomalyClassifier threshold) throws ClassCastException {
 		HysteresisAnomalyClassifier ht = (HysteresisAnomalyClassifier) threshold;
 		this.setLower(ht.getLower());
 		this.setUpper(ht.getUpper());

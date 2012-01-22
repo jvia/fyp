@@ -48,7 +48,7 @@ public class CastObservationSource extends AucomSourceAdapter<Observation> {
     protected Observation iNextItem() throws Exception
     {
         String[] msg = queue.take();
-        Observation obs = null;
+        Observation obs;
         
         if (msg[0].equals(".")) {
             setsendLastElement();

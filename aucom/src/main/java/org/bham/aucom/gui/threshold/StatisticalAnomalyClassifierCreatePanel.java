@@ -77,7 +77,7 @@ public class StatisticalAnomalyClassifierCreatePanel extends AbstractCreateAnoma
     public AnomalyClassifier getAnomalyClassifier() throws Exception {
         Double mean = Double.valueOf(this.meanTextField.getText());
         Double variance = Double.valueOf(this.varianceTextField.getText());
-        Integer windowSize = Integer.valueOf(this.windowSizeTextField.getText());
+        Integer.valueOf(this.windowSizeTextField.getText());
         return new StatisticalAnomalyClassifier(mean, variance);
     }
 

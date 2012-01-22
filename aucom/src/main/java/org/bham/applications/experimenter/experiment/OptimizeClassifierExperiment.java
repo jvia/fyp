@@ -191,13 +191,12 @@ public class OptimizeClassifierExperiment implements Experiment {
                 return "nonsense";
             }
         };
-        String dirPath = "";
         Logger.getLogger(this.getClass().getCanonicalName()).info("calling postprocess");
     }
 
     private void saveResults(ClassificationTimeSeriesDescriptiveStatistics statistics) {
         String fName = name + "_statistics.txt";
-        File filetoSaveTo = new File(AucomIO.getInstance().getCurrentWorkingDirectory().getAbsoluteFile() + File.separator + fName);
+        File fileToSaveTo = new File(AucomIO.getInstance().getCurrentWorkingDirectory().getAbsoluteFile() + File.separator + fName);
         String outputString = "";
         outputString += "FD" + CSV_SEP + "FTR" + CSV_SEP + "FA" + CSV_SEP + "SFAR" + CSV_SEP + "MSCORETOTAL" + CSV_SEP + "MSCOREHEAD" + CSV_SEP + "MSCORETAIL" + CSV_SEP + "VSCORETOTAL" + CSV_SEP + "VSCOREHEAD" + CSV_SEP + "VSCORETAIL\n";
         outputString += Math.ceil(statistics.getTailAnomalyValuePercent()) + CSV_SEP;
@@ -213,7 +212,7 @@ public class OptimizeClassifierExperiment implements Experiment {
         outputString += "\n";
         BufferedWriter w;
         try {
-            w = new BufferedWriter(new FileWriter(filetoSaveTo));
+            w = new BufferedWriter(new FileWriter(fileToSaveTo));
             w.write(outputString);
             w.flush();
             w.close();

@@ -33,7 +33,7 @@ public class MeanAnomalyClassifier extends AbstractAnomalyClassifier {
 	}
 
 	@Override
-	public void setClassificator(AnomalyClassifier threshold) throws ClassCastException {
+	public void setClassifier(AnomalyClassifier threshold) throws ClassCastException {
 		// TODO Auto-generated method stub
 		
 	}

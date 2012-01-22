@@ -274,7 +274,7 @@ abstract public class SystemConnection implements Presentable {
     {
         String[] parts = lineStr.split(" ");
         boolean isValid = parts.length == 2;
-        isValid = isValid & parts[1] != "";
+        isValid = isValid & !parts[1].equals("");
         return isValid;
     }
 
@@ -287,7 +287,7 @@ abstract public class SystemConnection implements Presentable {
      */
     private static String getSystemConnectionLine(BufferedReader br) throws IOException
     {
-        String str = null;
+        String str;
         while ((str = br.readLine()) != null) {
             str = str.trim();
             if (ignoreLine(str)) {

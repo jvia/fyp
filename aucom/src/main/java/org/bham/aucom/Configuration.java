@@ -163,7 +163,7 @@ public final class Configuration {
     private ArrayList<String> getLinesToConsider(BufferedReader br)
     {
         ArrayList<String> lines = new ArrayList<String>();
-        String str = null;
+        String str;
         try {
             while ((str = br.readLine()) != null) {
                 str = str.trim();

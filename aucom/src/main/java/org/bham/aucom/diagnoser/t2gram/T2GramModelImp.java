@@ -87,12 +87,12 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
 	}
 
 	@Override
-	public double getProbability(int from, int to, long timespan) {
-		double probability = 0.0f;
+	public double getProbability(int from, int to, long timeSpan) {
+		double probability;
 		Logger.getLogger(this.getClass().getCanonicalName()).info("calculating probability for " + "from " + from + " to " + to);
 		if (hasDistributionFor(from, to)) {
 			ProbabilityDistribution distribution = getDistributionFor(from, to);
-			probability = distribution.getProbability(timespan);
+			probability = distribution.getProbability(timeSpan);
 			Logger.getLogger(this.getClass().getCanonicalName()).info("from " + from + " to " + to + "present, prob is " + probability);
 		} else {
 			probability = LOWESTPROBABILITY;

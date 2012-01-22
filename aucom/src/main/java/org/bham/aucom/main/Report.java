@@ -155,7 +155,7 @@ public class Report {
 
 	private long getTimestamp(Element in) throws NumberFormatException {
 		String timestamp = "";
-		long out = -1;
+		long out;
 		if (in.getAttribute("timestamp") != null) {
 			timestamp = in.getAttribute("timestamp").getValue();
 		} else if (in.getAttribute(TIMESTAMP) != null) {
@@ -247,7 +247,7 @@ public class Report {
 	private void analyseCorruptedTimestamps(ArrayList<Element> list) {
 		for (Element e : list) {
 			try {
-				long timestamp = getTimestamp(e);
+                getTimestamp(e);
 			} catch (NumberFormatException e2) {
 				numCorruptedTimestamps++;
 				corruptedTimestampsElements.put(e.getLocalName(), e);
@@ -310,7 +310,7 @@ public class Report {
 	}
 
 	public ArrayList<Element> extractXml(File inFile) {
-		Document doc = null;
+		Document doc;
 		ArrayList<Element> list = null;
 		if (this.builder == null) {
 			this.builder = new Builder();

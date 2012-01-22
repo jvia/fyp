@@ -105,7 +105,7 @@ public class PlayTimeSeriesSource<T extends AbstractData> extends AucomSourceAda
 
 	@Override
 	protected T iNextItem() throws Exception {
-		T element = null;
+		T element;
 		element = this.queue.take();
 		if (element != null && element.isMarkedAsLastElement()) {
 			setsendLastElement();

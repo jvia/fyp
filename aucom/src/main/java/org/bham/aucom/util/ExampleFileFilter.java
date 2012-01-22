@@ -181,9 +181,9 @@ public class ExampleFileFilter extends FileFilter {
 		// build the description from the extension list
 		Enumeration extensions = filters.keys();
 		if(extensions != null) {
-		    fullDescription += "." + (String) extensions.nextElement();
+		    fullDescription += "." + extensions.nextElement();
 		    while (extensions.hasMoreElements()) {
-			fullDescription += ", ." + (String) extensions.nextElement();
+			fullDescription += ", ." + extensions.nextElement();
 		    }
 		}
 		fullDescription += ")";

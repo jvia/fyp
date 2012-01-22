@@ -132,7 +132,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel{
 //		System.out.println(" to " +  to +" last " +list.get(list.size()-1).getTimestamp());
 //		}
 //		final XYSeries s = this.series.get(sequence).getFirstElement();
-//		
+//
 //		SwingUtilities.invokeLater(new Runnable() {
 //			@Override
 //			public void run() {
@@ -150,7 +150,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel{
 		synchronized (sequence) {
 
 			for (int i = from; i <= to; i++) {
-				Number x = ((Score) sequence.get(i)).getTimestamp();
+				Number x = sequence.get(i).getTimestamp();
 				if (s.indexOf(x) >= 0)
 					;
 				s.remove(x);
@@ -206,12 +206,12 @@ public class ProbabilityChartFrame extends javax.swing.JPanel{
 			}
 			series = this.dataset.getSeries("Threshold");
 			if (!series.isEmpty()) {
-				Double min = series.getMinX();
-				Double max = series.getMaxX();
+				Double min = new Double(series.getMinX());
+				Double max = new Double(series.getMaxX());
 				if (series.indexOf(min) != -1)
-					series.remove((double) min);
+					series.remove(new Double(min));
 				if (series.indexOf(max) != -1)
-					series.remove((double) max);
+					series.remove(new Double(max));
 			}
 			final double min_x = this.dataset.getDomainLowerBound(false);
 			final double max_x = this.dataset.getDomainUpperBound(false);

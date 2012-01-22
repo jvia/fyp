@@ -38,7 +38,7 @@ public interface AnomalyClassifier extends AttributableObject, Serializable {
      * @param classifier the classified to be used
      * @throws ClassCastException invalid classifier type
      */
-    public void setClassificator(AnomalyClassifier classifier) throws ClassCastException;
+    public void setClassifier(AnomalyClassifier classifier) throws ClassCastException;
 
     /**
      * Makes this object a copy of the object passed in.

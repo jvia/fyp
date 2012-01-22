@@ -32,7 +32,7 @@ public class CastObservationCollectionFactory extends ExperimentFactory {
     @Override
     public Experiment createExperiment(Element element) throws ValidityException, ParsingException, IOException {
         setWorkingDirectoryIfPresentInExperimentDescription(element);
-        CastObservationCollection experiment = null;
+        CastObservationCollection experiment;
 
         String name = getExperimentNameFromElement(element);
         String wd = getWorkingDirectoryFromElement(element);

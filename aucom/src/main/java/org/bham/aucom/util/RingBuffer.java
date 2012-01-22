@@ -86,7 +86,7 @@ public class RingBuffer<T> {
 	 */
 	@SuppressWarnings("unchecked")
 	public Object[] toArray() {
-		T[] out = null;
+		T[] out;
 		if (!isFilled()) {
 		    out = (T[]) new Object[getNextInsertPosition()];
 			System.arraycopy(data, 0, out, 0, getNextInsertPosition());

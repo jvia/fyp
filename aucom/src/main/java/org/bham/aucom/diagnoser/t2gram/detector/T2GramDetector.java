@@ -93,7 +93,7 @@ public class T2GramDetector extends AbstractDetector {
     public void setClassificator(AnomalyClassifier classifierToSet)
     {
 
-        detectorGraph.setClassificator(classifierToSet);
+        detectorGraph.setClassifier(classifierToSet);
     }
 
     public AnomalyClassifier getClassificator()

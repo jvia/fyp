@@ -112,7 +112,7 @@ public class OptimizerPanel extends javax.swing.JPanel implements ClassifierOpti
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2, jButton3, loadFileButton});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, jButton1, jButton2, jButton3, loadFileButton);
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

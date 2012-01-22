@@ -22,7 +22,7 @@ public class Classify extends AbstractAucomTranformNode<Score, Classification> {
 
 	private Classification decide(Score in) {
 
-		Classification cl = null;
+		Classification cl;
 		if (getClassifier().satisfies(in)) {
 			cl = new Classification(in, SystemFaultStatus.NORMAL);
 		} else {

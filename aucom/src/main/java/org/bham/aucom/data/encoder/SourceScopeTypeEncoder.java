@@ -83,7 +83,7 @@ public class SourceScopeTypeEncoder extends Encoder {
 	public void loadEncoding(InputStream inStream) throws NumberFormatException, IOException {
 		this.classes.clear();
 		BufferedReader is = new BufferedReader(new InputStreamReader(inStream));
-		String tmp = ""; //$NON-NLS-1$
+		String tmp; //$NON-NLS-1$
 		while ((tmp = is.readLine()) != null) {
 			if (tmp.equals("")) //$NON-NLS-1$
 				continue;
@@ -99,7 +99,7 @@ public class SourceScopeTypeEncoder extends Encoder {
 	public void loadEncoding(File inFile) throws NumberFormatException, IOException {
 		this.classes.clear();
 		BufferedReader is = new BufferedReader(new FileReader(inFile));
-		String tmp = ""; //$NON-NLS-1$
+		String tmp; //$NON-NLS-1$
 		while ((tmp = is.readLine()) != null) {
 			if (tmp.equals("")) //$NON-NLS-1$
 				continue;

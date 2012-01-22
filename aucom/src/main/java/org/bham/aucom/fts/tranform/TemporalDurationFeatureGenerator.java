@@ -80,14 +80,15 @@ public class TemporalDurationFeatureGenerator {
 
     public TemporalDurationFeature generateFeature(DataType in)
     {
-        long timespan = 0l;
+        long timeSpan;
         LinkedHashMap<DataType, Long> durations = new LinkedHashMap<DataType, Long>();
+
         if(isLastOccurancesInitialized()){
             initializeLastOccurancesWithValue(in.getTimestamp());
         }
         for (DataType lastOccurrence : this.lastOccurrences.values()) {
-            timespan = calculateTimespanForElements(in, lastOccurrence);
-            durations.put(lastOccurrence, timespan);
+            timeSpan = calculateTimespanForElements(in, lastOccurrence);
+            durations.put(lastOccurrence, timeSpan);
         }
         TemporalDurationFeature f = new TemporalDurationFeature(in, durations);
         updateLastOccurrences(in);

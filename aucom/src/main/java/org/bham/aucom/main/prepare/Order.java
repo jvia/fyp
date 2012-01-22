@@ -44,7 +44,6 @@ public class Order {
 
     public SortedMap<Long, Element> sort(ArrayList<Element> list) {
         SortedMap<Long, Element> sortedMap = new TreeMap<Long, Element>();
-        ArrayList<Element> out = new ArrayList<Element>();
         for (Element element : list) {
             long currTimestamp = getTimestamp(element);
             if (currTimestamp == -1) {
@@ -78,7 +77,7 @@ public class Order {
     }
 
     public ArrayList<Element> extractXml(File inFile) {
-        Document doc = null;
+        Document doc;
         ArrayList<Element> list = null;
         if (this.builder == null) {
             this.builder = new Builder();

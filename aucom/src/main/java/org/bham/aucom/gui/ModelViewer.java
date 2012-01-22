@@ -68,8 +68,8 @@ public class ModelViewer extends javax.swing.JFrame {
 	}
 	public void displayDistribution(String label){
 		String parts[] = label.split("->");
-		int from = Integer.parseInt(parts[0]);
-		int to = Integer.parseInt(parts[1]);
+        Integer.parseInt(parts[0]);
+        Integer.parseInt(parts[1]);
 //		new HistogramView(model.transitionMatrix.get(from, to)).setVisible(true);
 	}
 	public void updateView() {

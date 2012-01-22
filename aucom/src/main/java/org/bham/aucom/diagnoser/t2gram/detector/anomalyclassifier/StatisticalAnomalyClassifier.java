@@ -155,14 +155,14 @@ public class StatisticalAnomalyClassifier extends AbstractAnomalyClassifier {
     }
 
     @Override
-    public void setClassificator(AnomalyClassifier classifier) throws ClassCastException {
+    public void setClassifier(AnomalyClassifier classifier) throws ClassCastException {
         StatisticalAnomalyClassifier st = (StatisticalAnomalyClassifier) classifier;
         setMeanAndVariance(st.getMean(), st.getVariance());
     }
 
     @Override
     public void copy(AnomalyClassifier classifier) {
-        setClassificator(classifier);
+        setClassifier(classifier);
 
     }
 

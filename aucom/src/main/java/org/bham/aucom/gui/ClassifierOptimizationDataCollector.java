@@ -117,7 +117,7 @@ public class ClassifierOptimizationDataCollector implements TimeSeriesStatusList
 		if (status.getStatus().equals(TimeseriesStatus.ELEMENTSADDED)) {
 			for (int i = status.getStartIndex(); i <= status.getEndIndex(); i++) {
 				TimeSeries<? extends Score> ts = (TimeSeries<? extends Score>) status.getSource();
-				this.getCollectedData().add((Score)ts.get(i));
+				this.getCollectedData().add(ts.get(i));
 			}
 		}
 		fireElementAdded();

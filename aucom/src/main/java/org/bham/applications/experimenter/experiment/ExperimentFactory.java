@@ -94,7 +94,7 @@ public abstract class ExperimentFactory {
         LinkedList<String> files = new LinkedList<String>();
         Nodes nodes = xmlElement.query("./aucom:input/aucom:validation", this.context);
         for (int i = 0; i < nodes.size(); i++) {
-            files.add(((Element) nodes.get(i)).getChild(0).getValue());
+            files.add(nodes.get(i).getChild(0).getValue());
         }
         return files;
     }
@@ -103,7 +103,7 @@ public abstract class ExperimentFactory {
         LinkedList<String> files = new LinkedList<String>();
         Nodes nodes = xmlElement.query("./aucom:input/aucom:train", this.context);
         for (int i = 0; i < nodes.size(); i++) {
-            files.add(((Element) nodes.get(i)).getChild(0).getValue());
+            files.add(nodes.get(i).getChild(0).getValue());
         }
         return files;
     }
@@ -112,7 +112,7 @@ public abstract class ExperimentFactory {
         LinkedList<String> files = new LinkedList<String>();
         Nodes nodes = xmlElement.query("./aucom:input/aucom:test", this.context);
         for (int i = 0; i < nodes.size(); i++) {
-            files.add(((Element) nodes.get(i)).getChild(0).getValue());
+            files.add(nodes.get(i).getChild(0).getValue());
         }
         return files;
     }
@@ -245,7 +245,7 @@ public abstract class ExperimentFactory {
         LinkedList<String> files = new LinkedList<String>();
         Nodes nodes = xmlElement.query("./aucom:input/aucom:optimize", this.context);
         for (int i = 0; i < nodes.size(); i++) {
-            files.add(((Element) nodes.get(i)).getChild(0).getValue());
+            files.add(nodes.get(i).getChild(0).getValue());
         }
         return files;
     }

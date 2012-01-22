@@ -8,7 +8,7 @@ public class FileOperator {
 		
 	}
 	public static String getExtension(File file){
-	    String ext="";
+	    String ext;
 	    int mid= file.getName().lastIndexOf(".");
 	    ext=file.getName().substring(mid+1,file.getName().length());  
 	    return ext;
@@ -23,7 +23,7 @@ public class FileOperator {
 		
 	}
 	public static String getPath(File file){
-		String fpath="";
+		String fpath;
 	    int mid= file.getAbsolutePath().lastIndexOf(File.separator);
 	    fpath = file.getAbsolutePath().substring(0,mid);
 	    return fpath;

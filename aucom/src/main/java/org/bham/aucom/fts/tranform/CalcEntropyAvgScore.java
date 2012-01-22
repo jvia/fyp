@@ -41,7 +41,7 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
     protected Score calculateScore(TemporalProbabilityFeature inData) {
         double sum_entropy = calculateSumEntropy(inData);
         double denominator = calculateDenominator(sum_entropy);
-        double scoreValue = 0.0d;
+        double scoreValue;
 
         scoreValue = calculateAbsoluteScoreValue(inData, denominator);
 //		System.out.println("predecessors " + inData.getPredecessors().size());

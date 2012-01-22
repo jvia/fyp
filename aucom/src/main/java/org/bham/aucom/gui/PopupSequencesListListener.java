@@ -31,7 +31,6 @@ public class PopupSequencesListListener extends MouseAdapter {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 XYSeries series = getFrame().getScoreXYSeries((TimeSeries<Score>) getSequenceList().getSelectedValue());
-                showNodeGraph(series);
             }
         });
         this.selectedIndexPopupMenu.add(item);
@@ -41,7 +40,6 @@ public class PopupSequencesListListener extends MouseAdapter {
             @Override
             public void actionPerformed(ActionEvent e) {
                 XYSeries series = getFrame().getScoreXYSeries((TimeSeries<Score>) getSequenceList().getSelectedValue());
-                showEventHistogram(series);
             }
         });
         this.selectedIndexPopupMenu.add(item);
@@ -51,60 +49,11 @@ public class PopupSequencesListListener extends MouseAdapter {
             @Override
             public void actionPerformed(ActionEvent e) {
                 XYSeries series = getFrame().getScoreXYSeries((TimeSeries<Score>) getSequenceList().getSelectedValue());
-//				getFrame().removeline();
-//				getFrame().setThresholdValue(((ScoreSequence)getSequenceList().getSelectedValue()).getThreshold().getMeanValue());
             }
         });
         //TODO add action to show threshold
         this.selectedIndexPopupMenu.add(item);
 
-    }
-
-    private void showNodeGraph(XYSeries s) {
-//		Range r = getFrame().getVisibleIntervalDomainAxis();
-//		int from = (int) r.getLowerBound();
-//		int to = (int) r.getUpperBound();
-//		TimeSeries<Score> sequence = getFrame().getScoreSequence(s);
-//		ArrayList<Score> vals = sequence.getElementsInRange(from, to);
-////		new EventView(vals, sequence.getThreshold().getMeanValue());
-//		// NodeGraph g = new NodeGraph(vals);
-//		// g.setTitle("score: " + sequence.getName() + " || model:" +
-//		// sequence.getGeneratorName());
-//		// g.setVisible(true);
-//		// TODO nodegraph ScoreSequenceGeben
-    }
-
-    private void showEventHistogram(XYSeries s) {
-//		Range r = this.frame.getVisibleIntervalDomainAxis();
-//		int from = (int) r.getLowerBound();
-//		int to = (int) r.getUpperBound();
-//		TimeSeries<Score> sequence = this.frame.getScoreSequence(s);
-//		ArrayList<Score> vals = sequence.getElementsInRange(from, to);
-//		DefaultCategoryDataset set = new DefaultCategoryDataset();
-//		HashMap<String, Integer> v = new HashMap<String, Integer>();
-//		String name = sequence.toString();
-//		for (Score tmp : vals) {
-//			String className = this.classifier.convertEnconding(tmp
-//					.getEventType());
-//			if (!v.containsKey(className))
-//				v.put(className, 1);
-//			else
-//				v.put(className, v.get(className) + 1);
-//		}
-//		for (String key : v.keySet()) {
-//			set.addValue(v.get(key), name, key);
-//		}
-//		JFreeChart chart = ChartFactory.createBarChart("score: "
-//				+ name + " || model:"
-//				+ sequence.getGeneratorID(), "Events", "Frequency", set,
-//				PlotOrientation.VERTICAL, true, true, false);
-//		ChartPanel panel = new ChartPanel(chart);
-//		JFrame frame = new JFrame("score: " + name + " || model:"
-//				+ sequence.getGeneratorID());
-//		frame.setSize(new Dimension(800,400));
-//		frame.setLayout(new GridLayout(1, 1));
-//		frame.getContentPane().add(panel);
-//		frame.setVisible(true);
     }
 
     @Override
@@ -131,20 +80,10 @@ public class PopupSequencesListListener extends MouseAdapter {
             System.out.println("clickedIndex" + clickedIndex);
             System.out.println("isHit" + isHit);
             if (isHit) {
-                updateSelectedIndexPopup();
                 this.selectedIndexPopupMenu.show(l, l.getX(), l.getY());
             }
 
         }
-    }
-
-    private void updateSelectedIndexPopup() {
-        // TODO Auto-generated method stub
-
-    }
-
-    public void setFrame(ProbabilityChartFrame frame) {
-        this.frame = frame;
     }
 
     public ProbabilityChartFrame getFrame() {

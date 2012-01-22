@@ -42,7 +42,7 @@ public class OptimizeClassifierExperimentFactory extends ExperimentFactory {
             Logger.getLogger(this.getClass().getCanonicalName()).info("name " + name);
 
             T2GramDetector detector = new T2GramDetector();
-            detector.setModel((T2GramModelI) model);
+            detector.setModel(model);
             detector.setClassificator(new StatisticalAnomalyClassifier(0.0, 0.0));
             detector.setSlidingWindow(new SlidingWindow(100, 50));
             Logger.getLogger(this.getClass().getCanonicalName()).info("detector " + detector);

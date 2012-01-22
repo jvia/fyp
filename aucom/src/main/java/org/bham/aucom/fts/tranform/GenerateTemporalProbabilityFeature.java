@@ -1,13 +1,13 @@
 package org.bham.aucom.fts.tranform;
 
-import java.util.HashMap;
-import java.util.logging.Logger;
-
 import org.bham.aucom.data.DataType;
 import org.bham.aucom.data.TemporalDurationFeature;
 import org.bham.aucom.data.TemporalProbabilityFeature;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
 import org.bham.aucom.util.Constants;
+
+import java.util.HashMap;
+import java.util.logging.Logger;
 
 
 public class GenerateTemporalProbabilityFeature extends AbstractAucomTranformNode<TemporalDurationFeature, TemporalProbabilityFeature> {
@@ -18,9 +18,8 @@ public class GenerateTemporalProbabilityFeature extends AbstractAucomTranformNod
     }
 
     @Override
-    protected TemporalProbabilityFeature iTransform(TemporalDurationFeature arg0) throws Exception
-    {
-        TemporalProbabilityFeature f = null;
+    protected TemporalProbabilityFeature iTransform(TemporalDurationFeature arg0) throws Exception {
+        TemporalProbabilityFeature f;
         if (checkIfModelNotTrained()) {
             return null;
         }
@@ -28,33 +27,32 @@ public class GenerateTemporalProbabilityFeature extends AbstractAucomTranformNod
         return f;
     }
 
-    protected TemporalProbabilityFeature generate(TemporalDurationFeature dataToTest)
-    {
+    protected TemporalProbabilityFeature generate(TemporalDurationFeature dataToTest) {
         int eventTypeToTest = dataToTest.getEventType();
 
-        double maximalProbabilityForPredecessor = 0.0f;
-        double absolutProbabilityForPredecessor = 0.0f;
-        double normalizedProbabilityOfPredecessor = 0.0f;
+        double maximalProbabilityForPredecessor;
+        double absoluteProbabilityForPredecessor;
+        double normalizedProbabilityOfPredecessor;
 
-        HashMap<DataType, Double> datatypeToProbabilities = new HashMap<DataType, Double>();
-        long timespanToPredecessor = 0l;
+        HashMap<DataType, Double> dataTypeToProbabilities = new HashMap<DataType, Double>();
+        long timeSpanToPredecessor;
         for (DataType predecessor : dataToTest.getPredecessors()) {
             try {
-                timespanToPredecessor = dataToTest.getDurationFor(predecessor);
+                timeSpanToPredecessor = dataToTest.getDurationFor(predecessor);
 
-                absolutProbabilityForPredecessor = getModel().getProbability(predecessor.getEventType(), eventTypeToTest, timespanToPredecessor);
+                absoluteProbabilityForPredecessor = getModel().getProbability(predecessor.getEventType(), eventTypeToTest, timeSpanToPredecessor);
                 maximalProbabilityForPredecessor = getModel().getMaxProbabilityFor(predecessor.getEventType(), eventTypeToTest);
-                normalizedProbabilityOfPredecessor = normalizePrecedessorProbability(absolutProbabilityForPredecessor, maximalProbabilityForPredecessor);
+                normalizedProbabilityOfPredecessor = normalizePredecessorProbability(absoluteProbabilityForPredecessor, maximalProbabilityForPredecessor);
 
-                String message = "max:" + maximalProbabilityForPredecessor + " prob:" + absolutProbabilityForPredecessor + " normalized prob:" + normalizedProbabilityOfPredecessor + " diff:"
-                        + (normalizedProbabilityOfPredecessor - absolutProbabilityForPredecessor);
+                String message = "max:" + maximalProbabilityForPredecessor + " prob:" + absoluteProbabilityForPredecessor + " normalized prob:" + normalizedProbabilityOfPredecessor + " diff:"
+                                 + (normalizedProbabilityOfPredecessor - absoluteProbabilityForPredecessor);
                 Logger.getLogger(this.getClass().getCanonicalName()).info(message);
-                
-                datatypeToProbabilities.put(predecessor, normalizedProbabilityOfPredecessor);
-                
+
+                dataTypeToProbabilities.put(predecessor, normalizedProbabilityOfPredecessor);
+
                 try {
                     Logger.getLogger(this.getClass().getCanonicalName()).info(
-                            "from: " + predecessor + " to " + predecessor + "timespan " + timespanToPredecessor + " probability " + normalizedProbabilityOfPredecessor);
+                            "from: " + predecessor + " to " + predecessor + "timespan " + timeSpanToPredecessor + " probability " + normalizedProbabilityOfPredecessor);
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
@@ -62,28 +60,21 @@ public class GenerateTemporalProbabilityFeature extends AbstractAucomTranformNod
                 exception.printStackTrace();
             }
         }
-        
+
         Logger.getLogger(this.getClass().getCanonicalName()).info("tested " + dataToTest);
-        return new TemporalProbabilityFeature(dataToTest, datatypeToProbabilities);
+        return new TemporalProbabilityFeature(dataToTest, dataTypeToProbabilities);
     }
 
     /**
-	 * 
-	 */
-    private boolean checkIfModelNotTrained()
-    {
+     *
+     */
+    private boolean checkIfModelNotTrained() {
         return model == null || !model.isTrained();
     }
 
-    /**
-     * @param probabilityOfPrecedessor
-     * @param maxProbability
-     * @return
-     */
-    private double normalizePrecedessorProbability(double probabilityOfPrecedessor, double maxProbability)
-    {
-        double normalizedPredecessorProbability = 0.0d;
-        normalizedPredecessorProbability = probabilityOfPrecedessor;
+    private double normalizePredecessorProbability(double probabilityOfPredecessor, double maxProbability) {
+        double normalizedPredecessorProbability;
+        normalizedPredecessorProbability = probabilityOfPredecessor;
         if (maxProbability == Constants.LOWESTPROBABILITY) {
             System.out.println("TestModel: maxProbability is " + maxProbability);
         } else {
@@ -93,13 +84,11 @@ public class GenerateTemporalProbabilityFeature extends AbstractAucomTranformNod
         return normalizedPredecessorProbability;
     }
 
-    public void setModel(T2GramModelI model)
-    {
+    public void setModel(T2GramModelI model) {
         this.model = model;
     }
 
-    public T2GramModelI getModel()
-    {
+    public T2GramModelI getModel() {
         return this.model;
     }
 
