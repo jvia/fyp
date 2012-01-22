@@ -69,14 +69,14 @@ public abstract class TimeSeries<T extends AbstractData> extends AbstractLinkabl
         setId(id);
     }
 
-    /**
+    /*
      * @param dataTypeTimeSeriesId
      */
     public void setGeneratedFrom(UUID dataTypeTimeSeriesId) {
         addLink(LinkEnum.generatedFromId, dataTypeTimeSeriesId);
     }
 
-    /**
+    /*
      * @param generatoId
      */
     public void setGenerator(UUID generatoId) {

@@ -20,7 +20,7 @@ import nu.xom.ValidityException;
 import nu.xom.XPathContext;
 
 import org.bham.aucom.data.management.DataAlreadyExistsException;
-import org.bham.aucom.util.Tupel;
+import org.bham.aucom.util.Tuple;
 import org.jaxen.JaxenException;
 import org.jaxen.xom.XOMXPath;
 
@@ -29,7 +29,7 @@ public class Report {
 	public static final String GENERATOR_TYPE = "generatorType";
 	private LinkedHashMap<String, Element> corruptedTimestampsElements;
 	private LinkedHashMap<String, Integer> zeroTimestampsElements;
-	private LinkedHashMap<String, Tupel<Element, Element>> negativeTimestampsElements;
+	private LinkedHashMap<String, Tuple<Element, Element>> negativeTimestampsElements;
 	private Builder builder;
 	private int numCorruptedTimestamps;
 	private int numZeroTimestamps;
@@ -110,7 +110,7 @@ public class Report {
 	public Report() {
 		this.corruptedTimestampsElements = new LinkedHashMap<String, Element>();
 		this.zeroTimestampsElements = new LinkedHashMap<String, Integer>();
-		this.negativeTimestampsElements = new LinkedHashMap<String, Tupel<Element, Element>>();
+		this.negativeTimestampsElements = new LinkedHashMap<String, Tuple<Element, Element>>();
 		this.missingTimestampsElements = new LinkedHashMap<String, Integer>();
 		this.numCorruptedTimestamps = 0;
 		this.numZeroTimestamps = 0;
@@ -269,7 +269,7 @@ public class Report {
 				long diff = timestamp - lastTimestamp;
 				if (diff < 0) {
 					this.numNegativeTimestamps++;
-					this.negativeTimestampsElements.put(e.getLocalName(), new Tupel<Element, Element>(lastTimestampElement, e));
+					this.negativeTimestampsElements.put(e.getLocalName(), new Tuple<Element, Element>(lastTimestampElement, e));
 
 				}
 				lastTimestampElement = e;

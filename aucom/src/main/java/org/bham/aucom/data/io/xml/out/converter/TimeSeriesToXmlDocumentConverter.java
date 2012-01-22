@@ -26,7 +26,7 @@ public abstract class TimeSeriesToXmlDocumentConverter<T extends AbstractData> {
 		return xmlDocumentToWrite;
 	}
 	
-	/**
+	/*
 	 * add all attributes of the {@linkplain timeSeriesToWrite} to {@linkplain xmlDocumentToWrite} 
 	 * @param doc
 	 * @param timeSeries

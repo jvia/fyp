@@ -10,7 +10,7 @@ import org.bham.aucom.fts.sink.AucomSinkStatusEvent;
 import org.bham.aucom.fts.sink.NodeStatus;
 import org.bham.aucom.fts.sink.SinkStatusListener;
 import org.bham.aucom.fts.source.*;
-import org.bham.aucom.fts.tranform.AbstractAucomTranformNode;
+import org.bham.aucom.fts.tranform.AbstractAucomTransformNode;
 import org.bham.aucom.fts.tranform.TransformNodeEvent;
 import org.bham.aucom.fts.tranform.TransformNodeEventListener;
 import org.bham.aucom.main.GraphStateChangedEvent;
@@ -42,7 +42,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
         NOTREADY, READY, RUNNING, STOPPED, PAUSED,
     }
 
-    /**
+    /*
      * Default constructor. Should be called by all subclasses
      *
      * @param inGraphName
@@ -138,18 +138,14 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
         return this.graphName;
     }
 
-    /**
-     * Utility function. Offers a convenient mean to check whether the status of this graph object is {@link
-     * #GraphStatus
-     * NOTREADY}
-     *
-     * @return
+    /*
+     * Utility function. Offers a convenient mean to check whether the status of this graph object.
      */
     public boolean isNotReadyStatus() {
         return getStatus().equals(GraphStatus.NOTREADY);
     }
 
-    /**
+    /*
      * Utility function. Offers a convenient mean to check whether the status of this graph object is {@link
      * #GraphStatus
      * RUNNING}
@@ -214,13 +210,15 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
 
     protected abstract String getReason();
 
-    /**
+    /*
      * Indicates whether the preconditions for the immediate execution of the graph are met. Postcondition: If this
-     * function returns True the status of the graph must not be {@link #GraphStatus NOTREADY}
+     * function returns True the status of the graph must not be {@link #GraphStatus NOT_READY}
+     *
+     * @return
      */
     public abstract boolean preconditionsSatisfied();
 
-    /**
+    /*
      * Connects to all fts nodes of the fts graph and listens to status events
      *
      * @param nodes
@@ -240,7 +238,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
                     ((AucomSinkAdapter<?>) node).addSinkStatusListener(this);
                     Logger.getLogger(this.getClass().getCanonicalName()).info("listening to sink " + node.toString());
                 } else {
-                    ((AbstractAucomTranformNode<?, ?>) node).addTransformNodeListener(this);
+                    ((AbstractAucomTransformNode<?, ?>) node).addTransformNodeListener(this);
                     Logger.getLogger(this.getClass().getCanonicalName()).info("listening to node " + node.toString());
                 }
             } catch (ClassCastException exception) {
@@ -249,7 +247,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
         }
     }
 
-    /**
+    /*
      * Pauses the graph execution by pausing the sources. The graph can be
      * always paused, except when its already paused. In this case we don't pause again as we don't want
      * to override the previous state.
@@ -264,7 +262,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
         }
     }
 
-    /**
+    /*
      * Changes the graph state to {@link #GraphStatus PAUSED}
      */
     private void setPausedState() {
@@ -272,15 +270,14 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
         setStatus(GraphStatus.PAUSED);
     }
 
-    /**
+    /*
      * Copies the value of {@link #currentStatus} to {@link #previousStatus}
      */
-
     private void copyCurrentToPreviousStatus() {
         this.previousStatus = this.currentStatus;
     }
 
-    /**
+    /*
      * calls pause() an all sources of the fts graph. By this means the fts graph is completely paused.
      *
      * @throws IllegalStateChange
@@ -330,7 +327,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
         }
     }
 
-    /**
+    /*
      * Stop this Graph if {@link GraphStatus} is not STOPPED. Afterwards this graph object cannot be restarted again In
      * doing so the {@link #cleanUp()} function will be called which offers a customized way to neatly clean up any
      * resources used by this graph
@@ -356,13 +353,13 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
         }
     }
 
-    /**
+    /*
      * Interface offering a mean to clean up resources used by this graph before stopping this graph. Called by {@link
      * #stop()}
      */
     protected abstract void cleanUp();
 
-    /**
+    /*
      * SourceEvent handling function. Changes {@link #currentStatus} to RUNNING if a source notifies about sending its
      * first element ({@link #SourceStatus FIRST_ELEMENT_SENT}) and if {@link #currentStatus} is not RUNNING
      */
@@ -376,32 +373,32 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
         }
     }
 
-    /**
+    /*
      * TransformNodeEvent handling function. Changes {@link #currentStatus} to READY if a transformation node notifies
-     * about receiving last element ({@link #NodeStatus RECEIVEDLASTELEMENT}) and if {@link #currentStatus} is RUNNING
+     * about receiving last element ({@link #NodeStatus RECEIVED_LAST_ELEMENT}) and if {@link #currentStatus} is RUNNING
      */
     @Override
     public void handleTransformNodeEvent(TransformNodeEvent event) {
-        if (event.getStatus().equals(NodeStatus.RECEIVEDLASTELEMENT) && currentStatus.equals(GraphStatus.RUNNING)) {
+        if (event.getStatus().equals(NodeStatus.RECEIVED_LAST_ELEMENT) && currentStatus.equals(GraphStatus.RUNNING)) {
             setStatus(GraphStatus.READY);
             Logger.getLogger(this.getClass().getCanonicalName()).info("processing finished in a transformation node");
         }
     }
 
-    /**
+    /*
      * SinkStatusEvent handling function. Changes {@link #currentStatus} to READY if a sink node notifies about
      * receiving
-     * last element ({@link #NodeStatus RECEIVEDLASTELEMENT}) and if {@link #currentStatus} is RUNNING
+     * last element ({@link #NodeStatus RECEIVED_LAST_ELEMENT}) and if {@link #currentStatus} is RUNNING
      */
     @Override
     public void sinkStatusChanged(AucomSinkStatusEvent event) {
-        if (event.getStatus().equals(NodeStatus.RECEIVEDLASTELEMENT) && currentStatus.equals(GraphStatus.RUNNING)) {
+        if (event.getStatus().equals(NodeStatus.RECEIVED_LAST_ELEMENT) && currentStatus.equals(GraphStatus.RUNNING)) {
             Logger.getLogger(this.getClass().getCanonicalName()).info("processing finished in a sink");
             setStatus(GraphStatus.READY);
         }
     }
 
-    /**
+    /*
      * Sets the state of the graph. It additionally save the previous state to {@link previousStatus} and Notifies all
      * {@link GraphStatusListener}
      *
@@ -415,7 +412,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
         fireGraphStatusChangedEvent(gsce);
     }
 
-    /**
+    /*
      * returns the current graph status
      *
      * @return {@link #currentStatus} the current status of the graph
@@ -424,7 +421,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
         return currentStatus;
     }
 
-    /**
+    /*
      * returns the number of currently registered {@link GraphStatusListener}
      *
      * @return number of currently registered listeners

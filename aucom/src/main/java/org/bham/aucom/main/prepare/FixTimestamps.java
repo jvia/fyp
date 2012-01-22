@@ -21,7 +21,7 @@ import nu.xom.XPathContext;
 import org.bham.aucom.util.FileOperator;
 
 public class FixTimestamps {
-	/**
+	/*
 	 * @param args
 	 */
 	public static void main(String[] args) {

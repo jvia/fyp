@@ -13,7 +13,7 @@ package org.bham.aucom.gui.charts;
 
 import org.bham.aucom.data.Score;
 import org.bham.aucom.data.timeseries.TimeSeries;
-import org.bham.aucom.util.Tupel;
+import org.bham.aucom.util.Tuple;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -56,7 +56,7 @@ public class AnomalyBarChartFrame extends javax.swing.JFrame implements ListData
         return this.dataSet;
     }
 
-    /**
+    /*
      * Creates new form AnomalyBarChartFrame
      */
     public AnomalyBarChartFrame(TimeSeries<Score> inData) {
@@ -74,7 +74,7 @@ public class AnomalyBarChartFrame extends javax.swing.JFrame implements ListData
         pack();
     }
 
-    public ArrayList<Tupel> generateBarchartOutput(ArrayList<Score> list, int binSize) {
+    public ArrayList<Tuple> generateBarchartOutput(ArrayList<Score> list, int binSize) {
 
         long firstBinNumber = list.get(0).getTimestamp() % binsize;
         long lastBinNumber = list.get(list.size() - 1).getTimestamp() % binsize;
@@ -102,7 +102,7 @@ public class AnomalyBarChartFrame extends javax.swing.JFrame implements ListData
         }
     }
 
-    /**
+    /*
      * @param status
      * @param sequenceName
      */

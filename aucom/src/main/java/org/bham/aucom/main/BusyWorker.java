@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 
 public class BusyWorker {
-    /**
+    /*
      * @param args
      */
     public static void intensiveCalc(int numThreads) {

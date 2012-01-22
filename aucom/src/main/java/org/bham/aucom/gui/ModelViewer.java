@@ -27,7 +27,7 @@ import javax.swing.JFileChooser;
 import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
 import org.bham.aucom.util.ExampleFileFilter;
-import org.bham.aucom.util.Tupel;
+import org.bham.aucom.util.Tuple;
 
 
 /**
@@ -78,7 +78,7 @@ public class ModelViewer extends javax.swing.JFrame {
 		int col = 10;
 		int row = model.getTransitionMatrix().keySet().size()/col;
 		distributionPanel.setLayout(new GridLayout(row, col));
-		for (Tupel<Integer, Integer> t : model.getTransitionMatrix().keySet()) {
+		for (Tuple<Integer, Integer> t : model.getTransitionMatrix().keySet()) {
 			System.out.println(t);
 			String label = t.toString();
 			JButton b = new JButton(label);

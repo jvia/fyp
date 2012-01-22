@@ -51,7 +51,7 @@ public class DataType extends Observation {
         }
     }
 
-    /**
+    /*
      * Creates a Datatype object from an existing Datatype object.
      *
      * @param d

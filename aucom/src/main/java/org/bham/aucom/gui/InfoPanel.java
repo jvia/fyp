@@ -18,7 +18,7 @@ package org.bham.aucom.gui;
 public class InfoPanel extends javax.swing.JFrame {
 	private static final long serialVersionUID = 0L;
 
-    /** Creates new form Info */
+    /* Creates new form Info */
     public InfoPanel(String info) {
         initComponents();
         this.jTextArea1.setText(info);

@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.logging.Logger;
 
 
-public class GenerateTemporalProbabilityFeature extends AbstractAucomTranformNode<TemporalDurationFeature, TemporalProbabilityFeature> {
+public class GenerateTemporalProbabilityFeature extends AbstractAucomTransformNode<TemporalDurationFeature, TemporalProbabilityFeature> {
     private T2GramModelI model = null;
 
     public GenerateTemporalProbabilityFeature() {
@@ -65,9 +65,7 @@ public class GenerateTemporalProbabilityFeature extends AbstractAucomTranformNod
         return new TemporalProbabilityFeature(dataToTest, dataTypeToProbabilities);
     }
 
-    /**
-     *
-     */
+
     private boolean checkIfModelNotTrained() {
         return model == null || !model.isTrained();
     }

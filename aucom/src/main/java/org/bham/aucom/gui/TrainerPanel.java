@@ -39,7 +39,7 @@ public class TrainerPanel extends javax.swing.JPanel implements ModelTrainerList
     private static final long serialVersionUID = 0L;
     T2GramModelTrainer trainer;
 
-    /**
+    /*
      * Creates new form TrainerPanel
      */
     public TrainerPanel(T2GramModelTrainer inTrainer) {

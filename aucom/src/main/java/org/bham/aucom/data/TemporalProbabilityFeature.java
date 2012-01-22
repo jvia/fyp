@@ -85,7 +85,7 @@ public class TemporalProbabilityFeature extends TemporalDurationFeature {
         return LOWESTPROBABILITY;
 	}
 
-	/**
+	/*
 	 * @param eventType
 	 * @return
 	 */

@@ -28,7 +28,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 public class ProbabilityDisplayer extends javax.swing.JFrame {
 	private static final long serialVersionUID = 0L;
 
-	/** Creates new form HistogramView */
+	/* Creates new form HistogramView */
 	public ProbabilityDisplayer(ProbabilityDistribution distributionToDisplay) {
 		initComponents();
 		String title = distributionToDisplay.getType();

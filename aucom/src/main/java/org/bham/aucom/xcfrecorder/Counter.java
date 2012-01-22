@@ -1,10 +1,10 @@
 package org.bham.aucom.xcfrecorder;
 
 import org.bham.aucom.data.AbstractData;
-import org.bham.aucom.fts.tranform.AbstractAucomTranformNode;
+import org.bham.aucom.fts.tranform.AbstractAucomTransformNode;
 
 
-public class Counter<TIn extends AbstractData> extends AbstractAucomTranformNode<TIn, TIn> {
+public class Counter<TIn extends AbstractData> extends AbstractAucomTransformNode<TIn, TIn> {
 	int counter = 0;
 	Counter() {
 		super("counter");

@@ -1,6 +1,6 @@
 package org.bham.aucom.data;
 
-import org.bham.aucom.util.Tupel;
+import org.bham.aucom.util.Tuple;
 
 /**
  * This class represents a name-value pair of Strings that is used as a
@@ -8,7 +8,7 @@ import org.bham.aucom.util.Tupel;
  * 
  * @author Raphael Golombek <rgolombe@cor-lab.uni-bielefeld.de>
  */
-public class DomainFeature extends Tupel<String, String> {
+public class DomainFeature extends Tuple<String, String> {
 
     /**
      * Create the DomainFeature object.
@@ -41,7 +41,7 @@ public class DomainFeature extends Tupel<String, String> {
         return this.getSecondElement();
     }
 
-    /**
+    /*
      * Makes a deep copy of this domain feature object.
      */
     public Object copy()

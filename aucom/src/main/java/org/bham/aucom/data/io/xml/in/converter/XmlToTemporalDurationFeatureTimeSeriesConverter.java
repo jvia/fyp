@@ -33,7 +33,7 @@ public class XmlToTemporalDurationFeatureTimeSeriesConverter extends XmlToTimeSe
 		private Long getDurationFroPredecessor(Element predeCessorElement) {
 		return Long.valueOf(predeCessorElement.getAttributeValue("duration"));
 	}
-	/**
+	/*
 	 * @param e
 	 * @return
 	 */

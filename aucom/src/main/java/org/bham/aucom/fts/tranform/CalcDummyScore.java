@@ -41,7 +41,7 @@ public class CalcDummyScore extends AbstractTransformNode<Score, Score> {
 		}
 	}
 
-	/**
+	/*
 	 * @param distribution
 	 * @return
 	 */

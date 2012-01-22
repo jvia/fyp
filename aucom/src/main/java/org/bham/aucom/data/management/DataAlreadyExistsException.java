@@ -21,7 +21,7 @@ public class DataAlreadyExistsException extends Exception {
 	super(s);
     }
 
-    /**
+    /*
      * Constructs a <code>DataAllreadyExistsException</code> with a detail message
      * consisting of the given pathname string followed by the given reason
      * string.  If the <code>reason</code> argument is <code>null</code> then

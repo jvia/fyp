@@ -26,7 +26,7 @@ public class SlidingWindowDialog extends javax.swing.JDialog {
 	SlidingWindow sw;
 	private boolean approved = false;
 
-	/** Creates new form SlidingWindowDialog */
+	/* Creates new form SlidingWindowDialog */
 	public SlidingWindowDialog(java.awt.Frame parent, boolean modal, SlidingWindow inSw) {
 		super(parent, modal);
 		initComponents();

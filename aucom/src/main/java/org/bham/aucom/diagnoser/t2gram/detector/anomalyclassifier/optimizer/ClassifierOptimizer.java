@@ -52,7 +52,7 @@ public class ClassifierOptimizer implements Presentable, GraphStatusListener {
         }
     }
 
-    /**
+    /*
      * @throws ActionFailedException
      */
     public void start() throws IllegalArgumentException, ActionFailedException {
@@ -72,7 +72,7 @@ public class ClassifierOptimizer implements Presentable, GraphStatusListener {
         }
     }
 
-    /**
+    /*
      * @return
      */
     private boolean isAcceptableFalsePositiveRate() {
@@ -126,7 +126,7 @@ public class ClassifierOptimizer implements Presentable, GraphStatusListener {
         }
     }
 
-    /**
+    /*
      * handles events sent by the optimization graph.
      *
      * @param evt the event to handle
@@ -204,7 +204,7 @@ public class ClassifierOptimizer implements Presentable, GraphStatusListener {
         this.optimizationMethod.setBestPositiveQuadraticDistance(currentPositiveQuadraticDistance);
     }
 
-    /**
+    /*
      * @param evt
      * @return
      */

@@ -10,7 +10,7 @@ import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
 import java.util.logging.Logger;
 
 
-public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProbabilityFeature, Score> {
+public class CalcEntropyAvgScore extends AbstractAucomTransformNode<TemporalProbabilityFeature, Score> {
     protected T2GramModelI model;
 
     public CalcEntropyAvgScore(T2GramModelI inModel) {
@@ -62,7 +62,7 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
         return Math.max(Math.pow(sum_entropy, 2), 0.00001);
     }
 
-    /**
+    /*
      * @param currentData
      * @param sum_entropy
      * @param scoreValue

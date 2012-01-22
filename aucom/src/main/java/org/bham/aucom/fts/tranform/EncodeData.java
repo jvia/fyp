@@ -9,7 +9,7 @@ import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.encoder.Encoder;
 
 
-public class EncodeData extends AbstractAucomTranformNode<Observation, DataType> {
+public class EncodeData extends AbstractAucomTransformNode<Observation, DataType> {
     private Encoder encoder;
 
     public EncodeData() {

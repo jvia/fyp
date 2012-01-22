@@ -8,7 +8,7 @@ import org.bham.aucom.data.SystemFaultStatus;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.AnomalyClassifier;
 
 
-public class Classify extends AbstractAucomTranformNode<Score, Classification> {
+public class Classify extends AbstractAucomTransformNode<Score, Classification> {
 	private AnomalyClassifier classifier = null;
 
 	public Classify(AnomalyClassifier inThreshold) {

@@ -19,7 +19,7 @@ import org.bham.aucom.util.AucomListModelAdapter;
 public class DataManagerPanel extends javax.swing.JPanel {
 	private static final long serialVersionUID = 0L;    
 	DataManager manager;
-    /** Creates new form DataManagerPanel */
+    /* Creates new form DataManagerPanel */
     public DataManagerPanel(DataManager inManager) {
     	manager = inManager;
         initComponents();

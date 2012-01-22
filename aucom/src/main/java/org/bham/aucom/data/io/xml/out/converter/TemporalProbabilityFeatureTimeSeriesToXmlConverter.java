@@ -26,7 +26,7 @@ public class TemporalProbabilityFeatureTimeSeriesToXmlConverter extends TimeSeri
 		appendPropabilities(data, predecessors);
 	}
 
-	/**
+	/*
 	 * @param data
 	 * @param predecessors
 	 */
@@ -40,7 +40,7 @@ public class TemporalProbabilityFeatureTimeSeriesToXmlConverter extends TimeSeri
 		}
 	}
 
-	/**
+	/*
 	 * @param tpElement
 	 * @return
 	 */
@@ -50,7 +50,7 @@ public class TemporalProbabilityFeatureTimeSeriesToXmlConverter extends TimeSeri
 		return predecessors;
 	}
 
-	/**
+	/*
 	 * @param containerElement
 	 * @return
 	 */

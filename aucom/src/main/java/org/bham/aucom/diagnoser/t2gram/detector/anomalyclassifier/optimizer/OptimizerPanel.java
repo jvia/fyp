@@ -32,7 +32,7 @@ import org.bham.aucom.util.ExampleFileFilter;
  */
 public class OptimizerPanel extends javax.swing.JPanel implements ClassifierOptimizerStatusListener {
     ClassifierOptimizer optimizer;
-	/** Creates new form OptimizerPanel */
+	/* Creates new form OptimizerPanel */
     public OptimizerPanel(ClassifierOptimizer inOptimizer){
         initComponents();
         optimizer = inOptimizer;

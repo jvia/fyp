@@ -2,7 +2,7 @@ package org.bham.aucom.main;
 
 import org.bham.aucom.diagnoser.t2gram.ProbabilityDistribution;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelImp;
-import org.bham.aucom.util.Tupel;
+import org.bham.aucom.util.Tuple;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -16,8 +16,8 @@ public class ModelReport {
             return;
         Logger.getLogger("loading model from " + args[0]);
         T2GramModelImp model = new ModelReport().loadModel(new File(args[0]));
-        ArrayList<Tupel<Integer, Integer>> tupel = model.getTransitionMatrix().keySet();
-        ProbabilityDistribution prob = model.getTransitionMatrix().get(tupel.get(0).getFirstElement(), tupel.get(0).getSecondElement());
+        ArrayList<Tuple<Integer, Integer>> tuple = model.getTransitionMatrix().keySet();
+        ProbabilityDistribution prob = model.getTransitionMatrix().get(tuple.get(0).getFirstElement(), tuple.get(0).getSecondElement());
         Logger.getLogger(ModelReport.class.getCanonicalName()).info("Distribution: " + prob.getClass().getCanonicalName());
     }
 

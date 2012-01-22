@@ -7,7 +7,7 @@ package org.bham.aucom.data;
  */
 public class SingleScore extends Score {
 
-    /**
+    /*
      * 
      * @param tpf
      * @param value 
@@ -17,7 +17,7 @@ public class SingleScore extends Score {
         super(tpf, value);
     }
 
-    /**
+    /*
      * 
      * @param s 
      */
@@ -26,7 +26,7 @@ public class SingleScore extends Score {
         this(s, s.getValue());
     }
 
-    /**
+    /*
      * 
      * @return 
      */
@@ -36,7 +36,7 @@ public class SingleScore extends Score {
         return "[ts:" + getTimestamp() + ":scr:" + getValue() + "]";
     }
 
-    /**
+    /*
      * 
      * @return 
      */

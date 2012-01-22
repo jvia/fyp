@@ -16,7 +16,7 @@ public class XcfFacesOutBoostDetector {
         recordedDocumentsList = new ArrayList<Document>();
     }
 
-    /**
+    /*
      * @param args
      */
     public static void main(String[] args) {

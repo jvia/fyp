@@ -17,10 +17,10 @@ public class SingleDataSink<TIn extends AbstractData> extends AucomSinkAdapter<T
 		this.setData(e);
 		Logger.getLogger(this.getClass().getCanonicalName()).info("pushing item " + getData().toString());
 		if (getData().isMarkedAsLastElement()) {
-			fireAucomSinkStatusChangedEvent(new AucomSinkStatusEvent(this, NodeStatus.RECEIVEDLASTELEMENT));
+			fireAucomSinkStatusChangedEvent(new AucomSinkStatusEvent(this, NodeStatus.RECEIVED_LAST_ELEMENT));
 			Logger.getLogger(this.getClass().getCanonicalName()).info("pushing last item " + getData());
 		}else if (getData().isMarkedAsFirstElement()) {
-			fireAucomSinkStatusChangedEvent(new AucomSinkStatusEvent(this, NodeStatus.RECEIVEDLASTELEMENT));
+			fireAucomSinkStatusChangedEvent(new AucomSinkStatusEvent(this, NodeStatus.RECEIVED_LAST_ELEMENT));
 			Logger.getLogger(this.getClass().getCanonicalName()).info("pushing first item " + getData());
 		} else {
 			fireAucomSinkStatusChangedEvent(new AucomSinkStatusEvent(this, NodeStatus.RECEIVEDELEMENT));

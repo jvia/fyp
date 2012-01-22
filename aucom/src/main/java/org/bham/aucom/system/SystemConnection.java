@@ -62,7 +62,7 @@ abstract public class SystemConnection implements Presentable {
         return currentState.equals(SystemConnectionStatus.CONNECTED);
     }
 
-    /**
+    /*
      * Changes the state of the SystemConnection. This is the mechanism for 
      * connecting or disconnecting to an outside system.
      * 
@@ -190,7 +190,7 @@ abstract public class SystemConnection implements Presentable {
         return currentState;
     }
 
-    /**
+    /*
      * Returns an instance of the SystemConnection object.
      * 
      * @return 
@@ -204,7 +204,7 @@ abstract public class SystemConnection implements Presentable {
         return instance;
     }
 
-    /**
+    /*
      * Loads configuration information about which system to connect to.
      * 
      * @return a connection for a specific system

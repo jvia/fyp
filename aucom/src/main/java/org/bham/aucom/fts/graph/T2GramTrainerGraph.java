@@ -76,14 +76,14 @@ public class T2GramTrainerGraph extends AbstractAucomGraph {
 		return reason;
 	}
 
-	/**
+	/*
 	 * @return
 	 */
 	private boolean isFreatureGeneratorMissing() {
 		return tdfNode.getGenerator() != null;
 	}
 
-	/**
+	/*
 	 * @return
 	 */
 	private boolean isTrainingDataMissing() {

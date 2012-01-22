@@ -173,7 +173,7 @@ public abstract class AbstractData implements AttributableObject {
         this.timestamp = inTimestamp;
     }
 
-    /**
+    /*
      * Return a copy of this object.
      * 
      * @return
@@ -200,7 +200,7 @@ public abstract class AbstractData implements AttributableObject {
         return isFirstElement;
     }
 
-    /**
+    /*
      * Change the object's last element status.
      * 
      * @param isFirstElement true if first; false otherwise

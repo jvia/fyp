@@ -185,7 +185,7 @@ public class SourceScopeTypeEncoder extends Encoder {
 		return features;
 	}
 
-	/**
+	/*
 	 * @param type
 	 * @param source
 	 * @param scope

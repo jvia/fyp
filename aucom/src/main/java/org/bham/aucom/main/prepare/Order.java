@@ -31,8 +31,7 @@ public class Order {
             timestamp = in.getAttribute("timestamp")
                           .getValue();
         } else if (in.getAttribute(TIMESTAMP) != null) {
-            timestamp = in.getAttribute(TIMESTAMP).getValue()
-                          .toString();
+            timestamp = in.getAttribute(TIMESTAMP).getValue();
         }
         try {
             out = Long.parseLong(timestamp);
@@ -100,9 +99,6 @@ public class Order {
         return list;
     }
 
-    /**
-     * @param args
-     */
     public static void main(String[] args) {
         if (args.length != 1) {
             System.out.println("wrong number of arguments");

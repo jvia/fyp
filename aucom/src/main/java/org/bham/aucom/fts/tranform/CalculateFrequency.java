@@ -4,7 +4,7 @@ import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 import org.bham.aucom.data.AbstractData;
 
 
-public class CalculateFrequency<TIn extends AbstractData> extends AbstractAucomTranformNode<TIn, TIn> {
+public class CalculateFrequency<TIn extends AbstractData> extends AbstractAucomTransformNode<TIn, TIn> {
 	private static final int HISTORY_SIZE = 20;
 	long windowSize;
 	long lastTimestamp;

@@ -7,7 +7,7 @@ import org.bham.aucom.data.DataType;
 import org.bham.aucom.data.TemporalDurationFeature;
 
 
-public class GenerateTemporalDurationFeature extends AbstractAucomTranformNode<DataType, TemporalDurationFeature> {
+public class GenerateTemporalDurationFeature extends AbstractAucomTransformNode<DataType, TemporalDurationFeature> {
 	private TemporalDurationFeatureGenerator generator;
 	public GenerateTemporalDurationFeature() {
 		super("GenerateDurationFeature");

@@ -52,7 +52,7 @@ public abstract class XmlToTimeSeriesConverter<T extends AbstractData>{
 		return ts;
 	}
 	
-	/**
+	/*
 	 * Retrieves attributes from an xml element and returns them as a HashMap. Keys are attribute names, values are attribute values
 	 * @param e the element from which the attributes are read
 	 */

@@ -3,7 +3,7 @@ package org.bham.aucom.fts.tranform;
 import org.bham.aucom.data.ConsistentObservationChecker;
 import org.bham.aucom.data.Observation;
 
-public class AssertConsistentObservation extends AbstractAucomTranformNode<Observation, Observation> {
+public class AssertConsistentObservation extends AbstractAucomTransformNode<Observation, Observation> {
 	ConsistentObservationChecker checker;
 	public AssertConsistentObservation() {
 		super("AssertConsistentObservation");

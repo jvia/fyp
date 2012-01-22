@@ -15,7 +15,7 @@ import java.text.DecimalFormat;
 import java.util.UUID;
 
 public class PrintStatistics {
-    /**
+    /*
      * @param sequence1
      * @param statisticsSequence1
      */

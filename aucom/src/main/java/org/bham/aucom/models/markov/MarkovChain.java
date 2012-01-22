@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import org.bham.aucom.util.HashMatrix;
-import org.bham.aucom.util.Tupel;
+import org.bham.aucom.util.Tuple;
 
 
 public class MarkovChain {
@@ -27,7 +27,7 @@ public class MarkovChain {
 	}
 	private int getNumTransitionElements(int classId){
 		int out = 0;
-		for(Tupel<Integer, Integer> key: transitions.keySet()){
+		for(Tuple<Integer, Integer> key: transitions.keySet()){
 			if(key.getFirstElement()==classId)
 				out += transitions.get(key.getFirstElement(), key.getSecondElement());
 		}

@@ -44,16 +44,14 @@ public class T2GramDetectorPanel extends javax.swing.JPanel implements TimeSerie
 	private static final long serialVersionUID = 0L;
 	T2GramDetector detector;
 
-	/** Creates new form MonitorPanel */
+	/* Creates new form MonitorPanel */
 	public T2GramDetectorPanel(T2GramDetector inDetector) {
 		detector = inDetector;
 		initComponents();
 		appendDetectorInfoToTextArea();
 	}
 
-	/**
-	 * 
-	 */
+
 	private void appendDetectorInfoToTextArea() {
 		appendRowToInfoTextArea("model " + detector.getModel());
 		appendRowToInfoTextArea("classificator " + detector.getClassificator());

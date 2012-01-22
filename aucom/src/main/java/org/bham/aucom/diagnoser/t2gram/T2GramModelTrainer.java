@@ -22,7 +22,7 @@ import org.bham.aucom.main.GraphStateChangedEvent;
 import org.bham.aucom.main.GraphStatusListener;
 import org.bham.aucom.util.Constants;
 import org.bham.aucom.util.HashMatrix;
-import org.bham.aucom.util.Tupel;
+import org.bham.aucom.util.Tuple;
 
 
 public class T2GramModelTrainer extends AbstractModelTrainer implements GraphStatusListener {
@@ -80,7 +80,7 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
 			Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, "staring training");
 			HashMatrix<Integer, Integer, ArrayList<Double>> values = computeTrainingset(output);
 			Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, "iterating through trainingset with " + values.size() + " elements");
-			for (Tupel<Integer, Integer> t : values.keySet()) {
+			for (Tuple<Integer, Integer> t : values.keySet()) {
 				double[] durations = getDurationsAsDoubleArray(values, t);
 				updateModel(model, t.getFirstElement(), t.getSecondElement(), durations);
 			}
@@ -94,7 +94,7 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
 		model.getDistributionFor(firstElement, secondElement).update(durations);
 	}
 
-	/**
+	/*
 	 * @param t
 	 */
 	private void createDistributionInModelIfMissing(T2GramModelI inModel, Integer firstElement, Integer secondElement) {
@@ -103,12 +103,12 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
 		}
 	}
 
-	/**
+	/*
 	 * @param values
 	 * @param t
 	 * @return
 	 */
-	private double[] getDurationsAsDoubleArray(HashMatrix<Integer, Integer, ArrayList<Double>> values, Tupel<Integer, Integer> t) {
+	private double[] getDurationsAsDoubleArray(HashMatrix<Integer, Integer, ArrayList<Double>> values, Tuple<Integer, Integer> t) {
 		double[] d = new double[values.get(t.getFirstElement(), t.getSecondElement()).size()];
 		for (int j = 0; j < values.get(t.getFirstElement(), t.getSecondElement()).size(); j++) {
 			d[j] = values.get(t.getFirstElement(), t.getSecondElement()).get(j);
@@ -116,7 +116,7 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
 		return d;
 	}
 
-	/**
+	/*
 	 * @param input
 	 * @param values
 	 */

@@ -29,7 +29,7 @@ public class Observation extends AbstractData {
         this.content = content;
     }
 
-    /**
+    /*
      * Creates a new observation from an object which is from type Observation 
      * or a subtype of it.
      * 

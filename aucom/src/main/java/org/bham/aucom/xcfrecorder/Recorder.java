@@ -66,7 +66,7 @@ public class Recorder implements Presentable, SystemConnectionStatusListener, Ti
         return "/record_" + new DecimalFormat("000").format(getNextFileNumber(this.getFolder())) + ".obs";
     }
 
-    /**
+    /*
      * starts recording to a new file.
      */
     public void record() throws ActionFailedException {

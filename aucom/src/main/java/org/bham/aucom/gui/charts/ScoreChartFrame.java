@@ -53,7 +53,7 @@ public class ScoreChartFrame extends javax.swing.JFrame implements
 	private JFreeChart chart;
 	private List<Score> externDataset;
 
-	/** Creates new form ProbabilityChartFrame */
+	/* Creates new form ProbabilityChartFrame */
 	public ScoreChartFrame(MonitorableArrayList<Score> inData) {
 		initComponents();
 		initChart(inData);

@@ -52,7 +52,7 @@ public class DataModel implements TimeSeriesStatusListener {
 		return timeSeriesToAdd.getId();
 	}
 
-	/**
+	/*
 	 * @param <T>
 	 * @param timeSeriesToAdd
 	 */
@@ -140,7 +140,7 @@ public class DataModel implements TimeSeriesStatusListener {
 		return this.getTimeseries().get(id);
 	}
 
-	/**
+	/*
 	 * @param id
 	 * @return
 	 */

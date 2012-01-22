@@ -21,7 +21,7 @@ public class RingBuffer<T> {
 		return getNextInsertPosition();
 	}
 
-	/**
+	/*
 	 * @param inCapacity
 	 */
         @SuppressWarnings("unchecked")
@@ -80,7 +80,7 @@ public class RingBuffer<T> {
 		return data[index];
 	}
 	
-	/**
+	/*
 	 * returns an array with elements of the buffer. If the buffer is full, the array has length {@linkplain getCapacity()} otherwise the array's length  is the number of inserted elements.  
 	 * @return
 	 */

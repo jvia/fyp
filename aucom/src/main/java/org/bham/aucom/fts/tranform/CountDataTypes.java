@@ -5,7 +5,7 @@ import java.util.HashMap;
 import org.bham.aucom.data.DataType;
 
 
-public class CountDataTypes extends AbstractAucomTranformNode<DataType, DataType> {
+public class CountDataTypes extends AbstractAucomTransformNode<DataType, DataType> {
 	private HashMap<Integer, Integer> counting;
 	
 	public CountDataTypes() {

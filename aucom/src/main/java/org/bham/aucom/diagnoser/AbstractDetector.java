@@ -13,13 +13,13 @@ import org.bham.aucom.util.Constants;
 
 abstract public class AbstractDetector implements Detector, Presentable{
 	public enum DetectorStatus{
-		NOTREADY, 
+        NOT_READY,
 		READY,
 		RUNNING,
 		STOPPED
 	}
-	DetectorStatus previousStatus = DetectorStatus.NOTREADY;
-	private DetectorStatus currentStatus = DetectorStatus.NOTREADY;
+	DetectorStatus previousStatus = DetectorStatus.NOT_READY;
+	private DetectorStatus currentStatus = DetectorStatus.NOT_READY;
 	
 	protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
@@ -40,7 +40,7 @@ abstract public class AbstractDetector implements Detector, Presentable{
 	 */
 	
 
-	/**
+	/*
 	 * add a status listener to the detector. listener will be notified when the status of the detector changes
 	 * see: @DetectorStatus for more information
 	 * @param the listener to add

@@ -19,7 +19,7 @@ public class TemporalDurationFeatureGenerator {
     ConcurrentHashMap<Integer, DataType> lastOccurrences = new ConcurrentHashMap<Integer, DataType>(new LinkedHashMap<Integer, DataType>());
     Collection<Integer> initialClasses;
 
-    /**
+    /*
      * null is permitted
      * 
      * @param inInitialClasses

@@ -28,7 +28,7 @@ public final class Configuration {
     private static Configuration instance = null;
     private HashMap<String, String> map;
 
-    /**
+    /*
      * Creates the private instance of the Configuration object.
      */
     private Configuration()
@@ -36,7 +36,7 @@ public final class Configuration {
         map = new HashMap<String, String>();
     }
 
-    /**
+    /*
      * Returns the singleton of the Configuration object.
      * 
      * @return
@@ -54,7 +54,7 @@ public final class Configuration {
         return instance;
     }
 
-    /**
+    /*
      * Returns the value associated with a configuration parameter.
      * 
      * @param inKey configuration name
@@ -65,7 +65,7 @@ public final class Configuration {
         return map.get(inKey);
     }
 
-    /**
+    /*
      * Returns the number of configuration parameters in the object.
      * 
      * @return number of configuration parameters.
@@ -75,7 +75,7 @@ public final class Configuration {
         return map.size();
     }
 
-    /**
+    /*
      * Loads the configuration file.
      * 
      * @throws Exception if something went wrong
@@ -93,7 +93,7 @@ public final class Configuration {
         Logger.getLogger(this.getClass().getCanonicalName()).info("loading done");
     }
 
-    /**
+    /*
      * Determines if an intern file exists.
      * 
      * @return true if the file exists
@@ -103,7 +103,7 @@ public final class Configuration {
         return SystemConnectionFactoryManager.class.getResourceAsStream(resourcePath) != null;
     }
 
-    /**
+    /*
      * Determines if an extern file exists.
      * 
      * @return true if file exists
@@ -113,7 +113,7 @@ public final class Configuration {
         return new File(fileString).exists();
     }
 
-    /**
+    /*
      * Removes all configuration information from the Singleton class.
      */
     public void resetConfiguration()
@@ -122,7 +122,7 @@ public final class Configuration {
         instance = null;
     }
 
-    /**
+    /*
      * Loads the configuration parameters into the map.
      * 
      * @param br buffer to read from
@@ -137,7 +137,7 @@ public final class Configuration {
         }
     }
 
-    /**
+    /*
      * Returns a list of all the valid lines.
      * 
      * @param linesToLoad 
@@ -154,7 +154,7 @@ public final class Configuration {
         return lines;
     }
 
-    /**
+    /*
      * Returns a list of all valid lines.
      * 
      * @param br the source to read from
@@ -178,7 +178,7 @@ public final class Configuration {
         return lines;
     }
 
-    /**
+    /*
      * Loads an external file.
      * 
      * @throws NumberFormatException
@@ -194,7 +194,7 @@ public final class Configuration {
         br.close();
     }
 
-    /**
+    /*
      * Loads an internal file.
      * 
      * @throws NumberFormatException
@@ -209,7 +209,7 @@ public final class Configuration {
         loadFromBuffer(new BufferedReader(new InputStreamReader(inStream)));
     }
 
-    /**
+    /*
      * Determines if the line is a comment. Any line which begins with "#" is
      * deemed to be a comment.
      * 
@@ -221,7 +221,7 @@ public final class Configuration {
         return str.startsWith("#");
     }
 
-    /**
+    /*
      * Determines if the line in the configuration file is valid. 
      * 
      * A line is valid if it is in the form of "key value", i.e., a parameter

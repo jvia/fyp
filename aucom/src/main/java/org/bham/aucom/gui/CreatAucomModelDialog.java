@@ -18,7 +18,7 @@ package org.bham.aucom.gui;
 public class CreatAucomModelDialog extends javax.swing.JDialog {
 	private static final long serialVersionUID = 0L;
 
-    /** Creates new form CreatAucomModelDialog */
+    /* Creates new form CreatAucomModelDialog */
     public CreatAucomModelDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();

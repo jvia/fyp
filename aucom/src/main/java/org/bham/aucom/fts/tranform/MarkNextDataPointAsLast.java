@@ -2,7 +2,7 @@ package org.bham.aucom.fts.tranform;
 
 import org.bham.aucom.data.AbstractData;
 
-public class MarkNextDataPointAsLast<TIn extends AbstractData> extends AbstractAucomTranformNode<TIn, TIn> {
+public class MarkNextDataPointAsLast<TIn extends AbstractData> extends AbstractAucomTransformNode<TIn, TIn> {
 
 	private boolean markerActive;
 

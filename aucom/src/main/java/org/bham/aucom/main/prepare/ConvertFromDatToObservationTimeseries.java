@@ -20,7 +20,7 @@ import org.bham.aucom.util.FileOperator;
 
 public class ConvertFromDatToObservationTimeseries {
 
-	/**
+	/*
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -30,7 +30,7 @@ public class ConvertFromDatToObservationTimeseries {
 		}
 	}
 
-	/**
+	/*
 	 * @param args
 	 */
 	public void convertDatToObservation(String str) {

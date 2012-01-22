@@ -9,7 +9,7 @@ import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.StatisticalAno
 import org.bham.aucom.util.Constants;
 
 
-/**
+/*
  * This class provides descriptive statistics for a time-series. Statistics can
  * be computed for three different parts of the time-series: a) the whole
  * time-series, b) the part before the first fault was induced (called head) c)
@@ -23,7 +23,7 @@ import org.bham.aucom.util.Constants;
 public class ClassificationTimeSeriesDescriptiveStatistics {
 	private TimeSeries<Classification> classificationTimeSeries;
 
-	/**
+	/*
 	 * Creates a ready to go ClassficationTimeSeriesStatistics object
 	 * 
 	 * @input scoretimeSeries the time-series for which statistics will be
@@ -39,14 +39,14 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		}
 	}
 
-	/**
+	/*
 	 * Default constructor
 	 */
 	public ClassificationTimeSeriesDescriptiveStatistics() {
 		// empty
 	}
 
-	/**
+	/*
 	 * Returns the duration of the time-series i.e., the difference between the
 	 * first time-stamp and last time-stamp of this time-series
 	 * 
@@ -59,7 +59,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 	}
 
 
-	/**
+	/*
 	 * Returns the duration of the head of the time-series i.e., the difference
 	 * between the first time-stamp of the time-series and last time-stamp
 	 * before the fault induced time-stamp given by {@link #getFaultTimestamp()}
@@ -74,7 +74,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		return lastHeadTimestamp - firstHeadTimestamp;
 	}
 
-	/**
+	/*
 	 * Returns the time-stamp of the last element in the time-series before the
 	 * fault induced time-stamp. If {@link #hasInducedFaultTimestamp()} returns
 	 * false this function returns the time-stamp of the last element in this
@@ -87,7 +87,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		return list.get(list.size() - 1).getTimestamp();
 	}
 
-	/**
+	/*
 	 * Returns the duration of the tail of the time-series i.e., the difference
 	 * between the first time-stamp of the tail as returned by {@link #getTail()}
 	 * and last time-stamp of the time-series. If {@link #hasInducedFaultTimestamp()} 
@@ -104,7 +104,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		return lastTailTimestamp - firstTailTimestamp ;
 	}
 
-	/**
+	/*
 	 * Returns the time-stamp of the first element in the time-series after the
 	 * fault induced time-stamp as returned by {@link getFaultTimestamp()}. In
 	 * case {@link #hasInducedFaultTimestamp()} returns false this function returns long.MAX_VALUE.
@@ -120,7 +120,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		return tail.get(0).getTimestamp();
 	}
 
-	/**
+	/*
 	 * Returns the total number of elements of the whole time-series which were
 	 * marked as faulty. Ignores a potential induced-fault time-stamp.
 	 * 
@@ -139,7 +139,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		return numberFaults;
 	}
 
-	/**
+	/*
 	 * Returns the total number of elements of the head part of the current
 	 * time-series which were marked as faulty. If
 	 * {@link timestamp_faultInduced} is Long.MAX_VALUE then this function is
@@ -157,7 +157,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		return numberFaults;
 	}
 
-	/**
+	/*
 	 * Returns the total number of elements of the tail part of the current
 	 * time-series which were marked as faulty.
 	 * 
@@ -174,7 +174,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		return numberFaults;
 	}
 
-	/**
+	/*
 	 * Returns the percentage of elements of the whole time-series which were
 	 * marked as faulty. Ignores a potential induced-fault time-stamp.
 	 * 
@@ -187,7 +187,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		return (double) getAnomalyValueCount() / (double) getTimeSeries().size();
 	}
 
-	/**
+	/*
 	 * Returns the percentage of elements of the head part of the time-series
 	 * which were marked as faulty. Ignores a potential induced-fault
 	 * time-stamp.
@@ -201,7 +201,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		return (double) getHeadAnomalyValueCount() / (double) getHead().size();
 	}
 
-	/**
+	/*
 	 * Returns the percentage of elements of the head part of the time-series
 	 * which were marked as faulty. Ignores a potential induced-fault
 	 * time-stamp.
@@ -215,7 +215,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		return (double) getTailAnomalyValueCount() / (double) getTail().size();
 	}
 
-	/**
+	/*
 	 * Returns a boolean value which indicate whether the current time-series
 	 * carries along a time-stamp of an induced fault.
 	 * 
@@ -225,7 +225,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		return Long.MAX_VALUE != getFautlTimestamp();
 	}
 
-	/**
+	/*
 	 * Computes the mean score for the current time-series
 	 * 
 	 * @return mean score for the time-series
@@ -242,7 +242,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		return mean;
 	}
 
-	/**
+	/*
 	 * Computes the mean score for the head of the current time-series
 	 * 
 	 * @return mean score for the head part of the current time-series
@@ -259,7 +259,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		return mean;
 	}
 
-	/**
+	/*
 	 * Computes the mean score for the tail of the current time-series
 	 * 
 	 * @return mean score for the tail part of the current time-series
@@ -276,7 +276,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		return mean;
 	}
 
-	/**
+	/*
 	 * Computes the score variance for the current time-series.
 	 * 
 	 * @return score variance for the time-series
@@ -294,7 +294,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		return variance;
 	}
 
-	/**
+	/*
 	 * Computes the score variance for the head of the current time-series.
 	 * 
 	 * @return score variance for head of the current time-series
@@ -312,7 +312,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		return variance;
 	}
 
-	/**
+	/*
 	 * Computes the score variance for the tail of the current time-series.
 	 * 
 	 * @return score variance for tail of the current time-series
@@ -329,7 +329,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		}
 		return variance;
 	}
-	/**
+	/*
 	 * Computes the positive quadratic distance for the time-series. This means for each element of the classification time-series the difference between the score of the 
 	 * element and the threshold used to classify this element into faulty or normal is calculated. 
 	 * In case  score<threshold (i.e., element classified as faulty) the difference would be negative and is therefore discarded.  
@@ -348,7 +348,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		return distance;
 	}
 
-	/**
+	/*
 	 * returns the current time-series. may be null
 	 * 
 	 * @return current time-series
@@ -357,7 +357,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		return classificationTimeSeries;
 	}
 
-	/**
+	/*
 	 * Sets the time-series which will be examined.
 	 * 
 	 * @param classificationTimeSeries
@@ -366,7 +366,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		this.classificationTimeSeries = classificationTimeSeries;
 	}
 
-	/**
+	/*
 	 * Checks whether the current time-series is not null and has an attribute
 	 * called {@linkplain Constants.FAULT_INDUCED} and if so returns its value.
 	 * Otherwise returns {@link Long.MAX_VALUE}.
@@ -380,7 +380,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		return Long.MAX_VALUE;
 	}
 
-	/**
+	/*
 	 * Returns the head of the current time-series based on the fault time-stamp
 	 * attribute of the time-series. If time-series is null or empty an empty
 	 * list is returned. Head consists of all elements with a time-stamp smaller
@@ -411,7 +411,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		return head;
 	}
 
-	/**
+	/*
 	 * Returns the tail of the current time-series based on the fault time-stamp
 	 * attribute of the time-series. If time-series is null or empty an empty
 	 * list is returned. Tail consists of all elements with a time-stamp equal

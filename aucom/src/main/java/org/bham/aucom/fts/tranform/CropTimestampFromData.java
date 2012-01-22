@@ -5,7 +5,7 @@ import java.io.Serializable;
 import org.bham.aucom.data.AbstractData;
 
 
-public class CropTimestampFromData<T extends AbstractData> extends AbstractAucomTranformNode<T, T> implements Serializable {
+public class CropTimestampFromData<T extends AbstractData> extends AbstractAucomTransformNode<T, T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public CropTimestampFromData() {

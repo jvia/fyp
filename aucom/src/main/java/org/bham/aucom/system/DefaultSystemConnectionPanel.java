@@ -26,7 +26,7 @@ public class DefaultSystemConnectionPanel extends javax.swing.JPanel implements 
 	private static final long serialVersionUID = 0L;
 	SystemConnection connection;
 
-	/** Creates new form DefaultSystemConnectionPanel */
+	/* Creates new form DefaultSystemConnectionPanel */
 	public DefaultSystemConnectionPanel(SystemConnection inConnection) {
 		connection = inConnection;
 		connection.addSystemConnectionStatusListener(this);

@@ -326,7 +326,7 @@ public class VisualizerScoreChart extends javax.swing.JPanel {
         Logger.getLogger(this.getClass().getName()).severe(msg);
     }
 
-    /**
+    /*
      * @param classification
      */
     protected void annotate_FAULTINDUCED_IfNecessary(Classification classification) {
