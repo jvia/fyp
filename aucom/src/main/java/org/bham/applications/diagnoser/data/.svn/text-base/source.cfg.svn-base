@@ -1,0 +1,3 @@
+dummy aucom.system.DummySystemConnectionFactory
+xcf aucom.system.xcf.XCFSystemConnectionFactory
+replay aucom.system.playfile.PlayFileSystemFactory

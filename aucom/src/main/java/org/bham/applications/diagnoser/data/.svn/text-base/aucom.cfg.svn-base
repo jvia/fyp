@@ -1,0 +1,5 @@
+#SystemConnection aucom.system.DummySystemConnectionFactory
+#SystemConnection aucom.system.xcf.XCFSystemConnectionFactory
+#SystemConnection aucom.system.playfile.PlayFileSystemConnection
+SystemConnection aucom.system.cast.CastSystemConnection
+encoder aucom.data.encoder.SourceScopeTypeEncoder

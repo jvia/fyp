@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aucom:experiments xmlns:aucom="http://www.cor-lab.de">
+ <aucom:experiment factory="aucom.experiment.SaveDurationAsCSVFactory" name="SaveDurationAsCSV">
+        <aucom:input>
+            <aucom:wd>C:\Users\rgolombe\Dropbox\aucom2</aucom:wd>
+      </aucom:input>
+    </aucom:experiment>
+</aucom:experiments>

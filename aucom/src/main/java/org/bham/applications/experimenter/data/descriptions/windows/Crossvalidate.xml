@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<aucom:experiments xmlns:aucom="http://www.cor-lab.de">
+  <aucom:experiment factory="aucom.experiment.CrossValidateExperimentFactory" name="crossvalidate">
+    <aucom:input>
+      <aucom:wd>C:\Users\rgolombe\Dropbox\aucom2\toy_system_fault</aucom:wd>
+    </aucom:input>
+  </aucom:experiment>
+</aucom:experiments>
