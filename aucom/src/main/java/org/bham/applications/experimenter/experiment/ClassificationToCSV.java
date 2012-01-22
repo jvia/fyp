@@ -33,6 +33,7 @@ public class ClassificationToCSV implements Experiment {
 
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void preprocess() throws IOException, ParsingException, DataAlreadyExistsException {
         printBlockMessage(70, "GATHERING TIMER SERIES DATA");

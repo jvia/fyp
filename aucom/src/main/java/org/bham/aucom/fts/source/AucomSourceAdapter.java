@@ -6,6 +6,10 @@ import java.io.Serializable;
 import java.util.logging.Logger;
 
 public abstract class AucomSourceAdapter<T> extends SourceAdapter<T> implements Serializable {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     private SourceStatus state = SourceStatus.DISCONNECTED;
     private final Object waitObject = new Object();
     protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();

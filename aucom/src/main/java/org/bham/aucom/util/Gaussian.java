@@ -47,9 +47,9 @@ package org.bham.aucom.util;
 	    // test client
 	    public static void main(String[] args) {
 	        double z     = Double.parseDouble(args[0]);
-	        double mu    = Double.parseDouble(args[1]);
-	        double sigma = Double.parseDouble(args[2]);
-	        double y = Phi(z);
+	        Double.parseDouble(args[1]);
+	        Double.parseDouble(args[2]);
+	        Phi(z);
 	    }
 
 	}

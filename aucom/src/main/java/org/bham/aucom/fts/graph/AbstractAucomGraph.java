@@ -286,7 +286,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
         if (this.graph != null) {
             Collection<Node<?, ?>> sources = this.graph.getSourceNodes();
             for (Node<?, ?> node : sources) {
-                AucomSourceAdapter source = ((AucomSourceAdapter) node);
+                AucomSourceAdapter<?> source = ((AucomSourceAdapter<?>) node);
                 source.pause();
             }
         }

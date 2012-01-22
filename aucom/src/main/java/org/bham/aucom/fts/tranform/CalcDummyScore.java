@@ -14,7 +14,6 @@ import org.bham.aucom.data.Score;
 import org.bham.aucom.data.SingleScore;
 import org.bham.aucom.data.TemporalDurationFeature;
 import org.bham.aucom.data.TemporalProbabilityFeature;
-import org.bham.aucom.diagnoser.t2gram.ProbabilityDistribution;
 
 public class CalcDummyScore extends AbstractTransformNode<Score, Score> {
 	String methodName = "zero";
@@ -39,14 +38,6 @@ public class CalcDummyScore extends AbstractTransformNode<Score, Score> {
 			exception.printStackTrace();
 			return null;
 		}
-	}
-
-	/*
-	 * @param distribution
-	 * @return
-	 */
-	private double calculateFrequencyWeight(ProbabilityDistribution distribution) {
-		return 1;// distribution.getCount();
 	}
 
 	@Override

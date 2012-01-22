@@ -5,7 +5,6 @@ import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.diagnoser.t2gram.ProbabilityFactory;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.AnomalyClassifier;
 
-import javax.naming.ConfigurationException;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

@@ -6,8 +6,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-import org.bham.aucom.data.DataType;
-import org.bham.aucom.data.timeseries.TimeSeries;
 
 
 public class DatasetListCellRenderer extends JLabel implements ListCellRenderer {
@@ -16,7 +14,6 @@ public class DatasetListCellRenderer extends JLabel implements ListCellRenderer 
 	// This is the only method defined by ListCellRenderer.
 	// We just reconfigure the JLabel each time we're called.
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public Component getListCellRendererComponent(JList list, // the list
 			Object value, // value to display

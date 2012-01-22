@@ -16,7 +16,7 @@
         <aucom:output>/home/rgolombe/workspace/aucom/data/tobi_iros10_session/results/</aucom:output>
         <aucom:model>
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
-                <aucom:parameter name="precision" type="java.lang.Double" value="1"></aucom:parameter>
+                <aucom:parameter name="precision" type="java.lang.Double" value="1"/>
             </aucom:distribution>
             <aucom:SlidingWindow size="5" overlap="2" >
             </aucom:SlidingWindow>

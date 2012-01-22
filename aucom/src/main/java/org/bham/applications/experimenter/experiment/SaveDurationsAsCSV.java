@@ -41,7 +41,7 @@ public class SaveDurationsAsCSV implements Experiment {
     /**
      *
      */
-    private static final String SAVEFILE = "savefile";
+    private static final String SAVE_FILE = "savefile";
     List<File> observationTimeseriesFiles;
     List<TimeSeries<Observation>> observationTimeseries;
     List<TimeSeries<TemporalDurationFeature>> temporalDurationFeatureTimeseries;
@@ -78,7 +78,7 @@ public class SaveDurationsAsCSV implements Experiment {
             File observationFile = new File(folder.getAbsolutePath() + File.separator + observationFileName);
             System.out.println("adding " + observationFile.getAbsolutePath() + " to observation files");
             TimeSeries<Observation> obsTs = (TimeSeries<Observation>) AucomIO.getInstance().readTimeSeries(observationFile);
-            obsTs.addAttribute(SAVEFILE, FileOperator.getPath(observationFile) + File.separator + FileOperator.getName(observationFile) + ".csv");
+            obsTs.addAttribute(SAVE_FILE, FileOperator.getPath(observationFile) + File.separator + FileOperator.getName(observationFile) + ".csv");
             observationTimeseries.add(obsTs);
         }
     }
@@ -95,7 +95,7 @@ public class SaveDurationsAsCSV implements Experiment {
         final Object wObject = new Object();
         for (int i = 0; i < observationTimeseries.size(); i++) {
             TimeSeries<Observation> obsTs = observationTimeseries.get(i);
-            Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, i + ") processing " + obsTs.getAttributeValue(SAVEFILE));
+            Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, i + ") processing " + obsTs.getAttributeValue(SAVE_FILE));
             TemporalDurationFeatureGenerationGraph graph = new TemporalDurationFeatureGenerationGraph();
             List<Integer> initialIds = getInitialIds(obsTs);
             Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, "extracted " + initialIds.size() + " initial ids");
@@ -127,7 +127,7 @@ public class SaveDurationsAsCSV implements Experiment {
             }
             graph.removeAllListeners();
             TimeSeries<TemporalDurationFeature> tdfTs = graph.getOutTimeSeries();
-            tdfTs.addAttribute(SAVEFILE, obsTs.getAttributeValue(SAVEFILE));
+            tdfTs.addAttribute(SAVE_FILE, obsTs.getAttributeValue(SAVE_FILE));
             temporalDurationFeatureTimeseries.add(tdfTs);
             graph.stop();
         }
@@ -177,8 +177,8 @@ public class SaveDurationsAsCSV implements Experiment {
     @Override
     public void postprocess() throws IOException {
         for (TimeSeries<TemporalDurationFeature> tdfTs : temporalDurationFeatureTimeseries) {
-            if (!tdfTs.containsAttribute(SAVEFILE)) {
-                System.out.println("coudn't save " + tdfTs + " " + SAVEFILE + " attribute is missing");
+            if (!tdfTs.containsAttribute(SAVE_FILE)) {
+                System.out.println("coudn't save " + tdfTs + " " + SAVE_FILE + " attribute is missing");
             }
             try {
                 if (tdfTs.containsAttribute(Constants.FAULT_INDUCED)) {

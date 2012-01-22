@@ -9,7 +9,7 @@ import javax.swing.event.ListDataListener;
 
 public class MonitorableArrayList<E> extends ArrayList<E> implements Serializable{
 	private static final long serialVersionUID = 1L;
-	transient ArrayList<ListDataListener> listeners = new ArrayList();
+	transient ArrayList<ListDataListener> listeners = new ArrayList<ListDataListener>();
 	private ArrayList<E> backedList;
 
 	public MonitorableArrayList(ArrayList<E> inList) {

@@ -75,10 +75,6 @@ public class HistogramDistribution implements ProbabilityDistribution{
 //		validate();
 	}
 
-	private double getProb(double value) {
-		int binNumber = this.content.getBinNumberForValue(value);
-		return getProbByBinNumber(binNumber);
-	}
 	public Iterator<Double> getProbabilities(){
 		return new HistogramDistributionIterator(this);
 	}
@@ -131,9 +127,6 @@ public class HistogramDistribution implements ProbabilityDistribution{
 			 entropy += calcEntropy(it.next());
 		 }
 		return -entropy;
-	}
-	private double getBinEntropy(int binNumber){
-		return calcEntropy(this.content.getValueOfBinWithNumber(binNumber));
 	}
 	public double log(double value, double base){
 		return Math.log(value)/Math.log(base);

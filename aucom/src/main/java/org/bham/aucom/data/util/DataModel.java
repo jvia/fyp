@@ -133,7 +133,7 @@ public class DataModel implements TimeSeriesStatusListener {
 	public <T extends AbstractData> T getDataItemById(UUID id) {
 		return (T) getItemsByIdHashMap().get(id);
 	}
-	@SuppressWarnings("unchecked")
+
 	public TimeSeries<?> getTimeSeriesById(UUID id) throws TimeSeriesNotFoundException{
 		if(!containsTimeSeriesWithId(id))
 			throw new TimeSeriesNotFoundException("ts with id " +  id + " not found");
@@ -151,7 +151,6 @@ public class DataModel implements TimeSeriesStatusListener {
 		return this.timeseries.size();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void timeseriesStatusChanged(TimeseriesStatusEvent status) {
 //		TimeSeries<? extends AbstractData> s = (TimeSeries<? extends AbstractData>) (status.getSource());

@@ -6,7 +6,6 @@ public class RingBuffer<T> {
 	private final int capacity;
 	private boolean filled;
 
-	@SuppressWarnings("unchecked")
 	public RingBuffer(int inCapacity) {
 		capacity = inCapacity;
 		initializeBuffer();

@@ -67,7 +67,6 @@ public abstract class Encoder implements Serializable {
      * 
      * @return an appropriate encoder
      */
-    @SuppressWarnings("static-access")
     public static Encoder getInstance()
     {
     	if(instance == null){

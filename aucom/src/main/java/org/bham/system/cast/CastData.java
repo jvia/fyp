@@ -8,6 +8,10 @@ import java.io.Serializable;
  */
 public class CastData implements Serializable {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     private long timeStamp;
     private String eventType;
     private String generatorType;

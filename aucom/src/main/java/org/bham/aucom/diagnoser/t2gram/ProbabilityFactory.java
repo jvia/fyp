@@ -9,7 +9,13 @@ import org.bham.aucom.data.AttributableObject;
 
 
 public abstract class  ProbabilityFactory implements AttributableObject, Serializable {
-	public abstract ProbabilityDistribution create(double[] trainingValues);
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
+
+    public abstract ProbabilityDistribution create(double[] trainingValues);
 	public abstract ProbabilityDistribution create();
 	
 	LinkedHashMap<String, Number> parameters = new LinkedHashMap<String, Number>();

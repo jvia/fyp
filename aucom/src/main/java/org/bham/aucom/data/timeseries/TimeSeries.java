@@ -111,7 +111,7 @@ public abstract class TimeSeries<T extends AbstractData> extends AbstractLinkabl
         // trim();
     }
 
-    @SuppressWarnings({"boxing", "unchecked"})
+    @SuppressWarnings({"boxing"})
     public synchronized void addAll(Collection<T> c) {
         try {
 
@@ -184,7 +184,7 @@ public abstract class TimeSeries<T extends AbstractData> extends AbstractLinkabl
     @Override
     public boolean equals(Object arg0) {
         if (arg0.getClass().equals(this.getClass())) {
-            TimeSeries s = (TimeSeries) arg0;
+            TimeSeries<?> s = (TimeSeries<?>) arg0;
             return s.getId().equals(this.getId());
         }
         return false;

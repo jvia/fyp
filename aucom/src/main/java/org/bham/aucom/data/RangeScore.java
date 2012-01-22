@@ -15,14 +15,12 @@ public class RangeScore extends Score{
 	public RangeScore(ArrayList<Score> scores) {
 		super(scores.get(0));// this is very dangerous, but I have no clue how to solve it
 		double meanValue = 0.0d;
-		int eventCounter = 0;
 		if(scores.size()>0){
 			setTimestamp(scores.get(0).getTimestamp());
 			setContent(scores.get(0).getContent());
 		}
 		for (Score s : scores) {
 			meanValue += s.getValue();
-			eventCounter++;
 			setFirstElement(isMarkedAsFirstElement() || s.isMarkedAsFirstElement());
 			setLastElement(isMarkedAsLastElement() || s.isMarkedAsLastElement());
 		}

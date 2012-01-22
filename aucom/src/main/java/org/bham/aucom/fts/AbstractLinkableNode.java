@@ -12,7 +12,11 @@ import org.bham.aucom.data.LinkEnum;
 
 
 public abstract class AbstractLinkableNode implements AttributableObject, Serializable  {
-	private UUID id;
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+    private UUID id;
 	private final LinkedHashMap<LinkEnum, List<UUID>> links = new LinkedHashMap<LinkEnum, List<UUID>>();
 
 	public AbstractLinkableNode(UUID id) {

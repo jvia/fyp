@@ -6,9 +6,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-import org.bham.aucom.data.Score;
-import org.bham.aucom.data.timeseries.TimeSeries;
-
 
 public class ScoreListCellRenderer extends JLabel implements ListCellRenderer {
 

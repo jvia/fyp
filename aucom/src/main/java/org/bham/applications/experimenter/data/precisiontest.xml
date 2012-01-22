@@ -30,11 +30,11 @@
     <aucom:output>/home/rgolombe/workspace/aucom/data/tobi_iros10_session/results/</aucom:output>
         <aucom:model>
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
-                <aucom:parameter name="kernelDensityEstimatorPrecision" type="java.lang.Double" value="10"></aucom:parameter>
+                <aucom:parameter name="kernelDensityEstimatorPrecision" type="java.lang.Double" value="10"/>
             </aucom:distribution>
             <aucom:Threshold type="aucom.models.mean.StatisticalThreshold">
-                <aucom:parameter name="lower" type="java.lang.Double" value="0.535"></aucom:parameter>
-                <aucom:parameter name="upper" type="java.lang.Double" value="0.003"></aucom:parameter>
+                <aucom:parameter name="lower" type="java.lang.Double" value="0.535"/>
+                <aucom:parameter name="upper" type="java.lang.Double" value="0.003"/>
             </aucom:Threshold>
             <aucom:SlidingWindow slidingWindowStepSize="10" slidingWindowInitialOverlap="0" >
             </aucom:SlidingWindow>
@@ -73,11 +73,11 @@
     <aucom:output>/home/rgolombe/workspace/aucom/data/tobi_iros10_session/results/</aucom:output>
         <aucom:model>
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
-                <aucom:parameter name="kernelDensityEstimatorPrecision" type="java.lang.Double" value="10"></aucom:parameter>
+                <aucom:parameter name="kernelDensityEstimatorPrecision" type="java.lang.Double" value="10"/>
             </aucom:distribution>
             <aucom:Threshold type="aucom.models.mean.StatisticalThreshold">
-                <aucom:parameter name="lower" type="java.lang.Double" value="0.535"></aucom:parameter>
-                <aucom:parameter name="upper" type="java.lang.Double" value="0.003"></aucom:parameter>
+                <aucom:parameter name="lower" type="java.lang.Double" value="0.535"/>
+                <aucom:parameter name="upper" type="java.lang.Double" value="0.003"/>
             </aucom:Threshold>
             <aucom:SlidingWindow slidingWindowStepSize="10" slidingWindowInitialOverlap="0" >
             </aucom:SlidingWindow>
@@ -118,11 +118,11 @@
     <aucom:output>/home/rgolombe/workspace/aucom/data/tobi_iros10_session/results/</aucom:output>
         <aucom:model>
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
-                <aucom:parameter name="kernelDensityEstimatorPrecision" type="java.lang.Double" value="10"></aucom:parameter>
+                <aucom:parameter name="kernelDensityEstimatorPrecision" type="java.lang.Double" value="10"/>
             </aucom:distribution>
             <aucom:Threshold type="aucom.models.mean.StatisticalThreshold">
-                <aucom:parameter name="lower" type="java.lang.Double" value="0.535"></aucom:parameter>
-                <aucom:parameter name="upper" type="java.lang.Double" value="0.003"></aucom:parameter>
+                <aucom:parameter name="lower" type="java.lang.Double" value="0.535"/>
+                <aucom:parameter name="upper" type="java.lang.Double" value="0.003"/>
             </aucom:Threshold>
             <aucom:SlidingWindow slidingWindowStepSize="10" slidingWindowInitialOverlap="0" >
             </aucom:SlidingWindow>
@@ -158,11 +158,11 @@
     <aucom:output>/home/rgolombe/workspace/aucom/data/tobi_iros10_session/results/</aucom:output>
         <aucom:model>
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
-                <aucom:parameter name="kernelDensityEstimatorPrecision" type="java.lang.Double" value="10"></aucom:parameter>
+                <aucom:parameter name="kernelDensityEstimatorPrecision" type="java.lang.Double" value="10"/>
             </aucom:distribution>
             <aucom:Threshold type="aucom.models.mean.StatisticalThreshold">
-                <aucom:parameter name="lower" type="java.lang.Double" value="0.535"></aucom:parameter>
-                <aucom:parameter name="upper" type="java.lang.Double" value="0.003"></aucom:parameter>
+                <aucom:parameter name="lower" type="java.lang.Double" value="0.535"/>
+                <aucom:parameter name="upper" type="java.lang.Double" value="0.003"/>
             </aucom:Threshold>
             <aucom:SlidingWindow slidingWindowStepSize="10" slidingWindowInitialOverlap="0" >
             </aucom:SlidingWindow>
@@ -201,11 +201,11 @@
     <aucom:output>/home/rgolombe/workspace/aucom/data/tobi_iros10_session/results/</aucom:output>
         <aucom:model>
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
-                <aucom:parameter name="kernelDensityEstimatorPrecision" type="java.lang.Double" value="10"></aucom:parameter>
+                <aucom:parameter name="kernelDensityEstimatorPrecision" type="java.lang.Double" value="10"/>
             </aucom:distribution>
             <aucom:Threshold type="aucom.models.mean.StatisticalThreshold">
-                <aucom:parameter name="lower" type="java.lang.Double" value="0.535"></aucom:parameter>
-                <aucom:parameter name="upper" type="java.lang.Double" value="0.003"></aucom:parameter>
+                <aucom:parameter name="lower" type="java.lang.Double" value="0.535"/>
+                <aucom:parameter name="upper" type="java.lang.Double" value="0.003"/>
             </aucom:Threshold>
             <aucom:SlidingWindow slidingWindowStepSize="10" slidingWindowInitialOverlap="0" >
             </aucom:SlidingWindow>
@@ -246,11 +246,11 @@
     <aucom:output>/home/rgolombe/workspace/aucom/data/tobi_iros10_session/results/</aucom:output>
         <aucom:model>
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
-                <aucom:parameter name="kernelDensityEstimatorPrecision" type="java.lang.Double" value="10"></aucom:parameter>
+                <aucom:parameter name="kernelDensityEstimatorPrecision" type="java.lang.Double" value="10"/>
             </aucom:distribution>
             <aucom:Threshold type="aucom.models.mean.StatisticalThreshold">
-                <aucom:parameter name="lower" type="java.lang.Double" value="0.535"></aucom:parameter>
-                <aucom:parameter name="upper" type="java.lang.Double" value="0.003"></aucom:parameter>
+                <aucom:parameter name="lower" type="java.lang.Double" value="0.535"/>
+                <aucom:parameter name="upper" type="java.lang.Double" value="0.003"/>
             </aucom:Threshold>
             <aucom:SlidingWindow slidingWindowStepSize="10" slidingWindowInitialOverlap="0" >
             </aucom:SlidingWindow>
@@ -286,11 +286,11 @@
     <aucom:output>/home/rgolombe/workspace/aucom/data/tobi_iros10_session/results/</aucom:output>
         <aucom:model>
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
-                <aucom:parameter name="kernelDensityEstimatorPrecision" type="java.lang.Double" value="10"></aucom:parameter>
+                <aucom:parameter name="kernelDensityEstimatorPrecision" type="java.lang.Double" value="10"/>
             </aucom:distribution>
             <aucom:Threshold type="aucom.models.mean.StatisticalThreshold">
-                <aucom:parameter name="lower" type="java.lang.Double" value="0.535"></aucom:parameter>
-                <aucom:parameter name="upper" type="java.lang.Double" value="0.003"></aucom:parameter>
+                <aucom:parameter name="lower" type="java.lang.Double" value="0.535"/>
+                <aucom:parameter name="upper" type="java.lang.Double" value="0.003"/>
             </aucom:Threshold>
             <aucom:SlidingWindow slidingWindowStepSize="10" slidingWindowInitialOverlap="0" >
             </aucom:SlidingWindow>
@@ -329,11 +329,11 @@
     <aucom:output>/home/rgolombe/workspace/aucom/data/tobi_iros10_session/results/</aucom:output>
         <aucom:model>
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
-                <aucom:parameter name="kernelDensityEstimatorPrecision" type="java.lang.Double" value="10"></aucom:parameter>
+                <aucom:parameter name="kernelDensityEstimatorPrecision" type="java.lang.Double" value="10"/>
             </aucom:distribution>
             <aucom:Threshold type="aucom.models.mean.StatisticalThreshold">
-                <aucom:parameter name="lower" type="java.lang.Double" value="0.535"></aucom:parameter>
-                <aucom:parameter name="upper" type="java.lang.Double" value="0.003"></aucom:parameter>
+                <aucom:parameter name="lower" type="java.lang.Double" value="0.535"/>
+                <aucom:parameter name="upper" type="java.lang.Double" value="0.003"/>
             </aucom:Threshold>
             <aucom:SlidingWindow slidingWindowStepSize="10" slidingWindowInitialOverlap="0" >
             </aucom:SlidingWindow>
@@ -374,11 +374,11 @@
     <aucom:output>/home/rgolombe/workspace/aucom/data/tobi_iros10_session/results/</aucom:output>
         <aucom:model>
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
-                <aucom:parameter name="kernelDensityEstimatorPrecision" type="java.lang.Double" value="10"></aucom:parameter>
+                <aucom:parameter name="kernelDensityEstimatorPrecision" type="java.lang.Double" value="10"/>
             </aucom:distribution>
             <aucom:Threshold type="aucom.models.mean.StatisticalThreshold">
-                <aucom:parameter name="lower" type="java.lang.Double" value="0.535"></aucom:parameter>
-                <aucom:parameter name="upper" type="java.lang.Double" value="0.003"></aucom:parameter>
+                <aucom:parameter name="lower" type="java.lang.Double" value="0.535"/>
+                <aucom:parameter name="upper" type="java.lang.Double" value="0.003"/>
             </aucom:Threshold>
             <aucom:SlidingWindow slidingWindowStepSize="10" slidingWindowInitialOverlap="0" >
             </aucom:SlidingWindow>
@@ -414,11 +414,11 @@
     <aucom:output>/home/rgolombe/workspace/aucom/data/tobi_iros10_session/results/</aucom:output>
         <aucom:model>
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
-                <aucom:parameter name="kernelDensityEstimatorPrecision" type="java.lang.Double" value="10"></aucom:parameter>
+                <aucom:parameter name="kernelDensityEstimatorPrecision" type="java.lang.Double" value="10"/>
             </aucom:distribution>
             <aucom:Threshold type="aucom.models.mean.StatisticalThreshold">
-                <aucom:parameter name="lower" type="java.lang.Double" value="0.535"></aucom:parameter>
-                <aucom:parameter name="upper" type="java.lang.Double" value="0.003"></aucom:parameter>
+                <aucom:parameter name="lower" type="java.lang.Double" value="0.535"/>
+                <aucom:parameter name="upper" type="java.lang.Double" value="0.003"/>
             </aucom:Threshold>
             <aucom:SlidingWindow slidingWindowStepSize="10" slidingWindowInitialOverlap="0" >
             </aucom:SlidingWindow>
@@ -457,11 +457,11 @@
     <aucom:output>/home/rgolombe/workspace/aucom/data/tobi_iros10_session/results/</aucom:output>
         <aucom:model>
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
-                <aucom:parameter name="kernelDensityEstimatorPrecision" type="java.lang.Double" value="10"></aucom:parameter>
+                <aucom:parameter name="kernelDensityEstimatorPrecision" type="java.lang.Double" value="10"/>
             </aucom:distribution>
             <aucom:Threshold type="aucom.models.mean.StatisticalThreshold">
-                <aucom:parameter name="lower" type="java.lang.Double" value="0.535"></aucom:parameter>
-                <aucom:parameter name="upper" type="java.lang.Double" value="0.003"></aucom:parameter>
+                <aucom:parameter name="lower" type="java.lang.Double" value="0.535"/>
+                <aucom:parameter name="upper" type="java.lang.Double" value="0.003"/>
             </aucom:Threshold>
             <aucom:SlidingWindow slidingWindowStepSize="10" slidingWindowInitialOverlap="0" >
             </aucom:SlidingWindow>
@@ -502,11 +502,11 @@
     <aucom:output>/home/rgolombe/workspace/aucom/data/tobi_iros10_session/results/</aucom:output>
         <aucom:model>
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
-                <aucom:parameter name="kernelDensityEstimatorPrecision" type="java.lang.Double" value="10"></aucom:parameter>
+                <aucom:parameter name="kernelDensityEstimatorPrecision" type="java.lang.Double" value="10"/>
             </aucom:distribution>
             <aucom:Threshold type="aucom.models.mean.StatisticalThreshold">
-                <aucom:parameter name="lower" type="java.lang.Double" value="0.535"></aucom:parameter>
-                <aucom:parameter name="upper" type="java.lang.Double" value="0.003"></aucom:parameter>
+                <aucom:parameter name="lower" type="java.lang.Double" value="0.535"/>
+                <aucom:parameter name="upper" type="java.lang.Double" value="0.003"/>
             </aucom:Threshold>
             <aucom:SlidingWindow slidingWindowStepSize="10" slidingWindowInitialOverlap="0" >
             </aucom:SlidingWindow>

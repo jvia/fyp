@@ -3,7 +3,6 @@ package org.bham.applications.experimenter.experiment;
 import nu.xom.Element;
 import nu.xom.Nodes;
 import nu.xom.ParsingException;
-import nu.xom.ValidityException;
 
 import java.io.IOException;
 
@@ -13,7 +12,7 @@ import java.io.IOException;
 public class CastExperimentFactory extends ExperimentFactory {
 
     @Override
-    public Experiment createExperiment(Element element) throws ValidityException, ParsingException, IOException {
+    public Experiment createExperiment(Element element) throws ParsingException, IOException {
         setWorkingDirectoryIfPresentInExperimentDescription(element);
         String name = getExperimentNameFromElement(element);
         String wd = getWorkingDirectoryFromElement(element);

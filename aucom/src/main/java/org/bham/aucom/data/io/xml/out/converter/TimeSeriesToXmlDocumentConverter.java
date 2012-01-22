@@ -41,7 +41,8 @@ public abstract class TimeSeriesToXmlDocumentConverter<T extends AbstractData> {
 		}
 		doc.getRootElement().appendChild(attributesElement);
 	}
-	public <T extends AbstractData> Document addTimeSeriesProperties(Document xmlDocumentToWrite,TimeSeries<T> timeSeriesToWrite){
+	@SuppressWarnings("hiding")
+    public <T extends AbstractData> Document addTimeSeriesProperties(Document xmlDocumentToWrite,TimeSeries<T> timeSeriesToWrite){
 		xmlDocumentToWrite.getRootElement().addAttribute(new Attribute("id", timeSeriesToWrite.getId().toString()));
 		xmlDocumentToWrite.getRootElement().addAttribute(new Attribute("type", timeSeriesToWrite.getType().toString()));
 		return xmlDocumentToWrite;

@@ -130,6 +130,7 @@ public class CastExperiment implements Experiment {
      * @param obs observation filename
      * @return the observation time series
      */
+    @SuppressWarnings("unchecked")
     private TimeSeries<Observation> loadObservation(String obs) {
         File file = new File(wd + "/" + obs);
         TimeSeries<Observation> ts = null;

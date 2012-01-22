@@ -30,10 +30,8 @@ import javax.swing.filechooser.FileFilter;
  */
 public class ExampleFileFilter extends FileFilter {
 
-    private static String TYPE_UNKNOWN = "Type Unknown";
-    private static String HIDDEN_FILE = "Hidden File";
 
-    private Hashtable filters = null;
+    private Hashtable<String, ExampleFileFilter> filters = null;
     private String description = null;
     private String fullDescription = null;
     private boolean useExtensionsInDescription = true;
@@ -45,7 +43,7 @@ public class ExampleFileFilter extends FileFilter {
      * @see #addExtension
      */
     public ExampleFileFilter() {
-	this.filters = new Hashtable();
+	this.filters = new Hashtable<String, ExampleFileFilter>();
     }
 
     /*
@@ -157,7 +155,7 @@ public class ExampleFileFilter extends FileFilter {
      */
     public void addExtension(String extension) {
 	if(filters == null) {
-	    filters = new Hashtable(5);
+	    filters = new Hashtable<String, ExampleFileFilter>(5);
 	}
 	filters.put(extension.toLowerCase(), this);
 	fullDescription = null;
@@ -179,7 +177,7 @@ public class ExampleFileFilter extends FileFilter {
 	    if(description == null || isExtensionListInDescription()) {
  		fullDescription = description==null ? "(" : description + " (";
 		// build the description from the extension list
-		Enumeration extensions = filters.keys();
+		Enumeration<String> extensions = filters.keys();
 		if(extensions != null) {
 		    fullDescription += "." + extensions.nextElement();
 		    while (extensions.hasMoreElements()) {

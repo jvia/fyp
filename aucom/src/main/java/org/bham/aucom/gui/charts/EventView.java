@@ -97,7 +97,6 @@ public class EventView {
         f.getContentPane().add(classPanel, BorderLayout.LINE_END);
     }
 
-    @SuppressWarnings("deprecation")
     public void initChart() {
         // System.out.println(inData);
         dataset = new XYSeriesCollection();

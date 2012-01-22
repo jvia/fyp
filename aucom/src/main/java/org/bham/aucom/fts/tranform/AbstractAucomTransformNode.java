@@ -12,7 +12,6 @@ public abstract class AbstractAucomTransformNode<TIn extends AbstractData, TOut 
     long lastProcessingTime = 0l;
     long startTimestamp = 0l;
     long stopTimestamp = 0l;
-    private boolean isShowProcessingTime = true;
 
     protected AbstractAucomTransformNode(String name) {
         super(name);
@@ -20,39 +19,41 @@ public abstract class AbstractAucomTransformNode<TIn extends AbstractData, TOut 
 
     @Override
     protected TOut transform(TIn input) throws Exception {
-        if (input == null) {
-            return null;
-        }
-        this.startTimestamp = System.currentTimeMillis();
+        if (input == null) return null;
+
+        startTimestamp = System.currentTimeMillis();
         TOut out = null;
+
         try {
-            Logger.getLogger(this.getClass().getCanonicalName()).info("input is " + input);
+            Logger.getLogger(getClass().getCanonicalName()).info("input is " + input);
             out = iTransform(input);
-            Logger.getLogger(this.getClass().getCanonicalName()).info(" output is " + out);
+            Logger.getLogger(getClass().getCanonicalName()).info(" output is " + out);
         } catch (Exception exception) {
             exception.printStackTrace();
         }
         if (out == null) {
             if (input.isMarkedAsFirstElement()) {
                 fireStatusChangedEvent(new TransformNodeEvent(this, NodeStatus.RECEIVED_FIRST_ELEMENT));
-                System.out.println(this.toString() + " fires RECEIVED_FIRST_ELEMENT");
+                System.out.println(toString() + " fires RECEIVED_FIRST_ELEMENT");
             } else if (input.isMarkedAsLastElement()) {
                 fireStatusChangedEvent(new TransformNodeEvent(this, NodeStatus.RECEIVED_LAST_ELEMENT));
-                System.out.println(this.toString() + " fires RECEIVED_LAST_ELEMENT");
+                System.out.println(toString() + " fires RECEIVED_LAST_ELEMENT");
             }
             return null;
         }
         copyMarkings(input, out);
-        if (this.getTimeSeries() != null) {
-            this.getTimeSeries().add(out);
+        if (getTimeSeries() != null) {
+            getTimeSeries().add(out);
         }
-        this.stopTimestamp = System.currentTimeMillis();
-        long newPoint = (this.stopTimestamp - this.startTimestamp);
-        if (this.isShowProcessingTime && (Math.abs(this.lastProcessingTime - newPoint)) > 10) {
-            Logger.getLogger(this.getClass().getCanonicalName()).info(this.name + " current timestamp " + newPoint + " increase: " + (this.lastProcessingTime - newPoint));
+
+        stopTimestamp = System.currentTimeMillis();
+        long newPoint = (stopTimestamp - startTimestamp);
+
+        if ((Math.abs(lastProcessingTime - newPoint)) > 10) {
+            Logger.getLogger(getClass().getCanonicalName()).info(name + " current timestamp " + newPoint + " increase: " + (lastProcessingTime - newPoint));
         }
-        this.lastProcessingTime = newPoint;
-        if (this.getClass().equals(Classify.class)) {
+        lastProcessingTime = newPoint;
+        if (getClass().equals(Classify.class)) {
             if (input.getAttributes().size() != out.getAttributes().size()) {
                 System.out.println("in " + input.getAttributes() + " out " + out.getAttributes());
             }
@@ -67,23 +68,20 @@ public abstract class AbstractAucomTransformNode<TIn extends AbstractData, TOut 
     private void copyMarkings(TIn input, TOut out) {
         if (input.isMarkedAsFirstElement()) {
             out.isMarkedAsFirstElement();
-            Logger.getLogger(this.getClass().getCanonicalName()).info(this.getClass().getName() + " copying mark of first element");
+            Logger.getLogger(getClass().getCanonicalName()).info(getClass().getName() + " copying mark of first element");
         }
         if (input.isMarkedAsLastElement()) {
             out.markAsLastElement();
-            Logger.getLogger(this.getClass().getCanonicalName()).info(this.getClass().getName() + " copying mark of last element");
+            Logger.getLogger(getClass().getCanonicalName()).info(getClass().getName() + " copying mark of last element");
         }
     }
 
     protected abstract TOut iTransform(TIn input) throws Exception;
 
-    @SuppressWarnings("unchecked")
-    public void setTimeSeries(TimeSeries<?> ts) {
-        this.ts = (TimeSeries<TOut>) ts;
-    }
+
 
     public TimeSeries<TOut> getTimeSeries() {
-        return this.ts;
+        return ts;
     }
 
     /* event handling ----> */
@@ -91,7 +89,7 @@ public abstract class AbstractAucomTransformNode<TIn extends AbstractData, TOut 
     protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
     void fireStatusChangedEvent(TransformNodeEvent evt) {
-        Object[] listeners = this.listenerList.getListenerList();
+        Object[] listeners = listenerList.getListenerList();
         for (int i = 0; i < listeners.length; i += 2) {
             if (listeners[i] == TransformNodeEventListener.class) {
                 ((TransformNodeEventListener) listeners[i + 1]).handleTransformNodeEvent(evt);
@@ -99,13 +97,9 @@ public abstract class AbstractAucomTransformNode<TIn extends AbstractData, TOut 
         }
     }
 
-    public int getNumberListeners() {
-        return listenerList.getListenerCount();
-    }
-
     public boolean isListenerRegistered(TransformNodeEventListener listener) {
         boolean isRegistered = false;
-        Object[] listeners = this.listenerList.getListenerList();
+        Object[] listeners = listenerList.getListenerList();
         for (int i = 0; i < listeners.length; i += 2) {
             if (listeners[i + 1].equals(listener)) {
                 isRegistered = true;
@@ -118,21 +112,7 @@ public abstract class AbstractAucomTransformNode<TIn extends AbstractData, TOut 
         if (isListenerRegistered(listener)) {
             return;
         }
-        this.listenerList.add(TransformNodeEventListener.class, listener);
+        listenerList.add(TransformNodeEventListener.class, listener);
 
     }
-
-    public void removeTransformNodeListener(TransformNodeEventListener listener) {
-        listenerList.remove(TransformNodeEventListener.class, listener);
-    }
-
-    public void removeAllListeners() {
-        Object[] listeners = this.listenerList.getListenerList();
-        for (int i = 0; i < listeners.length; i += 2) {
-            if (listeners[i] == TransformNodeEventListener.class) {
-                listenerList.remove(TransformNodeEventListener.class, (TransformNodeEventListener) listeners[i + 1]);
-            }
-        }
-    }
-    /* <---- event handling */
 }

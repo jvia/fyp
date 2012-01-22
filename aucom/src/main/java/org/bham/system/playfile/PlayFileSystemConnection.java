@@ -21,6 +21,7 @@ public class PlayFileSystemConnection extends SystemConnection {
         super("ReplayFileSystemConnection");
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void iConnect() throws SystemConnectionFailedException {
         if (isConnected()) {

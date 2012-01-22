@@ -1,7 +1,5 @@
 package org.bham.aucom.main.prepare;
 
-import static org.bham.aucom.util.Constants.TIMESTAMP;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -97,19 +95,6 @@ public class FixTimestamps {
 		}
 	}
 
-	private void fix(Element e) {
-		long timestamp = getTimestamp(e);
-		if (timestamp == -1) {
-			timestamp = getAlternativeTimestamp(e);
-		}
-		if (timestamp != -1) {
-			e.removeAttribute(e.getAttribute("timestamp"));
-			e.addAttribute(new Attribute("timestamp", String.valueOf(timestamp)));
-		} else {
-			System.out.println("could not fixed timestamp for node: " + e.getLocalName());
-		}
-	}
-
 	private void fix2(Element e) {
 		long timestamp = getTimestamp2(e);
 		e.removeAttribute(e.getAttribute("timestamp"));
@@ -133,22 +118,6 @@ public class FixTimestamps {
 			}
 		}
 		return Long.parseLong(out);
-	}
-
-	private long getTimestamp(Element in) throws NumberFormatException {
-		String timestamp = "";
-		long out;
-		if (in.getAttribute("timestamp") != null) {
-			timestamp = in.getAttribute("timestamp").getValue();
-		} else if (in.getAttribute(TIMESTAMP) != null) {
-			timestamp = in.getAttribute(TIMESTAMP).getValue();
-		}
-		try {
-			out = Long.parseLong(timestamp);
-		} catch (NumberFormatException e) {
-			out = -1;
-		}
-		return out;
 	}
 
 	private long getAlternativeTimestamp(Element in) throws NumberFormatException {

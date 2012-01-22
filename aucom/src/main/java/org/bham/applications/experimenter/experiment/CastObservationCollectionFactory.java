@@ -20,7 +20,7 @@ public class CastObservationCollectionFactory extends ExperimentFactory {
     }
 
     /**
-     * Creates the CastExpierment by reading the XML data from disk and
+     * Creates the CastExperiment by reading the XML data from disk and
      * configuring the experiment as necessary.
      *
      * @param element the XML element
@@ -30,7 +30,7 @@ public class CastObservationCollectionFactory extends ExperimentFactory {
      * @throws IOException
      */
     @Override
-    public Experiment createExperiment(Element element) throws ValidityException, ParsingException, IOException {
+    public Experiment createExperiment(Element element) throws ParsingException, IOException {
         setWorkingDirectoryIfPresentInExperimentDescription(element);
         CastObservationCollection experiment;
 

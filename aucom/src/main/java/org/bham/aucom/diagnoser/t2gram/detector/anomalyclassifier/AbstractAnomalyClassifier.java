@@ -8,9 +8,9 @@ import java.util.LinkedHashMap;
 import java.util.UUID;
 
 public abstract class AbstractAnomalyClassifier implements AnomalyClassifier {
+    private static final long serialVersionUID = 1L;
     LinkedHashMap<String, Number> parameters = new LinkedHashMap<String, Number>();
     LinkedHashMap<String, String> attributes = new LinkedHashMap<String, String>();
-    private static final long serialVersionUID = 1L;
     UUID id;
 
     public AbstractAnomalyClassifier(String name) {
@@ -29,7 +29,6 @@ public abstract class AbstractAnomalyClassifier implements AnomalyClassifier {
     }
 
     public String getName() {
-        // TODO Auto-generated method stub
         return this.attributes.get("name");
     }
 

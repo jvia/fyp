@@ -35,7 +35,6 @@ public class AucomIO {
 	private ModelIO faultDetectionModelIO = new ModelIO();
 	private SlindingWindowIO slidingWindowIO = new SlindingWindowIO();
 	private ClassifierIO classifierIO = new ClassifierIO();
-	private EncoderIO encoderIO = new EncoderIO();
 
 	// private XmlFileWriter xmlFileWriter = new XmlFileWriter();
 
@@ -62,13 +61,13 @@ public class AucomIO {
 	 */
 	public boolean writeFaultDetectionModel(Model model) {
 		File f = generateFileFor(model.getId(), "ml");
-		boolean successfull = this.faultDetectionModelIO.write(model, f);
-		if (successfull) {
+		boolean successful = this.faultDetectionModelIO.write(model, f);
+		if (successful) {
 			System.out.println("model: " + model.toString() + " saved to " + f);
 		} else {
 			System.out.println("error while saving model: " + model.toString() + " to " + f);
 		}
-		return successfull;
+		return successful;
 	}
 	/*
 	 * Fault detection model io

@@ -12,7 +12,6 @@ import org.bham.aucom.fts.graph.DataSequenceStatistics;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.UUID;
 
 public class PrintStatistics {
     /*

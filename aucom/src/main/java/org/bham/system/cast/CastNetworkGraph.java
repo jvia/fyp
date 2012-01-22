@@ -12,6 +12,10 @@ import org.bham.aucom.fts.sink.TimeSeriesSink;
  */
 public class CastNetworkGraph extends AbstractAucomGraph {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     CastObservationSource source;
     TimeSeriesSink<Observation> sink;
 

@@ -196,54 +196,6 @@ public class Report {
 		System.out.println("---------------- TIMESTAMPS ----------------");
 	}
 
-	private void analyseIdenticalTimestamps(ArrayList<Element> list) {
-		ArrayList<Element> proofed = new ArrayList<Element>();
-		while (!list.isEmpty()) {
-			Element e = list.get(0);
-			proofed.clear();
-			try {
-				long timestamp = getTimestamp(e);
-				if (timestamp == -1) {
-					continue;
-				}
-				for (int j = 1; j < list.size(); j++) {
-					try {
-						Element ee = list.get(j);
-						long timestamp2 = getTimestamp(ee);
-						if (timestamp2 == -1) {
-							continue;
-						}
-						if (e.equals(ee)) {
-							continue;
-						}
-						long diff = timestamp - timestamp2;
-						if (diff == 0) {
-							this.numZeroTimestamps++;
-							String type = e.getAttributeValue("source") + ":" + e.getAttributeValue("memoryName") + ":" + e.getAttributeValue("eventType") + ":" + e.getLocalName() + " -> "
-									+ e.getAttributeValue("source") + ":" + e.getAttributeValue("memoryName") + ":" + e.getAttributeValue("eventType") + ":" + ee.getLocalName();
-							if (!this.zeroTimestampsElements.containsKey(type))
-								this.zeroTimestampsElements.put(type, 0);
-							this.zeroTimestampsElements.put(type, this.zeroTimestampsElements.get(type) + 1);
-							proofed.add(ee);
-						}
-					} catch (Exception e2) {
-						for (Element remove : proofed) {
-							list.remove(remove);
-						}
-					}
-				}
-				for (Element remove : proofed) {
-					list.remove(remove);
-				}
-			} catch (NumberFormatException e2) {
-				for (Element remove : proofed) {
-					list.remove(remove);
-				}
-			}
-			list.remove(e);
-		}
-	}
-
 	private void analyseCorruptedTimestamps(ArrayList<Element> list) {
 		for (Element e : list) {
 			try {
@@ -251,31 +203,6 @@ public class Report {
 			} catch (NumberFormatException e2) {
 				numCorruptedTimestamps++;
 				corruptedTimestampsElements.put(e.getLocalName(), e);
-			}
-		}
-	}
-
-	private void analyseUnorderedTimestamps(ArrayList<Element> list) {
-		long lastTimestamp = -1;
-		Element lastTimestampElement = null;
-		for (Element e : list) {
-			try {
-				long timestamp = getTimestamp(e);
-				if (lastTimestamp == -1) {
-					lastTimestamp = timestamp;
-					lastTimestampElement = e;
-					continue;
-				}
-				long diff = timestamp - lastTimestamp;
-				if (diff < 0) {
-					this.numNegativeTimestamps++;
-					this.negativeTimestampsElements.put(e.getLocalName(), new Tuple<Element, Element>(lastTimestampElement, e));
-
-				}
-				lastTimestampElement = e;
-				lastTimestamp = timestamp;
-
-			} catch (NumberFormatException e2) {
 			}
 		}
 	}

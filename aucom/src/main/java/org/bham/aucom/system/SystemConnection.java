@@ -1,9 +1,6 @@
 package org.bham.aucom.system;
 
 import java.awt.Dimension;
-import java.io.BufferedReader;
-import java.io.IOException;
-
 import javax.swing.JPanel;
 
 import org.bham.aucom.ActionNotPermittedException;
@@ -228,86 +225,5 @@ abstract public class SystemConnection implements Presentable {
             throw new FactoryManagerInitalizationException("couldn't find source.cfg neither in file " + fileString + " nor with path " + resourcePath + " in a resource");
         }
         return null;
-    }
-
-    /**
-     * Loads a system connection from a BufferedReader.
-     * 
-     * @param br the reader to read from
-     * @return a new system connection
-     * @throws ClassNotFoundException could not find the class specific in the configuration
-     * @throws InstantiationException could not create an instance of this class
-     * @throws IllegalAccessException no access to the class definition
-     * @throws IOException IO error
-     */
-    @SuppressWarnings("unchecked")
-    private static SystemConnection loadSystemConnection(BufferedReader br) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException
-    {
-        SystemConnection loadedConnection = null;
-        String lineStr = getSystemConnectionLine(br);
-        if (isValid(lineStr)) {
-            String classString = getClassFromString(lineStr);
-            loadedConnection = (SystemConnection) Class.forName(classString).newInstance();
-        }
-        return loadedConnection;
-    }
-
-    /**
-     * Parse the class name from a line of text.
-     * 
-     * @param lineStr line of text
-     * @return class name
-     */
-    private static String getClassFromString(String lineStr)
-    {
-        String[] parts = lineStr.split(" ");
-        return parts[1];
-    }
-
-    /**
-     * Determines if the line is a valid line in the configuration file.
-     * 
-     * @param lineStr line of text
-     * @return true if valid
-     */
-    private static boolean isValid(String lineStr)
-    {
-        String[] parts = lineStr.split(" ");
-        boolean isValid = parts.length == 2;
-        isValid = isValid & !parts[1].equals("");
-        return isValid;
-    }
-
-    /**
-     * Find and return the line about which system to connect to.
-     * 
-     * @param br the text stream
-     * @return the line with the connection information
-     * @throws IOException IO error
-     */
-    private static String getSystemConnectionLine(BufferedReader br) throws IOException
-    {
-        String str;
-        while ((str = br.readLine()) != null) {
-            str = str.trim();
-            if (ignoreLine(str)) {
-                continue;
-            }
-            if (str.startsWith("SystemConnection")) {
-                break;
-            }
-        }
-        return str;
-    }
-
-    /**
-     * Determines if the line is commented out.
-     * 
-     * @param str line of text
-     * @return true if it begins with a '#'
-     */
-    private static boolean ignoreLine(String str)
-    {
-        return str.startsWith("#");
     }
 }

@@ -12,7 +12,6 @@ public class BusyWorker {
         ArrayList<Thread> threadPool = new ArrayList<Thread>();
         for (int i = 0; i < numThreads; i++) {
             threadPool.add(new Thread(new Runnable() {
-                @SuppressWarnings({"InfiniteLoopStatement"}) // Loop forever to destroy system
                 @Override
                 public void run() {
                     Long fibNumer = 30l;

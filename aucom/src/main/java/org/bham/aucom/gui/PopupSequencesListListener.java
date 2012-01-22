@@ -5,8 +5,6 @@ import org.bham.aucom.data.encoder.Encoder;
 import org.bham.aucom.data.encoder.SourceScopeTypeEncoder;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.gui.charts.ProbabilityChartFrame;
-import org.jfree.data.xy.XYSeries;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -28,27 +26,30 @@ public class PopupSequencesListListener extends MouseAdapter {
         JMenuItem item = new JMenuItem("show events");
         item.addActionListener(new ActionListener() {
 
+            @SuppressWarnings("unchecked")
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                XYSeries series = getFrame().getScoreXYSeries((TimeSeries<Score>) getSequenceList().getSelectedValue());
+                getFrame().getScoreXYSeries((TimeSeries<Score>) getSequenceList().getSelectedValue());
             }
         });
         this.selectedIndexPopupMenu.add(item);
         item = new JMenuItem("show histogram");
         item.addActionListener(new ActionListener() {
 
+            @SuppressWarnings("unchecked")
             @Override
             public void actionPerformed(ActionEvent e) {
-                XYSeries series = getFrame().getScoreXYSeries((TimeSeries<Score>) getSequenceList().getSelectedValue());
+                getFrame().getScoreXYSeries((TimeSeries<Score>) getSequenceList().getSelectedValue());
             }
         });
         this.selectedIndexPopupMenu.add(item);
         item = new JMenuItem("show threshold");
         item.addActionListener(new ActionListener() {
 
+            @SuppressWarnings("unchecked")
             @Override
             public void actionPerformed(ActionEvent e) {
-                XYSeries series = getFrame().getScoreXYSeries((TimeSeries<Score>) getSequenceList().getSelectedValue());
+                getFrame().getScoreXYSeries((TimeSeries<Score>) getSequenceList().getSelectedValue());
             }
         });
         //TODO add action to show threshold

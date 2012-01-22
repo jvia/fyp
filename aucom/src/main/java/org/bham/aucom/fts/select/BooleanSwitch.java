@@ -5,14 +5,14 @@ import java.util.logging.Logger;
 import net.sf.xcf.fts.Event;
 import net.sf.xcf.fts.nodes.filter.AbstractFilter;
 
-public class BooleanSwitch extends AbstractFilter {
+public class BooleanSwitch extends AbstractFilter<Object> {
 	Logger l = Logger.getLogger(this.getClass().getCanonicalName());
 	boolean filterState;
 	public BooleanSwitch() {
 		this.filterState = false;
 	}
 	@Override
-	public boolean isMatch(Event e) throws Exception {
+	public boolean isMatch(Event<?> e) throws Exception {
 		return this.filterState;
 	}
 	public void enable(){

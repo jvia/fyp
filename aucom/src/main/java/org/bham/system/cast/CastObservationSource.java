@@ -1,8 +1,6 @@
 package org.bham.system.cast;
 
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import nu.xom.Attribute;
 import nu.xom.Element;
@@ -19,6 +17,10 @@ import org.bham.aucom.fts.source.SourceStatus;
  */
 public class CastObservationSource extends AucomSourceAdapter<Observation> {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     private ConnectionManager cast;
     private LinkedBlockingQueue<String[]> queue;
 
@@ -62,10 +64,5 @@ public class CastObservationSource extends AucomSourceAdapter<Observation> {
             obs = new Observation(element, Long.parseLong(msg[0]));
         }
         return obs;
-    }
-    
-    private void log(Level level, String msg, Object ex)
-    {
-        Logger.getLogger(CastObservationSource.class.getName()).log(level, msg, ex);
     }
 }

@@ -9,11 +9,11 @@
         <aucom:output>/home/rgolombe/workspace/aucom/data/</aucom:output>
         <aucom:model>
             <aucom:distribution type="aucom.models.t2gram.KDEProbabilityFactory">
-                <aucom:parameter name="precision" type="java.lang.Double" value="1.0"></aucom:parameter>
+                <aucom:parameter name="precision" type="java.lang.Double" value="1.0"/>
             </aucom:distribution>
             <aucom:Threshold type="aucom.models.classifier.StatisticalHysterisisAnomalyClassificator">
-                <aucom:parameter name="mean" type="java.lang.Double" value="2.2"></aucom:parameter>
-                <aucom:parameter name="variance" type="java.lang.Double" value="0.1"></aucom:parameter>
+                <aucom:parameter name="mean" type="java.lang.Double" value="2.2"/>
+                <aucom:parameter name="variance" type="java.lang.Double" value="0.1"/>
             </aucom:Threshold>
             <aucom:SlidingWindow size="5" overlap="2" >
             </aucom:SlidingWindow>

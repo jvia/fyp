@@ -120,18 +120,6 @@ public class HistogramDistributionWithGauss implements ProbabilityDistribution{
 		return this.name;
 	}
 
-	//TODO: check the following for functionality
-	private double getDistributionEntropy() {
-		double entropy = 0.0f;
-		 Iterator<Double> it = getProbabilities();
-		 while(it.hasNext()){
-			 entropy += calcEntropy(it.next());
-		 }
-		return entropy;
-	}
-	private double getBinEntropy(int binNumber){
-		return calcEntropy(this.content.getValueOfBinWithNumber(binNumber));
-	}
 	private double calcEntropy(double inValue){
 		return inValue * Math.log(1/inValue)/Math.log(2);
 	}

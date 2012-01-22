@@ -10,7 +10,6 @@ import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.AnomalyClassifier;
 import org.bham.aucom.fts.sink.TimeSeriesSink;
 import org.bham.aucom.fts.source.ActionFailedException;
-import org.bham.aucom.fts.source.IllegalStateChange;
 import org.bham.aucom.fts.source.TimeSeriesSource;
 import org.bham.aucom.fts.tranform.*;
 
@@ -54,33 +53,6 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     public DetectorGraph() {
         super("detectorGraph");
         initGraph();
-    }
-
-    /*
-     * @param model
-     * @param classifier
-     * @param slidingWindow
-     */
-    private void setMonitorState(T2GramModelI model, AnomalyClassifier classifier, SlidingWindow slidingWindow) {
-        if (getStatus().equals(GraphStatus.RUNNING)) {
-            try {
-                pause();
-            } catch (IllegalStateChange e) {
-                e.printStackTrace();
-            }
-        }
-        setModel(model);
-        setClassifier(classifier);
-        if (model == null) {
-            return;
-        } else {
-            this.generateDurationFeature.setGenerator(new TemporalDurationFeatureGenerator(model.getDimensions()));
-        }
-        setSlidingWindow(slidingWindow);
-        if (getStatus().equals(GraphStatus.PAUSED)) {
-            resume();
-        }
-
     }
 
     /*
@@ -176,7 +148,6 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
      * @param inTimeSeries
      * @throws ActionFailedException
      */
-    @SuppressWarnings("unchecked")
     public void setInput(TimeSeries<Observation> inTimeSeries) throws ActionFailedException {
         this.observationTimeseriesSource.setInput(inTimeSeries);
     }
