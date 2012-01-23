@@ -18,7 +18,7 @@ public class KDELogProbabilityDistribution extends KernelDensityDistribution{
 		}
 		super.update(val);
 	}
-	public double getLogValue(double value){
+	double getLogValue(double value){
 		if(value == 0.0)
 			return 0.0;
 		return super.getProbability(Math.log(value));

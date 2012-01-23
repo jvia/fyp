@@ -8,8 +8,8 @@ import org.bham.aucom.models.probability.KernelDensityDistribution;
 public class KDEProbabilityFactory extends ProbabilityFactory {
 	private static final long serialVersionUID = 0L;
 
-	String name = "kde";
-	UUID id;
+	private final String name = "kde";
+	private final UUID id;
 
 	public KDEProbabilityFactory() {
 		this(1.0);

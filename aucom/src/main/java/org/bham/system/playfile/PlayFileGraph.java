@@ -8,8 +8,8 @@ import org.bham.aucom.fts.sink.TimeSeriesSink;
 
 public class PlayFileGraph extends AbstractAucomGraph {
 
-    PlayTimeSeriesSource<Observation> source;
-    TimeSeriesSink<Observation> sink;
+    private PlayTimeSeriesSource<Observation> source;
+    private TimeSeriesSink<Observation> sink;
     private static final long serialVersionUID = 1L;
 
     public PlayFileGraph()

@@ -12,18 +12,19 @@ package org.bham.aucom.data.util;
 
 import org.bham.aucom.util.AucomListModelAdapter;
 
+import javax.swing.*;
+
 /**
  * @author rgolombe
  */
 public class DataManagerPanel extends javax.swing.JPanel {
     private static final long serialVersionUID = 0L;
-    DataManager manager;
 
     /* Creates new form DataManagerPanel */
     public DataManagerPanel(DataManager inManager) {
-        manager = inManager;
+        DataManager manager = inManager;
         initComponents();
-        jListModel = new AucomListModelAdapter();
+        AucomListModelAdapter jListModel = new AucomListModelAdapter();
         manager.addDataModelStatusListener(jListModel);
         jList1.setModel(jListModel);
     }
@@ -38,7 +39,7 @@ public class DataManagerPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
+        JScrollPane jScrollPane1 = new JScrollPane();
         jList1 = new javax.swing.JList();
 
         setLayout(new java.awt.GridLayout(1, 0));
@@ -48,7 +49,7 @@ public class DataManagerPanel extends javax.swing.JPanel {
              *
              */
             private static final long serialVersionUID = 1L;
-            String[] strings = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
+            final String[] strings = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
 
             public int getSize() {
                 return strings.length;
@@ -65,9 +66,6 @@ public class DataManagerPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList jList1;
-    private javax.swing.JScrollPane jScrollPane1;
-    // End of variables declaration//GEN-END:variables
-    private AucomListModelAdapter jListModel;
 
     /*
      * Implementation of the accepts function of the @DataModeListener 

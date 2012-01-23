@@ -316,21 +316,21 @@ public class AucomChartPanel extends ChartPanel {
      *            a flag indicating whether or not tooltips should be enabled
      *            for the chart.
      */
-    public AucomChartPanel(JFreeChart chart, int width, int height,
-            int minimumDrawWidth, int minimumDrawHeight, int maximumDrawWidth,
-            int maximumDrawHeight, boolean useBuffer, boolean properties,
-            boolean save, boolean print, boolean zoom, boolean tooltips) {
+    private AucomChartPanel(JFreeChart chart, int width, int height,
+                            int minimumDrawWidth, int minimumDrawHeight, int maximumDrawWidth,
+                            int maximumDrawHeight, boolean useBuffer, boolean properties,
+                            boolean save, boolean print, boolean zoom, boolean tooltips) {
 
         this(chart, width, height, minimumDrawWidth, minimumDrawHeight,
                 maximumDrawWidth, maximumDrawHeight, useBuffer, properties,
                 true, save, print, zoom, tooltips);
     }
 
-    public AucomChartPanel(JFreeChart chart, int width, int height,
-            int minimumDrawWidth, int minimumDrawHeight, int maximumDrawWidth,
-            int maximumDrawHeight, boolean useBuffer, boolean properties,
-            boolean copy, boolean save, boolean print, boolean zoom,
-            boolean tooltips) {
+    private AucomChartPanel(JFreeChart chart, int width, int height,
+                            int minimumDrawWidth, int minimumDrawHeight, int maximumDrawWidth,
+                            int maximumDrawHeight, boolean useBuffer, boolean properties,
+                            boolean copy, boolean save, boolean print, boolean zoom,
+                            boolean tooltips) {
         super(chart, width, height,
                 minimumDrawWidth, minimumDrawHeight, maximumDrawWidth,
                 maximumDrawHeight, useBuffer, properties,

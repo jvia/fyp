@@ -27,21 +27,21 @@ import java.io.*;
  */
 public class ModelViewer extends javax.swing.JFrame {
     private static final long serialVersionUID = 0L;
-    Model model;
-    ExampleFileFilter modelFilter;
-    File dir = new File("/home/rgolombe/workspace/aucom/data/tobi_iros10_session/records/");
+    private Model model;
+    private final ExampleFileFilter modelFilter;
+    private final File dir = new File("/home/rgolombe/workspace/aucom/data/tobi_iros10_session/records/");
 
     /**
      * Creates new form ModelViewer
      */
-    public ModelViewer() {
+    private ModelViewer() {
         initComponents();
         modelFilter = new ExampleFileFilter();
         modelFilter.addExtension("ml");
         modelFilter.setDescription("Trained Model");
     }
 
-    public void load(File inFileToLoad) {
+    void load(File inFileToLoad) {
         ObjectInputStream in;
         try {
             in = new ObjectInputStream(new FileInputStream(inFileToLoad));
@@ -59,14 +59,14 @@ public class ModelViewer extends javax.swing.JFrame {
         }
     }
 
-    public void displayDistribution(String label) {
+    void displayDistribution(String label) {
         String parts[] = label.split("->");
         Integer.parseInt(parts[0]);
         Integer.parseInt(parts[1]);
 //		new HistogramView(model.transitionMatrix.get(from, to)).setVisible(true);
     }
 
-    public void updateView() {
+    void updateView() {
         distributionPanel.removeAll();
 //		System.out.println("updating");
         int col = 10;

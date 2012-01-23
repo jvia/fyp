@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 import org.bham.aucom.data.AbstractData;
 
 
-public class SingleDataSink<TIn extends AbstractData> extends AucomSinkAdapter<TIn> {
+class SingleDataSink<TIn extends AbstractData> extends AucomSinkAdapter<TIn> {
 	private TIn data = null;
 
 	public SingleDataSink() {
@@ -27,11 +27,11 @@ public class SingleDataSink<TIn extends AbstractData> extends AucomSinkAdapter<T
 		}
 	}
 
-	protected void setData(TIn data) {
+	void setData(TIn data) {
 		this.data = data;
 	}
 
-	public TIn getData() {
+	TIn getData() {
 		return data;
 	}
 }

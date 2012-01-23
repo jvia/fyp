@@ -14,8 +14,8 @@ import java.awt.event.MouseEvent;
 
 
 public class PopupSequencesListListener extends MouseAdapter {
-    JPopupMenu selectedIndexPopupMenu;
-    private ProbabilityChartFrame frame;
+    private final JPopupMenu selectedIndexPopupMenu;
+    private final ProbabilityChartFrame frame;
     private JList sequenceList;
     Encoder classifier = SourceScopeTypeEncoder.getInstance();
 
@@ -67,7 +67,7 @@ public class PopupSequencesListListener extends MouseAdapter {
         maybePopup(arg0);
     }
 
-    public void maybePopup(MouseEvent arg0) {
+    void maybePopup(MouseEvent arg0) {
         Point klickLocation = arg0.getPoint();
         JList l = (JList) arg0.getSource();
         int selectedIndex = l.getSelectedIndex();
@@ -87,15 +87,15 @@ public class PopupSequencesListListener extends MouseAdapter {
         }
     }
 
-    public ProbabilityChartFrame getFrame() {
+    ProbabilityChartFrame getFrame() {
         return this.frame;
     }
 
-    public void setSequenceList(JList sequenceList) {
+    void setSequenceList(JList sequenceList) {
         this.sequenceList = sequenceList;
     }
 
-    public JList getSequenceList() {
+    JList getSequenceList() {
         return this.sequenceList;
     }
 }

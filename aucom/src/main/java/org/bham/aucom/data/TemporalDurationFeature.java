@@ -10,7 +10,7 @@ public class TemporalDurationFeature extends DataType {
      * Holds durations between the occurrence of the data type represented by
      * this event and each last occurrence of all other known data types
      */
-    protected LinkedHashMap<DataType, Long> predecessorIdToDurationsMapping;
+    private LinkedHashMap<DataType, Long> predecessorIdToDurationsMapping;
 
     /**
      * Creates a non-initialized TemporalDurationFeature
@@ -26,7 +26,7 @@ public class TemporalDurationFeature extends DataType {
      * @param tdf the object from which information is take in order to create a
      *            new TemporalDurationFeature object
      */
-    public TemporalDurationFeature(TemporalDurationFeature tdf) {
+    TemporalDurationFeature(TemporalDurationFeature tdf) {
         this(tdf, tdf.getPredecessorIdToDurationsMapping());
     }
 
@@ -97,15 +97,15 @@ public class TemporalDurationFeature extends DataType {
         return out;
     }
 
-    protected void setPredecessorIdToDurationsMapping(LinkedHashMap<DataType, Long> predecessorIdToDurationsMapping) {
+    void setPredecessorIdToDurationsMapping(LinkedHashMap<DataType, Long> predecessorIdToDurationsMapping) {
         this.predecessorIdToDurationsMapping = predecessorIdToDurationsMapping;
     }
 
-    protected LinkedHashMap<DataType, Long> getPredecessorIdToDurationsMapping() {
+    LinkedHashMap<DataType, Long> getPredecessorIdToDurationsMapping() {
         return this.predecessorIdToDurationsMapping;
     }
 
-    public static TemporalDurationFeature createRandomTemporalDurationFeature() {
+    static TemporalDurationFeature createRandomTemporalDurationFeature() {
         DataType dtp = createRandomDataType();
         LinkedHashMap<DataType, Long> durations = new LinkedHashMap<DataType, Long>();
         for (int i = 0; i < 5; i++) {

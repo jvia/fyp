@@ -7,7 +7,7 @@ import net.sf.xcf.fts.nodes.sink.SinkAdapter;
 
 public abstract class AucomSinkAdapter<TIn> extends SinkAdapter<TIn> {
 
-	public AucomSinkAdapter(String name) {
+	AucomSinkAdapter(String name) {
 		super(name);
 
 	}
@@ -15,7 +15,7 @@ public abstract class AucomSinkAdapter<TIn> extends SinkAdapter<TIn> {
 	/*
 	 * event handling
 	 */
-	protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
+    private final javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
 	public void addSinkStatusListener(SinkStatusListener listener) {
 		if (isSinkStatusListenerRegistered(listener)) {
@@ -26,7 +26,7 @@ public abstract class AucomSinkAdapter<TIn> extends SinkAdapter<TIn> {
 		this.listenerList.add(SinkStatusListener.class, listener);
 	}
 
-	public boolean isSinkStatusListenerRegistered(SinkStatusListener listener) {
+	boolean isSinkStatusListenerRegistered(SinkStatusListener listener) {
 		boolean isRegistered = false;
 		Object[] listeners = this.listenerList.getListenerList();
 		for (int i = 0; i < listeners.length; i += 2) {

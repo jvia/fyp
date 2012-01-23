@@ -24,7 +24,7 @@ import org.bham.aucom.data.timeseries.TimeSeriesStatusEvent;
  */
 public class DefaultSystemConnectionPanel extends javax.swing.JPanel implements SystemConnectionStatusListener, TimeSeriesStatusListener {
 	private static final long serialVersionUID = 0L;
-	SystemConnection connection;
+	private final SystemConnection connection;
 
 	/* Creates new form DefaultSystemConnectionPanel */
 	public DefaultSystemConnectionPanel(SystemConnection inConnection) {
@@ -126,7 +126,7 @@ public class DefaultSystemConnectionPanel extends javax.swing.JPanel implements 
 		counterLabel.setText("#" +incomingSystemEventCounter);
 		
 	}
-	public void resetCounter(){
+	void resetCounter(){
 		incomingSystemEventCounter= 0;
 	}
 

@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class HistogramBin implements Serializable {
     private static final long serialVersionUID = 0L;
     private String binLabel;
-    double value;
+    private double value;
     private double lowBorder;
     private double highBorder;
     private int binNumber;
@@ -41,7 +41,7 @@ public class HistogramBin implements Serializable {
      * @param binLabel
      *            the binLabel to set
      */
-    public void setBinLabel(String binLabel) {
+    void setBinLabel(String binLabel) {
         this.binLabel = binLabel;
     }
 
@@ -56,7 +56,7 @@ public class HistogramBin implements Serializable {
      * @param binNumber
      *            the binNumber to set
      */
-    public void setBinNumber(int binNumber) {
+    void setBinNumber(int binNumber) {
         this.binNumber = binNumber;
     }
 
@@ -80,14 +80,14 @@ public class HistogramBin implements Serializable {
      * @param lowBorder
      *            the lowBorder to set
      */
-    public void setLowBorder(double lowBorder) {
+    void setLowBorder(double lowBorder) {
         this.lowBorder = lowBorder;
     }
 
     /**
      * @return the lowBorder
      */
-    public double getLowBorder() {
+    double getLowBorder() {
         return lowBorder;
     }
 
@@ -95,14 +95,14 @@ public class HistogramBin implements Serializable {
      * @param highBorder
      *            the highBorder to set
      */
-    public void setHighBorder(double highBorder) {
+    void setHighBorder(double highBorder) {
         this.highBorder = highBorder;
     }
 
     /**
      * @return the highBorder
      */
-    public double getHighBorder() {
+    double getHighBorder() {
         return highBorder;
     }
 }

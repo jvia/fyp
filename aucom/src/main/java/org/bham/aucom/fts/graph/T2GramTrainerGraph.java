@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class T2GramTrainerGraph extends AbstractAucomGraph {
     private static final long serialVersionUID = 1L;
     private TimeSeriesSource<Observation> source;
-    GenerateTemporalDurationFeature tdfNode;
+    private GenerateTemporalDurationFeature tdfNode;
     private TimeSeriesSink<TemporalDurationFeature> sink;
 
     public T2GramTrainerGraph() {

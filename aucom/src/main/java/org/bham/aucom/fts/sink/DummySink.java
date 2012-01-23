@@ -2,7 +2,7 @@ package org.bham.aucom.fts.sink;
 
 import org.bham.aucom.data.AbstractData;
 
-public class DummySink<TIn extends AbstractData> extends AucomSinkAdapter<TIn> {
+class DummySink<TIn extends AbstractData> extends AucomSinkAdapter<TIn> {
 
 	public DummySink() {
 		super("DummySink");

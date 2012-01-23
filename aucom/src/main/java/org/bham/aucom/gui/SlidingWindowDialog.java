@@ -22,12 +22,12 @@ import org.bham.aucom.data.util.SlidingWindow;
  */
 public class SlidingWindowDialog extends javax.swing.JDialog {
 	private static final long serialVersionUID = 0L;
-	Frame myParent;
-	SlidingWindow sw;
+	private final Frame myParent;
+	private final SlidingWindow sw;
 	private boolean approved = false;
 
 	/* Creates new form SlidingWindowDialog */
-	public SlidingWindowDialog(java.awt.Frame parent, boolean modal, SlidingWindow inSw) {
+    private SlidingWindowDialog(java.awt.Frame parent, boolean modal, SlidingWindow inSw) {
 		super(parent, modal);
 		initComponents();
 		this.myParent = parent;
@@ -127,11 +127,11 @@ public class SlidingWindowDialog extends javax.swing.JDialog {
 		this.windoOverlapTextField = jTextField2;
 	}
 
-	public javax.swing.JTextField getjTextField2() {
+	javax.swing.JTextField getjTextField2() {
 		return this.windoOverlapTextField;
 	}
 
-	public int getSlidingWindowSize() {
+	int getSlidingWindowSize() {
 		try {
 			return Integer.parseInt(windoOverlapTextField.getText());
 		} catch (Exception e) {
@@ -140,7 +140,7 @@ public class SlidingWindowDialog extends javax.swing.JDialog {
 
 	}
 
-	public int getWindowOverlapSize() {
+	int getWindowOverlapSize() {
 		try {
 			return Integer.parseInt(getjTextField2().getText());
 		} catch (Exception e) {

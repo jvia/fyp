@@ -1,7 +1,7 @@
 package org.bham.aucom.util;
 
 public class RingBuffer<T> {
-    T[] data;
+    private T[] data;
     private int nextInsertPosition;
     private final int capacity;
     private boolean filled;
@@ -98,11 +98,11 @@ public class RingBuffer<T> {
         return out;
     }
 
-    protected void setFilled(boolean filled) {
+    void setFilled(boolean filled) {
         this.filled = filled;
     }
 
-    public boolean isFilled() {
+    boolean isFilled() {
         return filled;
     }
 
@@ -122,7 +122,7 @@ public class RingBuffer<T> {
         this.nextInsertPosition = nextInsertPosition;
     }
 
-    protected int getNextInsertPosition() {
+    int getNextInsertPosition() {
         return nextInsertPosition;
     }
 }

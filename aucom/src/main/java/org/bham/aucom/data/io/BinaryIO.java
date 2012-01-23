@@ -5,9 +5,9 @@ import nu.xom.ParsingException;
 import java.io.*;
 
 public abstract class BinaryIO<T> implements IOInterface<T> {
-    Class<T> cl;
+    private final Class<T> cl;
 
-    public BinaryIO(Class<T> cl) {
+    BinaryIO(Class<T> cl) {
         this.cl = cl;
     }
 

@@ -9,7 +9,7 @@ import java.util.Random;
 import nu.xom.Element;
 
 public class Classification extends Score {
-	private Score score;
+	private final Score score;
 	private SystemFaultStatus status;
 
 	public Classification(Score data, SystemFaultStatus status) {

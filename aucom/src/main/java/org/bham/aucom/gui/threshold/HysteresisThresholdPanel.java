@@ -14,6 +14,8 @@ package org.bham.aucom.gui.threshold;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.AnomalyClassifier;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.HysteresisAnomalyClassifier;
 
+import javax.swing.*;
+
 /**
  *
  * @author rgolombe
@@ -41,8 +43,8 @@ public class HysteresisThresholdPanel extends AbstractCreateAnomalyClassifierPan
 
         upperTextField = new javax.swing.JTextField();
         lowertextField = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        JLabel jLabel1 = new JLabel();
+        JLabel jLabel2 = new JLabel();
 
         upperTextField.setText("1.0");
 
@@ -85,9 +87,6 @@ public class HysteresisThresholdPanel extends AbstractCreateAnomalyClassifierPan
     }// </editor-fold>//GEN-END:initComponents
 
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField lowertextField;
     private javax.swing.JTextField upperTextField;
     // End of variables declaration//GEN-END:variables

@@ -14,11 +14,11 @@ public class PosToFixToString extends AbstractTransformNode<String, String> {
         return arg0.concat(getPostfix());
     }
 
-    public void setPostfix(String inNewPostfix) {
+    void setPostfix(String inNewPostfix) {
         this.postfix = inNewPostfix;
     }
 
-    public String getPostfix() {
+    String getPostfix() {
         return postfix;
     }
 

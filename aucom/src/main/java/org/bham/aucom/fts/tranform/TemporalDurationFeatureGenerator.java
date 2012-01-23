@@ -16,8 +16,8 @@ import org.bham.aucom.data.TemporalDurationFeature;
 import org.bham.aucom.data.encoder.Encoder;
 
 public class TemporalDurationFeatureGenerator {
-    ConcurrentHashMap<Integer, DataType> lastOccurrences = new ConcurrentHashMap<Integer, DataType>(new LinkedHashMap<Integer, DataType>());
-    Collection<Integer> initialClasses;
+    private final ConcurrentHashMap<Integer, DataType> lastOccurrences = new ConcurrentHashMap<Integer, DataType>(new LinkedHashMap<Integer, DataType>());
+    private final Collection<Integer> initialClasses;
 
     /*
      * null is permitted
@@ -50,7 +50,7 @@ public class TemporalDurationFeatureGenerator {
         initialClasses.clear();
     }
 
-    public boolean isLastOccurancesInitialized()
+    boolean isLastOccurancesInitialized()
     {
         boolean isLastOccurancesInitialized = true;
         for (Integer id : lastOccurrences.keySet()) {

@@ -9,7 +9,7 @@ package org.bham.aucom.util;
  */
 public class Tuple<T, U> {
 
-    private T first;
+    private final T first;
     private U second;
 
     /**

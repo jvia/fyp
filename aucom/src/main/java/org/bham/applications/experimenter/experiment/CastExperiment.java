@@ -30,15 +30,15 @@ import java.util.logging.Logger;
  */
 public class CastExperiment implements Experiment {
 
-    private ModelTrainer trainer;
+    private final ModelTrainer trainer;
     private Detector faultDetector;
     private CastSystemConnection cast;
 
-    private String name;
-    private String wd;
-    private String ml;
-    private String obs;
-    private int size;
+    private final String name;
+    private final String wd;
+    private final String ml;
+    private final String obs;
+    private final int size;
 
     /**
      * Creates the CAST experiment.
@@ -221,7 +221,7 @@ public class CastExperiment implements Experiment {
             e.printStackTrace();
         }
         System.out.println("complete.");
-        return (Model) trainer.getModel();
+        return trainer.getModel();
     }
 
     /**
@@ -233,7 +233,7 @@ public class CastExperiment implements Experiment {
     private Model loadModelFile(String ml) {
         Model _model = null;
         try {
-            _model = (Model) AucomIO.getInstance().readFaultDetectionModel(new File(ml));
+            _model = AucomIO.getInstance().readFaultDetectionModel(new File(ml));
         } catch (FileNotFoundException ex) {
             Logger.getLogger(CastExperiment.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DataAlreadyExistsException ex) {

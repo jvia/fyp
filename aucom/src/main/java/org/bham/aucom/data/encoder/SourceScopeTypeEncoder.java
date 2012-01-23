@@ -1,32 +1,20 @@
 package org.bham.aucom.data.encoder;
 
-import static org.bham.aucom.util.Constants.EVENT_TYPE;
-import static org.bham.aucom.util.Constants.SCOPE_TYPE;
-import static org.bham.aucom.util.Constants.SOURCE_TYPE;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.TreeSet;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import nu.xom.Attribute;
 import nu.xom.Element;
 import nu.xom.Node;
 import nu.xom.Nodes;
-
 import org.bham.aucom.data.DomainFeature;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.util.Constants;
+
+import java.io.*;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static org.bham.aucom.util.Constants.*;
 
 /**
  * @author Raphael Golombek <rgolombe@cor-lab.uni-bielefeld.de>
@@ -37,11 +25,11 @@ public class SourceScopeTypeEncoder extends Encoder {
 	private static final String EncoderSeperator = ":";
 	private static final String CLASSES_TXT_INTERN_PATH = File.separator+"data"+File.separator+"algorithm"+File.separator+"classes.txt";
 	private static final String CLASSES_TXT_EXTERN_PATH = "data"+File.separator+"algorithm"+File.separator+"classes.txt";
-	protected UUID id;
-	protected ConcurrentHashMap<String, Integer> classes;
+	private UUID id;
+	private final ConcurrentHashMap<String, Integer> classes;
 	protected boolean reportMissingEncoding = true;
 	private boolean createMissingEncoding = true;
-	protected static SourceScopeTypeEncoder singeltonInstance;
+	private static SourceScopeTypeEncoder singeltonInstance;
 
 	protected SourceScopeTypeEncoder() {
 		this.id = UUID.randomUUID();
@@ -80,7 +68,7 @@ public class SourceScopeTypeEncoder extends Encoder {
 	// SourceScopeTypeEncoder.singeltonInstance = new SourceScopeTypeEncoder();
 	// return SourceScopeTypeEncoder.singeltonInstance;
 	// }
-	public void loadEncoding(InputStream inStream) throws NumberFormatException, IOException {
+    void loadEncoding(InputStream inStream) throws NumberFormatException, IOException {
 		this.classes.clear();
 		BufferedReader is = new BufferedReader(new InputStreamReader(inStream));
 		String tmp; //$NON-NLS-1$
@@ -96,7 +84,7 @@ public class SourceScopeTypeEncoder extends Encoder {
 		System.out.println("ClassifyData: " + this.classes.size() + " classes loaded from \"" + CLASSES_TXT_INTERN_PATH + "\"");
 	}
 
-	public void loadEncoding(File inFile) throws NumberFormatException, IOException {
+	void loadEncoding(File inFile) throws NumberFormatException, IOException {
 		this.classes.clear();
 		BufferedReader is = new BufferedReader(new FileReader(inFile));
 		String tmp; //$NON-NLS-1$
@@ -113,7 +101,7 @@ public class SourceScopeTypeEncoder extends Encoder {
 		is.close();
 	}
 
-	public boolean isEncodingMissing(String inName) {
+	boolean isEncodingMissing(String inName) {
 		return !this.classes.containsKey(inName);
 	}
 
@@ -121,7 +109,7 @@ public class SourceScopeTypeEncoder extends Encoder {
 		return !this.classes.containsValue(Integer.valueOf(inId));
 	}
 
-	public static String getEventType(Element in) {
+	private static String getEventType(Element in) {
 		Attribute attr = in.getAttribute(EVENT_TYPE);
 		String eventType = "";
 		if (attr != null) {
@@ -130,7 +118,7 @@ public class SourceScopeTypeEncoder extends Encoder {
 		return eventType;
 	}
 
-	protected String getGenerator(Element in) {
+	String getGenerator(Element in) {
 		String generator = "";
 		if (in.getAttribute(SOURCE_TYPE) != null) {
 			generator = in.getAttribute(SOURCE_TYPE).getValue();
@@ -148,7 +136,7 @@ public class SourceScopeTypeEncoder extends Encoder {
 		return generator;
 	}
 
-	protected String getmemoryName(Element in) {
+	String getmemoryName(Element in) {
 		String memoryName = "";
 		if (in.getAttribute(SCOPE_TYPE) != null) {
 			memoryName = in.getAttribute(SCOPE_TYPE).getValue();
@@ -169,9 +157,9 @@ public class SourceScopeTypeEncoder extends Encoder {
 		return encodedId;
 	}
 
-	public String encodeToString(Observation in) {
-		int id = encode(in);
-		return decodeToString(id);
+	String encodeToString(Observation in) {
+		int _id = encode(in);
+		return decodeToString(_id);
 	}
 
 	@Override
@@ -191,13 +179,13 @@ public class SourceScopeTypeEncoder extends Encoder {
 	 * @param scope
 	 * @param features
 	 */
-	public static void createFeatures(String type, String source, String scope, List<DomainFeature> features) {
+	private static void createFeatures(String type, String source, String scope, List<DomainFeature> features) {
 		features.add(new DomainFeature(Constants.EVENT_TYPE, type));
 		features.add(new DomainFeature(Constants.SOURCE_TYPE, source));
 		features.add(new DomainFeature(Constants.SCOPE_TYPE, scope));
 	}
 
-	public String createFeatureString(List<DomainFeature> features) {
+	String createFeatureString(List<DomainFeature> features) {
 		String classAsString = ""; //$NON-NLS-1$
 		for (DomainFeature f : features) {
 			classAsString += f.getFeatureValue() + EncoderSeperator;
@@ -213,7 +201,7 @@ public class SourceScopeTypeEncoder extends Encoder {
 		return list;
 	}
 
-	public List<DomainFeature> createFeaturesFromId(int id) {
+	List<DomainFeature> createFeaturesFromId(int id) {
 		String str = decodeToString(id);
 		List<DomainFeature> list = new LinkedList<DomainFeature>();
 		String[] parts = str.split(EncoderSeperator);
@@ -225,7 +213,7 @@ public class SourceScopeTypeEncoder extends Encoder {
 		return list;
 	}
 
-	protected int getNextKey() {
+	int getNextKey() {
 		if (this.classes.values().size() == 0) {
 			return 1;
 		}
@@ -285,7 +273,7 @@ public class SourceScopeTypeEncoder extends Encoder {
 		createEncodingFor(str);
 	}
 
-	public void createEncodingFor(String str) {
+	void createEncodingFor(String str) {
 		if (isEncodingMissing(str)) {
 			int nextKey = getNextKey();
 			getEncoding().put(str, nextKey);

@@ -8,9 +8,9 @@ import net.sf.xcf.fts.engine.Graph;
 
 import java.io.File;
 public class TransformToRelativeTimestamps {
-	Graph graph;
-	EngineThread thread;	
-	public TransformToRelativeTimestamps(File in, File out) {
+	private Graph graph;
+	private EngineThread thread;
+	private TransformToRelativeTimestamps(File in, File out) {
 		// TODO fix this here
 
 //		ArrayList<DataType> list;
@@ -30,7 +30,7 @@ public class TransformToRelativeTimestamps {
 //		}
 	}
 
-	public void run(){
+	void run() {
 		this.thread = new EngineThread(this.graph);
 		this.thread.start();
 	}

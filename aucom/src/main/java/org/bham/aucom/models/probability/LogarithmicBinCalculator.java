@@ -8,7 +8,7 @@ public class LogarithmicBinCalculator implements BinCalculator {
 	 * 
 	 */
 	private static final long serialVersionUID = 1231341324234L;
-	double basis;
+	private final double basis;
 	public LogarithmicBinCalculator(double basis) {
 		this.basis = basis;
 	}
@@ -32,7 +32,7 @@ public class LogarithmicBinCalculator implements BinCalculator {
 			return 0;
 		return Math.pow(this.basis, Math.floor(log(value)));
 	}
-	public double log(double value){
+	double log(double value){
 		return Math.log(value)/Math.log(this.basis);
 	}
 

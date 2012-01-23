@@ -12,10 +12,10 @@ public class CastData implements Serializable {
      * 
      */
     private static final long serialVersionUID = 1L;
-    private long timeStamp;
-    private String eventType;
-    private String generatorType;
-    private String memoryType;
+    private final long timeStamp;
+    private final String eventType;
+    private final String generatorType;
+    private final String memoryType;
 
     public CastData(long timeStamp, String eventType, String generatorType, String memoryType)
     {

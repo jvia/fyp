@@ -11,12 +11,12 @@ import java.util.Set;
 
 public class DataSequenceStatistics {
     //TODO fix DataSequenceStatistics
-    TimeSeries<DataType> sequence;
-    ArrayList<Integer> classIds = new ArrayList<Integer>();
-    HashMap<String, Integer> sources = new HashMap<String, Integer>();
-    ArrayList<String> types = new ArrayList<String>();
-    ArrayList<String> scopes = new ArrayList<String>();
-    long duration = 0l;
+    private final TimeSeries<DataType> sequence;
+    private final ArrayList<Integer> classIds = new ArrayList<Integer>();
+    private final HashMap<String, Integer> sources = new HashMap<String, Integer>();
+    private final ArrayList<String> types = new ArrayList<String>();
+    private final ArrayList<String> scopes = new ArrayList<String>();
+    private long duration = 0l;
 
     public DataSequenceStatistics(TimeSeries<DataType> sequence) {
         this.sequence = sequence;
@@ -24,7 +24,7 @@ public class DataSequenceStatistics {
     }
 
 
-    public long getDurationInSeconds() {
+    long getDurationInSeconds() {
         return this.duration / 1000;
     }
 

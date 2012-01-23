@@ -29,13 +29,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CrossValidateExperiment implements Experiment {
-    HashMap<Detector, String> detectors;
-    private List<TimeSeries<Observation>> timeSeries;
-    private File workingDirectory;
-    private ModelTrainer trainer;
-    Document results;
-    private String name;
-    Logger logger;
+    private final HashMap<Detector, String> detectors;
+    private final List<TimeSeries<Observation>> timeSeries;
+    private final File workingDirectory;
+    private final ModelTrainer trainer;
+    private final Document results;
+    private final String name;
+    private final Logger logger;
 
     public CrossValidateExperiment(File inWorkingDirectory, String inName) {
         detectors = new LinkedHashMap<Detector, String>();

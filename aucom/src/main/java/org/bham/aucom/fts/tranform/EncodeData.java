@@ -37,12 +37,12 @@ public class EncodeData extends AbstractAucomTransformNode<Observation, DataType
         return null;
     }
 
-    public void setEncoder(Encoder encoder)
+    void setEncoder(Encoder encoder)
     {
         this.encoder = encoder;
     }
 
-    public Encoder getEncoder()
+    Encoder getEncoder()
     {
         return this.encoder;
     }

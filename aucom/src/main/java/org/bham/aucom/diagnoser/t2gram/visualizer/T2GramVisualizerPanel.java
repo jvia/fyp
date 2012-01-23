@@ -16,7 +16,7 @@ package org.bham.aucom.diagnoser.t2gram.visualizer;
  */
 public class T2GramVisualizerPanel extends javax.swing.JPanel {
 	private static final long serialVersionUID = 0L;
-	T2GramVisualizer  visualizer;
+	private final T2GramVisualizer  visualizer;
     /* Creates new form T2GramVisualizerPanel */
     public T2GramVisualizerPanel(T2GramVisualizer inVisualizer) {
     	visualizer = inVisualizer;

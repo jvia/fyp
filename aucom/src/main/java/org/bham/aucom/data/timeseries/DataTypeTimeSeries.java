@@ -24,7 +24,7 @@ public class DataTypeTimeSeries extends TimeSeries<DataType> {
 		setType(TimeSeriesType.dtp);
 	}
 	
-	public DataTypeTimeSeries(UUID generatorId, UUID observationId, UUID id, List<DataType> in) {
+	private DataTypeTimeSeries(UUID generatorId, UUID observationId, UUID id, List<DataType> in) {
 		super(generatorId, observationId, id,in);
 		setType(TimeSeriesType.dtp);
 	}

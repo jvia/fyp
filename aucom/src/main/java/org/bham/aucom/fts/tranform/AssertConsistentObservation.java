@@ -4,7 +4,7 @@ import org.bham.aucom.data.ConsistentObservationChecker;
 import org.bham.aucom.data.Observation;
 
 public class AssertConsistentObservation extends AbstractAucomTransformNode<Observation, Observation> {
-	ConsistentObservationChecker checker;
+	private final ConsistentObservationChecker checker;
 	public AssertConsistentObservation() {
 		super("AssertConsistentObservation");
 		this.checker = new ConsistentObservationChecker();
@@ -12,7 +12,7 @@ public class AssertConsistentObservation extends AbstractAucomTransformNode<Obse
 
 	@Override
 	protected Observation iTransform(Observation input) throws Exception {
-		if(!checker.check(input)){// TODO fire events here, be more explicit what went wrong
+		if(checker.notConsistent(input)){// TODO fire events here, be more explicit what went wrong
 			System.err.println("observation icnonsistent");
 		}
 		return input;

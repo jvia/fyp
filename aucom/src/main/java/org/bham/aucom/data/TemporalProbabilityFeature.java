@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 import static org.bham.aucom.util.Constants.LOWEST_PROBABILITY;
 
 public class TemporalProbabilityFeature extends TemporalDurationFeature {
-	protected HashMap<DataType, Double> dataTypeToProbabilityMapping = new LinkedHashMap<DataType, Double>();
+	private HashMap<DataType, Double> dataTypeToProbabilityMapping = new LinkedHashMap<DataType, Double>();
 
 	/*
 	 * This constructor is used to load a saved version of a TemporalProbabilityFeature 
@@ -31,7 +31,7 @@ public class TemporalProbabilityFeature extends TemporalDurationFeature {
 	/*
 	 * 
 	 */
-	public TemporalProbabilityFeature(TemporalProbabilityFeature tpf) {
+    TemporalProbabilityFeature(TemporalProbabilityFeature tpf) {
 		this(tpf, tpf.getDataTypeToProbabilityMapping());
 }
 
@@ -40,7 +40,7 @@ public class TemporalProbabilityFeature extends TemporalDurationFeature {
 		
 	}
 	
-	public ArrayList<Double> getDurationProbabilities() {
+	ArrayList<Double> getDurationProbabilities() {
 		ArrayList<Double> out = new ArrayList<Double>();
 		for (Double probability : this.dataTypeToProbabilityMapping.values()) {
 			out.add(probability);
@@ -65,15 +65,15 @@ public class TemporalProbabilityFeature extends TemporalDurationFeature {
 	}
 
 
-	protected void setDataTypeToProbabilityMapping(HashMap<DataType, Double> dataTypeToProbabilityMapping) {
+	void setDataTypeToProbabilityMapping(HashMap<DataType, Double> dataTypeToProbabilityMapping) {
 		this.dataTypeToProbabilityMapping = dataTypeToProbabilityMapping;
 	}
 
-	protected HashMap<DataType, Double> getDataTypeToProbabilityMapping() {
+	HashMap<DataType, Double> getDataTypeToProbabilityMapping() {
 		return this.dataTypeToProbabilityMapping;
 	}
 
-	public static TemporalProbabilityFeature createRandomTemporalProbabilityFeature() {
+	static TemporalProbabilityFeature createRandomTemporalProbabilityFeature() {
 		TemporalDurationFeature f = createRandomTemporalDurationFeature();
 		LinkedHashMap<DataType, Double> probabilities = new LinkedHashMap<DataType, Double>();
 		for(DataType dtp : f.getPredecessors()){

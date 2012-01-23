@@ -13,6 +13,7 @@ org.bham.aucom.fts.tranform.CalcEntropyAvgScore
 ** TODO Make a simple 3-component chain
 ** TODO Get data running on 3-chain
 ** TODO Get data with 3-chain taking connections into account
+** TODO read through Jay's report and make notes
 * Logbook
 
 Weekly logs from the project.

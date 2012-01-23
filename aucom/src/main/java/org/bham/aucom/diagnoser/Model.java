@@ -22,8 +22,8 @@ public class Model extends AbstractLinkableNode implements Serializable{
     private static final boolean WARN_ON_LOWEST_PROBABILITY = false;
 
     private String name;
-    private HashMatrix<Integer, Integer, ProbabilityDistribution> transitionMatrix;
-    private ProbabilityFactory factory;
+    private final HashMatrix<Integer, Integer, ProbabilityDistribution> transitionMatrix;
+    private final ProbabilityFactory factory;
 
 
     public Model(ProbabilityFactory inFactory) {
@@ -134,12 +134,12 @@ public class Model extends AbstractLinkableNode implements Serializable{
         return "name: " + getName() + ", trained: " + isTrained();
     }
 
-    protected void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
     
-    public String getName() {
+    String getName() {
         return name;
     }
 

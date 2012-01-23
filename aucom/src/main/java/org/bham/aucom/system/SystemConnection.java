@@ -22,8 +22,8 @@ abstract public class SystemConnection implements Presentable {
     private static SystemConnection instance = null;
     private SystemConnectionStatus currentState;
     private SystemConnectionStatus previousState;
-    private static String resourcePath = "/data/aucom.cfg";
-    private static String fileString = "data/aucom.cfg";
+    private static final String resourcePath = "/data/aucom.cfg";
+    private static final String fileString = "data/aucom.cfg";
     /**
      * A panel representing the SystemConnection.
      */
@@ -31,18 +31,18 @@ abstract public class SystemConnection implements Presentable {
     /**
      * The SystemConnection name.
      */
-    protected String name;
+    protected final String name;
     /**
      * A variable use for event handling.
      */
-    protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
+    private final javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
     /**
      * Creates the SystemConnection with a name for identification.
      * 
      * @param inName connection name
      */
-    public SystemConnection(String inName)
+    protected SystemConnection(String inName)
     {
         name = inName;
         currentState = SystemConnectionStatus.DISCONNECTED;
@@ -65,7 +65,7 @@ abstract public class SystemConnection implements Presentable {
      * 
      * @param newState
      */
-    public void changeState(SystemConnectionStatus newState)
+    void changeState(SystemConnectionStatus newState)
     {
         previousState = currentState;
         currentState = newState;
@@ -78,7 +78,7 @@ abstract public class SystemConnection implements Presentable {
      * 
      * @throws SystemConnectionFailedException unable to create a connection
      */
-    abstract public void iConnect() throws SystemConnectionFailedException;
+    protected abstract void iConnect() throws SystemConnectionFailedException;
 
     /**
      * Connects to an outside system.
@@ -100,7 +100,7 @@ abstract public class SystemConnection implements Presentable {
      * Provides a means for system specific disconnection to an outside robotics
      * framework.
      */
-    abstract public void iDisconnect();
+    protected abstract void iDisconnect();
 
     /**
      * Disconnects from the outside system.

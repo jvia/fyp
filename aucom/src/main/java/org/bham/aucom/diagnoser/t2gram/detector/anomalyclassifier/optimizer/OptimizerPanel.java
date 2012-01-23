@@ -35,7 +35,7 @@ public class OptimizerPanel extends javax.swing.JPanel implements ClassifierOpti
      * 
      */
     private static final long serialVersionUID = 1L;
-    ClassifierOptimizer optimizer;
+    private final ClassifierOptimizer optimizer;
 	/* Creates new form OptimizerPanel */
     public OptimizerPanel(ClassifierOptimizer inOptimizer){
         initComponents();

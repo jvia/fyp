@@ -12,9 +12,9 @@ import java.util.UUID;
 
 public class AucomListModelAdapter extends AbstractListModel implements DataModelStatusListener {
     private static final long serialVersionUID = 3671172755117348322L;
-    List<UUID> values = new ArrayList<UUID>();
+    private final List<UUID> values = new ArrayList<UUID>();
 
-    public AucomListModelAdapter(Class<?> filterDataClass) {
+    private AucomListModelAdapter(Class<?> filterDataClass) {
         this.filterDataClass = filterDataClass;
     }
 
@@ -32,7 +32,7 @@ public class AucomListModelAdapter extends AbstractListModel implements DataMode
         return this.values.size();
     }
 
-    protected Class<?> filterDataClass;
+    private final Class<?> filterDataClass;
 
     @Override
     public boolean accepts(DataModelStatusEvent status) {

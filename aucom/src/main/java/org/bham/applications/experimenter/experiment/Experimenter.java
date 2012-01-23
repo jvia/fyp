@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 public class Experimenter {
 
-    protected XPathContext context = new XPathContext("aucom", "http://www.cor-lab.de");
+    private final XPathContext context = new XPathContext("aucom", "http://www.cor-lab.de");
 
     private final class ExperimenterThreadFactory implements ThreadFactory {
 
@@ -36,19 +36,17 @@ public class Experimenter {
         }
     }
 
-    LinkedList<Experiment> experiments;
-    LinkedList<Result> results;
-    public Experiment currentTask;
-    private ScheduledExecutorService experimenterExecutionService;
+    private final LinkedList<Experiment> experiments;
+    private final ScheduledExecutorService experimenterExecutionService;
 
-    public Experimenter() {
+    private Experimenter() {
         Logger.getLogger(this.getClass().getCanonicalName()).info("initializing experimenter");
         this.experimenterExecutionService = Executors.newScheduledThreadPool(1, new ExperimenterThreadFactory());
         this.experiments = new LinkedList<Experiment>();
-        this.results = new LinkedList<Result>();
+        LinkedList<Result> results = new LinkedList<Result>();
     }
 
-    public void load(File xmlExperimentDescription) throws ParsingException, IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    void load(File xmlExperimentDescription) throws ParsingException, IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         System.out.println("loading experiment descriptions ...");
         experiments.addAll(createExperiments(xmlExperimentDescription));
     }
@@ -94,7 +92,7 @@ public class Experimenter {
         return b.build(xmlExperimentDescription);
     }
 
-    public ExperimentFactory getFactory(Element experimentDefinition) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+    ExperimentFactory getFactory(Element experimentDefinition) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
         System.out.println(experimentDefinition);
         String fullyClassifiedFactoryClassName = experimentDefinition.getAttributeValue("factory");
         ExperimentFactory factory = (ExperimentFactory) Class.forName(fullyClassifiedFactoryClassName).newInstance();
@@ -103,8 +101,9 @@ public class Experimenter {
     }
 
     private void start() {
-        while ((this.currentTask = this.experiments.poll()) != null) {
-            Future<Result> f = this.experimenterExecutionService.schedule(this.currentTask, 1, TimeUnit.SECONDS);
+        Experiment currentTask;
+        while ((currentTask = this.experiments.poll()) != null) {
+            Future<Result> f = this.experimenterExecutionService.schedule(currentTask, 1, TimeUnit.SECONDS);
             try {
                 f.get(); // in order to wait for computation we try to get the result
             } catch (InterruptedException exception) {
@@ -116,7 +115,7 @@ public class Experimenter {
         }
     }
 
-    public void stop() {
+    void stop() {
         Logger.getLogger(this.getClass().getCanonicalName()).info("experimenter done");
         this.experimenterExecutionService.shutdown();
         Logger.getLogger(this.getClass().getCanonicalName()).info("experimenter done, shutting down executor service.");

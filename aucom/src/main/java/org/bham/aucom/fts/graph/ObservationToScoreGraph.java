@@ -11,12 +11,12 @@ import org.bham.aucom.fts.tranform.*;
 
 
 public class ObservationToScoreGraph extends AbstractAucomGraph {
-    TimeSeriesSource<Observation> source;
-    EncodeData observationToDataType;
-    GenerateTemporalDurationFeature dataTypeToDurationFeature;
-    GenerateTemporalProbabilityFeature durationFeatureToProbabilityFeature;
-    CalcEntropyAvgScore probabilityFeatureToScore;
-    TimeSeriesSink<Score> sink;
+    private TimeSeriesSource<Observation> source;
+    private EncodeData observationToDataType;
+    private GenerateTemporalDurationFeature dataTypeToDurationFeature;
+    private GenerateTemporalProbabilityFeature durationFeatureToProbabilityFeature;
+    private CalcEntropyAvgScore probabilityFeatureToScore;
+    private TimeSeriesSink<Score> sink;
 
     private static final long serialVersionUID = 1L;
 

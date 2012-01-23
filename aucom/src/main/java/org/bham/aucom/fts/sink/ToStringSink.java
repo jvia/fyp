@@ -2,7 +2,7 @@ package org.bham.aucom.fts.sink;
 
 import net.sf.xcf.fts.nodes.sink.SinkAdapter;
 
-public class ToStringSink<T> extends SinkAdapter<T> {
+class ToStringSink<T> extends SinkAdapter<T> {
 
 	@Override
 	protected void pushItem(T arg0) throws Exception {

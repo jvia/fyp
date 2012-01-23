@@ -8,7 +8,7 @@ public class BusyWorker {
     /*
      * @param args
      */
-    public static void intensiveCalc(int numThreads) {
+    private static void intensiveCalc(int numThreads) {
         ArrayList<Thread> threadPool = new ArrayList<Thread>();
         for (int i = 0; i < numThreads; i++) {
             threadPool.add(new Thread(new Runnable() {
@@ -28,7 +28,7 @@ public class BusyWorker {
     }
 
     @SuppressWarnings("boxing")
-    public static Long fib(Long fib) {
+    private static Long fib(Long fib) {
         if (fib == 0)
             return 0L;
         if (fib == 1)

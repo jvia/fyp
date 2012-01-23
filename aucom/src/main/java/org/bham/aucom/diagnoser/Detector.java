@@ -22,8 +22,8 @@ import java.util.logging.Logger;
 
 
 public class Detector implements Presentable{
-    JPanel panel;
-    private DetectorGraph detectorGraph;
+    private JPanel panel;
+    private final DetectorGraph detectorGraph;
 
     public Detector() {
         detectorGraph = new DetectorGraph();
@@ -65,7 +65,7 @@ public class Detector implements Presentable{
     }
 
     public void setModel(Model m) throws ClassCastException {
-        detectorGraph.setModel((Model) m);
+        detectorGraph.setModel(m);
     }
 
     public void setClassificator(AnomalyClassifier classifierToSet) {
@@ -127,18 +127,17 @@ public class Detector implements Presentable{
         STOPPED
     }
 
-    DetectorStatus previousStatus = DetectorStatus.NOT_READY;
     private DetectorStatus currentStatus = DetectorStatus.NOT_READY;
 
-    protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
+    private final javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
-    public void setStatus(DetectorStatus newStatus) {
+    void setStatus(DetectorStatus newStatus) {
         if (newStatus.equals(getCurrentStatus())) {
             Logger.getLogger(this.getClass().getCanonicalName()).info("trying to set previous status " + newStatus);
             return;
         }
 
-        previousStatus = getCurrentStatus();
+        DetectorStatus previousStatus = getCurrentStatus();
         setCurrentStatus(newStatus);
 
         DetectorStatusChangedEvent event = new DetectorStatusChangedEvent(this,
@@ -167,7 +166,7 @@ public class Detector implements Presentable{
         this.listenerList.add(DetectorStatusChangedListener.class, listener);
     }
 
-    public boolean isSinkStatusListenerRegistered(DetectorStatusChangedListener listener) {
+    boolean isSinkStatusListenerRegistered(DetectorStatusChangedListener listener) {
         boolean isRegistered = false;
         Object[] listeners = this.listenerList.getListenerList();
         for (int i = 0; i < listeners.length; i += 2) {
@@ -205,7 +204,7 @@ public class Detector implements Presentable{
         }
     }
 
-    protected void fireDetectorStatusChangedEvent(DetectorStatusChangedEvent evt) {
+    void fireDetectorStatusChangedEvent(DetectorStatusChangedEvent evt) {
         Object[] listeners = this.listenerList.getListenerList();
         for (int i = 0; i < listeners.length; i += 2) {
             if (listeners[i] == DetectorStatusChangedListener.class) {
@@ -251,7 +250,7 @@ public class Detector implements Presentable{
 //		return p;
 //	}
 
-    protected void setCurrentStatus(DetectorStatus currentStatus) {
+    void setCurrentStatus(DetectorStatus currentStatus) {
         this.currentStatus = currentStatus;
     }
 

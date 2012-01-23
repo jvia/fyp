@@ -36,22 +36,22 @@ public class AnomalyBarChartFrame extends javax.swing.JFrame implements ListData
     private static final long serialVersionUID = 5916732456468501494L;
     private DefaultCategoryDataset dataSet;
     private JFreeChart barChart;
-    ArrayList<Score> data;
+    private ArrayList<Score> data;
     int binsize;
 
-    public void setBarChart(JFreeChart barChart) {
+    void setBarChart(JFreeChart barChart) {
         this.barChart = barChart;
     }
 
-    public JFreeChart getBarChart() {
+    JFreeChart getBarChart() {
         return this.barChart;
     }
 
-    public void setDataSet(DefaultCategoryDataset dataSet) {
+    void setDataSet(DefaultCategoryDataset dataSet) {
         this.dataSet = dataSet;
     }
 
-    public DefaultCategoryDataset getDataSet() {
+    DefaultCategoryDataset getDataSet() {
         return this.dataSet;
     }
 
@@ -73,19 +73,7 @@ public class AnomalyBarChartFrame extends javax.swing.JFrame implements ListData
         pack();
     }
 
-    public void /*ArrayList<Tuple>*/ generateBarchartOutput(ArrayList<Score> list, int binSize) {
-//        long firstBinNumber = list.get(0).getTimestamp() % binsize;
-//        long lastBinNumber = list.get(list.size() - 1).getTimestamp() % binsize;
-//
-//        for (long i = firstBinNumber; i <= lastBinNumber; i++) {
-//            for (long j = i * binsize; j < i * binsize + binsize; j++) {
-//
-//            }
-//        }
-//        return null;
-    }
-
-    public void addValue(Score inScore) {
+    void addValue(Score inScore) {
         this.logger.info("adding: " + inScore);
         if (inScore != null) {
 //			String status = "normal";
@@ -100,7 +88,7 @@ public class AnomalyBarChartFrame extends javax.swing.JFrame implements ListData
         }
     }
 
-    public void addValues(List<Score> inScores) {
+    void addValues(List<Score> inScores) {
         this.dataSet.clear();
         for (Score score : inScores) {
             addValue(score);
@@ -159,13 +147,13 @@ public class AnomalyBarChartFrame extends javax.swing.JFrame implements ListData
         this.data = data;
     }
 
-    public List<Score> getData() {
+    List<Score> getData() {
         return Collections.synchronizedList(data);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel chartPanel;
-    private Logger logger;
+    private final Logger logger;
 
     // End of variables declaration//GEN-END:variables
     @Override

@@ -26,13 +26,13 @@ import java.util.logging.Logger;
 public class ModelTrainer implements GraphStatusListener, Presentable {
     private LinkedHashMap<String, DataType> lastTrainOccurrences;
 
-    TrainerStatus currentStatus = TrainerStatus.READY;
-    TrainerStatus previousStatus = TrainerStatus.READY;
+    private TrainerStatus currentStatus = TrainerStatus.READY;
+    private TrainerStatus previousStatus = TrainerStatus.READY;
 
-    JPanel panel;
-    Model model;
+    private JPanel panel;
+    private Model model;
 
-    T2GramTrainerGraph graph;
+    private final T2GramTrainerGraph graph;
 
     public ModelTrainer(Model inModel) {
         model = inModel;
@@ -210,7 +210,7 @@ public class ModelTrainer implements GraphStatusListener, Presentable {
     public void stop() throws Exception {
     }
 
-    public void setStatus(TrainerStatus newStatus) {
+    void setStatus(TrainerStatus newStatus) {
         Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, "setting new state to " + newStatus + " previously " + previousStatus);
         previousStatus = currentStatus;
         currentStatus = newStatus;
@@ -221,7 +221,7 @@ public class ModelTrainer implements GraphStatusListener, Presentable {
     * event handling ---->
     */
 
-    protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
+    private final javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
     // This method is used to fire TrainingStatusChangedEvents
     void fireStatusChangedEvent(StatusChangedEvent evt) {
@@ -235,7 +235,7 @@ public class ModelTrainer implements GraphStatusListener, Presentable {
         }
     }
 
-    public boolean isListenerRegistered(ModelTrainerListener listener) {
+    boolean isListenerRegistered(ModelTrainerListener listener) {
         boolean isRegistered = false;
         Object[] listeners = this.listenerList.getListenerList();
         for (int i = 0; i < listeners.length; i += 2) {

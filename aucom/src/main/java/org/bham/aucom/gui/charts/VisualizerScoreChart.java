@@ -39,18 +39,18 @@ import java.util.logging.Logger;
 
 
 public class VisualizerScoreChart extends javax.swing.JPanel {
-    private boolean showSnapShot = true;
-    long faultBeginHorizintalCoordinate;
-    double verticalCoordinate = -0.1;
+    private final boolean showSnapShot = true;
+    private long faultBeginHorizintalCoordinate;
+    private final double verticalCoordinate = -0.1;
     private static final long serialVersionUID = 1L;
-    long startMonitoringTimeStamp = -1l;
-    XYSeriesCollection fittnessSet = new XYSeriesCollection();
+    private final long startMonitoringTimeStamp = -1l;
+    private XYSeriesCollection fittnessSet = new XYSeriesCollection();
     private boolean isCurrentTimeSeriesFaulty = false;
-    HashMap<BlockingQueue<Triple<Long, Double, SystemFaultStatus>>, XYSeries> series;
-    JFreeChart chart;
+    private HashMap<BlockingQueue<Triple<Long, Double, SystemFaultStatus>>, XYSeries> series;
+    private JFreeChart chart;
     private double thresholdValue;
-    int hrz = 10;
-    ScheduledExecutorService service;
+    private final int hrz = 10;
+    private ScheduledExecutorService service;
 
     public static void main(String[] args) {
         JFrame f = new JFrame();
@@ -97,7 +97,7 @@ public class VisualizerScoreChart extends javax.swing.JPanel {
         series.remove(input);
     }
 
-    public void startUpdating() {
+    void startUpdating() {
         this.service = Executors.newScheduledThreadPool(1);
 
         this.service.scheduleAtFixedRate(new Runnable() {
@@ -113,7 +113,7 @@ public class VisualizerScoreChart extends javax.swing.JPanel {
                         Triple<Long, Double, SystemFaultStatus> triple;
                         while (!bc.isEmpty()) {
                             triple = bc.take();
-                            if (!isShowSnapShot()) {
+                            if (isNotShowSnapShot()) {
                                 s.addOrUpdate(triple.first.doubleValue() / (visibleRange * 0.01), triple.second.doubleValue());
                             } else if (bc.isEmpty()) {
                                 s.addOrUpdate(triple.first.doubleValue() / (visibleRange * 0.01), triple.second.doubleValue());
@@ -130,7 +130,7 @@ public class VisualizerScoreChart extends javax.swing.JPanel {
         }, 100, 1000 / this.hrz, TimeUnit.MILLISECONDS);
     }
 
-    public void updateDomainAxis() {
+    void updateDomainAxis() {
         // 2147483647
         int from = this.visibleDataSlider.getValue();
         int to = from + visibleRange;
@@ -140,13 +140,13 @@ public class VisualizerScoreChart extends javax.swing.JPanel {
         plot.getRangeAxis().setRange(-0.5, 1.5);
     }
 
-    public void reportIfYourAreOnEventDispatcherThread(String str) {
+    void reportIfYourAreOnEventDispatcherThread(String str) {
         if (SwingUtilities.isEventDispatchThread()) {
             System.out.println("---------------------------------------------------------------------- " + this.getClass().getName() + " On EventDispatcher " + str);
         }
     }
 
-    public void updateSliderRanges() {
+    void updateSliderRanges() {
         double maxValue_tmp = Double.MIN_VALUE;
         double minValue_tmp = Double.MAX_VALUE;
         for (Object tmp_series : VisualizerScoreChart.this.fittnessSet.getSeries()) {
@@ -167,7 +167,7 @@ public class VisualizerScoreChart extends javax.swing.JPanel {
         });
     }
 
-    public void initChart() {
+    void initChart() {
         // this.sequencesList.addMouseListener(new
         // PopupSequencesListListener(this, this.sequencesList));
         this.fittnessSet = new XYSeriesCollection();
@@ -193,11 +193,11 @@ public class VisualizerScoreChart extends javax.swing.JPanel {
         this.chartPanel.validate();
     }
 
-    public void setChart(JFreeChart chart) {
+    void setChart(JFreeChart chart) {
         this.chart = chart;
     }
 
-    public JFreeChart getChart() {
+    JFreeChart getChart() {
         return this.chart;
     }
 
@@ -305,8 +305,8 @@ public class VisualizerScoreChart extends javax.swing.JPanel {
     private javax.swing.JPanel chartPanel;
     private javax.swing.JSlider rangeSlider;
     private javax.swing.JCheckBox showHeadCheckbox;
-    javax.swing.JSlider visibleDataSlider;
-    private int visibleRange;
+    private javax.swing.JSlider visibleDataSlider;
+    private final int visibleRange;
 
     // End of variables declaration//GEN-END:variables
     public void contentsChanged(ListDataEvent e) {
@@ -395,15 +395,7 @@ public class VisualizerScoreChart extends javax.swing.JPanel {
         return isCurrentTimeSeriesFaulty;
     }
 
-    public boolean isReady() {
-        return false;
-    }
-
-    public boolean isShowSnapShot() {
-        return showSnapShot;
-    }
-
-    public void setShowSnapShot(boolean showSnapShot) {
-        this.showSnapShot = showSnapShot;
+    boolean isNotShowSnapShot() {
+        return !showSnapShot;
     }
 }

@@ -11,25 +11,11 @@
 
 package org.bham.aucom.diagnoser.t2gram.detector;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.concurrent.Executors;
-import java.util.logging.Logger;
-
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
 import nu.xom.ParsingException;
-import nu.xom.ValidityException;
-
 import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.data.management.DataAlreadyExistsException;
-import org.bham.aucom.data.timeseries.TimeSeriesStatusListener;
 import org.bham.aucom.data.timeseries.TimeSeriesStatusEvent;
+import org.bham.aucom.data.timeseries.TimeSeriesStatusListener;
 import org.bham.aucom.diagnoser.Detector;
 import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.fts.source.ActionFailedException;
@@ -37,13 +23,20 @@ import org.bham.aucom.system.FactoryManagerInitalizationException;
 import org.bham.aucom.system.SystemConnection;
 import org.bham.aucom.util.ExampleFileFilter;
 
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.logging.Logger;
+
 /**
  * 
  * @author rgolombe
  */
 public class T2GramDetectorPanel extends javax.swing.JPanel implements TimeSeriesStatusListener {
 	private static final long serialVersionUID = 0L;
-	Detector detector;
+	private final Detector detector;
 
 	/* Creates new form MonitorPanel */
 	public T2GramDetectorPanel(Detector inDetector) {
@@ -251,13 +244,13 @@ public class T2GramDetectorPanel extends javax.swing.JPanel implements TimeSerie
     private javax.swing.JLabel numberEvaluatedElements;
     private javax.swing.JButton pauseButton;
     // End of variables declaration//GEN-END:variables
-	void loadModelAndRegisterForEvents(File f) throws FileNotFoundException, DataAlreadyExistsException, IOException, ValidityException, ParsingException, ClassCastException {
+	void loadModelAndRegisterForEvents(File f) throws DataAlreadyExistsException, IOException, ParsingException, ClassCastException {
 		Logger.getLogger(this.getClass().getCanonicalName()).info("loading model from " + f.getAbsolutePath());
 		Model model = AucomIO.getInstance().readFaultDetectionModel(f);
 		detector.setModel(model);
 		appendRowToInfoTextArea("model loaded: " + model.toString());
 	}
-	public void appendRowToInfoTextArea(String row){
+	void appendRowToInfoTextArea(String row){
 		infoTextArea.append(row + "\n"); 
 	}
 

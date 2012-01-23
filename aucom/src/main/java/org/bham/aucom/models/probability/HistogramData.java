@@ -12,15 +12,15 @@ public class HistogramData implements Serializable {
 	private static final long serialVersionUID = 0L;
 	private double binSize;
 	private LinkedHashMap<Integer, HistogramBin> content;
-	BinCalculator calculator;
-	boolean isDirty;
-	int sumValues;
+	private final BinCalculator calculator;
+	private boolean isDirty;
+	private int sumValues;
 
 	public HistogramData(double inBinSize) {
 		this(new LinkedHashMap<Integer, HistogramBin>(), inBinSize);
 	}
 
-	public HistogramData(LinkedHashMap<Integer, HistogramBin> in, double inBinSize) {
+	private HistogramData(LinkedHashMap<Integer, HistogramBin> in, double inBinSize) {
 		setBins(in);
 		this.calculator = new LinearBinCalculator(inBinSize);
 		//calculator = new LogarithmicBinCalculator(inBinSize);
@@ -35,7 +35,7 @@ public class HistogramData implements Serializable {
 		Logger.getLogger(this.getClass().getName()).severe(msg);
 	}
 
-	public void info(String info) {
+	void info(String info) {
 		Logger.getLogger(this.getClass().getCanonicalName()).info(info);
 	}
 	public int getNearestBinNumberForValue(double value){
@@ -93,7 +93,7 @@ public class HistogramData implements Serializable {
 		return getBins().containsKey(binNumber);
 	}
 
-	public boolean isBinMissingWithNumber(int binNumber) {
+	boolean isBinMissingWithNumber(int binNumber) {
 		return !containsBinWithNumber(binNumber);
 	}
 
@@ -134,7 +134,7 @@ public class HistogramData implements Serializable {
 		return getBins().get(binNumber).getBinLabel();
 	}
 
-	public HistogramBin getBinWithBinNumber(int binNumber) {
+	HistogramBin getBinWithBinNumber(int binNumber) {
 		return getBins().get(binNumber);
 	}
 

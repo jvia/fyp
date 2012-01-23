@@ -19,7 +19,7 @@ public class ContextFrame extends javax.swing.JFrame {
 	private static final long serialVersionUID = 0L;
 
     /** Creates new form ContextFrame */
-    public ContextFrame() {
+    private ContextFrame() {
         initComponents();
     }
 

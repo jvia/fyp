@@ -7,10 +7,10 @@ public class StatisticalHysterisisAnomalyClassifier extends AbstractAnomalyClass
      *
      */
     private static final long serialVersionUID = 1L;
-    StatisticalAnomalyClassifier statistic;
-    HysteresisAnomalyClassifier hysteresis;
-    double mean;
-    double variance;
+    private StatisticalAnomalyClassifier statistic;
+    private HysteresisAnomalyClassifier hysteresis;
+    private final double mean;
+    private final double variance;
 
     public StatisticalHysterisisAnomalyClassifier(Double mean, Double variance) {
         super("StatisticalHysterisisThreshold");

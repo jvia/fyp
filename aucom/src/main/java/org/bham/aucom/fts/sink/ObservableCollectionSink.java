@@ -11,10 +11,10 @@ import net.sf.xcf.fts.nodes.sink.SinkAdapter;
 import org.bham.aucom.data.AttributableObject;
 import org.bham.aucom.util.AucomObservable;
 
-public class ObservableCollectionSink<T extends AttributableObject> extends SinkAdapter<T> {
+class ObservableCollectionSink<T extends AttributableObject> extends SinkAdapter<T> {
 	private Collection<T> data;
 	private final Observable o;
-	private String notificationName;
+	private final String notificationName;
 
 	public ObservableCollectionSink(Collection<T> data, String noficifactionName) {
 		super("ObservableCollectionSink");
@@ -39,11 +39,11 @@ public class ObservableCollectionSink<T extends AttributableObject> extends Sink
 		return this.o;
 	}
 
-	public void setData(Collection<T> data) {
+	void setData(Collection<T> data) {
 		this.data = data;
 	}
 
-	public Collection<T> getData() {
+	Collection<T> getData() {
 		return this.data;
 	}
 

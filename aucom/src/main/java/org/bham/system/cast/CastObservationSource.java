@@ -22,7 +22,7 @@ public class CastObservationSource extends AucomSourceAdapter<Observation> {
      */
     private static final long serialVersionUID = 1L;
     private ConnectionManager cast;
-    private LinkedBlockingQueue<String[]> queue;
+    private final LinkedBlockingQueue<String[]> queue;
 
     public CastObservationSource()
     {

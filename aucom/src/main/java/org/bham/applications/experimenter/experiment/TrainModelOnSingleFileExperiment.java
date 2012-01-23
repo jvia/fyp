@@ -1,5 +1,6 @@
 package org.bham.applications.experimenter.experiment;
 
+import java.util.logging.Level;
 import nu.xom.ParsingException;
 import nu.xom.ValidityException;
 import org.bham.applications.experimenter.data.Result;
@@ -21,10 +22,10 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class TrainModelOnSingleFileExperiment implements Experiment {
-    List<File> trainingFiles;
-    List<Tuple<Model, File>> models;
-    private File workingDirectory;
-    private ModelTrainer trainer;
+    private final List<File> trainingFiles;
+    private final List<Tuple<Model, File>> models;
+    private final File workingDirectory;
+    private final ModelTrainer trainer;
 
     public TrainModelOnSingleFileExperiment(File inWorkingDirectory) {
         workingDirectory = inWorkingDirectory;
@@ -70,10 +71,10 @@ public class TrainModelOnSingleFileExperiment implements Experiment {
             }
         };
         String observationFileNames[] = workingDirectory.list(observationFiler);
-        Logger.getLogger(this.getClass().getCanonicalName()).info("getting " + observationFileNames.length + " observationfiles from " + workingDirectory);
+        Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, "getting {0} observationfiles from {1}", new Object[]{observationFileNames.length, workingDirectory});
         for (String observationFileName : observationFileNames) {
             File trainingFile = new File(workingDirectory.getAbsolutePath() + File.separator + observationFileName);
-            Logger.getLogger(this.getClass().getCanonicalName()).info("adding " + trainingFile.getAbsolutePath() + " to training files");
+            Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, "adding {0} to training files", trainingFile.getAbsolutePath());
             trainingFiles.add(trainingFile);
         }
     }
@@ -94,13 +95,13 @@ public class TrainModelOnSingleFileExperiment implements Experiment {
             }
         });
 
-        Logger.getLogger(this.getClass().getCanonicalName()).info(trainingFiles.size() + " models to train");
+        Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, "{0} models to train", trainingFiles.size());
         for (File f : trainingFiles) {
             try {
                 @SuppressWarnings("unchecked")
                 TimeSeries<Observation> ts = (TimeSeries<Observation>) AucomIO.getInstance().readTimeSeries(f);
                 File outputFile = new File(FileOperator.getPath(f) + File.separator + FileOperator.getName(f) + ".ml");
-                Logger.getLogger(this.getClass().getCanonicalName()).info("training " + FileOperator.getName(outputFile) + " with " + ts.size() + " elements");
+                Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, "training {0} with {1} elements", new Object[]{FileOperator.getName(outputFile), ts.size()});
                 trainer.setModel(new Model(new KDEProbabilityFactory()));
                 trainer.start(ts);
                 synchronized (obj) {
@@ -110,18 +111,13 @@ public class TrainModelOnSingleFileExperiment implements Experiment {
                 }
                 models.add(new Tuple<Model, File>(trainer.getModel(), outputFile));
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (ValidityException e) {
-                e.printStackTrace();
             } catch (DataAlreadyExistsException e) {
-                e.printStackTrace();
             } catch (ParsingException e) {
-                Logger.getLogger(this.getClass().getCanonicalName()).info("catched parsing exception on " + f.getName() + " ex: " + e.getLocalizedMessage());
+                Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, "catched parsing exception on {0} ex: {1}", new Object[]{f.getName(), e.getLocalizedMessage()});
             } catch (IOException e) {
-                e.printStackTrace();
             } catch (Exception e) {
                 System.out.println(e.getLocalizedMessage());
-                e.printStackTrace();
             }
         }
     }
@@ -129,7 +125,7 @@ public class TrainModelOnSingleFileExperiment implements Experiment {
     @Override
     public void postprocess() {
         for (Tuple<Model, File> t : models) {
-            Logger.getLogger(this.getClass().getCanonicalName()).info("saving model to " + t.getSecond().getAbsolutePath());
+            Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, "saving model to {0}", t.getSecond().getAbsolutePath());
             AucomIO.getInstance().writeFaultDetectionModel(t.getFirst(),
                                                            t.getSecond());
         }

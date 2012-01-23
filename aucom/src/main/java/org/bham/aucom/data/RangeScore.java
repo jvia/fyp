@@ -48,7 +48,7 @@ public class RangeScore extends Score {
         return var;
     }
 
-    protected void setScores(ArrayList<Score> scores) {
+    void setScores(ArrayList<Score> scores) {
         this.scores = scores;
     }
 

@@ -13,10 +13,9 @@ import java.util.HashMap;
 // TODO finish this here
 
 public class CSVTimeSeriesInput implements TimeSeriesInput {
-    HashMap<TimeSeriesType, CSVToTimeSeriesConverter<?>> converter;
 
     public CSVTimeSeriesInput() {
-        converter = new HashMap<TimeSeriesType, CSVToTimeSeriesConverter<?>>();
+        HashMap<TimeSeriesType, CSVToTimeSeriesConverter<?>> converter = new HashMap<TimeSeriesType, CSVToTimeSeriesConverter<?>>();
     }
 
     @Override

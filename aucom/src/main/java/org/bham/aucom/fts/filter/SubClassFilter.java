@@ -3,13 +3,13 @@ package org.bham.aucom.fts.filter;
 import net.sf.xcf.fts.Event;
 import net.sf.xcf.fts.nodes.AbstractNode;
 
-public class SubClassFilter<Tin, Tout extends Tin> extends AbstractNode<Tin, Tout> {
-	Class<Tout> cl;
+class SubClassFilter<Tin, Tout extends Tin> extends AbstractNode<Tin, Tout> {
+	private final Class<Tout> cl;
 	public SubClassFilter(Class<Tout> cl) {
 		this.cl = cl;
 	}
 
-	public boolean isMatch(Event<? extends Tin> e) throws Exception {
+	boolean isMatch(Event<? extends Tin> e) {
 		return cl.isInstance(e);	
 	}
 

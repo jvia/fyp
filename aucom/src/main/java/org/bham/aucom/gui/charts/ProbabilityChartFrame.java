@@ -39,13 +39,13 @@ import java.util.logging.Logger;
 
 public class ProbabilityChartFrame extends javax.swing.JPanel {
     private static final long serialVersionUID = 1L;
-    final XYSeriesCollection dataset = new XYSeriesCollection();
-    HashMap<TimeSeries<Score>, Tuple<XYSeries, Integer>> series;
-    DefaultListModel sequencesListModel;
+    private final XYSeriesCollection dataset = new XYSeriesCollection();
+    private HashMap<TimeSeries<Score>, Tuple<XYSeries, Integer>> series;
+    private DefaultListModel sequencesListModel;
     private JFreeChart chart;
     private double thresholdValue;
-    int hrz = 100;
-    ScheduledExecutorService service;
+    private final int hrz = 100;
+    private ScheduledExecutorService service;
     private final String type;
 
     public static void main(String[] args) {
@@ -55,7 +55,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
     /*
      * Creates new form ProbabilityChartFrame
      */
-    public ProbabilityChartFrame(String type) {
+    private ProbabilityChartFrame(String type) {
         Logger.getLogger(this.getClass().getName()).setLevel(Level.SEVERE);
         this.type = type;
         initComponents();
@@ -97,7 +97,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
         this.sequencesListModel.removeElement(sequence);
     }
 
-    public void startUpdating() {
+    void startUpdating() {
         this.service = Executors.newScheduledThreadPool(1);
         this.service.scheduleAtFixedRate(new Runnable() {
 
@@ -125,8 +125,8 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
         }, 100, 1000 / this.hrz, TimeUnit.MILLISECONDS);
     }
 
-    public void addDataToseriesInTimespan(final TimeSeries<Score> sequence,
-                                          final int from, final int to) {
+    void addDataToseriesInTimespan(final TimeSeries<Score> sequence,
+                                   final int from, final int to) {
 //		final ArrayList<Score> list = sequence.getElementsInRange(from, to);
 //		if(list.size()>0){
 //		System.out.print("from " + from + " first " +list.get(0).getTimestamp());
@@ -196,7 +196,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
         }
     }
 
-    public void drawLine() {
+    void drawLine() {
         synchronized (dataset) {
 
             final XYSeries series;
@@ -227,7 +227,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
         }
     }
 
-    public void updateDomainAxis() {
+    void updateDomainAxis() {
         int from = this.visibleDataSlider.getValue();
         int to = from + this.rangeSlider.getValue();
         XYPlot plot = (XYPlot) this.chart.getPlot();
@@ -235,7 +235,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
         plot.getDomainAxis().setUpperBound(to);
     }
 
-    public void updateSliderRanges() {
+    void updateSliderRanges() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -257,7 +257,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
         });
     }
 
-    public void initChart() {
+    void initChart() {
         setThresholdValue(0.5);
         this.sequencesListModel = new DefaultListModel();
         this.sequencesList.setModel(this.sequencesListModel);
@@ -276,11 +276,11 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
         this.chartPanel.validate();
     }
 
-    public void setChart(JFreeChart chart) {
+    void setChart(JFreeChart chart) {
         this.chart = chart;
     }
 
-    public JFreeChart getChart() {
+    JFreeChart getChart() {
         return this.chart;
     }
 
@@ -408,12 +408,12 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
         updateDomainAxis();
     }// GEN-LAST:event_visibleDataSliderStateChanged
 
-    public void setThresholdValue(double thresholdValue) {
+    void setThresholdValue(double thresholdValue) {
         this.thresholdValue = thresholdValue;
         drawLine();
     }
 
-    public double getThresholdValue() {
+    double getThresholdValue() {
         return this.thresholdValue;
     }
 
@@ -434,7 +434,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
 //		}
     }
 
-    public void info(String msg) {
+    void info(String msg) {
         Logger.getLogger(this.getClass().getName()).info(msg);
     }
 

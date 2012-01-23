@@ -15,10 +15,10 @@ import org.bham.aucom.data.SingleScore;
 import org.bham.aucom.data.TemporalDurationFeature;
 import org.bham.aucom.data.TemporalProbabilityFeature;
 
-public class CalcDummyScore extends AbstractTransformNode<Score, Score> {
+class CalcDummyScore extends AbstractTransformNode<Score, Score> {
 	String methodName = "zero";
 
-	protected Score calc(Score inData) throws Exception {
+	Score calc(Score inData) throws Exception {
 		try {
 			ArrayList<DomainFeature> features = new ArrayList<DomainFeature>();
 			features.add(new DomainFeature("scope", "a"));

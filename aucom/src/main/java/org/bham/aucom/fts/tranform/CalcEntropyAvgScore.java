@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 
 public class CalcEntropyAvgScore extends AbstractAucomTransformNode<TemporalProbabilityFeature, Score> {
-    protected Model model;
+    private Model model;
 
     public CalcEntropyAvgScore() {
         super("CalcEntropyAvgScore");
@@ -23,13 +23,13 @@ public class CalcEntropyAvgScore extends AbstractAucomTransformNode<TemporalProb
         return calculate(arg0);
     }
 
-    protected Score calculate(TemporalProbabilityFeature inData) {
+    Score calculate(TemporalProbabilityFeature inData) {
         warnIfModelIsNotTrained();
         return calculateScore(inData);
 
     }
 
-    protected Score calculateScore(TemporalProbabilityFeature inData) {
+    Score calculateScore(TemporalProbabilityFeature inData) {
         double sum_entropy = calculateSumEntropy(inData);
         double denominator = calculateDenominator(sum_entropy);
         double scoreValue;
@@ -40,11 +40,11 @@ public class CalcEntropyAvgScore extends AbstractAucomTransformNode<TemporalProb
         return new SingleScore(inData, scoreValue);
     }
 
-    protected double calculateDenominator(double sum_entropy) {
+    double calculateDenominator(double sum_entropy) {
         return Math.max(Math.pow(sum_entropy, 2), 0.00001);
     }
 
-    protected double calculateAbsoluteScoreValue(TemporalProbabilityFeature currentData, double denominator) {
+    double calculateAbsoluteScoreValue(TemporalProbabilityFeature currentData, double denominator) {
         double scoreValue = 0.0d;
 
         for (DataType predecessorData : currentData.getPredecessors()) {
@@ -55,7 +55,7 @@ public class CalcEntropyAvgScore extends AbstractAucomTransformNode<TemporalProb
         return scoreValue;
     }
 
-    protected double calculateSingleScoreValue(DataType predecessorData, TemporalProbabilityFeature currentData, double denominator) {
+    double calculateSingleScoreValue(DataType predecessorData, TemporalProbabilityFeature currentData, double denominator) {
         double probability = currentData.getProbabilityFor(predecessorData);
         double entropy = calculateSingleEntropy(currentData, predecessorData);
 
@@ -65,11 +65,11 @@ public class CalcEntropyAvgScore extends AbstractAucomTransformNode<TemporalProb
         return alg_calculateSingleScore(probability, entropy, denominator);
     }
 
-    protected double alg_calculateSingleScore(double probability, double entropy, double denominator) {
+    double alg_calculateSingleScore(double probability, double entropy, double denominator) {
         return probability * (1 - Math.pow(entropy, 2) / denominator);
     }
 
-    protected double normalize(TemporalProbabilityFeature inData, double absoluteScore) {
+    double normalize(TemporalProbabilityFeature inData, double absoluteScore) {
         double normalizedScore = absoluteScore;
         if (inData.getPredecessors().size() > 0) {
             normalizedScore = absoluteScore / inData.getPredecessors().size();
@@ -77,7 +77,7 @@ public class CalcEntropyAvgScore extends AbstractAucomTransformNode<TemporalProb
         return normalizedScore;
     }
 
-    protected double calculateSumEntropy(TemporalProbabilityFeature inData) {
+    double calculateSumEntropy(TemporalProbabilityFeature inData) {
         double[] singleEntropy = new double[inData.getPredecessors().size()];
         for (int i = 0; i < inData.getPredecessors().size(); i++) {
             DataType predecessor = inData.getPredecessors().get(i);
@@ -88,7 +88,7 @@ public class CalcEntropyAvgScore extends AbstractAucomTransformNode<TemporalProb
         return alg_calculateSumEntropy(singleEntropy);
     }
 
-    protected double alg_calculateSumEntropy(double[] values) {
+    double alg_calculateSumEntropy(double[] values) {
         double sum = 0.0d;
         for (double value : values) {
             sum += value;
@@ -110,7 +110,7 @@ public class CalcEntropyAvgScore extends AbstractAucomTransformNode<TemporalProb
         this.model = model;
     }
 
-    public Model getModel() {
+    Model getModel() {
         return this.model;
     }
 

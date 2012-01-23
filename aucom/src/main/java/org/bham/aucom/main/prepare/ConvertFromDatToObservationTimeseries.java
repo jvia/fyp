@@ -33,7 +33,7 @@ public class ConvertFromDatToObservationTimeseries {
 	/*
 	 * @param args
 	 */
-	public void convertDatToObservation(String str) {
+    void convertDatToObservation(String str) {
 		Builder b = new Builder();
 		try {
 			Element rootElement = new Element("ts:timeseries", Constants.URI);

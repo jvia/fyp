@@ -21,12 +21,12 @@ public class SaveTimeSeriesGraph extends AbstractAucomGraph implements SinkStatu
 	private static final String XML_VERSION = "<?xml version=\"1.0\"?>\n";
 	private static final String CLOSING_TAG = "</ts:elements></ts:timeseries>";
 	EngineThread engineThread;
-	transient OutputStream outputStream;
+	private transient OutputStream outputStream;
 
-	TimeSeriesSource<Observation> source;
-	Counter<Observation> counter;
-	MarkNextDataPointAsLast<Observation> marker;
-	ObservableStreamSink<Observation> sink;
+	private TimeSeriesSource<Observation> source;
+	private Counter<Observation> counter;
+	private MarkNextDataPointAsLast<Observation> marker;
+	private ObservableStreamSink<Observation> sink;
 
 	private TimeSeries<Observation> timeSeriesToSave;
 
@@ -118,7 +118,7 @@ public class SaveTimeSeriesGraph extends AbstractAucomGraph implements SinkStatu
 	}
 
 	@Override
-	public boolean preconditionsSatisfied() {
+    protected boolean preconditionsSatisfied() {
 		return getTimeSeriesToSave() != null;	
 	}
 
@@ -131,11 +131,11 @@ public class SaveTimeSeriesGraph extends AbstractAucomGraph implements SinkStatu
 		return s;
 	}
 
-	public TimeSeries<Observation> getTimeSeriesToSave() {
+	TimeSeries<Observation> getTimeSeriesToSave() {
 		return timeSeriesToSave;
 	}
 
-	public void setTimeSeriesToSave(TimeSeries<Observation> timeSeriesToSave) {
+	void setTimeSeriesToSave(TimeSeries<Observation> timeSeriesToSave) {
 		this.timeSeriesToSave = timeSeriesToSave;
 	}
 

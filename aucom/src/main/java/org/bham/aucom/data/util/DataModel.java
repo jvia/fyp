@@ -14,11 +14,11 @@ import java.util.*;
 
 public class DataModel implements TimeSeriesStatusListener {
     private LinkedHashMap<UUID, TimeSeries<?>> timeSeries;
-    private LinkedHashMap<UUID, Model> models;
+    private final LinkedHashMap<UUID, Model> models;
     private LinkedHashMap<UUID, AnomalyClassifier> classifiers;
-    private HashMap<UUID, Object> itemsById = new HashMap<UUID, Object>();
+    private final HashMap<UUID, Object> itemsById = new HashMap<UUID, Object>();
     private static DataModel instance = null;
-    protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
+    private final javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
     /*
       * creates an empty data Model, to fill it use DataLoader

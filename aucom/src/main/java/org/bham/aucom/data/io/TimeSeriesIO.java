@@ -13,8 +13,8 @@ import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.data.util.DataModel;
 
 public class TimeSeriesIO implements IOInterface<TimeSeries<?>> {
-	final TimeSeriesInput tsInput ;
-	final TimeSeriesOutput tsOutput;
+	private final TimeSeriesInput tsInput ;
+	private final TimeSeriesOutput tsOutput;
 	
 	public TimeSeriesIO(TimeSeriesInput in, TimeSeriesOutput out) {
 		tsInput = in;
@@ -22,7 +22,7 @@ public class TimeSeriesIO implements IOInterface<TimeSeries<?>> {
 	}
 	
 	@Override
-	public TimeSeries<?> read(File file) throws ValidityException, ParsingException, IOException {
+	public TimeSeries<?> read(File file) throws ParsingException, IOException {
 		Logger.getLogger(this.getClass().getCanonicalName()).info("loading timeseries from file " + file.getAbsolutePath());
 		TimeSeries<?> ts = tsInput.read(file);
 		if(ts.size()==0){
@@ -35,7 +35,7 @@ public class TimeSeriesIO implements IOInterface<TimeSeries<?>> {
 		return ts;
 	}
 
-	public static Document getXmlDocumentFromFile(File file) throws ValidityException, ParsingException, IOException {
+	public static Document getXmlDocumentFromFile(File file) throws ParsingException, IOException {
 		Builder b = new Builder();
 		return b.build(file);
 	}

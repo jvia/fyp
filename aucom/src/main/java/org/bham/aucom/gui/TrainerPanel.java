@@ -36,7 +36,7 @@ import java.util.concurrent.Executors;
  */
 public class TrainerPanel extends javax.swing.JPanel implements ModelTrainerListener {
     private static final long serialVersionUID = 0L;
-    ModelTrainer trainer;
+    private final ModelTrainer trainer;
 
     /*
      * Creates new form TrainerPanel
@@ -173,7 +173,7 @@ public class TrainerPanel extends javax.swing.JPanel implements ModelTrainerList
     private javax.swing.JButton saveButton;
     private javax.swing.JToggleButton trainingButton;
     // End of variables declaration//GEN-END:variables
-    protected TimeSeries<Observation> currentTrainingTimeSeries;
+    private TimeSeries<Observation> currentTrainingTimeSeries;
 
     @Override
     public void modelTrainerStatusChanged(StatusChangedEvent evt) {
@@ -201,7 +201,7 @@ public class TrainerPanel extends javax.swing.JPanel implements ModelTrainerList
         trainingButton.setIcon(null);
     }
 
-    protected void addTrainingIconToButtonButton() {
+    void addTrainingIconToButtonButton() {
         // Look for the image.
         String imgLocation = "";
         URL imageURL = RecorderPanel.class.getResource("/toolbarButtonGraphics/general/Stop24.gif");

@@ -21,7 +21,7 @@ import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.data.timeseries.TimeSeriesType;
 
 public class XmlTimeSeriesOutput implements TimeSeriesOutput {
-	HashMap<TimeSeriesType, TimeSeriesToXmlDocumentConverter<?>> converter;
+	private final HashMap<TimeSeriesType, TimeSeriesToXmlDocumentConverter<?>> converter;
 
 	public XmlTimeSeriesOutput() {
 		converter = new HashMap<TimeSeriesType, TimeSeriesToXmlDocumentConverter<?>>();

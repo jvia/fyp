@@ -14,9 +14,9 @@ import org.bham.aucom.fts.tranform.Classify;
 
 public class OptimizerGraph extends AbstractAucomGraph {
 	private static final long serialVersionUID = 0L;
-	TimeSeriesSource<Score> source;
-	Classify classify;
-	TimeSeriesSink<Classification> sink;
+	private TimeSeriesSource<Score> source;
+	private Classify classify;
+	private TimeSeriesSink<Classification> sink;
 
 	public OptimizerGraph() {
 		super("OptimizerGraph");

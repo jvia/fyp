@@ -7,7 +7,7 @@ import java.util.List;
 
 public class GetDataTypesFromObsTimeSeries {
 
-    public GetDataTypesFromObsTimeSeries() {
+    private GetDataTypesFromObsTimeSeries() {
     }
 
     public static void main(String[] args) {

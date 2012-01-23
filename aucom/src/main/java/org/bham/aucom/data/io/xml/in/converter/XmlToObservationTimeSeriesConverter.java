@@ -44,7 +44,7 @@ public class XmlToObservationTimeSeriesConverter extends XmlToTimeSeriesConverte
 	 * Helper functions
 	 */
 	
-	protected Element getcontentFrom(Element e) {
+	Element getcontentFrom(Element e) {
 		Nodes nodes = e.query("./*", XmlToTimeSeriesConverter.getContext());
 		if(nodes.size() == 0){
 			return new Element("emptyConcent");

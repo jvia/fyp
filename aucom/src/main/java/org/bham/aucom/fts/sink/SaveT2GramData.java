@@ -8,8 +8,8 @@ import net.sf.xcf.fts.nodes.sink.SinkAdapter;
 
 import org.bham.aucom.data.DataType;
 
-public class SaveT2GramData extends SinkAdapter<DataType> {
-	FileOutputStream out;
+class SaveT2GramData extends SinkAdapter<DataType> {
+	private FileOutputStream out;
 	public SaveT2GramData() {
 		 try {
 			out = new FileOutputStream(new File("t2gram.csv"));

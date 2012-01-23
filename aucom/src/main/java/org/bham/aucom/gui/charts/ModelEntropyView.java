@@ -55,27 +55,27 @@ public class ModelEntropyView extends JPanel {
         this.validate();
     }
 
-    public void setPanel(ChartPanel panel) {
+    void setPanel(ChartPanel panel) {
         this.panel = panel;
     }
 
-    public ChartPanel getPanel() {
+    ChartPanel getPanel() {
         return panel;
     }
 
-    public void setChart(JFreeChart chart) {
+    void setChart(JFreeChart chart) {
         this.chart = chart;
     }
 
-    public JFreeChart getChart() {
+    JFreeChart getChart() {
         return chart;
     }
 
-    public void setDataSet(DefaultCategoryDataset dataSet) {
+    void setDataSet(DefaultCategoryDataset dataSet) {
         this.dataSet = dataSet;
     }
 
-    public DefaultCategoryDataset getDataSet() {
+    DefaultCategoryDataset getDataSet() {
         return dataSet;
     }
 

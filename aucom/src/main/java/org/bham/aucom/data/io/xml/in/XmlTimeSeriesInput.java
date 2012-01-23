@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 public class XmlTimeSeriesInput implements TimeSeriesInput {
     private static final String TYPE = "type";
-    HashMap<TimeSeriesType, XmlToTimeSeriesConverter<?>> converter;
+    private final HashMap<TimeSeriesType, XmlToTimeSeriesConverter<?>> converter;
 
     public XmlTimeSeriesInput() {
         converter = new HashMap<TimeSeriesType, XmlToTimeSeriesConverter<?>>();

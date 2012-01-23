@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 public class DataManager implements Presentable {
 
-    DataModel dataModel;
+    private final DataModel dataModel;
     private static DataManager manager;
     private DataManagerPanel panel;
 
@@ -126,7 +126,7 @@ public class DataManager implements Presentable {
         return new DataType(features, 1, getTestObservation());
     }
 
-    public Observation getTestObservation() {
+    Observation getTestObservation() {
         Element e = new Element(
                 "<ROBOTPOSITION source=\"RDS\" eventType=\"INSERT\" memoryName=\"publisher\" dataSetId=\"XcfEventToDocument\" timestamp=\"1276070723418\" dataSetIndex=\"0\">"
                 +

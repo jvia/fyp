@@ -28,11 +28,11 @@ public class AucomIO {
 
     private File workingDirectory = new File(System.getProperty("user.dir"));
 
-    private HashMap<String, TimeSeriesIO> tsIo = new HashMap<String, TimeSeriesIO>();
-    String defaultTimeSeriesIOType = "xml";
-    private ModelIO faultDetectionModelIO = new ModelIO();
-    private SlidingWindowIO slidingWindowIO = new SlidingWindowIO();
-    private ClassifierIO classifierIO = new ClassifierIO();
+    private final HashMap<String, TimeSeriesIO> tsIo = new HashMap<String, TimeSeriesIO>();
+    private final String defaultTimeSeriesIOType = "xml";
+    private final ModelIO faultDetectionModelIO = new ModelIO();
+    private final SlidingWindowIO slidingWindowIO = new SlidingWindowIO();
+    private final ClassifierIO classifierIO = new ClassifierIO();
 
     // private XmlFileWriter xmlFileWriter = new XmlFileWriter();
 
@@ -164,7 +164,7 @@ public class AucomIO {
         return this.workingDirectory;
     }
 
-    public File generateFileFor(UUID id, String fileExtension) {
+    File generateFileFor(UUID id, String fileExtension) {
         return new File(this.getCurrentWorkingDirectory().getAbsolutePath() + File.separator + id.toString() + "." + fileExtension);
     }
 }

@@ -37,7 +37,7 @@ public class FixTimestamps {
 
 	private Builder builder;
 
-	public ArrayList<Element> extractXml(File inFile) {
+	ArrayList<Element> extractXml(File inFile) {
 		Document doc;
 		ArrayList<Element> list = null;
 		if (this.builder == null) {
@@ -71,7 +71,7 @@ public class FixTimestamps {
 		save(new File(sortedFileName), list);
 	}
 
-	public void save(File file, ArrayList<Element> list) {
+	void save(File file, ArrayList<Element> list) {
 		try {
 			FileWriter out;
 			out = new FileWriter(file);

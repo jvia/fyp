@@ -3,7 +3,7 @@ package org.bham.aucom.gui;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
-public class DatasetListDataListener implements ListDataListener {
+class DatasetListDataListener implements ListDataListener {
 
 	@Override
 	public void contentsChanged(ListDataEvent e) {

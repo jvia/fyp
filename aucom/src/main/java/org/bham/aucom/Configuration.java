@@ -18,10 +18,10 @@ import java.util.logging.Logger;
  */
 public final class Configuration {
 
-    private static String resourcePath = "/data/aucom.cfg";
-    private static String fileString = "data/aucom.cfg";
+    private static final String resourcePath = "/data/aucom.cfg";
+    private static final String fileString = "data/aucom.cfg";
     private static Configuration instance = null;
-    private HashMap<String, String> map;
+    private final HashMap<String, String> map;
 
     /*
      * Creates the private instance of the Configuration object.

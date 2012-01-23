@@ -11,17 +11,17 @@ import java.awt.*;
 
 
 public class T2GramVisualizer implements Presentable {
-	JPanel panel;
-	Detector detector;
-	JFrame scoreChartFrame;
-	VisualizerScoreChart scoreChart;
-	T2GramVisualizerGraph graph;
+	private JPanel panel;
+	private final Detector detector;
+	private JFrame scoreChartFrame;
+	private VisualizerScoreChart scoreChart;
+	private T2GramVisualizerGraph graph;
 
 	public T2GramVisualizer(Detector inDetector) {
 		detector = inDetector;
 	}
 
-	public void start() throws ActionFailedException {
+	void start() throws ActionFailedException {
 		if (detector != null && detector.getOutput() != null) {
 			graph = new T2GramVisualizerGraph(detector.getOutput());
 			graph.start();

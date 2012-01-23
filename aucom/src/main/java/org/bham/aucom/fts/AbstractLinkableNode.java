@@ -13,14 +13,14 @@ public abstract class AbstractLinkableNode implements AttributableObject, Serial
     private UUID id;
     private final LinkedHashMap<LinkEnum, List<UUID>> links = new LinkedHashMap<LinkEnum, List<UUID>>();
 
-    public AbstractLinkableNode(UUID id) {
+    protected AbstractLinkableNode(UUID id) {
         this.setId(id);
     }
 
-    public AbstractLinkableNode() {
+    protected AbstractLinkableNode() {
     }
 
-    protected HashMap<String, String> attributes = new LinkedHashMap<String, String>();
+    private final HashMap<String, String> attributes = new LinkedHashMap<String, String>();
 
     @Override
     public HashMap<String, String> getAttributes() {
@@ -54,11 +54,11 @@ public abstract class AbstractLinkableNode implements AttributableObject, Serial
         return this.links;
     }
 
-    public boolean containsLink(LinkEnum link) {
+    protected boolean containsLink(LinkEnum link) {
         return this.links.containsKey(link);
     }
 
-    public void addLink(LinkEnum link, UUID uuid) {
+    protected void addLink(LinkEnum link, UUID uuid) {
         if (!this.links.containsKey(link))
             this.links.put(link, new ArrayList<UUID>());
         this.links.get(link).add(uuid);
@@ -70,7 +70,7 @@ public abstract class AbstractLinkableNode implements AttributableObject, Serial
         this.links.get(link).addAll(uuids);
     }
 
-    public List<UUID> getLinks(LinkEnum link) {
+    protected List<UUID> getLinks(LinkEnum link) {
         if (this.links.containsKey(link))
             return this.links.get(link);
         return null;

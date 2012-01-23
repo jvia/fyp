@@ -8,9 +8,9 @@ import javax.swing.JList;
 import javax.swing.JPopupMenu;
 
 class PopupDatasetListener extends MouseAdapter {
-	JPopupMenu selectedItempopupMenu;
-	JPopupMenu freeSpacePopupMenu;
-	JList list;
+	private final JPopupMenu selectedItempopupMenu;
+	private final JPopupMenu freeSpacePopupMenu;
+	private final JList list;
 
 	PopupDatasetListener(JList list, JPopupMenu selectedItempopupMenu,
 			JPopupMenu freeSpacePopupMenu) {

@@ -27,7 +27,7 @@ public class GenerateTemporalProbabilityFeature extends AbstractAucomTransformNo
         return f;
     }
 
-    protected TemporalProbabilityFeature generate(TemporalDurationFeature dataToTest) {
+    TemporalProbabilityFeature generate(TemporalDurationFeature dataToTest) {
         int eventTypeToTest = dataToTest.getEventType();
 
         double maximalProbabilityForPredecessor;

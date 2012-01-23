@@ -8,8 +8,8 @@ import java.util.Collection;
 
 public class MonitoredArrayList<E> extends ArrayList<E> implements Serializable{
 	private static final long serialVersionUID = 1L;
-	transient ArrayList<ListDataListener> listeners = new ArrayList<ListDataListener>();
-	private ArrayList<E> backedList;
+	private final transient ArrayList<ListDataListener> listeners = new ArrayList<ListDataListener>();
+	private final ArrayList<E> backedList;
 
 	public MonitoredArrayList(ArrayList<E> inList) {
 		backedList = inList;

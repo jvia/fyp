@@ -18,10 +18,8 @@ import java.util.logging.Logger;
  * @param <TOut>
  */
 public abstract class AbstractAucomTransformNode<TIn extends AbstractData, TOut extends AbstractData> extends AbstractTransformNode<TIn, TOut> {
-    protected TimeSeries<TOut> ts = null;
-    long lastProcessingTime = 0l;
-    long startTimestamp = 0l;
-    long stopTimestamp = 0l;
+    private final TimeSeries<TOut> ts = null;
+    private long lastProcessingTime = 0l;
 
     protected AbstractAucomTransformNode(String name) {
         super(name);
@@ -31,7 +29,9 @@ public abstract class AbstractAucomTransformNode<TIn extends AbstractData, TOut 
     protected TOut transform(TIn input) throws Exception {
         if (input == null) return null;
 
-        startTimestamp = System.currentTimeMillis();
+        long startTimestamp = System.currentTimeMillis();
+        long stopTimestamp = System.currentTimeMillis();
+        long newPoint = (stopTimestamp - startTimestamp);
         TOut out = null;
 
         try {
@@ -56,8 +56,6 @@ public abstract class AbstractAucomTransformNode<TIn extends AbstractData, TOut 
             getTimeSeries().add(out);
         }
 
-        stopTimestamp = System.currentTimeMillis();
-        long newPoint = (stopTimestamp - startTimestamp);
 
         if ((Math.abs(lastProcessingTime - newPoint)) > 10) {
             Logger.getLogger(getClass().getCanonicalName()).info(name + " current timestamp " + newPoint + " increase: " + (lastProcessingTime - newPoint));
@@ -95,7 +93,7 @@ public abstract class AbstractAucomTransformNode<TIn extends AbstractData, TOut 
 
     /* event handling ----> */
 
-    protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
+    private final javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
     void fireStatusChangedEvent(TransformNodeEvent evt) {
         Object[] listeners = listenerList.getListenerList();
@@ -106,7 +104,7 @@ public abstract class AbstractAucomTransformNode<TIn extends AbstractData, TOut 
         }
     }
 
-    public boolean isListenerRegistered(TransformNodeEventListener listener) {
+    boolean isListenerRegistered(TransformNodeEventListener listener) {
         boolean isRegistered = false;
         Object[] listeners = listenerList.getListenerList();
         for (int i = 0; i < listeners.length; i += 2) {

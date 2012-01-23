@@ -1,9 +1,4 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * AutomaticRecorderFrame.java
  *
  * Created on 06.06.2010, 19:37:50
@@ -45,7 +40,7 @@ public class DiagnoserGui extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 1L;
 
-    public DiagnoserGui(SystemConnection inConnection)
+    private DiagnoserGui(SystemConnection inConnection)
     {
         presentables = new ArrayList<Presentable>();
         try {
@@ -58,9 +53,9 @@ public class DiagnoserGui extends javax.swing.JFrame {
             exception.printStackTrace();
         }
     }
-    List<Presentable> presentables;
+    private final List<Presentable> presentables;
 
-    public void registerPresentable(Presentable newPresentable)
+    void registerPresentable(Presentable newPresentable)
     {
         presentables.add(newPresentable);
         newPresentable.getPanel().setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), newPresentable.getPanel().getName()));
@@ -78,9 +73,6 @@ public class DiagnoserGui extends javax.swing.JFrame {
 //		presentablesPanel.remove(presentablesPanel.getComponentCount()-1);
         validateTree();
     }
-    XYSeries frequencySeries;
-    JLabel currentFrequencyLabel;
-    JLabel numberRecordedEventsLabel;
 
     protected JButton makeNavigationButton(String imgLocation, String actionCommand, String toolTipText, String altText, ActionListener buttonActionListener)
     {
@@ -105,8 +97,8 @@ public class DiagnoserGui extends javax.swing.JFrame {
 
     private void customizeComponents()
     {
-        this.frequencySeries = new XYSeries("frequencies");
-        JFreeChart frequencyChart = ChartFactory.createXYLineChart("", "", "", new XYSeriesCollection(this.frequencySeries), PlotOrientation.VERTICAL, false, false, false);
+        XYSeries frequencySeries = new XYSeries("frequencies");
+        JFreeChart frequencyChart = ChartFactory.createXYLineChart("", "", "", new XYSeriesCollection(frequencySeries), PlotOrientation.VERTICAL, false, false, false);
         frequencyChart.setBackgroundPaint(Color.black);
         XYPlot frequencyPlotToCustomize = frequencyChart.getXYPlot();
         frequencyPlotToCustomize.getRenderer().setBasePaint(Color.white);
@@ -119,14 +111,14 @@ public class DiagnoserGui extends javax.swing.JFrame {
         frequencyPlotToCustomize.setBackgroundPaint(Color.black);
         ChartPanel chartPanel = new ChartPanel(frequencyChart);
         chartPanel.setPreferredSize(new Dimension(200, 20));
-        this.currentFrequencyLabel = new JLabel("0Hz", SwingConstants.CENTER);
-        this.currentFrequencyLabel.setPreferredSize(new Dimension(80, 20));
-        this.currentFrequencyLabel.setForeground(Color.white);
-        this.currentFrequencyLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
-        this.numberRecordedEventsLabel = new JLabel("#0", SwingConstants.LEFT);
-        this.numberRecordedEventsLabel.setPreferredSize(new Dimension(120, 20));
-        this.numberRecordedEventsLabel.setForeground(Color.white);
-        this.numberRecordedEventsLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
+        JLabel currentFrequencyLabel = new JLabel("0Hz", SwingConstants.CENTER);
+        currentFrequencyLabel.setPreferredSize(new Dimension(80, 20));
+        currentFrequencyLabel.setForeground(Color.white);
+        currentFrequencyLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        JLabel numberRecordedEventsLabel = new JLabel("#0", SwingConstants.LEFT);
+        numberRecordedEventsLabel.setPreferredSize(new Dimension(120, 20));
+        numberRecordedEventsLabel.setForeground(Color.white);
+        numberRecordedEventsLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
 
 //		addButtonsToRecorderToolBar();
 
@@ -147,7 +139,7 @@ public class DiagnoserGui extends javax.swing.JFrame {
     private void initComponents() {
 
         presentablesTabbedPane = new javax.swing.JTabbedPane();
-        statusLabel = new javax.swing.JLabel();
+        JLabel statusLabel = new JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Diagnoser");
@@ -222,6 +214,5 @@ public class DiagnoserGui extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane presentablesTabbedPane;
-    private javax.swing.JLabel statusLabel;
     // End of variables declaration//GEN-END:variables
 }

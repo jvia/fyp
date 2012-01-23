@@ -42,7 +42,7 @@ public class RedGreenGradientImageGenerator {
       * for values bigger than or equal to 1 colors are derivates of green
       * for values  lower than 1 colors are red
       */
-    public static Color getColor(double val) {
+    private static Color getColor(double val) {
         if (getAbnormalColors() == null)
             createColors();
         if (val >= 1) {

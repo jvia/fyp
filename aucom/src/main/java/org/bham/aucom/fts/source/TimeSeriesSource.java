@@ -13,7 +13,7 @@ import org.bham.aucom.data.timeseries.TimeSeriesStatusEvent;
 
 public class TimeSeriesSource<T extends AbstractData> extends AucomSourceAdapter<T> implements TimeSeriesStatusListener {
 	private static final long serialVersionUID = 0L;
-	final BlockingQueue<T> queue;
+	private final BlockingQueue<T> queue;
 	private TimeSeries<T> input;
 
 
@@ -50,7 +50,7 @@ public class TimeSeriesSource<T extends AbstractData> extends AucomSourceAdapter
 
 	
 
-	protected BlockingQueue<T> getQueue() {
+	BlockingQueue<T> getQueue() {
 		return this.queue;
 	}
 
@@ -62,7 +62,7 @@ public class TimeSeriesSource<T extends AbstractData> extends AucomSourceAdapter
 		return this.queue.size();
 	}
 
-	protected void copyDataFromTimeSeriesToSourceQueue(int startIndex, int endIndex) {
+	void copyDataFromTimeSeriesToSourceQueue(int startIndex, int endIndex) {
 		if (getInput() == null)
 			return;
 		for (int i = startIndex; i <= endIndex; i++) {

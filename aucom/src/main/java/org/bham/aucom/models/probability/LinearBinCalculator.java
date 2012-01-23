@@ -16,7 +16,7 @@ public class LinearBinCalculator implements BinCalculator {
         return (int) Math.floor(value / intervalSize);
     }
 
-    public void setIntervalSize(double intervalSize) {
+    void setIntervalSize(double intervalSize) {
         this.intervalSize = intervalSize;
     }
 

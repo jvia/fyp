@@ -35,7 +35,7 @@ public class Observation extends AbstractData {
      * 
      * @param o
      */
-    public Observation(Observation o)
+    Observation(Observation o)
     {
         if (o != null) {
             this.setTimestamp(o.getTimestamp());
@@ -61,7 +61,7 @@ public class Observation extends AbstractData {
      * 
      * @return observation object
      */
-    public static Observation createRandomObservation()
+    static Observation createRandomObservation()
     {
         long timestamp = System.currentTimeMillis();
         Element content = new Element("content");
@@ -87,7 +87,7 @@ public class Observation extends AbstractData {
      * 
      * @param content set the content of the Observation
      */
-    protected void setContent(Element content)
+    void setContent(Element content)
     {
         this.content = content;
     }

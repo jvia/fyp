@@ -92,7 +92,7 @@ public class ExampleFileFilter extends FileFilter {
      *
      * @see #addExtension
      */
-    public ExampleFileFilter(String[] filters, String description) {
+    private ExampleFileFilter(String[] filters, String description) {
 	this();
         for (String filter : filters) {
             // add filters one by one
@@ -130,7 +130,7 @@ public class ExampleFileFilter extends FileFilter {
      * @see #getExtension
      * @see FileFilter#accept
      */
-     public String getExtension(File f) {
+    String getExtension(File f) {
 	if(f != null) {
 	    String filename = f.getName();
 	    int i = filename.lastIndexOf('.');
@@ -232,7 +232,7 @@ public class ExampleFileFilter extends FileFilter {
      * @see setDescription
      * @see setExtensionListInDescription
      */
-    public boolean isExtensionListInDescription() {
+    boolean isExtensionListInDescription() {
 	return useExtensionsInDescription;
     }
 }

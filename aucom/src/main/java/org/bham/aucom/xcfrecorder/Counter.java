@@ -5,7 +5,7 @@ import org.bham.aucom.fts.tranform.AbstractAucomTransformNode;
 
 
 public class Counter<TIn extends AbstractData> extends AbstractAucomTransformNode<TIn, TIn> {
-	int counter = 0;
+	private int counter = 0;
 	Counter() {
 		super("counter");
 	}

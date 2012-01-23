@@ -24,11 +24,11 @@ import java.util.logging.Logger;
 
 
 public class ClassifierOptimizer implements Presentable, GraphStatusListener {
-    OptimizerGraph optimizationGraph = null;
-    ObservationToScoreGraph obsToScoreGraph = null;
-    TimeSeries<Score> scoreTs = null;
+    private OptimizerGraph optimizationGraph = null;
+    private ObservationToScoreGraph obsToScoreGraph = null;
+    private TimeSeries<Score> scoreTs = null;
     private Detector detector;
-    ClassifierOptimizationMethod optimizationMethod;
+    private final ClassifierOptimizationMethod optimizationMethod;
 
     public ClassifierOptimizer(Detector inDetector) {
         setDetector(inDetector);
@@ -63,7 +63,7 @@ public class ClassifierOptimizer implements Presentable, GraphStatusListener {
         }
     }
 
-    public void stop() {
+    void stop() {
         this.optimizationGraph.stop();
         this.optimizationGraph = null;
         if (this.optimizationMethod.getBestClassifier() != null) {
@@ -215,7 +215,7 @@ public class ClassifierOptimizer implements Presentable, GraphStatusListener {
     /*
       * event handling ---->
       */
-    protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
+    private final javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
     public void addStatusListener(ClassifierOptimizerStatusListener listener) {
         this.listenerList.add(ClassifierOptimizerStatusListener.class, listener);
@@ -258,7 +258,7 @@ public class ClassifierOptimizer implements Presentable, GraphStatusListener {
         return detector;
     }
 
-    public void setDetector(Detector detector) {
+    void setDetector(Detector detector) {
         this.detector = detector;
     }
 

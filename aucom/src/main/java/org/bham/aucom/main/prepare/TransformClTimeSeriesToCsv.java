@@ -23,10 +23,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class TransformClTimeSeriesToCsv {
-    Graph g;
+    private Graph g;
     private EngineThread engineThread;
 
-    public TransformClTimeSeriesToCsv(File in_file, File out_file) {
+    private TransformClTimeSeriesToCsv(File in_file, File out_file) {
         try {
             @SuppressWarnings("unchecked")
             TimeSeries<Classification> cl = (TimeSeries<Classification>) AucomIO.getInstance().readTimeSeries(in_file);

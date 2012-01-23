@@ -12,11 +12,11 @@ public abstract class AucomSourceAdapter<T> extends SourceAdapter<T> implements 
     private static final long serialVersionUID = 1L;
     private SourceStatus state = SourceStatus.DISCONNECTED;
     private final Object waitObject = new Object();
-    protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
+    private final javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
     private SourceStatus previousState = SourceStatus.DISCONNECTED;
     private boolean sendLastElement = false;
 
-    public AucomSourceAdapter(String name) {
+    protected AucomSourceAdapter(String name) {
         super(name);
     }
 
@@ -38,7 +38,7 @@ public abstract class AucomSourceAdapter<T> extends SourceAdapter<T> implements 
 //        return listenerList.getListenerCount();
 //    }
 
-    public boolean isListenerRegistered(SourceStatusListener listener) {
+    boolean isListenerRegistered(SourceStatusListener listener) {
         boolean isRegistered = false;
         Object[] listeners = this.listenerList.getListenerList();
         for (int i = 0; i < listeners.length; i += 2) {
@@ -66,7 +66,7 @@ public abstract class AucomSourceAdapter<T> extends SourceAdapter<T> implements 
         this.state = state;
     }
 
-    public SourceStatus getStatus() {
+    protected SourceStatus getStatus() {
         return state;
     }
 
@@ -95,11 +95,11 @@ public abstract class AucomSourceAdapter<T> extends SourceAdapter<T> implements 
         this.sendLastElement = true;
     }
 
-    protected void resetSendLastElement() {
+    void resetSendLastElement() {
         this.sendLastElement = false;
     }
 
-    protected boolean isSentLastElement() {
+    boolean isSentLastElement() {
         return this.sendLastElement;
     }
 

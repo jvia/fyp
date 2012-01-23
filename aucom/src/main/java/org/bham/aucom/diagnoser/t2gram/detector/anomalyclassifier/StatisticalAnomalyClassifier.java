@@ -30,8 +30,8 @@ public class StatisticalAnomalyClassifier extends AbstractAnomalyClassifier {
     private static final long serialVersionUID = 1L;
     private double classifierMean;
     private double classifierVariance;
-    transient List<Score> historyScoreValues = Collections.synchronizedList(new ArrayList<Score>());
-    int historySize = 50;
+    private transient List<Score> historyScoreValues = Collections.synchronizedList(new ArrayList<Score>());
+    private int historySize = 50;
     private double a;
 
     public StatisticalAnomalyClassifier(Double mean, Double variance) {
@@ -77,7 +77,7 @@ public class StatisticalAnomalyClassifier extends AbstractAnomalyClassifier {
         // return (this.mean +
     }
 
-    public double getValueToCompare() {
+    double getValueToCompare() {
         double scoreVariance = calculateVarianceValue(this.historyScoreValues);
         double quotient = scoreVariance / this.getVariance();
         return (a * this.getMean() + (1.0 - a) * this.getMean() * quotient);
@@ -110,7 +110,7 @@ public class StatisticalAnomalyClassifier extends AbstractAnomalyClassifier {
         return var;
     }
 
-    public double calculateMeanOnHistoryElements(List<Score> sequence) {
+    double calculateMeanOnHistoryElements(List<Score> sequence) {
         double calculatedMean = 0.0d;
         for (Score s : sequence)
             calculatedMean += s.getValue();
@@ -118,18 +118,18 @@ public class StatisticalAnomalyClassifier extends AbstractAnomalyClassifier {
         return calculatedMean / sequence.size();
     }
 
-    protected void setMean(double mean) {
+    void setMean(double mean) {
         if (this.classifierMean != mean) {
             fireStatusChangedEvent(new AnomalyClassifierStatusEvent(this));
         }
         this.classifierMean = mean;
     }
 
-    public double getMean() {
+    double getMean() {
         return this.classifierMean;
     }
 
-    protected void setMeanAndVariance(double mean, double variance) {
+    void setMeanAndVariance(double mean, double variance) {
         {
             boolean valuesChanged;
             valuesChanged = this.classifierVariance != variance;
@@ -143,14 +143,14 @@ public class StatisticalAnomalyClassifier extends AbstractAnomalyClassifier {
 
     }
 
-    protected void setVariance(double variance) {
+    void setVariance(double variance) {
         if (this.classifierVariance != variance) {
             fireStatusChangedEvent(new AnomalyClassifierStatusEvent(this));
         }
         this.classifierVariance = variance;
     }
 
-    public double getVariance() {
+    double getVariance() {
         return this.classifierVariance;
     }
 

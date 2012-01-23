@@ -20,14 +20,14 @@ public abstract class TimeSeries<T extends AbstractData> extends AbstractLinkabl
     public static final String last = "LAST_TIMESERIES_ELEMENT";
     public static final String first = "FIRST_TIMESERIES_ELEMENT";
     private TimeSeriesType type;
-    protected RingBuffer<T> list;
+    private RingBuffer<T> list;
 
-    public TimeSeries() {
+    TimeSeries() {
         this(UUID.randomUUID());
         list = new RingBuffer<T>();
     }
 
-    public TimeSeries(int num) {
+    TimeSeries(int num) {
         this(UUID.randomUUID());
         list = new RingBuffer<T>(num);
     }
@@ -35,35 +35,35 @@ public abstract class TimeSeries<T extends AbstractData> extends AbstractLinkabl
     /*
      * Concrete Timeseries, use this construtor to load a timeseries from file
      */
-    public TimeSeries(UUID id) {
+    private TimeSeries(UUID id) {
         super(id);
         list = new RingBuffer<T>();
     }
 
-    public TimeSeries(UUID id, int num) {
+    private TimeSeries(UUID id, int num) {
         super(id);
         list = new RingBuffer<T>(num);
     }
 
-    public TimeSeries(UUID generatorId, UUID dataSourceId) {
+    private TimeSeries(UUID generatorId, UUID dataSourceId) {
         this(generatorId);
         setGenerator(generatorId);
         setGeneratedFrom(dataSourceId);
     }
 
-    public TimeSeries(UUID generatorId, UUID dataSourceId, int num) {
+    private TimeSeries(UUID generatorId, UUID dataSourceId, int num) {
         this(generatorId, num);
         setGenerator(generatorId);
         setGeneratedFrom(dataSourceId);
     }
 
-    public TimeSeries(UUID generatorId, UUID dataSourceId, UUID id, List<T> content) {
+    TimeSeries(UUID generatorId, UUID dataSourceId, UUID id, Collection<T> content) {
         this(generatorId, dataSourceId);
         addAll(content);
         setId(id);
     }
 
-    public TimeSeries(UUID generatorId, UUID dataSourceId, UUID id, List<T> content, int num) {
+    public TimeSeries(UUID generatorId, UUID dataSourceId, UUID id, Collection<T> content, int num) {
         this(generatorId, dataSourceId, num);
         addAll(content);
         setId(id);
@@ -72,14 +72,14 @@ public abstract class TimeSeries<T extends AbstractData> extends AbstractLinkabl
     /*
      * @param dataTypeTimeSeriesId
      */
-    public void setGeneratedFrom(UUID dataTypeTimeSeriesId) {
+    public final void setGeneratedFrom(UUID dataTypeTimeSeriesId) {
         addLink(LinkEnum.generatedFromId, dataTypeTimeSeriesId);
     }
 
     /*
      * @param generatoId
      */
-    public void setGenerator(UUID generatoId) {
+    public final void setGenerator(UUID generatoId) {
         addLink(LinkEnum.generatorId, generatoId);
     }
 
@@ -112,7 +112,7 @@ public abstract class TimeSeries<T extends AbstractData> extends AbstractLinkabl
     }
 
     @SuppressWarnings({"boxing"})
-    public synchronized void addAll(Collection<T> c) {
+    public final synchronized void addAll(Collection<T> c) {
         try {
 
             if (c.size() == 0) {
@@ -151,7 +151,7 @@ public abstract class TimeSeries<T extends AbstractData> extends AbstractLinkabl
     /*
      * event handling ---->
      */
-    protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
+    private final javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
     public void addTimeSeriesStatusListener(TimeSeriesStatusListener listener) {
         this.listenerList.add(TimeSeriesStatusListener.class, listener);
@@ -199,7 +199,7 @@ public abstract class TimeSeries<T extends AbstractData> extends AbstractLinkabl
         return this.list.size() != 0 && this.list.get(0).getClass().equals(classToCheck);
     }
 
-    protected void setType(TimeSeriesType type) {
+    void setType(TimeSeriesType type) {
         this.type = type;
     }
 

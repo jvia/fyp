@@ -6,9 +6,9 @@ import org.bham.aucom.data.DataAttributes;
 import org.bham.aucom.data.DataType;
 import org.bham.aucom.data.timeseries.TimeSeries;
 
-public class CalculateDuration extends AbstractTransformNode<DataType, DataType> {
-	TimeSeries<DataType> sequence;
-	long beginTimestamp;
+class CalculateDuration extends AbstractTransformNode<DataType, DataType> {
+	private final TimeSeries<DataType> sequence;
+	private final long beginTimestamp;
 	public CalculateDuration(TimeSeries<DataType> sequence) {
 		this.sequence = sequence;
 		this.beginTimestamp = sequence.get(0).getTimestamp();

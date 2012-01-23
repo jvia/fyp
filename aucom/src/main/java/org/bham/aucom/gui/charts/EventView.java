@@ -22,12 +22,12 @@ import java.util.LinkedHashMap;
 import java.util.logging.Logger;
 
 
-public class EventView {
-    XYSeriesCollection dataset = new XYSeriesCollection();
+class EventView {
+    private XYSeriesCollection dataset = new XYSeriesCollection();
     private JFreeChart chart;
     private int intervalsize = 99;
-    private double referenceValue;
-    public int numberRows;
+    private final double referenceValue;
+    private int numberRows;
     private JFrame f;
     private ChartPanel tmp;
 
@@ -38,11 +38,11 @@ public class EventView {
         f.setSize(new Dimension(1024, 120 + 21 * Math.min(numberRows, 30)));
     }
 
-    public void info(String info) {
+    void info(String info) {
         Logger.getLogger(this.getClass().getName()).info(info);
     }
 
-    public void add(ArrayList<Score> data) {
+    void add(ArrayList<Score> data) {
         XYSeries series = new XYSeries("test", false);
         dataset.addSeries(series);
         XYPlot plot = chart.getXYPlot();
@@ -97,7 +97,7 @@ public class EventView {
         f.getContentPane().add(classPanel, BorderLayout.LINE_END);
     }
 
-    public void initChart() {
+    void initChart() {
         // System.out.println(inData);
         dataset = new XYSeriesCollection();
         chart = ChartFactory.createXYLineChart("Event Sequence", "Events in a " + intervalsize + " milliseconds interval",

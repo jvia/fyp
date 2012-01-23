@@ -13,7 +13,7 @@ import org.bham.aucom.data.management.DataAlreadyExistsException;
 import org.bham.aucom.data.timeseries.TimeSeries;
 
 public class SaveTDFToCSV {
-	public SaveTDFToCSV(File in, File out) {
+	private SaveTDFToCSV(File in, File out) {
 		try {
 			TimeSeries<?>  tsIn = AucomIO.getInstance().readTimeSeries(in, "xml");
 			AucomIO.getInstance().writeTimeSeries(tsIn, out, "csv");

@@ -29,12 +29,12 @@ import java.util.logging.Logger;
 public class AucomChart extends javax.swing.JFrame {
     private static final long serialVersionUID = 1L;
     private XYSeriesCollection dataSet = new XYSeriesCollection();
-    HashMap<TimeSeries<Score>, Tuple<XYSeries, Integer>> series;
-    DefaultListModel sequencesListModel;
+    private HashMap<TimeSeries<Score>, Tuple<XYSeries, Integer>> series;
+    private DefaultListModel sequencesListModel;
     private JFreeChart chart;
     private double thresholdValue;
-    int hrz = 50;
-    ScheduledExecutorService service;
+    private final int hrz = 50;
+    private ScheduledExecutorService service;
     private final String type;
 
     /**
@@ -72,7 +72,7 @@ public class AucomChart extends javax.swing.JFrame {
         this.sequencesListModel.removeElement(sequence);
     }
 
-    public void startUpdating() {
+    void startUpdating() {
         this.service = Executors.newScheduledThreadPool(1);
         this.service.scheduleAtFixedRate(new Runnable() {
 
@@ -97,12 +97,12 @@ public class AucomChart extends javax.swing.JFrame {
         }, 100, 1000 / this.hrz, TimeUnit.MILLISECONDS);
     }
 
-    public void addDataToseriesInTimespan(final TimeSeries<Score> sequence, final int from, final int to) {
+    void addDataToseriesInTimespan(final TimeSeries<Score> sequence, final int from, final int to) {
     }
 
     public void removeDataFromSeries(TimeSeries<Score> sequence, int from, int to) {
         XYSeries s = this.series.get(sequence).getFirst();
-        synchronized (sequence) {
+        synchronized (this) {
             for (int i = from; i <= to; i++) {
                 Number x = sequence.get(i).getTimestamp();
                 if (s.indexOf(x) >= 0)
@@ -148,7 +148,7 @@ public class AucomChart extends javax.swing.JFrame {
         }
     }
 
-    public void drawLine() {
+    void drawLine() {
         synchronized (getDataSet()) {
 
             final XYSeries series;
@@ -179,7 +179,7 @@ public class AucomChart extends javax.swing.JFrame {
         }
     }
 
-    public void updateDomainAxis() {
+    void updateDomainAxis() {
         int from = getVisibleDataSlider().getValue();
         int to = from + this.rangeSlider.getValue();
         XYPlot plot = (XYPlot) this.chart.getPlot();
@@ -187,7 +187,7 @@ public class AucomChart extends javax.swing.JFrame {
         plot.getDomainAxis().setUpperBound(to);
     }
 
-    public void updateSliderRanges() {
+    void updateSliderRanges() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -206,7 +206,7 @@ public class AucomChart extends javax.swing.JFrame {
         });
     }
 
-    public void initChart() {
+    void initChart() {
         setThresholdValue(0.5);
         this.sequencesListModel = new DefaultListModel();
         this.sequencesList.setModel(this.sequencesListModel);
@@ -229,11 +229,11 @@ public class AucomChart extends javax.swing.JFrame {
         this.chartPanel.validate();
     }
 
-    public void setChart(JFreeChart chart) {
+    void setChart(JFreeChart chart) {
         this.chart = chart;
     }
 
-    public JFreeChart getChart() {
+    JFreeChart getChart() {
         return this.chart;
     }
 
@@ -400,12 +400,12 @@ public class AucomChart extends javax.swing.JFrame {
 //		});
 //	}
 
-    public void setThresholdValue(double thresholdValue) {
+    void setThresholdValue(double thresholdValue) {
         this.thresholdValue = thresholdValue;
         drawLine();
     }
 
-    public double getThresholdValue() {
+    double getThresholdValue() {
         return this.thresholdValue;
     }
 
@@ -427,7 +427,7 @@ public class AucomChart extends javax.swing.JFrame {
         // }
     }
 
-    public void info(String msg) {
+    void info(String msg) {
         Logger.getLogger(this.getClass().getName()).info(msg);
     }
 

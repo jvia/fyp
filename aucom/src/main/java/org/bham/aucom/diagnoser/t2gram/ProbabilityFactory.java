@@ -9,7 +9,7 @@ import java.util.LinkedHashMap;
 
 public abstract class ProbabilityFactory implements AttributableObject, Serializable {
     private static final long serialVersionUID = 1L;
-    LinkedHashMap<String, Number> parameters = new LinkedHashMap<String, Number>();
+    final LinkedHashMap<String, Number> parameters = new LinkedHashMap<String, Number>();
 
     public abstract ProbabilityDistribution create(double[] trainingValues);
     public abstract ProbabilityDistribution create();

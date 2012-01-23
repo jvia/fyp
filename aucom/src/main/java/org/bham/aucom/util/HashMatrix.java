@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class HashMatrix<T, U, V> implements Serializable{
 	private static final long serialVersionUID = 0L;
-	HashMap<T, HashMap<U, V>> content;
+	private final HashMap<T, HashMap<U, V>> content;
 	public HashMatrix() {
 		content = new LinkedHashMap<T, HashMap<U,V>>();
 	}
@@ -27,7 +27,7 @@ public class HashMatrix<T, U, V> implements Serializable{
 		HashMap<U, V> tmp = get(indexOne);
 		
 		// make sure theres is a row hashmap available
-		if(!containsFirstKey(indexOne)){
+		if(doesNotContainsFirstKey(indexOne)){
 			tmp = new HashMap<U, V>();
 			content.put(indexOne, tmp);
 		}
@@ -36,7 +36,7 @@ public class HashMatrix<T, U, V> implements Serializable{
 		tmp_row.put(indexTwo, value);
 		
 	}
-	public HashMap<U, V> get(T indexOne){
+	HashMap<U, V> get(T indexOne){
 		return content.get(indexOne);
 	}
 	public V get(T indexOne, U indexTwo){
@@ -47,8 +47,8 @@ public class HashMatrix<T, U, V> implements Serializable{
 		//System.out.println("contains index two " + content.get(indexOne).containsKey(indexTwo));
 		return content.get(indexOne).get(indexTwo);
 	}
-	public boolean containsFirstKey(T indexOne){
-		return content.containsKey(indexOne);
+	public boolean doesNotContainsFirstKey(T indexOne){
+		return !content.containsKey(indexOne);
 	}
 	public boolean containsKey(T indexOne, U indexTwo){
 		boolean contains = content.containsKey(indexOne); 

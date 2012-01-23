@@ -9,11 +9,11 @@ import org.bham.aucom.util.HashMatrix;
 import org.bham.aucom.util.Tuple;
 
 
-public class MarkovChain {
-	LinkedHashMap<Integer, Integer> initial;
-	HashMatrix<Integer, Integer, Integer> transitions;
+class MarkovChain {
+	private final LinkedHashMap<Integer, Integer> initial;
+	private final HashMatrix<Integer, Integer, Integer> transitions;
 	int numElements = 0;
-	int lastId = -1;
+	private int lastId = -1;
 	public MarkovChain() {
 		this.initial= new LinkedHashMap<Integer, Integer>();
 		this.transitions = new HashMatrix<Integer, Integer, Integer>();
@@ -41,7 +41,7 @@ public class MarkovChain {
 			return;
 		}
 		initial.put(classId, initial.get(classId)+1);
-		if(!transitions.containsFirstKey(lastId)){
+		if(transitions.doesNotContainsFirstKey(lastId)){
 			transitions.put(lastId, classId, 0);
 		}
 		if(!transitions.containsKey(lastId,classId))
@@ -49,12 +49,12 @@ public class MarkovChain {
 		transitions.put(lastId, classId, transitions.get(lastId, classId)+1);
 		lastId = classId;
 	}
-	public double getInitialProbability(int classId){
+	double getInitialProbability(int classId){
 		if(!initial.containsKey(classId))
 			return LOWEST_PROBABILITY;
 		return (double)initial.get(classId)/(double)getNumInitialElements();
 	}
-	public double getTransitionProbability(int fromt, int to){
+	double getTransitionProbability(int fromt, int to){
 		if(!transitions.containsKey(fromt, to))
 			return LOWEST_PROBABILITY;
 		return (double)transitions.get(fromt, to)/(double)getNumTransitionElements(fromt);

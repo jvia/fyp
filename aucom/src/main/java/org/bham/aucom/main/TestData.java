@@ -16,14 +16,14 @@ import org.bham.aucom.data.Observation;
 import org.bham.aucom.diagnoser.Model;
 
 public class TestData {
-    Model model;
-    Graph graph;
+    private Model model;
+    private Graph graph;
     private boolean running;
-    LinkedBlockingQueue<Observation> list;
+    private LinkedBlockingQueue<Observation> list;
     private EngineThread thread;
-    ScheduledExecutorService service;
+    private ScheduledExecutorService service;
 
-    public TestData(File in, File mfile, File out) {
+    private TestData(File in, File mfile, File out) {
         // try {
         // running = false;
         // model = T2GramModel.loadModel(mfile);
@@ -64,7 +64,7 @@ public class TestData {
         }, 100, 500, TimeUnit.MILLISECONDS);
     }
 
-    public void quit() {
+    void quit() {
         if (running) {
             if (list.size() == 0) {
                 thread.interrupt();

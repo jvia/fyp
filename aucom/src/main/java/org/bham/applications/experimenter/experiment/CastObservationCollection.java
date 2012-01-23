@@ -21,11 +21,11 @@ import java.util.logging.Logger;
  */
 public class CastObservationCollection implements Experiment {
 
-    private int amount;
-    private String name;
+    private final int amount;
+    private final String name;
     private Recorder recorder;
     private CastSystemConnection cast;
-    private String workingDirectory;
+    private final String workingDirectory;
 
     CastObservationCollection(final String workingDirectory, final String name, final int amount) {
         this.name = name;

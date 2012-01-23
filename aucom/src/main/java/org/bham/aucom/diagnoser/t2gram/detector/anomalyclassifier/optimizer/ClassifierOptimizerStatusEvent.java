@@ -8,10 +8,10 @@ import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.AnomalyClassif
 public class ClassifierOptimizerStatusEvent extends EventObject  {
 
 	private static final long serialVersionUID = 1L;
-	private AnomalyClassifier tested;
-	private AnomalyClassifier best;
-	private double fpr;
-	private double distanceToMean;
+	private final AnomalyClassifier tested;
+	private final AnomalyClassifier best;
+	private final double fpr;
+	private final double distanceToMean;
 	private int number;
 	private int total;
 	private boolean finished;
@@ -36,13 +36,13 @@ public class ClassifierOptimizerStatusEvent extends EventObject  {
 	public double getDistanceToMean(){
 		return this.distanceToMean;
 	}
-	protected void setNumber(int number) {
+	void setNumber(int number) {
 		this.number = number;
 	}
 	public int getNumber() {
 		return number;
 	}
-	protected void setTotal(int total) {
+	void setTotal(int total) {
 		this.total = total;
 	}
 	public int getTotal() {

@@ -14,7 +14,7 @@ public class TemporalDurationFeatureTimeSeries extends TimeSeries<TemporalDurati
 		setId(UUID.randomUUID());
 		setType(TimeSeriesType.tdf);
 	}
-	public TemporalDurationFeatureTimeSeries(UUID generatoId, UUID generatedFromID) {
+	private TemporalDurationFeatureTimeSeries(UUID generatoId, UUID generatedFromID) {
 		setGenerator(generatoId);
 		setGeneratedFrom(generatedFromID);
 		setType(TimeSeriesType.tdf);

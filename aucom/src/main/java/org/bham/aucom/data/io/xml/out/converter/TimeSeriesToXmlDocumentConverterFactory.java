@@ -8,7 +8,7 @@ import org.bham.aucom.data.util.DataManager;
 public class TimeSeriesToXmlDocumentConverterFactory {
 
 	@SuppressWarnings("unchecked")
-	public <T extends AbstractData> TimeSeriesToXmlDocumentConverter<T> getConverter(TimeSeriesType tst) {
+    <T extends AbstractData> TimeSeriesToXmlDocumentConverter<T> getConverter(TimeSeriesType tst) {
 		Object converter = null;
 		switch (tst) {
 		case cl: {

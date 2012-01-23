@@ -28,8 +28,8 @@ public class Recorder implements Presentable, SystemConnectionStatusListener, Ti
     private File folder;
     private SaveTimeSeriesGraph saveTimeSeriesGraph;
     private TimeSeries<Observation> bufferObservationTimeSeries;
-    Logger logger;
-    RecorderPanel panel;
+    private final Logger logger;
+    private RecorderPanel panel;
     private File fileName;
     private RecorderState currentState;
     private RecorderState oldState;
@@ -39,7 +39,7 @@ public class Recorder implements Presentable, SystemConnectionStatusListener, Ti
         this(AucomIO.getInstance().getCurrentWorkingDirectory(), inSystemConnection);
     }
 
-    public Recorder(File folder, SystemConnection inSystemConnection) {
+    private Recorder(File folder, SystemConnection inSystemConnection) {
         bufferObservationTimeSeries = new ObservationTimeSeries();
         setState(RecorderState.NOTREADY);
         oldState = RecorderState.NOTREADY;
@@ -62,7 +62,7 @@ public class Recorder implements Presentable, SystemConnectionStatusListener, Ti
         return this.panel.isVisible();
     }
 
-    public String getNextFileName() {
+    String getNextFileName() {
         return "/record_" + new DecimalFormat("000").format(getNextFileNumber(this.getFolder())) + ".obs";
     }
 
@@ -137,7 +137,7 @@ public class Recorder implements Presentable, SystemConnectionStatusListener, Ti
         Logger.getLogger("").addHandler(handler);
     }
 
-    public int getNextFileNumber(File folder) {
+    int getNextFileNumber(File folder) {
         int number = 0;
         File[] files = folder.listFiles();
 
@@ -164,7 +164,7 @@ public class Recorder implements Presentable, SystemConnectionStatusListener, Ti
     /**
      * @param fileName the fileName to set
      */
-    public void setFileName(File fileName) {
+    void setFileName(File fileName) {
         this.fileName = fileName;
     }
 
@@ -223,7 +223,7 @@ public class Recorder implements Presentable, SystemConnectionStatusListener, Ti
         return panel;
     }
 
-    public void setSystemConnection(SystemConnection inSystemConnection) {
+    void setSystemConnection(SystemConnection inSystemConnection) {
         if (inSystemConnection != null) {
             if (systemConnection != null) {
                 if (currentState.equals(RecorderState.RECORDING)) {
@@ -252,7 +252,7 @@ public class Recorder implements Presentable, SystemConnectionStatusListener, Ti
       * event handling ---->
       */
 
-    protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
+    private final javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
     public void addRecorderStatusListener(RecorderStatusListener listener) {
         this.listenerList.add(RecorderStatusListener.class, listener);
@@ -289,7 +289,7 @@ public class Recorder implements Presentable, SystemConnectionStatusListener, Ti
 
     }
 
-    public RecorderState getState() {
+    RecorderState getState() {
         return currentState;
     }
 

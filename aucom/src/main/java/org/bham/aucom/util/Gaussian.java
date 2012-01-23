@@ -13,7 +13,7 @@ package org.bham.aucom.util;
 	    }
 
 	    // return Phi(z) = standard Gaussian cdf using Taylor approximation
-	    public static double Phi(double z) {
+	    private static double Phi(double z) {
 	        if (z < -8.0) return 0.0;
 	        if (z >  8.0) return 1.0;
 	        double sum = 0.0, term = z;

@@ -11,13 +11,13 @@ import org.bham.aucom.util.Gaussian;
 public class HistogramDistributionWithGauss implements ProbabilityDistribution{
 	private static final long serialVersionUID = 1L;
 	private String name;
-	public HistogramData content;
+	private final HistogramData content;
 
 	class HistogramDistributionIterator implements Iterator<Double> {
-		HistogramDistributionWithGauss dist;
-		int index;
-		int maxIndex;
-		Iterator<HistogramBin> it;
+		final HistogramDistributionWithGauss dist;
+		final int index;
+		final int maxIndex;
+		final Iterator<HistogramBin> it;
 
 		public HistogramDistributionIterator(HistogramDistributionWithGauss inDist) {
 			this.dist = inDist;
@@ -76,10 +76,10 @@ public class HistogramDistributionWithGauss implements ProbabilityDistribution{
 //		validate();
 	}
 
-	public Iterator<Double> getProbabilities(){
+	Iterator<Double> getProbabilities(){
 		return new HistogramDistributionIterator(this);
 	}
-	public double getProbByBinNumber(int binNumber) {
+	double getProbByBinNumber(int binNumber) {
 		double probability = LOWEST_PROBABILITY;
 		if (this.content.containsBinWithNumber(binNumber)) {
 			double numElements = this.content.getSumValues();
@@ -109,14 +109,14 @@ public class HistogramDistributionWithGauss implements ProbabilityDistribution{
 	 * @param name
 	 *            the name to set
 	 */
-	public void setName(String name) {
+    void setName(String name) {
 		this.name = name;
 	}
 
 	/**
 	 * @return the name
 	 */
-	public String getName() {
+    String getName() {
 		return this.name;
 	}
 
@@ -127,7 +127,7 @@ public class HistogramDistributionWithGauss implements ProbabilityDistribution{
 		this.content.setBinSize(binSize);
 	}
 
-	public double getBinSize() {
+	double getBinSize() {
 		return this.content.getBinSize();
 	}
 	@Override
@@ -169,7 +169,7 @@ public class HistogramDistributionWithGauss implements ProbabilityDistribution{
 		Logger.getLogger(this.getClass().getName()).severe(msg);
 	}
 
-	public void info(String info) {
+	void info(String info) {
 		Logger.getLogger(this.getClass().getCanonicalName()).info(info);
 	}
 	@Override

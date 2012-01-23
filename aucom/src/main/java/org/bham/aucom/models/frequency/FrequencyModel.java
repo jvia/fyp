@@ -4,7 +4,7 @@ import static org.bham.aucom.util.Constants.LOWEST_PROBABILITY;
 
 import java.util.LinkedHashMap;
 
-public class FrequencyModel {
+class FrequencyModel {
 
     private LinkedHashMap<Integer, Integer> data;
     private int numValues;
@@ -35,17 +35,17 @@ public class FrequencyModel {
         this.data = data;
     }
 
-    public LinkedHashMap<Integer, Integer> getData()
+    LinkedHashMap<Integer, Integer> getData()
     {
         return this.data;
     }
 
-    public void setNumValues(int numValues)
+    void setNumValues(int numValues)
     {
         this.numValues = numValues;
     }
 
-    public int getNumValues()
+    int getNumValues()
     {
         return this.numValues;
     }
