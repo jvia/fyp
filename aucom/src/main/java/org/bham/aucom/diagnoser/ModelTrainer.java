@@ -24,8 +24,7 @@ import java.util.logging.Logger;
 
 
 public class ModelTrainer implements GraphStatusListener, Presentable {
-    private HashMatrix<Integer, Integer, ArrayList<Double>> trainingData;
-    private LinkedHashMap<String, DataType> lastTrainOccurances;
+    private LinkedHashMap<String, DataType> lastTrainOccurrences;
 
     TrainerStatus currentStatus = TrainerStatus.READY;
     TrainerStatus previousStatus = TrainerStatus.READY;
@@ -40,7 +39,7 @@ public class ModelTrainer implements GraphStatusListener, Presentable {
         graph = new T2GramTrainerGraph();
         graph.addGraphListener(this);
         setTrainingData(new HashMatrix<Integer, Integer, ArrayList<Double>>());
-        setLastTrainOccurances(new LinkedHashMap<String, DataType>());
+        setLastTrainOccurrences(new LinkedHashMap<String, DataType>());
         currentStatus = TrainerStatus.READY;
         previousStatus = TrainerStatus.READY;
     }
@@ -49,20 +48,12 @@ public class ModelTrainer implements GraphStatusListener, Presentable {
         graph = new T2GramTrainerGraph();
         graph.addGraphListener(this);
         setTrainingData(new HashMatrix<Integer, Integer, ArrayList<Double>>());
-        setLastTrainOccurances(new LinkedHashMap<String, DataType>());
+        setLastTrainOccurrences(new LinkedHashMap<String, DataType>());
         currentStatus = TrainerStatus.READY;
         previousStatus = TrainerStatus.READY;
     }
 
-    public double[] getValuesFromTrainingData(Integer firstKey, Integer secondKey) {
-        double[] values = new double[this.trainingData.get(firstKey, secondKey).size()];
-        for (int i = 0; i < values.length; i++) {
-            values[i] = this.trainingData.get(firstKey, secondKey).get(i);
-        }
-        return values;
-    }
 
-    
     public void start(TimeSeries<Observation> inTrainingData) throws Exception {
         if (inTrainingData == null) {
             Logger.getLogger(this.getClass().getCanonicalName()).info("cannot train with empty input");
@@ -86,14 +77,14 @@ public class ModelTrainer implements GraphStatusListener, Presentable {
             Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, "iterating through trainingset with " + values.size() + " elements");
             for (Tuple<Integer, Integer> t : values.keySet()) {
                 double[] durations = getDurationsAsDoubleArray(values, t);
-                updateModel(model, t.getFirstElement(), t.getSecondElement(), durations);
+                updateModel(t.getFirst(), t.getSecond(), durations);
             }
         } catch (Exception exception) {
             exception.printStackTrace();
         }
     }
 
-    private void updateModel(Model model2, Integer firstElement, Integer secondElement, double[] durations) {
+    private void updateModel(Integer firstElement, Integer secondElement, double[] durations) {
         createDistributionInModelIfMissing(model, firstElement, secondElement);
         model.getDistributionFor(firstElement, secondElement).update(durations);
     }
@@ -113,9 +104,9 @@ public class ModelTrainer implements GraphStatusListener, Presentable {
     * @return
     */
     private double[] getDurationsAsDoubleArray(HashMatrix<Integer, Integer, ArrayList<Double>> values, Tuple<Integer, Integer> t) {
-        double[] d = new double[values.get(t.getFirstElement(), t.getSecondElement()).size()];
-        for (int j = 0; j < values.get(t.getFirstElement(), t.getSecondElement()).size(); j++) {
-            d[j] = values.get(t.getFirstElement(), t.getSecondElement()).get(j);
+        double[] d = new double[values.get(t.getFirst(), t.getSecond()).size()];
+        for (int j = 0; j < values.get(t.getFirst(), t.getSecond()).size(); j++) {
+            d[j] = values.get(t.getFirst(), t.getSecond()).get(j);
         }
         return d;
     }
@@ -146,23 +137,21 @@ public class ModelTrainer implements GraphStatusListener, Presentable {
         return out;
     }
 
-    private void setLastTrainOccurances(LinkedHashMap<String, DataType> lastTrainOccurances) {
-        this.lastTrainOccurances = lastTrainOccurances;
+    private void setLastTrainOccurrences(LinkedHashMap<String, DataType> lastTrainOccurrences) {
+        this.lastTrainOccurrences = lastTrainOccurrences;
     }
 
     private void setTrainingData(HashMatrix<Integer, Integer, ArrayList<Double>> trainingData) {
-        this.trainingData = trainingData;
     }
 
-    
+
     public void reset() {
         graph.getOutput().clear();
-        this.lastTrainOccurances.clear();
-        this.trainingData = new HashMatrix<Integer, Integer, ArrayList<Double>>();
+        this.lastTrainOccurrences.clear();
         Logger.getLogger(this.getClass().getCanonicalName()).info("SimpleModelTrainer reseted");
     }
 
-    
+
     public JPanel getPanel() {
         if (panel == null) {
             panel = new TrainerPanel(this);
@@ -172,17 +161,17 @@ public class ModelTrainer implements GraphStatusListener, Presentable {
         return panel;
     }
 
-    
+
     public Model getModel() {
         return model;
     }
 
-    
+
     public void setModel(Model inModel) throws ClassCastException {
-        model = (Model) inModel;
+        model = inModel;
     }
 
-    
+
     public void graphStatusChanged(GraphStateChangedEvent evt) {
         Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, "receives event " + evt);
         switch (evt.getNewState()) {
@@ -209,18 +198,16 @@ public class ModelTrainer implements GraphStatusListener, Presentable {
     }
 
     /*
-    * returns the size of the training input timeseries
+    * returns the size of the training input time series
     */
     public int getInputSize() {
-        if (graph.getInput() != null) {
+        if (graph.getInput() != null)
             return graph.getInput().size();
-        }
         return 0;
     }
 
-    
+
     public void stop() throws Exception {
-        // TODO code this here
     }
 
     public void setStatus(TrainerStatus newStatus) {
@@ -259,7 +246,7 @@ public class ModelTrainer implements GraphStatusListener, Presentable {
         return isRegistered;
     }
 
-    
+
     public void addModelTrainerListener(ModelTrainerListener listener) {
         if (isListenerRegistered(listener)) {
             return;
@@ -268,12 +255,6 @@ public class ModelTrainer implements GraphStatusListener, Presentable {
 
     }
 
-    
-    public void removeModelTrainerListener(ModelTrainerListener listener) {
-        listenerList.remove(ModelTrainerListener.class, listener);
-    }
-
-    
     public void removeAllListeners() {
         Object[] listeners = this.listenerList.getListenerList();
         for (int i = 0; i < listeners.length; i += 2) {
@@ -282,5 +263,4 @@ public class ModelTrainer implements GraphStatusListener, Presentable {
             }
         }
     }
-
 }

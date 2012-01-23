@@ -1,7 +1,6 @@
 package org.bham.aucom.data.io.xml.out.converter;
 
 import org.bham.aucom.data.AbstractData;
-import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.data.timeseries.TimeSeriesType;
 import org.bham.aucom.data.util.DataManager;
 
@@ -42,9 +41,10 @@ public class TimeSeriesToXmlDocumentConverterFactory {
 
 	}
 
-	public <T extends AbstractData> TimeSeriesToXmlDocumentConverter<T> getConverter(TimeSeries<?> ts) {
-		return getConverter(ts.getType());
-	}
+//	public <T extends AbstractData> TimeSeriesToXmlDocumentConverter<T> getConverter(TimeSeries<?> ts) {
+//		return getConverter(ts.getType());
+//	}
+
 	public <T extends AbstractData> TimeSeriesToXmlDocumentConverter<T> getConverter(AbstractData data) {
 		TimeSeriesType tsType = DataManager.getInstance().getTimeSeriesTypeFor(data);
 		return getConverter(tsType);

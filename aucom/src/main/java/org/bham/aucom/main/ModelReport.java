@@ -17,7 +17,7 @@ public class ModelReport {
         Logger.getLogger("loading model from " + args[0]);
         Model model = new ModelReport().loadModel(new File(args[0]));
         ArrayList<Tuple<Integer, Integer>> tuple = model.getTransitionMatrix().keySet();
-        ProbabilityDistribution prob = model.getTransitionMatrix().get(tuple.get(0).getFirstElement(), tuple.get(0).getSecondElement());
+        ProbabilityDistribution prob = model.getTransitionMatrix().get(tuple.get(0).getFirst(), tuple.get(0).getSecond());
         Logger.getLogger(ModelReport.class.getCanonicalName()).info("Distribution: " + prob.getClass().getCanonicalName());
     }
 

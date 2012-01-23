@@ -32,10 +32,10 @@ public class ModelEntropyView extends JPanel {
         HashMatrix<Integer, Integer, ProbabilityDistribution> distribution = main.getTransitionMatrix();
 
         for (Tuple<Integer, Integer> tuple : distribution.keySet()) {
-            out.addValue(distribution.get(tuple.getFirstElement(),
-                                          tuple.getSecondElement()).getEntropy(), "entropy", tuple
-                                                                                                     .getFirstElement()
-                                                                                             + "_" + tuple.getSecondElement());
+            out.addValue(distribution.get(tuple.getFirst(),
+                                          tuple.getSecond()).getEntropy(), "entropy", tuple
+                                                                                                     .getFirst()
+                                                                                             + "_" + tuple.getSecond());
         }
         return out;
     }

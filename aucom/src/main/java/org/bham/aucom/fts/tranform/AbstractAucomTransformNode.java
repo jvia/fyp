@@ -7,6 +7,16 @@ import org.bham.aucom.fts.sink.NodeStatus;
 
 import java.util.logging.Logger;
 
+/**
+ * This class extends the FTS transform node with aucom specific facilities.
+ * <p/>
+ * The aim of this class is to sit in the ring processing structure, taking
+ * input and transforming it into output by the means specified by concrete
+ * subclasses.
+ *
+ * @param <TIn>
+ * @param <TOut>
+ */
 public abstract class AbstractAucomTransformNode<TIn extends AbstractData, TOut extends AbstractData> extends AbstractTransformNode<TIn, TOut> {
     protected TimeSeries<TOut> ts = null;
     long lastProcessingTime = 0l;
@@ -77,7 +87,6 @@ public abstract class AbstractAucomTransformNode<TIn extends AbstractData, TOut 
     }
 
     protected abstract TOut iTransform(TIn input) throws Exception;
-
 
 
     public TimeSeries<TOut> getTimeSeries() {

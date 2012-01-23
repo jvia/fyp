@@ -336,8 +336,8 @@ public class Recorder implements Presentable, SystemConnectionStatusListener, Ti
     }
 
     @Override
-    public void timeseriesStatusChanged(TimeseriesStatusEvent status) {
-        if (status.getStatus().equals(TimeseriesStatus.ELEMENTSADDED)) {
+    public void timeSeriesStatusChanged(TimeSeriesStatusEvent status) {
+        if (status.getStatus().equals(TimeSeriesStatus.ELEMENTS_ADDED)) {
             for (int i = status.getStartIndex(); i <= status.getEndIndex(); i++) {
                 bufferObservationTimeSeries.add(systemConnection.getObservationTimeSeries().get(i));
             }

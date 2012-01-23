@@ -13,7 +13,7 @@ import org.bham.aucom.data.management.DataAlreadyExistsException;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.fts.sink.OutputStreamSinkStrip;
 import org.bham.aucom.fts.source.TimeSeriesSource;
-import org.bham.aucom.fts.tranform.PostofixToString;
+import org.bham.aucom.fts.tranform.PosToFixToString;
 import org.bham.aucom.fts.tranform.RawDataToCsvRow;
 import org.bham.aucom.fts.tranform.StringToBufferOutputEvent;
 
@@ -26,16 +26,13 @@ public class TransformClTimeSeriesToCsv {
     Graph g;
     private EngineThread engineThread;
 
-    public TransformClTimeSeriesToCsv() {
-    }
-
     public TransformClTimeSeriesToCsv(File in_file, File out_file) {
         try {
             @SuppressWarnings("unchecked")
             TimeSeries<Classification> cl = (TimeSeries<Classification>) AucomIO.getInstance().readTimeSeries(in_file);
             this.g = new Graph().getConnector(new TimeSeriesSource<Classification>(cl, "cl_src")).
                     connect(new RawDataToCsvRow()).
-                    connect(new PostofixToString("\n")).
+                    connect(new PosToFixToString("\n")).
                     connect(new StringToBufferOutputEvent()).
                     connect(new OutputStreamSinkStrip(new FileOutputStream(out_file))).
                     getGraph();
@@ -78,7 +75,6 @@ public class TransformClTimeSeriesToCsv {
         try {
             t.engineThread.join();
         } catch (InterruptedException exception) {
-            // TODO Auto-generated catch block
             exception.printStackTrace();
         }
     }

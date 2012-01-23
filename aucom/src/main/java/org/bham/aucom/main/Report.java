@@ -187,8 +187,8 @@ public class Report {
 		System.out.println("****************** ZERO ******************");
 		System.out.println("****************** NEGATIVE (" + numNegativeTimestamps + ") %" + (double) numNegativeTimestamps / numTotal + " ******************");
 		for (String key : negativeTimestampsElements.keySet()) {
-			System.out.println("from : " + this.negativeTimestampsElements.get(key).getFirstElement().getLocalName() + " " + getTimestamp(this.negativeTimestampsElements.get(key).getFirstElement())
-					+ "ms " + " to: " + this.negativeTimestampsElements.get(key).getSecondElement().getLocalName() + " " + getTimestamp(this.negativeTimestampsElements.get(key).getFirstElement())
+			System.out.println("from : " + this.negativeTimestampsElements.get(key).getFirst().getLocalName() + " " + getTimestamp(this.negativeTimestampsElements.get(key).getFirst())
+					+ "ms " + " to: " + this.negativeTimestampsElements.get(key).getSecond().getLocalName() + " " + getTimestamp(this.negativeTimestampsElements.get(key).getFirst())
 					+ "ms ");
 		}
 

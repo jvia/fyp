@@ -30,17 +30,14 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     // graph stateful fields
     private Model model;
     // transient fields
-    private transient TimeSeriesSource<Observation> observationTimeseriesSource;
-    private transient TimeSeriesSource<Score> scoreTimeseriesSource;
+    private transient TimeSeriesSource<Observation> observationTimeSeriesSource;
+    private transient TimeSeriesSource<Score> scoreTimeSeriesSource;
     private transient CalcEntropyAvgScore calculateScore;
-    private transient EncodeData encodeData;
-    private transient CountDataTypes countDataTypes;
     private transient GenerateTemporalDurationFeature generateDurationFeature;
     private transient GenerateTemporalProbabilityFeature test;
     private transient TimeSeriesSink<Classification> sink;
-    private transient CalcMeanvalue mean;
+    private transient CalcMeanValue mean;
     private transient Classify anomalyClassification;
-    private transient CropTimestampFromData<Observation> cropTimestampFromData;
 
     /*
      * Constructs the DetectorGraph with the specified model, classifier, and
@@ -87,30 +84,31 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
      */
     @Override
     protected void initGraph() {
-        this.observationTimeseriesSource = new TimeSeriesSource<Observation>(TEST_SOURCE);
+        EncodeData encodeData = new EncodeData();
+        CropTimestampFromData<Observation> cropTimestampFromData = new CropTimestampFromData<Observation>();
+        CountDataTypes countDataTypes = new CountDataTypes();
 
-        this.observationTimeseriesSource.addSourceStatusListener(this);
-
-        this.scoreTimeseriesSource = new TimeSeriesSource<Score>("scoreTimeseriesSource");
-        this.encodeData = new EncodeData();
-        this.countDataTypes = new CountDataTypes();
+        this.observationTimeSeriesSource = new TimeSeriesSource<Observation>(TEST_SOURCE);
+        this.observationTimeSeriesSource.addSourceStatusListener(this);
+        this.scoreTimeSeriesSource = new TimeSeriesSource<Score>("scoreTimeSeriesSource");
         this.test = new GenerateTemporalProbabilityFeature();
         this.generateDurationFeature = new GenerateTemporalDurationFeature();
         this.calculateScore = new CalcEntropyAvgScore();
-        this.mean = new CalcMeanvalue();
+        this.mean = new CalcMeanValue();
         this.mean.setSlidingWindow(new SlidingWindow(100, 50));
         this.anomalyClassification = new Classify();
         this.sink = new TimeSeriesSink<Classification>(new ClassificationTimeSeries());
+
         DataManager.getInstance().addTimeSeries(sink.getOutput());
         sink.getOutput().addTimeSeriesStatusListener(this);
-        cropTimestampFromData = new CropTimestampFromData<Observation>();
-        this.graph.connect(this.observationTimeseriesSource, cropTimestampFromData);
-        this.graph.connect(cropTimestampFromData, this.encodeData);
-        this.graph.connect(this.encodeData, this.countDataTypes);
-        this.graph.connect(this.countDataTypes, this.generateDurationFeature);
+
+        this.graph.connect(this.observationTimeSeriesSource, cropTimestampFromData);
+        this.graph.connect(cropTimestampFromData, encodeData);
+        this.graph.connect(encodeData, countDataTypes);
+        this.graph.connect(countDataTypes, this.generateDurationFeature);
         this.graph.connect(this.generateDurationFeature, this.test);
         this.graph.connect(this.test, this.calculateScore);
-        this.graph.connect(this.scoreTimeseriesSource, this.anomalyClassification);
+        this.graph.connect(this.scoreTimeSeriesSource, this.anomalyClassification);
 
         Logger.getLogger(this.getClass().getCanonicalName()).log(Level.CONFIG, "mean calculation on");
         this.graph.connect(this.calculateScore, this.mean);
@@ -126,8 +124,8 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     }
 
     public void reset() {
-        observationTimeseriesSource.reset();
-        scoreTimeseriesSource.reset();
+        observationTimeSeriesSource.reset();
+        scoreTimeSeriesSource.reset();
         sink.getOutput().clear();
         if (mean != null) {
             mean.reset();
@@ -149,7 +147,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
      * @throws ActionFailedException
      */
     public void setInput(TimeSeries<Observation> inTimeSeries) throws ActionFailedException {
-        this.observationTimeseriesSource.setInput(inTimeSeries);
+        this.observationTimeSeriesSource.setInput(inTimeSeries);
     }
 
     /*
@@ -192,8 +190,8 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
      */
     @Override
     protected void cleanUp() {
-        this.scoreTimeseriesSource.setInput(new ScoreTimeSeries());
-        this.scoreTimeseriesSource.setInput(new ScoreTimeSeries());
+        this.scoreTimeSeriesSource.setInput(new ScoreTimeSeries());
+        this.scoreTimeSeriesSource.setInput(new ScoreTimeSeries());
     }
 
     /*
@@ -235,7 +233,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
      * @return true if ready
      */
     private boolean inputIsPresent() {
-        return observationTimeseriesSource.getInput() != null;
+        return observationTimeSeriesSource.getInput() != null;
     }
 
     /*
@@ -261,7 +259,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     }
 
     @Override
-    public void timeseriesStatusChanged(TimeseriesStatusEvent status) {
+    public void timeSeriesStatusChanged(TimeSeriesStatusEvent status) {
 
     }
 

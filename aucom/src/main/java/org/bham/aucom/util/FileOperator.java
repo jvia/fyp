@@ -14,18 +14,18 @@ public class FileOperator {
 	    return ext;
 	}
 	public static String getName(File file){
-		String fname="";
+		String filename="";
 	    int mid= file.getName().lastIndexOf(".");
 	    if(mid != -1){
-	    	fname= file.getName().substring(0,mid);
+	    	filename= file.getName().substring(0,mid);
 	    }
-		return fname;
+		return filename;
 		
 	}
 	public static String getPath(File file){
-		String fpath;
+		String filePath;
 	    int mid= file.getAbsolutePath().lastIndexOf(File.separator);
-	    fpath = file.getAbsolutePath().substring(0,mid);
-	    return fpath;
+	    filePath = file.getAbsolutePath().substring(0,mid);
+	    return filePath;
 	}
 }

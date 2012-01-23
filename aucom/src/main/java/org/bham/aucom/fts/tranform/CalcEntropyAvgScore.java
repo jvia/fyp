@@ -13,13 +13,8 @@ import java.util.logging.Logger;
 public class CalcEntropyAvgScore extends AbstractAucomTransformNode<TemporalProbabilityFeature, Score> {
     protected Model model;
 
-    public CalcEntropyAvgScore(Model inModel) {
-        super("CalcEnropyAvgScore");
-        setModel(inModel);
-    }
-
     public CalcEntropyAvgScore() {
-        super("CalcEnropyAvgScore");
+        super("CalcEntropyAvgScore");
     }
 
     @Override
@@ -34,74 +29,46 @@ public class CalcEntropyAvgScore extends AbstractAucomTransformNode<TemporalProb
 
     }
 
-    /**
-     * @param inData
-     * @return
-     */
     protected Score calculateScore(TemporalProbabilityFeature inData) {
         double sum_entropy = calculateSumEntropy(inData);
         double denominator = calculateDenominator(sum_entropy);
         double scoreValue;
 
         scoreValue = calculateAbsoluteScoreValue(inData, denominator);
-//		System.out.println("predecessors " + inData.getPredecessors().size());
-//		System.out.println("predecessors " + inData.getPredecessors().get(0).getEventType());
-//		System.out.println("sum_entropy " + sum_entropy);
-//		System.out.println("denominator " + denominator);
-//		System.out.println("absolute scoreValue " + scoreValue);
         scoreValue = normalize(inData, scoreValue);
-//		System.out.println("normalized scoreValue " + scoreValue);
+
         return new SingleScore(inData, scoreValue);
     }
 
-    /**
-     * @param sum_entropy
-     * @return
-     */
     protected double calculateDenominator(double sum_entropy) {
         return Math.max(Math.pow(sum_entropy, 2), 0.00001);
     }
 
-    /*
-     * @param currentData
-     * @param sum_entropy
-     * @param scoreValue
-     * @return
-     */
     protected double calculateAbsoluteScoreValue(TemporalProbabilityFeature currentData, double denominator) {
         double scoreValue = 0.0d;
-        for (DataType precedessorData : currentData.getPredecessors()) {
-            warnIfDitstributionNotfound(currentData, precedessorData);
-            scoreValue += calculateSingleScoreValue(precedessorData, currentData, denominator);
+
+        for (DataType predecessorData : currentData.getPredecessors()) {
+            warnIfDistributionNotFound(currentData, predecessorData);
+            scoreValue += calculateSingleScoreValue(predecessorData, currentData, denominator);
         }
+
         return scoreValue;
     }
 
-    protected double calculateSingleScoreValue(DataType precedessorData, TemporalProbabilityFeature currentData, double denominator) {
-        double probability = currentData.getProbabilityFor(precedessorData);
-        double entropy = calculateSingleEntropy(currentData, precedessorData);
+    protected double calculateSingleScoreValue(DataType predecessorData, TemporalProbabilityFeature currentData, double denominator) {
+        double probability = currentData.getProbabilityFor(predecessorData);
+        double entropy = calculateSingleEntropy(currentData, predecessorData);
 
-        warnIfProbabilityHasNaNValue(probability, currentData, precedessorData);
-        warnIfEntropyHasNaNValue(entropy, currentData, precedessorData);
+        warnIfProbabilityHasNaNValue(probability, currentData, predecessorData);
+        warnIfEntropyHasNaNValue(entropy, currentData, predecessorData);
 
         return alg_calculateSingleScore(probability, entropy, denominator);
     }
 
-    /**
-     * @param probability
-     * @param entropy
-     * @param denominator
-     * @return
-     */
     protected double alg_calculateSingleScore(double probability, double entropy, double denominator) {
         return probability * (1 - Math.pow(entropy, 2) / denominator);
     }
 
-    /**
-     * @param inData
-     * @param absoluteScore
-     * @return
-     */
     protected double normalize(TemporalProbabilityFeature inData, double absoluteScore) {
         double normalizedScore = absoluteScore;
         if (inData.getPredecessors().size() > 0) {
@@ -110,18 +77,15 @@ public class CalcEntropyAvgScore extends AbstractAucomTransformNode<TemporalProb
         return normalizedScore;
     }
 
-    /**
-     * @param inData
-     */
     protected double calculateSumEntropy(TemporalProbabilityFeature inData) {
-        double[] singleEntropies = new double[inData.getPredecessors().size()];
+        double[] singleEntropy = new double[inData.getPredecessors().size()];
         for (int i = 0; i < inData.getPredecessors().size(); i++) {
             DataType predecessor = inData.getPredecessors().get(i);
-            singleEntropies[i] = calculateSingleEntropy(inData, predecessor);
+            singleEntropy[i] = calculateSingleEntropy(inData, predecessor);
 
         }
 
-        return alg_calculateSumEntropy(singleEntropies);
+        return alg_calculateSumEntropy(singleEntropy);
     }
 
     protected double alg_calculateSumEntropy(double[] values) {
@@ -132,18 +96,10 @@ public class CalcEntropyAvgScore extends AbstractAucomTransformNode<TemporalProb
         return sum;
     }
 
-    /**
-     * @param inData
-     * @param inPrecedessor
-     * @return
-     */
     private double calculateSingleEntropy(TemporalProbabilityFeature inData, DataType inPrecedessor) {
         return getModel().getEntropyOfDistribution(inPrecedessor.getEventType(), inData.getEventType());
     }
 
-    /**
-     *
-     */
     private void warnIfModelIsNotTrained() {
         if (this.getModel().getTransitionMatrix().size() == 0) {
             Logger.getLogger(this.getClass().getCanonicalName()).severe("warning: model not trained");
@@ -158,32 +114,20 @@ public class CalcEntropyAvgScore extends AbstractAucomTransformNode<TemporalProb
         return this.model;
     }
 
-    /**
-     * @param inData
-     * @param precedessorData
-     */
-    private void warnIfEntropyHasNaNValue(double entropy, TemporalProbabilityFeature inData, DataType precedessorData) {
+    private void warnIfEntropyHasNaNValue(double entropy, TemporalProbabilityFeature inData, DataType predecessorData) {
         if (Double.isNaN(entropy))
-            Logger.getLogger(getClass().getCanonicalName()).info("entropy " + precedessorData.getEventType() + "--->" + inData.getEventType() + " " + entropy);
+            Logger.getLogger(getClass().getCanonicalName()).info("entropy " + predecessorData.getEventType() + "--->" + inData.getEventType() + " " + entropy);
     }
 
-    /**
-     * @param inData
-     * @param precedessorData
-     */
-    private void warnIfProbabilityHasNaNValue(double probability, TemporalProbabilityFeature inData, DataType precedessorData) {
+    private void warnIfProbabilityHasNaNValue(double probability, TemporalProbabilityFeature inData, DataType predecessorData) {
         if (Double.isNaN(probability))
-            Logger.getLogger(this.getClass().getCanonicalName()).info("prob " + precedessorData.getEventType() + "--->" + inData.getEventType() + " " + probability);
+            Logger.getLogger(this.getClass().getCanonicalName()).info("prob " + predecessorData.getEventType() + "--->" + inData.getEventType() + " " + probability);
     }
 
-    /**
-     * @param inData
-     * @param precedessor
-     */
-    private void warnIfDitstributionNotfound(TemporalProbabilityFeature inData, DataType precedessor) {
-        ProbabilityDistribution distribution = getModel().getDistributionFor(precedessor.getEventType(), inData.getEventType());
+    private void warnIfDistributionNotFound(TemporalProbabilityFeature inData, DataType predecessor) {
+        ProbabilityDistribution distribution = getModel().getDistributionFor(predecessor.getEventType(), inData.getEventType());
         if (distribution == null) {
-            Logger.getLogger(this.getClass().getCanonicalName()).info("no distribution for " + precedessor.getEventType() + "--->" + inData.getEventType());
+            Logger.getLogger(this.getClass().getCanonicalName()).info("no distribution for " + predecessor.getEventType() + "--->" + inData.getEventType());
         }
     }
 }

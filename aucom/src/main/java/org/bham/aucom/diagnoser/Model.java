@@ -38,8 +38,8 @@ public class Model extends AbstractLinkableNode implements Serializable{
 
         for (Tuple<Integer, Integer> key : transitionMatrix.keySet()) {
             Logger.getLogger(getClass().getCanonicalName()).info(key.toString());
-            dimensions.add(key.getFirstElement());
-            dimensions.add(key.getSecondElement());
+            dimensions.add(key.getFirst());
+            dimensions.add(key.getSecond());
         }
 
         return dimensions;
@@ -50,7 +50,7 @@ public class Model extends AbstractLinkableNode implements Serializable{
         int numberAvailableDistributions = 0;
 
         for (Tuple<Integer, Integer> key : transitionMatrix.keySet())
-            if (transitionMatrix.get(key.getFirstElement(), key.getSecondElement()) != null)
+            if (transitionMatrix.get(key.getFirst(), key.getSecond()) != null)
                 numberAvailableDistributions++;
 
         return numberAvailableDistributions;

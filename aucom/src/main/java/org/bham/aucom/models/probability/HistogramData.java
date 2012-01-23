@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.logging.Logger;
 
-import org.bham.aucom.util.BinCaluclator;
+import org.bham.aucom.util.BinCalculator;
 
 
 public class HistogramData implements Serializable {
 	private static final long serialVersionUID = 0L;
 	private double binSize;
 	private LinkedHashMap<Integer, HistogramBin> content;
-	BinCaluclator calculator;
+	BinCalculator calculator;
 	boolean isDirty;
 	int sumValues;
 

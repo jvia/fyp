@@ -1,27 +1,18 @@
 package org.bham.aucom.xcfrecorder;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.UUID;
-import java.util.logging.Logger;
-
 import net.sf.xcf.fts.engine.EngineThread;
-
 import org.bham.aucom.data.Observation;
-import org.bham.aucom.data.timeseries.ObservationTimeSeries;
-import org.bham.aucom.data.timeseries.TimeSeries;
-import org.bham.aucom.data.timeseries.TimeSeriesStatusListener;
-import org.bham.aucom.data.timeseries.TimeseriesStatus;
-import org.bham.aucom.data.timeseries.TimeseriesStatusEvent;
+import org.bham.aucom.data.timeseries.*;
 import org.bham.aucom.fts.graph.AbstractAucomGraph;
 import org.bham.aucom.fts.sink.ObservableStreamSink;
 import org.bham.aucom.fts.sink.SinkStatusListener;
 import org.bham.aucom.fts.source.TimeSeriesSource;
 import org.bham.aucom.fts.tranform.MarkNextDataPointAsLast;
 import org.bham.aucom.util.Constants;
+
+import java.io.*;
+import java.util.UUID;
+import java.util.logging.Logger;
 
 public class SaveTimeSeriesGraph extends AbstractAucomGraph implements SinkStatusListener, TimeSeriesStatusListener {
 	private static final long serialVersionUID = 0L;
@@ -106,8 +97,8 @@ public class SaveTimeSeriesGraph extends AbstractAucomGraph implements SinkStatu
 	}
 
 	@Override
-	public void timeseriesStatusChanged(TimeseriesStatusEvent status) {
-		if (status.getStatus().equals(TimeseriesStatus.ELEMENTSADDED)) {
+	public void timeSeriesStatusChanged(TimeSeriesStatusEvent status) {
+		if (status.getStatus().equals(TimeSeriesStatus.ELEMENTS_ADDED)) {
 			for (int i = status.getStartIndex(); i <= status.getEndIndex(); i++) {
 				this.source.getInput().add(this.getTimeSeriesToSave().get(i));
 			}

@@ -148,7 +148,7 @@ public class AnomalyBarChartFrame extends javax.swing.JFrame implements ListData
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                // new AnomalyBarChartFrame(new MonitorableArrayList<Score>(new
+                // new AnomalyBarChartFrame(new MonitoredArrayList<Score>(new
                 // ArrayList<Score>())).setVisible(true);
                 // TODO: fix the problem directly above
             }

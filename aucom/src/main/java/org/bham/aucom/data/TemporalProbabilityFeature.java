@@ -1,10 +1,10 @@
 package org.bham.aucom.data;
 
-import static org.bham.aucom.util.Constants.LOWEST_PROBABILITY;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+
+import static org.bham.aucom.util.Constants.LOWEST_PROBABILITY;
 
 public class TemporalProbabilityFeature extends TemporalDurationFeature {
 	protected HashMap<DataType, Double> dataTypeToProbabilityMapping = new LinkedHashMap<DataType, Double>();
@@ -36,17 +36,6 @@ public class TemporalProbabilityFeature extends TemporalDurationFeature {
 }
 
 
-//	public TemporalDurationFeature getGeneratedFromData() {
-//		if(this.generaDurationFeature == null)
-//			try {
-//				initializeGeneratedFrom();
-//			} catch (IdNotFoundException exception) {
-//				exception.printStackTrace();
-//				return null;
-//			}
-//		return this.generaDurationFeature;
-//	}
-
 	public TemporalProbabilityFeature() {
 		
 	}
@@ -59,14 +48,6 @@ public class TemporalProbabilityFeature extends TemporalDurationFeature {
 		return out;
 	}
 
-//	public void add(Integer eventType, Double inProbability) {
-//		if (isUnknownEventType(eventType)){
-//			System.out.println("Warning: unknown predecessor");
-//			return;
-//		}
-//		this.getDataTypeToProbabilityMapping().put(this.getEventTypeToIdMapping().get(eventType), inProbability);
-//	}
-
 	public double getProbabilityFor(DataType eventType) {
 		if (isUnknownEventType(eventType)) {
 			System.out.println("Warning: unknown predecessor");
@@ -75,20 +56,10 @@ public class TemporalProbabilityFeature extends TemporalDurationFeature {
 		return this.getDataTypeToProbabilityMapping().get(eventType);
 	}
 
-	public double getProbabilityFor(int eventTypeId) {
-	    for(DataType dtp: this.getDataTypeToProbabilityMapping().keySet()){
-	        if(dtp.getEventType() == eventTypeId){
-	            return this.getDataTypeToProbabilityMapping().get(dtp);
-	        }
-	    }
-        System.out.println("Warning: unknown predecessor");
-        return LOWEST_PROBABILITY;
-	}
-
-	/*
-	 * @param eventType
-	 * @return
-	 */
+    /*
+      * @param eventType
+      * @return
+      */
 	private boolean isUnknownEventType(DataType eventType) {
 		return !this.getDataTypeToProbabilityMapping().containsKey(eventType);
 	}

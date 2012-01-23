@@ -129,9 +129,9 @@ public class TrainModelOnSingleFileExperiment implements Experiment {
     @Override
     public void postprocess() {
         for (Tuple<Model, File> t : models) {
-            Logger.getLogger(this.getClass().getCanonicalName()).info("saving model to " + t.getSecondElement().getAbsolutePath());
-            AucomIO.getInstance().writeFaultDetectionModel(t.getFirstElement(),
-                                                           t.getSecondElement());
+            Logger.getLogger(this.getClass().getCanonicalName()).info("saving model to " + t.getSecond().getAbsolutePath());
+            AucomIO.getInstance().writeFaultDetectionModel(t.getFirst(),
+                                                           t.getSecond());
         }
     }
 }

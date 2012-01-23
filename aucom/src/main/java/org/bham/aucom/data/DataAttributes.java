@@ -1,6 +1,7 @@
 package org.bham.aucom.data;
 
 public class DataAttributes {
+    // TODO delete unused fields
 	public static final String PRECEDESSOR = "precedessoryOfThisDataPoint";
 	public static final String DURATION_PROBABILITY = "durationprob";
 	public static final String SCORE = "score";

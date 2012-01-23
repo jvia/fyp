@@ -1,34 +1,19 @@
 package org.bham.aucom.data.util;
 
-import java.awt.Dimension;
+import nu.xom.Element;
+import org.bham.aucom.Presentable;
+import org.bham.aucom.data.*;
+import org.bham.aucom.data.timeseries.*;
+import org.bham.aucom.diagnoser.Model;
+import org.bham.aucom.util.Constants;
+import org.bham.aucom.util.TimeSeriesNotFoundException;
+
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
-
-import javax.swing.JPanel;
-
-import nu.xom.Element;
-
-import org.bham.aucom.Presentable;
-import org.bham.aucom.data.AbstractData;
-import org.bham.aucom.data.Classification;
-import org.bham.aucom.data.DataType;
-import org.bham.aucom.data.DomainFeature;
-import org.bham.aucom.data.Observation;
-import org.bham.aucom.data.Score;
-import org.bham.aucom.data.TemporalDurationFeature;
-import org.bham.aucom.data.TemporalProbabilityFeature;
-import org.bham.aucom.data.timeseries.ClassificationTimeSeries;
-import org.bham.aucom.data.timeseries.DataTypeTimeSeries;
-import org.bham.aucom.data.timeseries.ScoreTimeSeries;
-import org.bham.aucom.data.timeseries.TemporalDurationFeatureTimeSeries;
-import org.bham.aucom.data.timeseries.TemporalProbabilityFeatureTimeSeries;
-import org.bham.aucom.data.timeseries.TimeSeries;
-import org.bham.aucom.data.timeseries.TimeSeriesType;
-import org.bham.aucom.diagnoser.Model;
-import org.bham.aucom.util.Constants;
-import org.bham.aucom.util.TimeSeriesNotFoundException;
 
 public class DataManager implements Presentable {
 
@@ -44,28 +29,28 @@ public class DataManager implements Presentable {
         // Assert.assertNotNull(timeSeries);
         TimeSeries<?> generatedTimeSeries = null;
         switch (timeSeries.getType()) {
-        case obs:
-            generatedTimeSeries = new DataTypeTimeSeries();
-            generatedTimeSeries.setGeneratedFrom(timeSeries.getId());
-            break;
-        case dtp:
-            generatedTimeSeries = new TemporalDurationFeatureTimeSeries();
-            generatedTimeSeries.setGeneratedFrom(timeSeries.getId());
-            break;
-        case tdf:
-            generatedTimeSeries = new TemporalProbabilityFeatureTimeSeries();
-            generatedTimeSeries.setGeneratedFrom(timeSeries.getId());
-            break;
-        case tpf:
-            generatedTimeSeries = new ScoreTimeSeries();
-            generatedTimeSeries.setGeneratedFrom(timeSeries.getId());
-            break;
-        case score:
-            generatedTimeSeries = new ClassificationTimeSeries();
-            generatedTimeSeries.setGeneratedFrom(timeSeries.getId());
-            break;
-        case cl:
-            break;
+            case obs:
+                generatedTimeSeries = new DataTypeTimeSeries();
+                generatedTimeSeries.setGeneratedFrom(timeSeries.getId());
+                break;
+            case dtp:
+                generatedTimeSeries = new TemporalDurationFeatureTimeSeries();
+                generatedTimeSeries.setGeneratedFrom(timeSeries.getId());
+                break;
+            case tdf:
+                generatedTimeSeries = new TemporalProbabilityFeatureTimeSeries();
+                generatedTimeSeries.setGeneratedFrom(timeSeries.getId());
+                break;
+            case tpf:
+                generatedTimeSeries = new ScoreTimeSeries();
+                generatedTimeSeries.setGeneratedFrom(timeSeries.getId());
+                break;
+            case score:
+                generatedTimeSeries = new ClassificationTimeSeries();
+                generatedTimeSeries.setGeneratedFrom(timeSeries.getId());
+                break;
+            case cl:
+                break;
         }
         this.dataModel.addTimeSeries(generatedTimeSeries);
         return generatedTimeSeries;
@@ -120,7 +105,7 @@ public class DataManager implements Presentable {
     @SuppressWarnings("unchecked")
     public <T extends AbstractData> List<TimeSeries<T>> getTimeSeriesOfType(Class<T> classToSelectAfter) {
         List<TimeSeries<T>> out = new ArrayList<TimeSeries<T>>();
-        for (TimeSeries<? extends AbstractData> timeSeries : this.dataModel.getTimeseries().values()) {
+        for (TimeSeries<? extends AbstractData> timeSeries : this.dataModel.getTimeSeries().values()) {
             if (timeSeries.isOfType(classToSelectAfter))
                 out.add((TimeSeries<T>) timeSeries);
         }
@@ -128,7 +113,7 @@ public class DataManager implements Presentable {
     }
 
     public TimeSeries<Score> deriveScoreSequenceFrom(TimeSeries<Score> sequenceToDeriveFrom,
-            String nameOfDerivedSequence) {
+                                                     String nameOfDerivedSequence) {
         return null;
     }
 
@@ -144,20 +129,20 @@ public class DataManager implements Presentable {
     public Observation getTestObservation() {
         Element e = new Element(
                 "<ROBOTPOSITION source=\"RDS\" eventType=\"INSERT\" memoryName=\"publisher\" dataSetId=\"XcfEventToDocument\" timestamp=\"1276070723418\" dataSetIndex=\"0\">"
-                        +
-                        "<xcf:metadata xmlns:xcf=\"http://xcf.sf.net\">"
-                        +
-                        "<timing>"
-                        +
-                        "<ts key=\"xcf:cre\" src=\"OdometryData\" ms=\"1276070723418\" ns=\"195068\" dateTime=\"xs:dateTime\" />"
-                        +
-                        "<ts key=\"xcf:pub\" src=\"OdometryData\" ms=\"1276070723418\" ns=\"326904\" dateTime=\"xs:dateTime\" />"
-                        +
-                        "</timing>"
-                        +
-                        "</xcf:metadata>"
-                        +
-                        "<GENERATOR>RDS</GENERATOR><TIMESTAMP><INSERTED value=\"1276070723413\" /><UPDATED value=\"1276070723413\" /></TIMESTAMP><READTIME><SECONDS value=\"1276070723\" /><MICROSECONDS value=\"370528\" /></READTIME><POSITION kind=\"absolute\" ref=\"world\" theta=\"-3.124139308929443\" x=\"-3.809863328933716\" y=\"-5.656352996826172\" /></ROBOTPOSITION>\")");
+                +
+                "<xcf:metadata xmlns:xcf=\"http://xcf.sf.net\">"
+                +
+                "<timing>"
+                +
+                "<ts key=\"xcf:cre\" src=\"OdometryData\" ms=\"1276070723418\" ns=\"195068\" dateTime=\"xs:dateTime\" />"
+                +
+                "<ts key=\"xcf:pub\" src=\"OdometryData\" ms=\"1276070723418\" ns=\"326904\" dateTime=\"xs:dateTime\" />"
+                +
+                "</timing>"
+                +
+                "</xcf:metadata>"
+                +
+                "<GENERATOR>RDS</GENERATOR><TIMESTAMP><INSERTED value=\"1276070723413\" /><UPDATED value=\"1276070723413\" /></TIMESTAMP><READTIME><SECONDS value=\"1276070723\" /><MICROSECONDS value=\"370528\" /></READTIME><POSITION kind=\"absolute\" ref=\"world\" theta=\"-3.124139308929443\" x=\"-3.809863328933716\" y=\"-5.656352996826172\" /></ROBOTPOSITION>\")");
         return new Observation(e, System.currentTimeMillis());
     }
 
@@ -182,7 +167,7 @@ public class DataManager implements Presentable {
     @SuppressWarnings("unchecked")
     public List<TimeSeries<Observation>> getAllObservationTimeSeries() {
         List<TimeSeries<Observation>> l = new ArrayList<TimeSeries<Observation>>();
-        for (TimeSeries<?> ts : dataModel.getTimeseries().values()) {
+        for (TimeSeries<?> ts : dataModel.getTimeSeries().values()) {
             if (ts.getType().equals(TimeSeriesType.obs)) {
                 l.add((TimeSeries<Observation>) ts);
             }

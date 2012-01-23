@@ -41,9 +41,9 @@ public class TimeSeriesIO implements IOInterface<TimeSeries<?>> {
 	}
 
 	@Override
-	public boolean write(TimeSeries<?> timeSeriesTowrite, File file) {
+	public boolean write(TimeSeries<?> timeSeriesToWrite, File file) {
 		try {
-			return tsOutput.write(timeSeriesTowrite, file);
+			return tsOutput.write(timeSeriesToWrite, file);
 		} catch (Exception exception) {
 			System.out.println("timeseries conversion failed " + exception.getLocalizedMessage());
 			exception.printStackTrace();

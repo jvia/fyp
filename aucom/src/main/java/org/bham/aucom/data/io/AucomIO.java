@@ -1,7 +1,6 @@
 package org.bham.aucom.data.io;
 
 import nu.xom.ParsingException;
-import nu.xom.ValidityException;
 import org.bham.aucom.data.AbstractData;
 import org.bham.aucom.data.io.csv.in.CSVTimeSeriesInput;
 import org.bham.aucom.data.io.csv.out.CSVTimeSeriesOutput;
@@ -14,25 +13,25 @@ import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.AbstractAnomalyClassifier;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+/**
+ * This class defines an interface for managing persistence in the aucom
+ * project. For each structure we want to read/write we need an IOClass.
+ * Currently known structures to save: Time series, FaultDetectionModel,
+ * SlidingWindow, Classifier, Encoder
+ */
 public class AucomIO {
-    /*
-      * This class defines an interface for managing persistency in the aucom
-      * project. For each structure we want to read/write we need an IOClass.
-      * Currently known structures to save: Timeseries, FaultDetectionModel,
-      * SlidingWindow, Classificator, Encoder
-      */
+
     private File workingDirectory = new File(System.getProperty("user.dir"));
 
     private HashMap<String, TimeSeriesIO> tsIo = new HashMap<String, TimeSeriesIO>();
     String defaultTimeSeriesIOType = "xml";
     private ModelIO faultDetectionModelIO = new ModelIO();
-    private SlindingWindowIO slidingWindowIO = new SlindingWindowIO();
+    private SlidingWindowIO slidingWindowIO = new SlidingWindowIO();
     private ClassifierIO classifierIO = new ClassifierIO();
 
     // private XmlFileWriter xmlFileWriter = new XmlFileWriter();
@@ -82,7 +81,7 @@ public class AucomIO {
         return successful;
     }
 
-    public Model readFaultDetectionModel(File file) throws FileNotFoundException, DataAlreadyExistsException, IOException, ValidityException, ParsingException {
+    public Model readFaultDetectionModel(File file) throws DataAlreadyExistsException, IOException, ParsingException {
         return this.faultDetectionModelIO.read(file);
     }
 
@@ -111,15 +110,15 @@ public class AucomIO {
         throw new IllegalOutputType("output handler for type " + type + " not found");
     }
 
-    public TimeSeries<?> readTimeSeriesRelativeToCurrentWorking(String file) throws FileNotFoundException, ValidityException, DataAlreadyExistsException, ParsingException, IOException {
+    public TimeSeries<?> readTimeSeriesRelativeToCurrentWorking(String file) throws DataAlreadyExistsException, ParsingException, IOException {
         return this.tsIo.get(defaultTimeSeriesIOType).read(new File(getCurrentWorkingDirectory(), file));
     }
 
-    public TimeSeries<?> readTimeSeries(File file) throws FileNotFoundException, ValidityException, DataAlreadyExistsException, ParsingException, IOException {
+    public TimeSeries<?> readTimeSeries(File file) throws DataAlreadyExistsException, ParsingException, IOException {
         return this.tsIo.get(defaultTimeSeriesIOType).read(file);
     }
 
-    public TimeSeries<?> readTimeSeriesRelativeToCurrentWorking(String file, String type) throws FileNotFoundException, ValidityException, DataAlreadyExistsException, ParsingException, IOException,
+    public TimeSeries<?> readTimeSeriesRelativeToCurrentWorking(String file, String type) throws DataAlreadyExistsException, ParsingException, IOException,
                                                                                                  IllegalOutputType {
         if (tsIo.containsKey(type)) {
             return this.tsIo.get(defaultTimeSeriesIOType).read(new File(getCurrentWorkingDirectory(), file));
@@ -127,7 +126,7 @@ public class AucomIO {
         throw new IllegalOutputType("output handler for type " + type + " not found");
     }
 
-    public TimeSeries<?> readTimeSeries(File file, String type) throws FileNotFoundException, ValidityException, DataAlreadyExistsException, ParsingException, IOException, IllegalOutputType {
+    public TimeSeries<?> readTimeSeries(File file, String type) throws DataAlreadyExistsException, ParsingException, IOException, IllegalOutputType {
         if (tsIo.containsKey(type)) {
             return this.tsIo.get(defaultTimeSeriesIOType).read(file);
         }
@@ -142,7 +141,7 @@ public class AucomIO {
         return this.classifierIO.write(classifier, generateFileFor(classifier.getId(), "cl"));
     }
 
-    public AbstractAnomalyClassifier readClassificator(String file) throws FileNotFoundException, ValidityException, DataAlreadyExistsException, ParsingException, IOException {
+    public AbstractAnomalyClassifier readClassificator(String file) throws DataAlreadyExistsException, ParsingException, IOException {
         return this.classifierIO.read(new File(getCurrentWorkingDirectory(), file));
     }
 
@@ -150,7 +149,7 @@ public class AucomIO {
         return this.slidingWindowIO.write(slidingWindow, generateFileFor(slidingWindow.getId(), "sw"));
     }
 
-    public SlidingWindow readSlidingWindow(String file) throws FileNotFoundException, ValidityException, DataAlreadyExistsException, ParsingException, IOException {
+    public SlidingWindow readSlidingWindow(String file) throws DataAlreadyExistsException, ParsingException, IOException {
         return this.slidingWindowIO.read(new File(getCurrentWorkingDirectory(), file));
     }
 

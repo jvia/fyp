@@ -68,7 +68,7 @@ public class AucomChart extends javax.swing.JFrame {
             throw new IllegalArgumentException("Unknown sequence " + sequence);
         }
         Tuple<XYSeries, Integer> t = this.series.get(sequence);
-        getDataSet().removeSeries(t.getFirstElement());
+        getDataSet().removeSeries(t.getFirst());
         this.sequencesListModel.removeElement(sequence);
     }
 
@@ -81,14 +81,14 @@ public class AucomChart extends javax.swing.JFrame {
                 try {
                     for (TimeSeries<Score> s : AucomChart.this.series.keySet()) {
                         Tuple<XYSeries, Integer> t = AucomChart.this.series.get(s);
-                        int from = t.getSecondElement();
+                        int from = t.getSecond();
                         int to = (int) Math.min(s.get(s.size() - 1).getTimestamp(), from + 1000 / AucomChart.this.hrz);
                         updateDomainAxis();
                         updateSliderRanges();
-                        t.getFirstElement().setNotify(false);
+                        t.getFirst().setNotify(false);
                         addDataToseriesInTimespan(s, from, to);
-                        t.getFirstElement().setNotify(true);
-                        t.setSecondElement(to);
+                        t.getFirst().setNotify(true);
+                        t.setSecond(to);
                     }
                 } catch (Throwable e) {
                     // TODO: handle exception
@@ -101,7 +101,7 @@ public class AucomChart extends javax.swing.JFrame {
     }
 
     public void removeDataFromSeries(TimeSeries<Score> sequence, int from, int to) {
-        XYSeries s = this.series.get(sequence).getFirstElement();
+        XYSeries s = this.series.get(sequence).getFirst();
         synchronized (sequence) {
             for (int i = from; i <= to; i++) {
                 Number x = sequence.get(i).getTimestamp();
@@ -118,12 +118,12 @@ public class AucomChart extends javax.swing.JFrame {
     }
 
     public XYSeries getScoreXYSeries(TimeSeries<Score> sequence) {
-        return this.series.get(sequence).getFirstElement();
+        return this.series.get(sequence).getFirst();
     }
 
     public TimeSeries<Score> getScoreSequence(XYSeries ser) {
         for (TimeSeries<Score> s : this.series.keySet()) {
-            if (ser.equals(this.series.get(s).getFirstElement())) {
+            if (ser.equals(this.series.get(s).getFirst())) {
                 return s;
             }
         }

@@ -4,5 +4,5 @@ import java.io.File;
 import java.util.UUID;
 
 public interface Loader {
-	public abstract UUID load(File file);
+    public abstract UUID load(File file);
 }

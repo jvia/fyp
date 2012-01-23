@@ -1,8 +1,8 @@
 package org.bham.aucom.models.probability;
 
-import org.bham.aucom.util.BinCaluclator;
+import org.bham.aucom.util.BinCalculator;
 
-public class LinearBinCalculator implements BinCaluclator {
+public class LinearBinCalculator implements BinCalculator {
 
     private static final long serialVersionUID = 1L;
     private double intervalSize;

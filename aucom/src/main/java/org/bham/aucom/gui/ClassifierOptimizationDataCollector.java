@@ -7,8 +7,8 @@ import org.bham.aucom.data.Score;
 import org.bham.aucom.data.timeseries.ScoreTimeSeries;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.data.timeseries.TimeSeriesStatusListener;
-import org.bham.aucom.data.timeseries.TimeseriesStatus;
-import org.bham.aucom.data.timeseries.TimeseriesStatusEvent;
+import org.bham.aucom.data.timeseries.TimeSeriesStatus;
+import org.bham.aucom.data.timeseries.TimeSeriesStatusEvent;
 
 
 public class ClassifierOptimizationDataCollector implements TimeSeriesStatusListener {
@@ -113,8 +113,8 @@ public class ClassifierOptimizationDataCollector implements TimeSeriesStatusList
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void timeseriesStatusChanged(TimeseriesStatusEvent status) {
-		if (status.getStatus().equals(TimeseriesStatus.ELEMENTSADDED)) {
+	public void timeSeriesStatusChanged(TimeSeriesStatusEvent status) {
+		if (status.getStatus().equals(TimeSeriesStatus.ELEMENTS_ADDED)) {
 			for (int i = status.getStartIndex(); i <= status.getEndIndex(); i++) {
 				TimeSeries<? extends Score> ts = (TimeSeries<? extends Score>) status.getSource();
 				this.getCollectedData().add(ts.get(i));

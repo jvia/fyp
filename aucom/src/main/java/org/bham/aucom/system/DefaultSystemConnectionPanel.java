@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 
 import org.bham.aucom.ActionNotPermittedException;
 import org.bham.aucom.data.timeseries.TimeSeriesStatusListener;
-import org.bham.aucom.data.timeseries.TimeseriesStatusEvent;
+import org.bham.aucom.data.timeseries.TimeSeriesStatusEvent;
 
 
 /**
@@ -121,7 +121,7 @@ public class DefaultSystemConnectionPanel extends javax.swing.JPanel implements 
 	}
 
 	@Override
-	public void timeseriesStatusChanged(TimeseriesStatusEvent status) {
+	public void timeSeriesStatusChanged(TimeSeriesStatusEvent status) {
 		incomingSystemEventCounter++;
 		counterLabel.setText("#" +incomingSystemEventCounter);
 		

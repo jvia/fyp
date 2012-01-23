@@ -5,10 +5,6 @@ import java.util.EventObject;
 
 
 public class DetectorStatusChangedEvent extends EventObject {
-
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
     private final Detector.DetectorStatus previousStatus;
     private final Detector.DetectorStatus currentStatus;

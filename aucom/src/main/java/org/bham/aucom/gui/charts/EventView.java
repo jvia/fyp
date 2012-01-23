@@ -120,7 +120,7 @@ public class EventView {
         f.getContentPane().add(tmp, BorderLayout.CENTER);
         JPanel colorLegend = new JPanel();
         colorLegend.setLayout(new BorderLayout());
-        ArrayList<Color> abnormalColors = RedGreenGradientImageGenerator.getAbnormalcolors();
+        ArrayList<Color> abnormalColors = RedGreenGradientImageGenerator.getAbnormalColors();
         JPanel abnormalColorsPanel = new JPanel();
         abnormalColorsPanel.setLayout(new GridLayout(1, 3 + abnormalColors.size()));
         abnormalColorsPanel.add(new JLabel("Abnormal: "));
@@ -134,7 +134,7 @@ public class EventView {
             abnormalColorsPanel.add(tmp);
         }
         abnormalColorsPanel.add(new JLabel("(high)"));
-        ArrayList<Color> normalColors = RedGreenGradientImageGenerator.getNormalcolors();
+        ArrayList<Color> normalColors = RedGreenGradientImageGenerator.getNormalColors();
         JPanel normalColorsPanel = new JPanel();
         normalColorsPanel.add(new JLabel("Normal: "));
         normalColorsPanel.add(new JLabel("(low)"));

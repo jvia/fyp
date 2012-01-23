@@ -28,8 +28,8 @@ public class MarkovChain {
 	private int getNumTransitionElements(int classId){
 		int out = 0;
 		for(Tuple<Integer, Integer> key: transitions.keySet()){
-			if(key.getFirstElement()==classId)
-				out += transitions.get(key.getFirstElement(), key.getSecondElement());
+			if(key.getFirst()==classId)
+				out += transitions.get(key.getFirst(), key.getSecond());
 		}
 		return out;
 	}

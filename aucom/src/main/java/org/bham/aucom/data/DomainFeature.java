@@ -28,7 +28,7 @@ public class DomainFeature extends Tuple<String, String> {
      */
     public String getFeatureName()
     {
-        return this.getFirstElement();
+        return this.getFirst();
     }
 
     /**
@@ -38,7 +38,7 @@ public class DomainFeature extends Tuple<String, String> {
      */
     public String getFeatureValue()
     {
-        return this.getSecondElement();
+        return this.getSecond();
     }
 
     /*
@@ -46,6 +46,6 @@ public class DomainFeature extends Tuple<String, String> {
      */
     public Object copy()
     {
-        return new DomainFeature(getFirstElement(), getSecondElement());
+        return new DomainFeature(getFirst(), getSecond());
     }
 }

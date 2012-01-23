@@ -93,7 +93,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
                                                + sequence);
         }
         Tuple<XYSeries, Integer> t = this.series.get(sequence);
-        this.dataset.removeSeries(t.getFirstElement());
+        this.dataset.removeSeries(t.getFirst());
         this.sequencesListModel.removeElement(sequence);
     }
 
@@ -108,15 +108,15 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
                         if (s.isEmpty())
                             return;
                         Tuple<XYSeries, Integer> t = ProbabilityChartFrame.this.series.get(s);
-                        int from = t.getSecondElement();
+                        int from = t.getSecond();
                         int to = (int) Math.min(s.get(s.size() - 1).getTimestamp(),
                                                 from + 1000 / ProbabilityChartFrame.this.hrz);
                         updateDomainAxis();
                         updateSliderRanges();
-                        t.getFirstElement().setNotify(false);
+                        t.getFirst().setNotify(false);
                         addDataToseriesInTimespan(s, from, to);
-                        t.getFirstElement().setNotify(true);
-                        t.setSecondElement(to);
+                        t.getFirst().setNotify(true);
+                        t.setSecond(to);
                     }
                 } catch (Throwable e) {
                     // TODO: handle exception
@@ -132,7 +132,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
 //		System.out.print("from " + from + " first " +list.get(0).getTimestamp());
 //		System.out.println(" to " +  to +" last " +list.get(list.size()-1).getTimestamp());
 //		}
-//		final XYSeries s = this.series.get(sequence).getFirstElement();
+//		final XYSeries s = this.series.get(sequence).getFirst();
 //
 //		SwingUtilities.invokeLater(new Runnable() {
 //			@Override
@@ -147,7 +147,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
 
     public void removeDataFromSeries(TimeSeries<Score> sequence, int from, int to) {
 //		updateDomainAxis();
-        XYSeries s = this.series.get(sequence).getFirstElement();
+        XYSeries s = this.series.get(sequence).getFirst();
         synchronized (sequence) {
 
             for (int i = from; i <= to; i++) {
@@ -165,12 +165,12 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
     }
 
     public XYSeries getScoreXYSeries(TimeSeries<Score> sequence) {
-        return this.series.get(sequence).getFirstElement();
+        return this.series.get(sequence).getFirst();
     }
 
     public TimeSeries<Score> getScoreSequence(XYSeries ser) {
         for (TimeSeries<Score> s : this.series.keySet()) {
-            if (ser.equals(this.series.get(s).getFirstElement())) {
+            if (ser.equals(this.series.get(s).getFirst())) {
                 return s;
             }
         }
