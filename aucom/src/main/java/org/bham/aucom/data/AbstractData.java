@@ -104,7 +104,6 @@ public abstract class AbstractData implements AttributableObject {
     /**
      * Unset this object as the first element in the collection.
      */
-
     void unmarkAsFirstElement() {
         this.setFirstElement(false);
     }
@@ -128,58 +127,41 @@ public abstract class AbstractData implements AttributableObject {
     /**
      * Unset this object as the last element in the collection.
      */
-
     void unmarkAsLastElement() {
         this.setLastElement(false);
     }
 
     /**
-     * Determines if this
-     * object is
-     * set as
-     * the last
-     * object in
-     * the collection
-     * .
+     * Determines if this object is set as the last object in the collection
      *
-     * @return true if
-     *         set as
-     *         last object;
-     *         false otherwise
+     * @return true if set as last object; false otherwise
      */
-
     public boolean isMarkedAsLastElement() {
         return this.isLastElement();
     }
 
     /**
-     * Get the
-     * object's timestamp.
+     * Get the object's timestamp.
      *
      * @return the timestamp
      */
-
     public long getTimestamp() {
-        return this.timestamp;
+        return timestamp;
     }
 
     /**
-     * Set the
-     * timestamp
+     * Set the timestamp
      *
-     * @param inTimestamp the
-     *                    timestamp in
-     *                    milliseconds
+     * @param inTimestamp the timestamp in milliseconds
      */
-
     public void setTimestamp(long inTimestamp) {
-        this.timestamp = inTimestamp;
+        timestamp = inTimestamp;
     }
 
-    /*
+    /**
      * Return a copy of this object.
-     * 
-     * @return
+     *
+     * @return copy of object
      */
     public abstract Object copy();
 
@@ -189,53 +171,33 @@ public abstract class AbstractData implements AttributableObject {
      *
      * @param isFirstElement true if first;false otherwise
      */
-
     void setFirstElement(boolean isFirstElement) {
         this.isFirstElement = isFirstElement;
     }
 
     /**
-     * Determine if
-     * the object
-     * is the
-     * first element
-     * .
+     * Determine if the object is the first element
      *
-     * @return true if
-     *         th object
-     *         is the
-     *         first element;
-     *         false otherwise
+     * @return true if the object is the first element; false otherwise
      */
-
     boolean isFirstElement() {
         return isFirstElement;
     }
 
-    /*
+    /**
      * Change the object's last element status.
-     * 
-     * @param isFirstElement true if first; false otherwise
+     *
+     * @param isLastElement true if first; false otherwise
      */
-
     void setLastElement(boolean isLastElement) {
         this.isLastElement = isLastElement;
     }
 
     /**
-     * Determine if
-     * the object
-     * is the
-     * last element
-     * .
+     * Determine if the object is the last element
      *
-     * @return true if
-     *         th object
-     *         is the
-     *         last element;
-     *         false otherwise
+     * @return true if the object is the last element; false otherwise
      */
-
     boolean isLastElement() {
         return isLastElement;
     }

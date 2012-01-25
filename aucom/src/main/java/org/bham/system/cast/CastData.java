@@ -3,51 +3,40 @@ package org.bham.system.cast;
 import java.io.Serializable;
 
 /**
- *
  * @author Jeremiah Via <jxv911@cs.bham.ac.uk>
  */
 public class CastData implements Serializable {
-    
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
     private final long timeStamp;
     private final String eventType;
     private final String generatorType;
     private final String memoryType;
 
-    public CastData(long timeStamp, String eventType, String generatorType, String memoryType)
-    {
+    public CastData(long timeStamp, String eventType, String generatorType, String memoryType) {
         this.timeStamp = timeStamp;
         this.eventType = eventType;
         this.generatorType = generatorType;
         this.memoryType = memoryType;
     }
 
-    public String getEventType()
-    {
+    public String getEventType() {
         return eventType;
     }
 
-    public String getGeneratorType()
-    {
+    public String getGeneratorType() {
         return generatorType;
     }
 
-    public String getMemoryType()
-    {
+    public String getMemoryType() {
         return memoryType;
     }
 
-    public long getTimeStamp()
-    {
+    public long getTimeStamp() {
         return timeStamp;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return String.format("<cast eventType=\"%s\" generatorType=\"%s\" memoryType=\"%s\" />",
                              eventType, generatorType, memoryType);
     }

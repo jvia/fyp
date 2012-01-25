@@ -1,12 +1,12 @@
 package org.bham.aucom.fts.tranform;
 
-import java.util.List;
-import java.util.logging.Logger;
-
 import org.bham.aucom.data.DataType;
 import org.bham.aucom.data.DomainFeature;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.encoder.Encoder;
+
+import java.util.List;
+import java.util.logging.Logger;
 
 
 public class EncodeData extends AbstractAucomTransformNode<Observation, DataType> {
@@ -18,8 +18,7 @@ public class EncodeData extends AbstractAucomTransformNode<Observation, DataType
     }
 
     @Override
-    public DataType iTransform(Observation input) throws Exception
-    {
+    public DataType iTransform(Observation input) throws Exception {
         try {
             Logger.getLogger(this.getClass().getCanonicalName()).info("encoding " + input.toString());
             int dataType = getEncoder().encode(input);
@@ -37,13 +36,11 @@ public class EncodeData extends AbstractAucomTransformNode<Observation, DataType
         return null;
     }
 
-    void setEncoder(Encoder encoder)
-    {
+    void setEncoder(Encoder encoder) {
         this.encoder = encoder;
     }
 
-    Encoder getEncoder()
-    {
+    Encoder getEncoder() {
         return this.encoder;
     }
 

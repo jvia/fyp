@@ -1,19 +1,18 @@
 package org.bham.aucom.fts.tranform;
 
+import nu.xom.Element;
+import org.bham.aucom.data.DataType;
+import org.bham.aucom.data.DomainFeature;
+import org.bham.aucom.data.Observation;
+import org.bham.aucom.data.TemporalDurationFeature;
+import org.bham.aucom.data.encoder.Encoder;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
-
-import nu.xom.Element;
-
-import org.bham.aucom.data.DataType;
-import org.bham.aucom.data.DomainFeature;
-import org.bham.aucom.data.Observation;
-import org.bham.aucom.data.TemporalDurationFeature;
-import org.bham.aucom.data.encoder.Encoder;
 
 public class TemporalDurationFeatureGenerator {
     private final ConcurrentHashMap<Integer, DataType> lastOccurrences = new ConcurrentHashMap<Integer, DataType>(new LinkedHashMap<Integer, DataType>());
@@ -32,26 +31,22 @@ public class TemporalDurationFeatureGenerator {
         }
     }
 
-    public void clearInitialClasses()
-    {
+    public void clearInitialClasses() {
         initialClasses.clear();
     }
 
-    public void addInitalClasses(Collection<Integer> inInitialClassesToAdd)
-    {
+    public void addInitalClasses(Collection<Integer> inInitialClassesToAdd) {
         if (inInitialClassesToAdd == null) {
             return;
         }
         initialClasses.addAll(inInitialClassesToAdd);
     }
 
-    public void resetInitialClasses()
-    {
+    public void resetInitialClasses() {
         initialClasses.clear();
     }
 
-    boolean isLastOccurancesInitialized()
-    {
+    boolean isLastOccurancesInitialized() {
         boolean isLastOccurancesInitialized = true;
         for (Integer id : lastOccurrences.keySet()) {
             isLastOccurancesInitialized &= lastOccurrences.get(id).getTimestamp() == 0;
@@ -59,14 +54,12 @@ public class TemporalDurationFeatureGenerator {
         return isLastOccurancesInitialized;
     }
 
-    public void initializeLastOccurances()
-    {
+    public void initializeLastOccurances() {
         int initializationValue = 0;
         initializeLastOccurancesWithValue(initializationValue);
     }
 
-    private void initializeLastOccurancesWithValue(long initializationValue)
-    {
+    private void initializeLastOccurancesWithValue(long initializationValue) {
         this.lastOccurrences.clear();
         Logger.getLogger(this.getClass().getCanonicalName()).info("adding initial data points as last occurrences of " + initialClasses.size() + " classes");
         for (Integer classId : initialClasses) {
@@ -78,15 +71,14 @@ public class TemporalDurationFeatureGenerator {
         }
     }
 
-    public TemporalDurationFeature generateFeature(DataType in)
-    {
+    public TemporalDurationFeature generateFeature(DataType in) {
         long timeSpan;
         LinkedHashMap<DataType, Long> durations = new LinkedHashMap<DataType, Long>();
 
-        if(isLastOccurancesInitialized()){
+        if (isLastOccurancesInitialized()) {
             initializeLastOccurancesWithValue(in.getTimestamp());
         }
-        for (DataType lastOccurrence : this.lastOccurrences.values()) {
+        for (DataType lastOccurrence : lastOccurrences.values()) {
             timeSpan = calculateTimespanForElements(in, lastOccurrence);
             durations.put(lastOccurrence, timeSpan);
         }
@@ -94,22 +86,23 @@ public class TemporalDurationFeatureGenerator {
         updateLastOccurrences(in);
         return f;
     }
+
     /**
-     * calculates the duration for the two elements. In case th
-     * @param inTestElement the currently occurred event as datatype object
-     * @param lastOccurrence last occurrence of an event with a specific datatype
-     * @return
+     * calculates the duration for the two elements.
+     *
+     * @param inTestElement  the currently occurred event as datatype object
+     * @param lastOccurrence last occurrence of an event with a specific
+     *                       datatype
+     * @return timespan in milliseconds
      */
-    private long calculateTimespanForElements(DataType inTestElement, DataType lastOccurrence)
-    {
+    private long calculateTimespanForElements(DataType inTestElement, DataType lastOccurrence) {
         if (lastOccurrence.getTimestamp() != -1) {
             return inTestElement.getTimestamp() - lastOccurrence.getTimestamp();
         }
         return 0l;
     }
 
-    private void updateLastOccurrences(DataType inTestElement)
-    {
-        this.lastOccurrences.put(inTestElement.getEventType(), inTestElement);
+    private void updateLastOccurrences(DataType inTestElement) {
+        lastOccurrences.put(inTestElement.getEventType(), inTestElement);
     }
 }

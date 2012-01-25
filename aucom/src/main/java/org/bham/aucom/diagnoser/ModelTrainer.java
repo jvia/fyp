@@ -47,7 +47,7 @@ public class ModelTrainer implements GraphStatusListener, Presentable {
     public ModelTrainer() {
         graph = new T2GramTrainerGraph();
         graph.addGraphListener(this);
-        setTrainingData(new HashMatrix<Integer, Integer, ArrayList<Double>>());
+        //setTrainingData(new HashMatrix<Integer, Integer, ArrayList<Double>>());
         setLastTrainOccurrences(new LinkedHashMap<String, DataType>());
         currentStatus = TrainerStatus.READY;
         previousStatus = TrainerStatus.READY;

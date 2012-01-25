@@ -1,14 +1,13 @@
 package org.bham.system.cast;
 
-import java.util.concurrent.LinkedBlockingQueue;
-
 import nu.xom.Attribute;
 import nu.xom.Element;
-
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.fts.source.AucomSourceAdapter;
 import org.bham.aucom.fts.source.SourceStatus;
+
+import java.util.concurrent.LinkedBlockingQueue;
 
 
 /**
@@ -16,10 +15,6 @@ import org.bham.aucom.fts.source.SourceStatus;
  * @author Jeremiah Via <jxv911@cs.bham.ac.uk>
  */
 public class CastObservationSource extends AucomSourceAdapter<Observation> {
-
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
     private ConnectionManager cast;
     private final LinkedBlockingQueue<String[]> queue;
