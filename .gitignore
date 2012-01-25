@@ -8,3 +8,6 @@ aucom.iml
 lib/
 nbproject/
 target/
+\#*#
+*.toc
+*.pdf

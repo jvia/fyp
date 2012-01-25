@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : castExperiment.xml
+    Created on : 05 September 2011, 15:00
+    Author     : Jeremiah M. Via <jxv911@cs.bham.ac.uk>
+    Description:
+    
+        This experiment allows you to collect a series of observations and 
+        save them to file. There are only three values you need to worry about:
+            1. name
+                    The name of the file you will save. It helps if it is a 
+                    descriptive name.
+            2. aucom:wd
+                    The working directory where the file will be saved.
+            3. aucom:observations
+                    The number of observations you want to collect before you
+                    save to file.
+                     
+-->
+<aucom:experiments xmlns:aucom="http://www.cor-lab.de">
+    <aucom:experiment factory="org.bham.applications.experimenter.experiment.CastObservationCollectionFactory" name="debug">
+        <aucom:input>        
+            <aucom:wd>/home/jxv911/Dropbox/aucom/cast</aucom:wd>
+            <aucom:observations>2000</aucom:observations>
+        </aucom:input>
+    </aucom:experiment>
+</aucom:experiments>
