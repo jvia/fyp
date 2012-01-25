@@ -7,14 +7,14 @@ public abstract class Score extends TemporalProbabilityFeature {
     private double value;
     private double variance = 0.0d;
 
-    public Score(TemporalProbabilityFeature f, double value)
+    Score(TemporalProbabilityFeature f, double value)
     {
         super(f);
         setValue(value);
         setVariance(0.0d);
     }
 
-    public Score(Score s)
+    Score(Score s)
     {
         this(s, s.getValue());
     }
@@ -23,7 +23,7 @@ public abstract class Score extends TemporalProbabilityFeature {
 		super();
 	}
 
-	public void setValue(double value)
+	void setValue(double value)
     {
         this.value = value;
     }
@@ -33,7 +33,7 @@ public abstract class Score extends TemporalProbabilityFeature {
         return this.value;
     }
 
-    public void setVariance(double variance)
+    void setVariance(double variance)
     {
         this.variance = variance;
     }
@@ -43,7 +43,7 @@ public abstract class Score extends TemporalProbabilityFeature {
         return this.variance;
     }
 
-    public static Score createRandomScore()
+    static Score createRandomScore()
     {
         if (Math.random() <= 0.5)
             return createRandomSingleScore();
@@ -61,7 +61,7 @@ public abstract class Score extends TemporalProbabilityFeature {
         return new RangeScore(subScores);
     }
 
-    public static Score createRandomSingleScore()
+    private static Score createRandomSingleScore()
     {
         return new SingleScore(Score.createRandomTemporalProbabilityFeature(), Math.random());
     }

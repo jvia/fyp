@@ -10,7 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 
-public class ClassifierOptimizationMethod {
+class ClassifierOptimizationMethod {
     private double allowedFalsePositiveRate;
     private StatisticalAnomalyClassifier bestClassifier;
     private StatisticalAnomalyClassifier currentClassifier;
@@ -73,7 +73,7 @@ public class ClassifierOptimizationMethod {
         return this.statistic;
     }
 
-    public void setStatistic(ClassificationTimeSeriesDescriptiveStatistics statistic) {
+    void setStatistic(ClassificationTimeSeriesDescriptiveStatistics statistic) {
         this.statistic = statistic;
     }
 
@@ -97,7 +97,7 @@ public class ClassifierOptimizationMethod {
         return this.classifiersToTest;
     }
 
-    public void setClassifiersToTest(LinkedList<AnomalyClassifier> classifiersToTest) {
+    void setClassifiersToTest(LinkedList<AnomalyClassifier> classifiersToTest) {
         this.classifiersToTest = classifiersToTest;
     }
 
@@ -105,7 +105,7 @@ public class ClassifierOptimizationMethod {
         return this.testedClassifiers;
     }
 
-    public void setTestedClassifiers(HashMap<AnomalyClassifier, Double> testedClassifiers) {
+    void setTestedClassifiers(HashMap<AnomalyClassifier, Double> testedClassifiers) {
         this.testedClassifiers = testedClassifiers;
     }
 }

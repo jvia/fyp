@@ -14,7 +14,7 @@ public class ModelList extends AbstractListModel implements Observer{
 	 * 
 	 */
 	private static final long serialVersionUID = 3671172755117348322L;
-	List<Model> models;
+	private final List<Model> models;
 
 	public ModelList(List<Model> modelList) {
 		this.models = modelList;
@@ -31,7 +31,7 @@ public class ModelList extends AbstractListModel implements Observer{
 		this.fireIntervalRemoved(this, indexOf(model), indexOf(model));
 	}
 
-	public int indexOf(Model model) {
+	int indexOf(Model model) {
 		return this.models.indexOf(model);
 	}
 	@Override

@@ -3,7 +3,7 @@ package org.bham.aucom.fts.tranform;
 import org.bham.aucom.data.DataType;
 import org.bham.aucom.data.TemporalDurationFeature;
 import org.bham.aucom.data.TemporalProbabilityFeature;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
+import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.util.Constants;
 
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 
 public class GenerateTemporalProbabilityFeature extends AbstractAucomTransformNode<TemporalDurationFeature, TemporalProbabilityFeature> {
-    private T2GramModelI model = null;
+    private Model model = null;
 
     public GenerateTemporalProbabilityFeature() {
         super("TestModel");
@@ -27,7 +27,7 @@ public class GenerateTemporalProbabilityFeature extends AbstractAucomTransformNo
         return f;
     }
 
-    protected TemporalProbabilityFeature generate(TemporalDurationFeature dataToTest) {
+    TemporalProbabilityFeature generate(TemporalDurationFeature dataToTest) {
         int eventTypeToTest = dataToTest.getEventType();
 
         double maximalProbabilityForPredecessor;
@@ -82,11 +82,11 @@ public class GenerateTemporalProbabilityFeature extends AbstractAucomTransformNo
         return normalizedPredecessorProbability;
     }
 
-    public void setModel(T2GramModelI model) {
+    public void setModel(Model model) {
         this.model = model;
     }
 
-    public T2GramModelI getModel() {
+    public Model getModel() {
         return this.model;
     }
 

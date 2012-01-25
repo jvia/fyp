@@ -7,53 +7,41 @@ import org.bham.aucom.fts.graph.AbstractAucomGraph;
 import org.bham.aucom.fts.sink.TimeSeriesSink;
 
 /**
- *
  * @author Jeremiah Via <jxv911@cs.bham.ac.uk>
  */
 public class CastNetworkGraph extends AbstractAucomGraph {
-
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
-    CastObservationSource source;
-    TimeSeriesSink<Observation> sink;
+    private TimeSeriesSink<Observation> sink;
 
-    public CastNetworkGraph()
-    {
+    public CastNetworkGraph() {
         super("CastNetworkGraph");
         initGraph();
     }
 
     @Override
-    protected void initGraph()
-    {
-        source = new CastObservationSource();
+    protected void initGraph() {
+        CastObservationSource source = new CastObservationSource();
         sink = new TimeSeriesSink<Observation>(new ObservationTimeSeries());
         graph.connect(source, sink);
     }
 
     @Override
-    protected String getReason()
-    {
+    protected String getReason() {
         return "no input";
     }
 
     @Override
-    public boolean preconditionsSatisfied()
-    {
+    public boolean preconditionsSatisfied() {
         // TODO: check if cast is running
         return true;
     }
 
     @Override
-    protected void cleanUp()
-    {
+    protected void cleanUp() {
         // ignored
     }
 
-    TimeSeries<Observation> getObservationTimeSeries()
-    {
+    TimeSeries<Observation> getObservationTimeSeries() {
         return sink.getOutput();
     }
 }

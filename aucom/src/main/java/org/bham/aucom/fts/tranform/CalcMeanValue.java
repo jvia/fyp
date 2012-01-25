@@ -7,25 +7,25 @@ import org.bham.aucom.data.util.SlidingWindow;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-public class CalcMeanvalue extends AbstractAucomTransformNode<Score, Score> {
-    ArrayList<Score> tmp;
+public class CalcMeanValue extends AbstractAucomTransformNode<Score, Score> {
+    private final ArrayList<Score> tmp;
     private SlidingWindow slidingWindow;
-    protected long tmpFirstTimestampOfTheWindow;
-    protected long tmpLastTimestampOfTheWindow;
+    private long tmpFirstTimestampOfTheWindow;
+    private long tmpLastTimestampOfTheWindow;
 
-    public CalcMeanvalue() {
+    public CalcMeanValue() {
         super("CalcMeanValue");
         this.tmp = new ArrayList<Score>();
     }
 
     public void reset() {
-        Logger.getLogger(this.getClass().getCanonicalName()).info("reseting CalcMean");
+        Logger.getLogger(this.getClass().getCanonicalName()).info("resetting CalcMean");
         this.tmp.clear();
         this.tmpFirstTimestampOfTheWindow = 0l;
         this.tmpLastTimestampOfTheWindow = this.getSlidingWindow().getIntervalSize();
     }
 
-    protected void store(Score dataToStore) {
+    void store(Score dataToStore) {
         this.tmp.add(dataToStore);
     }
 
@@ -33,14 +33,14 @@ public class CalcMeanvalue extends AbstractAucomTransformNode<Score, Score> {
 //		this.tmp.addAll(dataToStore);
 //	}
 
-    protected RangeScore calcMeanScore(ArrayList<Score> list) {
+    RangeScore calcMeanScore(ArrayList<Score> list) {
         if (list.size() == 0) {
             return null;
         }
         return new RangeScore(list);
     }
 
-    protected boolean hasReceivedLastSequenceElement(Score element) {
+    boolean hasReceivedLastSequenceElement(Score element) {
         if (element.isMarkedAsLastElement())
             Logger.getLogger(this.getClass().getCanonicalName()).info("received last item, queue size is " + this.tmp.size());
         Logger.getLogger(this.getClass().getCanonicalName()).info("last element: " + element.isMarkedAsLastElement());
@@ -85,7 +85,7 @@ public class CalcMeanvalue extends AbstractAucomTransformNode<Score, Score> {
         return hasReceivedLastSequenceElement(arg0) || hasEnoughElementsForNextSlidingWindow();
     }
 
-    protected ArrayList<Score> getElementsToRemove(ArrayList<Score> tmp2, long tmpLastTimestampOfTheWindow2) {
+    ArrayList<Score> getElementsToRemove(ArrayList<Score> tmp2, long tmpLastTimestampOfTheWindow2) {
         ArrayList<Score> out = new ArrayList<Score>();
         try {
             for (Score s : tmp2) {
@@ -99,14 +99,14 @@ public class CalcMeanvalue extends AbstractAucomTransformNode<Score, Score> {
         return new ArrayList<Score>();
     }
 
-    protected void checkIfLastTimestampOfTheWindowIsValid() {
+    void checkIfLastTimestampOfTheWindowIsValid() {
         if (this.tmp.size() != 0 && this.tmp.get(0).getTimestamp() > this.tmpLastTimestampOfTheWindow) {
             Logger.getLogger(this.getClass().getCanonicalName()).info("lastTimeStamp is not valid");
             this.tmpLastTimestampOfTheWindow = this.tmp.get(0).getTimestamp();
         }
     }
 
-    protected long getNextLastTimestampOfTheWindow() {
+    long getNextLastTimestampOfTheWindow() {
         long next = this.tmpLastTimestampOfTheWindow + this.getSlidingWindow().getIntervalSize() - this.getSlidingWindow().getIntervalOverlapSize();
         if (this.tmp.size() != 0 && this.tmp.get(0).getTimestamp() > next) {
             next = this.tmp.get(0).getTimestamp();
@@ -114,7 +114,7 @@ public class CalcMeanvalue extends AbstractAucomTransformNode<Score, Score> {
         return next;
     }
 
-    protected ArrayList<Score> getWindowElements(ArrayList<Score> tmp2, long tmpLastTimestampOfTheWindow2) {
+    ArrayList<Score> getWindowElements(ArrayList<Score> tmp2, long tmpLastTimestampOfTheWindow2) {
         ArrayList<Score> out = new ArrayList<Score>();
         if (hasReceivedLastSequenceElement(this.tmp.get(this.tmp.size() - 1))) {
             out.addAll(this.tmp);
@@ -132,11 +132,11 @@ public class CalcMeanvalue extends AbstractAucomTransformNode<Score, Score> {
         return out;
     }
 
-    protected long getOldestTimestamp() {
+    long getOldestTimestamp() {
         return (this.tmp.size() > 0) ? this.tmp.get(this.tmp.size() - 1).getTimestamp() : this.tmpFirstTimestampOfTheWindow;
     }
 
-    protected boolean hasEnoughElementsForNextSlidingWindow() {
+    boolean hasEnoughElementsForNextSlidingWindow() {
         long oldestTimestamp = getOldestTimestamp();
         boolean isCalculateNextWindow = false;
         if (this.tmpLastTimestampOfTheWindow < oldestTimestamp) {

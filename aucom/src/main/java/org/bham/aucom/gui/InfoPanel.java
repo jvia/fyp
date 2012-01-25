@@ -11,6 +11,8 @@
 
 package org.bham.aucom.gui;
 
+import javax.swing.*;
+
 /**
  *
  * @author rgolombe
@@ -19,7 +21,7 @@ public class InfoPanel extends javax.swing.JFrame {
 	private static final long serialVersionUID = 0L;
 
     /* Creates new form Info */
-    public InfoPanel(String info) {
+    private InfoPanel(String info) {
         initComponents();
         this.jTextArea1.setText(info);
     }
@@ -33,7 +35,7 @@ public class InfoPanel extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
+        JScrollPane jScrollPane1 = new JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
 
         setTitle("Info");
@@ -64,8 +66,6 @@ public class InfoPanel extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 

@@ -24,14 +24,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class AbstractAucomGraph implements SourceStatusListener, SinkStatusListener, Serializable, TransformNodeEventListener {
-    private GraphStatus currentStatus = GraphStatus.NOTREADY;
+    private GraphStatus currentStatus = GraphStatus.NOT_READY;
     private GraphStatus previousStatus = currentStatus;
 
     private static final long serialVersionUID = 1L;
-    protected transient javax.swing.event.EventListenerList listenerList = null;
-    protected transient Graph graph;
+    private transient javax.swing.event.EventListenerList listenerList = null;
+    protected final transient Graph graph;
     private final String graphName;
-    protected transient EngineThread engineThread;
+    private transient EngineThread engineThread;
 
     /**
      * Defines possible states of an AucomGraph
@@ -39,7 +39,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
      * @author rgolombe
      */
     public enum GraphStatus {
-        NOTREADY, READY, RUNNING, STOPPED, PAUSED,
+        NOT_READY, READY, RUNNING, STOPPED, PAUSED,
     }
 
     /*
@@ -47,11 +47,11 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
      *
      * @param inGraphName
      */
-    public AbstractAucomGraph(String inGraphName) {
+    protected AbstractAucomGraph(String inGraphName) {
         this.graphName = inGraphName;
         this.graph = new Graph();
-        currentStatus = GraphStatus.NOTREADY;
-        previousStatus = GraphStatus.NOTREADY;
+        currentStatus = GraphStatus.NOT_READY;
+        previousStatus = GraphStatus.NOT_READY;
         this.listenerList = new javax.swing.event.EventListenerList();
         Logger.getLogger(this.getClass().getCanonicalName()).log(Level.CONFIG, "instantiating " + this.graphName);
     }
@@ -94,7 +94,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
     protected abstract void initGraph();
 
     @SuppressWarnings("cast")
-    protected void fireGraphStatusChangedEvent(GraphStateChangedEvent evt) {
+    void fireGraphStatusChangedEvent(GraphStateChangedEvent evt) {
         Logger.getLogger(this.getClass().getCanonicalName()).info(getGraphName() + " fires " + evt + "to " + listenerList.getListenerCount() + " listeners");
         Object[] listeners = this.listenerList.getListenerList();
         for (int i = 0; i < listeners.length; i += 2) {
@@ -141,8 +141,8 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
     /*
      * Utility function. Offers a convenient mean to check whether the status of this graph object.
      */
-    public boolean isNotReadyStatus() {
-        return getStatus().equals(GraphStatus.NOTREADY);
+    boolean isNotReadyStatus() {
+        return getStatus().equals(GraphStatus.NOT_READY);
     }
 
     /*
@@ -152,7 +152,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
      *
      * @return
      */
-    public boolean isRunningStatus() {
+    boolean isRunningStatus() {
         return getStatus().equals(GraphStatus.RUNNING);
     }
 
@@ -178,7 +178,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
             }
         } else {
             String reason = getReason();
-            setStatus(GraphStatus.NOTREADY);
+            setStatus(GraphStatus.NOT_READY);
             throw new ActionFailedException("graph " + getGraphName() + " preconditions not satisfied, reason: " + reason);
         }
         if (engineThread != null) {
@@ -216,14 +216,14 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
      *
      * @return
      */
-    public abstract boolean preconditionsSatisfied();
+    protected abstract boolean preconditionsSatisfied();
 
     /*
      * Connects to all fts nodes of the fts graph and listens to status events
      *
      * @param nodes
      */
-    protected void listenToNodes(Iterator<Node<?, ?>> nodes) {
+    void listenToNodes(Iterator<Node<?, ?>> nodes) {
         while (nodes.hasNext()) {
             Node<?, ?> node = nodes.next();
             // recurrence
@@ -282,7 +282,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
      *
      * @throws IllegalStateChange
      */
-    private void pauseAllSources() throws IllegalStateChange {
+    private void pauseAllSources() {
         if (this.graph != null) {
             Collection<Node<?, ?>> sources = this.graph.getSourceNodes();
             for (Node<?, ?> node : sources) {
@@ -417,7 +417,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
      *
      * @return {@link #currentStatus} the current status of the graph
      */
-    public GraphStatus getStatus() {
+    GraphStatus getStatus() {
         return currentStatus;
     }
 

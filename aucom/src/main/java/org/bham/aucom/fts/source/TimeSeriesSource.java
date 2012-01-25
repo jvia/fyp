@@ -1,145 +1,127 @@
 package org.bham.aucom.fts.source;
 
+import org.bham.aucom.data.AbstractData;
+import org.bham.aucom.data.timeseries.TimeSeries;
+import org.bham.aucom.data.timeseries.TimeSeriesStatus;
+import org.bham.aucom.data.timeseries.TimeSeriesStatusEvent;
+import org.bham.aucom.data.timeseries.TimeSeriesStatusListener;
+
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Logger;
 
-import org.bham.aucom.data.AbstractData;
-import org.bham.aucom.data.timeseries.TimeSeries;
-import org.bham.aucom.data.timeseries.TimeSeriesStatusListener;
-import org.bham.aucom.data.timeseries.TimeseriesStatus;
-import org.bham.aucom.data.timeseries.TimeseriesStatusEvent;
-
 
 public class TimeSeriesSource<T extends AbstractData> extends AucomSourceAdapter<T> implements TimeSeriesStatusListener {
-	private static final long serialVersionUID = 0L;
-	final BlockingQueue<T> queue;
-	private TimeSeries<T> input;
+    private static final long serialVersionUID = 0L;
+    private final BlockingQueue<T> queue;
+    private TimeSeries<T> input;
+    private final Logger log = Logger.getLogger(getClass().getName());
 
 
+    public TimeSeriesSource(TimeSeries<T> input, String noficifactionName) {
+        super("SequenceQueueSource");
+        queue = new LinkedBlockingQueue<T>();
+        setInput(input);
+        setState(SourceStatus.CONNECTED);
+        copyDataFromTimeSeriesToSourceQueue(0, getInput().size() - 1);
 
-	public TimeSeriesSource(TimeSeries<T> input, String noficifactionName) {
-		super("SequenceQueueSource");
-		this.queue = new LinkedBlockingQueue<T>();
-		this.setInput(input);
-		this.setState(SourceStatus.CONNECTED);
-		copyDataFromTimeSeriesToSourceQueue(0, this.getInput().size() - 1);
-		Logger.getLogger(this.getClass().getCanonicalName()).info("init:" + noficifactionName + " elements: " + this.queue.size());
-	}
+        log.info("Initializing with" + noficifactionName + " elements: " + queue.size());
+    }
 
-	public TimeSeriesSource(String noficifactionName) {
-		super("SequenceQueueSource");
-		this.queue = new LinkedBlockingQueue<T>();
-		this.setInput(null);
-		this.setState(SourceStatus.CONNECTED);
-		Logger.getLogger(this.getClass().getCanonicalName()).info("initializing queue with notification name:" + noficifactionName + "and " + this.queue.size() + " elements");
-	}
+    public TimeSeriesSource(String noficifactionName) {
+        super("SequenceQueueSource");
+        queue = new LinkedBlockingQueue<T>();
+        setInput(null);
+        setState(SourceStatus.CONNECTED);
 
-	@Override
-	protected T iNextItem() throws Exception {
-		Logger.getLogger(this.getClass().getCanonicalName()).info(" next element called, queue size " + getQueue().size());
-		T element;
-		element = this.getQueue().take();
-		if(element != null && element.isMarkedAsLastElement()){
-			setsendLastElement();
-		}
-		return element;
-	}
+        log.info(String.format("Initializing queue with notification name \"%s\" and %d elements", noficifactionName, queue.size()));
+    }
 
-	
+    @Override
+    protected T iNextItem() throws Exception {
+        log.fine("Next element called, queue size " + getQueue().size());
+        T element = getQueue().take();
+        if (element != null && element.isMarkedAsLastElement())
+            setsendLastElement();
+        return element;
+    }
 
-	
+    BlockingQueue<T> getQueue() {
+        return queue;
+    }
 
-	protected BlockingQueue<T> getQueue() {
-		return this.queue;
-	}
+    public void reset() {
+        getQueue().clear();
+        setInput(null);
+    }
 
-	public void reset(){
-		getQueue().clear();
-		setInput(null);
-	}
-	public int size() {
-		return this.queue.size();
-	}
+    public int size() {
+        return queue.size();
+    }
 
-	protected void copyDataFromTimeSeriesToSourceQueue(int startIndex, int endIndex) {
-		if (getInput() == null)
-			return;
-		for (int i = startIndex; i <= endIndex; i++) {
-			TimeSeriesSource.this.queue.add(this.getInput().get(i));
-		}
-	}
+    void copyDataFromTimeSeriesToSourceQueue(int startIndex, int endIndex) {
+        if (getInput() == null) return;
+        for (int i = startIndex; i <= endIndex; i++)
+            queue.add(getInput().get(i));
+    }
 
-	@Override
-	public void timeseriesStatusChanged(TimeseriesStatusEvent status) {
-		if (status.getStatus().equals(TimeseriesStatus.ELEMENTSADDED)) {
-			copyDataFromTimeSeriesToSourceQueue(status.getStartIndex(), status.getEndIndex());
-		}
-	}
+    @Override
+    public void timeSeriesStatusChanged(TimeSeriesStatusEvent status) {
+        if (status.getStatus().equals(TimeSeriesStatus.ELEMENTS_ADDED))
+            copyDataFromTimeSeriesToSourceQueue(status.getStartIndex(), status.getEndIndex());
+    }
 
-	
 
-	public void setInput(TimeSeries<T> newInput) {
-		deregisterFromCurrentInputIfNotNull();
-		if (newInput == null) {
-			Logger.getLogger(this.getClass().getCanonicalName()).info("new input to set is null");
-		} else {
-			Logger.getLogger(this.getClass().getCanonicalName()).info("setting new input for inputqueue, size " + newInput.size());
-		}
+    public void setInput(TimeSeries<T> newInput) {
+        deregisterFromCurrentInputIfNotNull();
 
-		this.input = newInput;
-		registerOnNewInputIfNotNull();
-		copyInitialElementIfInputNotNull();
-	}
+        if (newInput == null)
+            log.fine("New input to set is null");
+        else
+            log.fine("Setting new input for input queue, size " + newInput.size());
 
-	/**
-	 * This is a helper function which is called when a new timeseries has been
-	 * set as input . It copies all elements from the @input timeseries to the
-	 * source blocking queue if the timeseries object is not null.
-	 */
-	private void copyInitialElementIfInputNotNull() {
-		if (this.input != null) {
-			copyDataFromTimeSeriesToSourceQueue(0, this.input.size() - 1);
-		}
-	}
+        input = newInput;
+        registerOnNewInputIfNotNull();
+        copyInitialElementIfInputNotNull();
+    }
 
-	/**
-	 * 
-	 */
-	private void registerOnNewInputIfNotNull() {
-		if (this.input != null) {
-			Logger.getLogger(this.getClass().getCanonicalName()).info("starting listenting on new input");
-			this.getInput().addTimeSeriesStatusListener(this);
-		}
-	}
+    /**
+     * This is a helper function which is called when a new timeseries has been
+     * set as input . It copies all elements from the @input timeseries to the
+     * source blocking queue if the timeseries object is not null.
+     */
+    private void copyInitialElementIfInputNotNull() {
+        if (input != null) {
+            copyDataFromTimeSeriesToSourceQueue(0, input.size() - 1);
+        }
+    }
 
-	/**
-	 * 
-	 */
-	private void deregisterFromCurrentInputIfNotNull() {
-		Logger.getLogger(this.getClass().getCanonicalName()).info("entered deregisterFromCurrentInputIfNotNull " + (getInput() != null));
-		if (getInput() != null) {
-			getInput().removeTimeseriesStatusListener(this);
-			Logger.getLogger(this.getClass().getCanonicalName()).info("stopping listening on current input");
-		}
-	}
+    private void registerOnNewInputIfNotNull() {
+        if (input != null) {
+            log.fine("Starting listenting on new input");
+            getInput().addTimeSeriesStatusListener(this);
+        }
+    }
 
-	public TimeSeries<T> getInput() {
-		return this.input;
-	}
+    private void deregisterFromCurrentInputIfNotNull() {
+        log.finer("Entered deregisterFromCurrentInputIfNotNull " + (getInput() != null));
+        if (getInput() != null) {
+            getInput().removeTimeseriesStatusListener(this);
+            log.fine("Stopping listening on current input");
+        }
+    }
 
-	@Override
-	protected void iDisconnect() throws ActionFailedException {
-		// is ignored by this implementation
-	}
+    public TimeSeries<T> getInput() {
+        return input;
+    }
 
-	@Override
-	protected void iConnect() throws ActionFailedException {
-		// is ignored by this implementation
-	}
+    @Override
+    protected void iDisconnect() throws ActionFailedException {}
 
-	public boolean isReady() {
-		return false;
-	}
+    @Override
+    protected void iConnect() throws ActionFailedException {}
 
+    public boolean isReady() {
+        return false;
+    }
 }

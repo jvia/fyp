@@ -44,9 +44,9 @@ public class RecorderPanel extends JPanel implements RecorderStatusListener {
 
 	private static final long serialVersionUID = 1L;
 	private Recorder recorder;
-	Logger logger;
+	private final Logger logger;
 
-	public boolean isGuiActivated() {
+	boolean isGuiActivated() {
 		try {
 			return this.recorderToolbar.getComponent(0).isEnabled();
 		} catch (Exception e) {
@@ -54,7 +54,7 @@ public class RecorderPanel extends JPanel implements RecorderStatusListener {
 		}
 	}
 
-	public void synchronizeStatusWithRecorder() {
+	void synchronizeStatusWithRecorder() {
 		verifyFolderCanBeChanged();
 		refreshGuiLabels();
 		if ((getRecorder().isReady() || getRecorder().isRecording()) && !isGuiActivated()) {
@@ -106,9 +106,9 @@ public class RecorderPanel extends JPanel implements RecorderStatusListener {
 
 	XYSeries frequencySeries;
 	JLabel currentFrequencyLabel;
-	JLabel numberRecordedEventsLabel;
+	private JLabel numberRecordedEventsLabel;
 
-	protected JButton makeNavigationButton(String imgLocation, String actionCommand, String toolTipText, String altText, ActionListener buttonActionListener) {
+	JButton makeNavigationButton(String imgLocation, String actionCommand, String toolTipText, String altText, ActionListener buttonActionListener) {
 		// Look for the image.
 		URL imageURL = RecorderPanel.class.getResource(imgLocation);
 
@@ -351,11 +351,11 @@ public class RecorderPanel extends JPanel implements RecorderStatusListener {
 		this.jButton1.setEnabled(false);
 	}// GEN-LAST:event_jButton1ActionPerformed
 
-	public synchronized void setRecorder(Recorder recorder) {
+	synchronized void setRecorder(Recorder recorder) {
 		this.recorder = recorder;
 	}
 
-	public synchronized Recorder getRecorder() {
+	synchronized Recorder getRecorder() {
 		return this.recorder;
 	}
 

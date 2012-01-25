@@ -15,11 +15,11 @@ import org.bham.aucom.fts.source.SourceStatus;
 
 public class PlayTimeSeriesSource<T extends AbstractData> extends AucomSourceAdapter<T> {
 	private static final long serialVersionUID = 1L;
-	final BlockingQueue<T> queue;
+	private final BlockingQueue<T> queue;
 	TimeSeries<T> input;
-	ScheduledExecutorService service;
-	long firstTimestamp;
-	Object waiterObj;
+	private ScheduledExecutorService service;
+	private long firstTimestamp;
+	private final Object waiterObj;
 
 	public PlayTimeSeriesSource() {
 		super("PlayTimeSeriesSource");

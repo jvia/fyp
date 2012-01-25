@@ -1,13 +1,13 @@
 package org.bham.aucom.data;
 
-import static org.bham.aucom.util.Constants.LOWEST_PROBABILITY;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import static org.bham.aucom.util.Constants.LOWEST_PROBABILITY;
+
 public class TemporalProbabilityFeature extends TemporalDurationFeature {
-	protected HashMap<DataType, Double> dataTypeToProbabilityMapping = new LinkedHashMap<DataType, Double>();
+	private HashMap<DataType, Double> dataTypeToProbabilityMapping = new LinkedHashMap<DataType, Double>();
 
 	/*
 	 * This constructor is used to load a saved version of a TemporalProbabilityFeature 
@@ -31,41 +31,22 @@ public class TemporalProbabilityFeature extends TemporalDurationFeature {
 	/*
 	 * 
 	 */
-	public TemporalProbabilityFeature(TemporalProbabilityFeature tpf) {
+    TemporalProbabilityFeature(TemporalProbabilityFeature tpf) {
 		this(tpf, tpf.getDataTypeToProbabilityMapping());
 }
 
-
-//	public TemporalDurationFeature getGeneratedFromData() {
-//		if(this.generaDurationFeature == null)
-//			try {
-//				initializeGeneratedFrom();
-//			} catch (IdNotFoundException exception) {
-//				exception.printStackTrace();
-//				return null;
-//			}
-//		return this.generaDurationFeature;
-//	}
 
 	public TemporalProbabilityFeature() {
 		
 	}
 	
-	public ArrayList<Double> getDurationProbabilities() {
+	ArrayList<Double> getDurationProbabilities() {
 		ArrayList<Double> out = new ArrayList<Double>();
 		for (Double probability : this.dataTypeToProbabilityMapping.values()) {
 			out.add(probability);
 		}
 		return out;
 	}
-
-//	public void add(Integer eventType, Double inProbability) {
-//		if (isUnknownEventType(eventType)){
-//			System.out.println("Warning: unknown predecessor");
-//			return;
-//		}
-//		this.getDataTypeToProbabilityMapping().put(this.getEventTypeToIdMapping().get(eventType), inProbability);
-//	}
 
 	public double getProbabilityFor(DataType eventType) {
 		if (isUnknownEventType(eventType)) {
@@ -75,34 +56,24 @@ public class TemporalProbabilityFeature extends TemporalDurationFeature {
 		return this.getDataTypeToProbabilityMapping().get(eventType);
 	}
 
-	public double getProbabilityFor(int eventTypeId) {
-	    for(DataType dtp: this.getDataTypeToProbabilityMapping().keySet()){
-	        if(dtp.getEventType() == eventTypeId){
-	            return this.getDataTypeToProbabilityMapping().get(dtp);
-	        }
-	    }
-        System.out.println("Warning: unknown predecessor");
-        return LOWEST_PROBABILITY;
-	}
-
-	/*
-	 * @param eventType
-	 * @return
-	 */
+    /*
+      * @param eventType
+      * @return
+      */
 	private boolean isUnknownEventType(DataType eventType) {
 		return !this.getDataTypeToProbabilityMapping().containsKey(eventType);
 	}
 
 
-	protected void setDataTypeToProbabilityMapping(HashMap<DataType, Double> dataTypeToProbabilityMapping) {
+	void setDataTypeToProbabilityMapping(HashMap<DataType, Double> dataTypeToProbabilityMapping) {
 		this.dataTypeToProbabilityMapping = dataTypeToProbabilityMapping;
 	}
 
-	protected HashMap<DataType, Double> getDataTypeToProbabilityMapping() {
+	HashMap<DataType, Double> getDataTypeToProbabilityMapping() {
 		return this.dataTypeToProbabilityMapping;
 	}
 
-	public static TemporalProbabilityFeature createRandomTemporalProbabilityFeature() {
+	static TemporalProbabilityFeature createRandomTemporalProbabilityFeature() {
 		TemporalDurationFeature f = createRandomTemporalDurationFeature();
 		LinkedHashMap<DataType, Double> probabilities = new LinkedHashMap<DataType, Double>();
 		for(DataType dtp : f.getPredecessors()){

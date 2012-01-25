@@ -11,13 +11,13 @@ import org.bham.aucom.diagnoser.t2gram.ProbabilityDistribution;
 public class HistogramDistribution implements ProbabilityDistribution{
 	private static final long serialVersionUID = 1L;
 	private String name;
-	public HistogramData content;
+	private final HistogramData content;
 
 	class HistogramDistributionIterator implements Iterator<Double> {
-		HistogramDistribution dist;
-		int index;
-		int maxIndex;
-		Iterator<HistogramBin> it;
+		final HistogramDistribution dist;
+		final int index;
+		final int maxIndex;
+		final Iterator<HistogramBin> it;
 
 		public HistogramDistributionIterator(HistogramDistribution inDist) {
 			this.dist = inDist;
@@ -75,10 +75,10 @@ public class HistogramDistribution implements ProbabilityDistribution{
 //		validate();
 	}
 
-	public Iterator<Double> getProbabilities(){
+	Iterator<Double> getProbabilities(){
 		return new HistogramDistributionIterator(this);
 	}
-	public double getProbByBinNumber(int binNumber) {
+	double getProbByBinNumber(int binNumber) {
 		double probability = LOWEST_PROBABILITY;
 		if (this.content.containsBinWithNumber(binNumber)) {
 			double numElements = this.content.getSumValues();
@@ -108,7 +108,7 @@ public class HistogramDistribution implements ProbabilityDistribution{
 	 * @param name
 	 *            the name to set
 	 */
-	public void setName(String name) {
+    void setName(String name) {
 		this.name = name;
 	}
 
@@ -128,7 +128,7 @@ public class HistogramDistribution implements ProbabilityDistribution{
 		 }
 		return -entropy;
 	}
-	public double log(double value, double base){
+	double log(double value, double base){
 		return Math.log(value)/Math.log(base);
 	}
 	private double calcEntropy(double inValue){
@@ -177,7 +177,7 @@ public class HistogramDistribution implements ProbabilityDistribution{
 		Logger.getLogger(this.getClass().getCanonicalName()).info(info);
 	}
 
-	public void setDebugLevel(Level level) {
+	void setDebugLevel(Level level) {
 		Logger.getLogger(this.getClass().getCanonicalName()).setLevel(level);
 	}
 	public Level getDebugLevel(){

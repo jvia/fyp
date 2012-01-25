@@ -25,7 +25,7 @@ public class AddAttributeToElement extends AbstractAucomTransformNode<Observatio
      * @return the attr The attributes which will be added to the next xom.Element which will be piped through this
      *         node.
      */
-    public synchronized ArrayList<Attribute> getAttr() {
+    synchronized ArrayList<Attribute> getAttr() {
         return attributesToAdd;
     }
 

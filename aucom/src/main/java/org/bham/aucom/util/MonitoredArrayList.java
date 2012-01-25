@@ -1,18 +1,17 @@
 package org.bham.aucom.util;
 
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
-
-public class MonitorableArrayList<E> extends ArrayList<E> implements Serializable{
+public class MonitoredArrayList<E> extends ArrayList<E> implements Serializable{
 	private static final long serialVersionUID = 1L;
-	transient ArrayList<ListDataListener> listeners = new ArrayList<ListDataListener>();
-	private ArrayList<E> backedList;
+	private final transient ArrayList<ListDataListener> listeners = new ArrayList<ListDataListener>();
+	private final ArrayList<E> backedList;
 
-	public MonitorableArrayList(ArrayList<E> inList) {
+	public MonitoredArrayList(ArrayList<E> inList) {
 		backedList = inList;
 	}
 
@@ -21,9 +20,9 @@ public class MonitorableArrayList<E> extends ArrayList<E> implements Serializabl
 		return backedList.get(index);
 	}
 
-	public void removeListDataListener(ListDataListener l) {
-		listeners.remove(l);
-	}
+//	public void removeListDataListener(ListDataListener l) {
+//		listeners.remove(l);
+//	}
 
 	public void addListDataListener(ListDataListener l) {
 		listeners.add(l);

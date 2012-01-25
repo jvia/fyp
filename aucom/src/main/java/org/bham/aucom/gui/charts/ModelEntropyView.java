@@ -2,7 +2,6 @@ package org.bham.aucom.gui.charts;
 
 import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.diagnoser.t2gram.ProbabilityDistribution;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
 import org.bham.aucom.util.HashMatrix;
 import org.bham.aucom.util.Tuple;
 import org.jfree.chart.ChartFactory;
@@ -30,14 +29,13 @@ public class ModelEntropyView extends JPanel {
 
     private DefaultCategoryDataset extractEntropyValues(Model main) {
         DefaultCategoryDataset out = new DefaultCategoryDataset();
-        T2GramModelI model = (T2GramModelI) main;
-        HashMatrix<Integer, Integer, ProbabilityDistribution> distribution = model
-                .getTransitionMatrix();
+        HashMatrix<Integer, Integer, ProbabilityDistribution> distribution = main.getTransitionMatrix();
+
         for (Tuple<Integer, Integer> tuple : distribution.keySet()) {
-            out.addValue(distribution.get(tuple.getFirstElement(),
-                                          tuple.getSecondElement()).getEntropy(), "entropy", tuple
-                                                                                                     .getFirstElement()
-                                                                                             + "_" + tuple.getSecondElement());
+            out.addValue(distribution.get(tuple.getFirst(),
+                                          tuple.getSecond()).getEntropy(), "entropy", tuple
+                                                                                                     .getFirst()
+                                                                                             + "_" + tuple.getSecond());
         }
         return out;
     }
@@ -57,27 +55,27 @@ public class ModelEntropyView extends JPanel {
         this.validate();
     }
 
-    public void setPanel(ChartPanel panel) {
+    void setPanel(ChartPanel panel) {
         this.panel = panel;
     }
 
-    public ChartPanel getPanel() {
+    ChartPanel getPanel() {
         return panel;
     }
 
-    public void setChart(JFreeChart chart) {
+    void setChart(JFreeChart chart) {
         this.chart = chart;
     }
 
-    public JFreeChart getChart() {
+    JFreeChart getChart() {
         return chart;
     }
 
-    public void setDataSet(DefaultCategoryDataset dataSet) {
+    void setDataSet(DefaultCategoryDataset dataSet) {
         this.dataSet = dataSet;
     }
 
-    public DefaultCategoryDataset getDataSet() {
+    DefaultCategoryDataset getDataSet() {
         return dataSet;
     }
 

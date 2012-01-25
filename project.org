@@ -8,8 +8,12 @@
 
 * Project
 
-This is my final year project.
-
+** DONE Find class where calculation takes place
+org.bham.aucom.fts.tranform.CalcEntropyAvgScore
+** TODO Make a simple 3-component chain
+** TODO Get data running on 3-chain
+** TODO Get data with 3-chain taking connections into account
+** TODO read through Jay's report and make notes
 * Logbook
 
 Weekly logs from the project.
@@ -100,7 +104,7 @@ to head. Some of the things we talked about:
 
 An important point he mentioned was what kind of story I want to tell
 with my project. I need to provide a deeper understanding and go
-beyond what Raphael, i.e., don't just implement on other systems. 
+beyond what Raphael, i.e., don't just implement on other systems.
 
 He suggested that I start from the beginning so I can find a goal for
 aucom. I should determine what it can and cannot do and relate these
@@ -108,13 +112,13 @@ to real-life scenarios. Essentially, I need to find the story that
 says "his system can't do X, this is how we extended it so it could do
 X".
 
-An interesting problem is determining how well the system scales. 
+An interesting problem is determining how well the system scales.
 
 ** COMMENT 2012-01-16
 
 Quantitative:
 
-- Determine memory & cpu 
+- Determine memory & cpu
 - compare to score
 - experiments on the score
 

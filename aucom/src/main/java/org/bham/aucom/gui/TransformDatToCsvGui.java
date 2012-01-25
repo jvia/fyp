@@ -19,7 +19,7 @@ public class TransformDatToCsvGui extends javax.swing.JFrame {
     private static final long serialVersionUID = 0L;
 
     /** Creates new form TransformDatToCsvGui */
-    public TransformDatToCsvGui() {
+    private TransformDatToCsvGui() {
         initComponents();
     }
 

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class XcfFacesOutBoostDetector {
-    ArrayList<Document> recordedDocumentsList;
+    private final ArrayList<Document> recordedDocumentsList;
 
     public XcfFacesOutBoostDetector(File f) {
         recordedDocumentsList = new ArrayList<Document>();
@@ -112,7 +112,7 @@ public class XcfFacesOutBoostDetector {
         return out;
     }
 
-    public static ArrayList<Element> generateBoostDetectoor(long duration, long offset) {
+    private static ArrayList<Element> generateBoostDetectoor(long duration, long offset) {
         ArrayList<Element> boostDetector = new ArrayList<Element>();
         long timestamp = offset;
         Element tmp;
@@ -135,7 +135,7 @@ public class XcfFacesOutBoostDetector {
         return boostDetector;
     }
 
-    public static ArrayList<Element> generateXcfFacesOuts(long duration, long offset) {
+    private static ArrayList<Element> generateXcfFacesOuts(long duration, long offset) {
         ArrayList<Element> xcfFacesout = new ArrayList<Element>();
         long timestamp = offset;
         Element tmp = null;
@@ -160,7 +160,7 @@ public class XcfFacesOutBoostDetector {
         return xcfFacesout;
     }
 
-    public static void save(ArrayList<Element> elements, File file) {
+    private static void save(ArrayList<Element> elements, File file) {
         try {
             FileWriter out;
             out = new FileWriter(file);

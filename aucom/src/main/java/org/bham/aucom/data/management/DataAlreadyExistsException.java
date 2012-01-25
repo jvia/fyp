@@ -1,11 +1,11 @@
 package org.bham.aucom.data.management;
 
 public class DataAlreadyExistsException extends Exception {
-    
+
     private static final long serialVersionUID = 0L;
-    
+
     public DataAlreadyExistsException() {
-	super();
+        super();
     }
 
     /**
@@ -15,9 +15,9 @@ public class DataAlreadyExistsException extends Exception {
      * <code>{@link java.lang.Throwable#getMessage}</code>
      * method of class <code>java.lang.Throwable</code>.
      *
-     * @param   s   the detail message.
+     * @param s the detail message.
      */
     public DataAlreadyExistsException(String s) {
-	super(s);
+        super(s);
     }
 }

@@ -35,9 +35,9 @@ import org.bham.aucom.util.TimeSeriesNotFoundException;
  */
 public class ScoreView extends javax.swing.JFrame {
 	private static final long serialVersionUID = 0L;
-	File dir = new File("/home/rgolombe/work/experiments/data/tobi/FollowMe/");
+	private final File dir = new File("/home/rgolombe/work/experiments/data/tobi/FollowMe/");
     /** Creates new form ScoreView */
-    public ScoreView() {
+    private ScoreView() {
         initComponents();
     }
 
@@ -85,7 +85,7 @@ public class ScoreView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     @SuppressWarnings("unchecked")
-    public TimeSeries<Score> load(File f){
+    TimeSeries<Score> load(File f){
     	UUID id;
 		try {
             TimeSeries<Score> score = (TimeSeries<Score>) AucomIO.getInstance().readTimeSeriesRelativeToCurrentWorking(f.getName()); 

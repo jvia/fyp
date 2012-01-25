@@ -8,7 +8,7 @@ import nu.xom.Element;
 
 import org.bham.aucom.data.Observation;
 
-public class DocumentToObservation extends AbstractTransformNode<Document, Observation> {
+class DocumentToObservation extends AbstractTransformNode<Document, Observation> {
 
 	@Override
 	protected Observation transform(Document arg0) throws Exception {

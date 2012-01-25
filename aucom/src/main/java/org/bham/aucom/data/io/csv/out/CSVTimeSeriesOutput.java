@@ -16,7 +16,7 @@ import org.bham.aucom.data.timeseries.TimeSeriesType;
 
 // TODO finish converters for different timeseries 
 public class CSVTimeSeriesOutput implements TimeSeriesOutput {
-	HashMap<TimeSeriesType, TimeSeriesToCSVConverter<?>> converter;
+	private final HashMap<TimeSeriesType, TimeSeriesToCSVConverter<?>> converter;
 	public CSVTimeSeriesOutput() {
 		converter = new HashMap<TimeSeriesType, TimeSeriesToCSVConverter<?>>();
 		converter.put(TimeSeriesType.tdf, new TemporalDurationFeatureTimeSeriesToCSVConverter());

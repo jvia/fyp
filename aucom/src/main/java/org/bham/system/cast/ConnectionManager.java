@@ -14,12 +14,12 @@ import java.util.logging.Logger;
  *
  * @author Jeremiah Via <jxv911@cs.bham.ac.uk>
  */
-public class ConnectionManager {
+class ConnectionManager {
 
     private final static Logger LOGGER = Logger.getLogger(ConnectionManager.class.getName());
     private final BlockingQueue<String[]> queue;
-    private String host;
-    private int port;
+    private final String host;
+    private final int port;
     private Socket cast;
     private ObjectInputStream input;
     private ObjectOutputStream output;
@@ -30,7 +30,7 @@ public class ConnectionManager {
      * @param host
      * @param port 
      */
-    public ConnectionManager(String host, int port, LinkedBlockingQueue<String[]> queue) {
+    private ConnectionManager(String host, int port, LinkedBlockingQueue<String[]> queue) {
         LOGGER.setLevel(Level.WARNING);
 
         this.queue = queue;

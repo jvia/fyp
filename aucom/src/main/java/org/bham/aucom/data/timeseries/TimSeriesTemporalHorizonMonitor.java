@@ -7,8 +7,8 @@ import java.util.concurrent.TimeUnit;
 import org.bham.aucom.data.AbstractData;
 
 
-public class TimSeriesTemporalHorizonMonitor {
-	TimeSeries<? extends AbstractData> timeSeriesToMonitor = null;
+class TimSeriesTemporalHorizonMonitor {
+	private TimeSeries<? extends AbstractData> timeSeriesToMonitor = null;
 	private ScheduledExecutorService service = null;
 	private long horizonInMilliseconds = 0l;
 
@@ -34,7 +34,7 @@ public class TimSeriesTemporalHorizonMonitor {
 		}, 100, 100, TimeUnit.MILLISECONDS);
 	}
 
-	protected void trim() {
+	void trim() {
 		long newestTimestampInSeries = this.timeSeriesToMonitor.get(this.timeSeriesToMonitor.size() - 1).getTimestamp();
 		long oldestAllowedTimstamp = newestTimestampInSeries - getHorizonInMilliseconds();
 		for (int i = 0; i < this.timeSeriesToMonitor.size(); i++) {
@@ -52,11 +52,11 @@ public class TimSeriesTemporalHorizonMonitor {
 		super.finalize();
 	}
 
-	public synchronized void setHorizonInMilliseconds(long horizonInMilliseconds) {
+	synchronized void setHorizonInMilliseconds(long horizonInMilliseconds) {
 		this.horizonInMilliseconds = horizonInMilliseconds;
 	}
 
-	public synchronized long getHorizonInMilliseconds() {
+	synchronized long getHorizonInMilliseconds() {
 		return this.horizonInMilliseconds;
 	}
 }

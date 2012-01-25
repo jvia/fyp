@@ -1,12 +1,12 @@
 package org.bham.aucom.data;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.StatisticalAnomalyClassifier;
 import org.bham.aucom.util.Constants;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
 
 /*
@@ -34,7 +34,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		if (classificationTimeSeries.size() == 0) {
 			Logger.getLogger(this.getClass().getCanonicalName()).severe(this.getClass() + " warning timeseries has length 0");
 		}
-		if(!hasInducedFaultTimestamp()){
+		if(hasNotInducedFaultTimestamp()){
 			Logger.getLogger(this.getClass().getCanonicalName()).severe(this.getClass() + " timeseries has no fault induces timestamp attribute");
 		}
 	}
@@ -126,7 +126,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 	 * 
 	 * @return total number of faults in the time-series
 	 */
-	public int getAnomalyValueCount() {
+    int getAnomalyValueCount() {
 		TimeSeries<Classification> list = getTimeSeries();
 		int numberFaults = 0;
 		synchronized (list) {
@@ -215,17 +215,17 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		return (double) getTailAnomalyValueCount() / (double) getTail().size();
 	}
 
-	/*
+	/**
 	 * Returns a boolean value which indicate whether the current time-series
 	 * carries along a time-stamp of an induced fault.
 	 * 
 	 * @return true if the time-series has a time-stamp for an induced fault
 	 */
-	public boolean hasInducedFaultTimestamp() {
-		return Long.MAX_VALUE != getFautlTimestamp();
+    boolean hasNotInducedFaultTimestamp() {
+		return Long.MAX_VALUE == getFautlTimestamp();
 	}
 
-	/*
+	/**
 	 * Computes the mean score for the current time-series
 	 * 
 	 * @return mean score for the time-series
@@ -353,7 +353,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 	 * 
 	 * @return current time-series
 	 */
-	public TimeSeries<Classification> getTimeSeries() {
+    TimeSeries<Classification> getTimeSeries() {
 		return classificationTimeSeries;
 	}
 
@@ -396,7 +396,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 			return new ArrayList<Classification>();
 		}
 		List<Classification> head = new ArrayList<Classification>();
-		if (!hasInducedFaultTimestamp()) {
+		if (hasNotInducedFaultTimestamp()) {
 			head.addAll(getTimeSeries().getall());
 			return head;
 		}
@@ -426,7 +426,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 			return new ArrayList<Classification>();
 		}
 		List<Classification> tail = new ArrayList<Classification>();
-		if (!hasInducedFaultTimestamp()) {
+		if (hasNotInducedFaultTimestamp()) {
 			return tail;
 		}
 		long faultTimeStamp = getFautlTimestamp();

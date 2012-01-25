@@ -15,7 +15,7 @@ import org.bham.aucom.util.Constants;
 
 public class PlayFileSystemConnection extends SystemConnection {
     private File file;
-    PlayFileGraph graph;
+    private PlayFileGraph graph;
 
     public PlayFileSystemConnection() {
         super("ReplayFileSystemConnection");
@@ -87,7 +87,7 @@ public class PlayFileSystemConnection extends SystemConnection {
         return panel;
     }
 
-    public File getFile() {
+    File getFile() {
         return file;
     }
 

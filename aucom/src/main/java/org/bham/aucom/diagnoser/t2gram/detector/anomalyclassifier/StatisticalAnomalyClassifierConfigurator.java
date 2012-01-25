@@ -20,7 +20,7 @@ public class StatisticalAnomalyClassifierConfigurator implements AnomalyConfigur
         }
     }
 
-    public double getVariance() {
+    double getVariance() {
         return variance;
     }
 
@@ -28,7 +28,7 @@ public class StatisticalAnomalyClassifierConfigurator implements AnomalyConfigur
         this.variance = variance;
     }
 
-    public double getMean() {
+    double getMean() {
         return mean;
     }
 

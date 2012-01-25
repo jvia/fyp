@@ -6,9 +6,9 @@ import java.util.LinkedHashMap;
 import javax.swing.JPanel;
 
 public class AnomalyClassifierFactory {
-	HashMap<String, Class<? extends AnomalyClassifier>> nameToClMapping = new LinkedHashMap<String, Class<? extends AnomalyClassifier>>();
-	HashMap<Class<? extends AnomalyClassifier>, Class<? extends AnomalyConfigurator>> clToCfgMapping = new LinkedHashMap<Class<? extends AnomalyClassifier>, Class<? extends AnomalyConfigurator>>();
-	HashMap<Class<? extends AnomalyConfigurator>, Class<? extends AnomalyConfiguratorPanel>> cfToPanelMapping = new LinkedHashMap<Class<? extends AnomalyConfigurator>, Class<? extends AnomalyConfiguratorPanel>>();
+	private final HashMap<String, Class<? extends AnomalyClassifier>> nameToClMapping = new LinkedHashMap<String, Class<? extends AnomalyClassifier>>();
+	private final HashMap<Class<? extends AnomalyClassifier>, Class<? extends AnomalyConfigurator>> clToCfgMapping = new LinkedHashMap<Class<? extends AnomalyClassifier>, Class<? extends AnomalyConfigurator>>();
+	private final HashMap<Class<? extends AnomalyConfigurator>, Class<? extends AnomalyConfiguratorPanel>> cfToPanelMapping = new LinkedHashMap<Class<? extends AnomalyConfigurator>, Class<? extends AnomalyConfiguratorPanel>>();
 
 	public void add(String name, Class<? extends AnomalyClassifier> adClass, Class<? extends AnomalyConfigurator> cfgClass, Class<? extends AnomalyConfiguratorPanel> cfgPanelClass) {
 

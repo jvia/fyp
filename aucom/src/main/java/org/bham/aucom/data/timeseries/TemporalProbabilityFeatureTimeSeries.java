@@ -15,7 +15,7 @@ public class TemporalProbabilityFeatureTimeSeries extends TimeSeries<TemporalPro
 		setType(TimeSeriesType.tpf);
 	}
 
-	public TemporalProbabilityFeatureTimeSeries(UUID generatoId, UUID generatedFromID) {
+	private TemporalProbabilityFeatureTimeSeries(UUID generatoId, UUID generatedFromID) {
 		super();
 		setGenerator(generatoId);
 		setGeneratedFrom(generatedFromID);

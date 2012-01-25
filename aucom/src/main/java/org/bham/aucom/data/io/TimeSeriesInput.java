@@ -9,5 +9,5 @@ import nu.xom.ValidityException;
 import org.bham.aucom.data.timeseries.TimeSeries;
 
 public interface TimeSeriesInput {
-		public TimeSeries<?> read(File file) throws ValidityException, ParsingException, IOException ;
+		public TimeSeries<?> read(File file) throws ParsingException, IOException ;
 }

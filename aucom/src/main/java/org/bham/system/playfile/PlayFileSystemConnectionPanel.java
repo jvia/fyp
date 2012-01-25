@@ -32,8 +32,8 @@ public class PlayFileSystemConnectionPanel extends javax.swing.JPanel implements
      * 
      */
     private static final long serialVersionUID = 1L;
-    ScheduledExecutorService service;
-	private PlayFileSystemConnection connection;
+    private ScheduledExecutorService service;
+	private final PlayFileSystemConnection connection;
 	/* Creates new form XcfRecordSystemConnectionPanel */
 	public PlayFileSystemConnectionPanel(PlayFileSystemConnection inConnection) {
 		initComponents();

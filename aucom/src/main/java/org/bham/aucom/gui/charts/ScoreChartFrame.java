@@ -36,7 +36,7 @@ import org.bham.aucom.data.management.DataAlreadyExistsException;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.data.util.DataManager;
 import org.bham.aucom.util.ExampleFileFilter;
-import org.bham.aucom.util.MonitorableArrayList;
+import org.bham.aucom.util.MonitoredArrayList;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -46,20 +46,20 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 public class ScoreChartFrame extends javax.swing.JFrame implements
 		ListDataListener {
-    	File dir = new File("/home/rgolombe/work/experiments/data/tobi/FollowMe/");
-        MonitorableArrayList<Score> data;
+    	private final File dir = new File("/home/rgolombe/work/experiments/data/tobi/FollowMe/");
+        private MonitoredArrayList<Score> data;
 	private static final long serialVersionUID = 1L;
-	XYSeriesCollection dataset = new XYSeriesCollection();
+	private XYSeriesCollection dataset = new XYSeriesCollection();
 	private JFreeChart chart;
 	private List<Score> externDataset;
 
 	/* Creates new form ProbabilityChartFrame */
-	public ScoreChartFrame(MonitorableArrayList<Score> inData) {
+    private ScoreChartFrame(MonitoredArrayList<Score> inData) {
 		initComponents();
 		initChart(inData);
 	}
 
-	public void syncDataWithDataSet() {
+	void syncDataWithDataSet() {
 		if (this.isVisible()) {
 			List<Score> scoreToDisplay = getDisplayableScores();
 			List<Score> scoreToHide = getHideableScores();
@@ -73,20 +73,20 @@ public class ScoreChartFrame extends javax.swing.JFrame implements
 
 	}
 
-	public List<Score> getHideableScores() {
+	List<Score> getHideableScores() {
 		int from = new Long(visibleDataSlider.getValue()).intValue();
 		int to = from + rangeSlider.getValue() - 1;
 		return getScoresNotInRange(externDataset, from, to);
 	}
 
-	public List<Score> getDisplayableScores() {
+	List<Score> getDisplayableScores() {
 		int from = visibleDataSlider.getValue();
 		int to = from + rangeSlider.getValue() - 1;
 		// System.out.println("DisplayableScores " + from + " "+ to);
 		return getScoresInRange(externDataset, from, to);
 	}
 
-	public List<Score> getScoresNotInRange(List<Score> data, int from, int to) {
+	List<Score> getScoresNotInRange(List<Score> data, int from, int to) {
 		List<Score> list = new ArrayList<Score>();
 		for (Score score : externDataset) {
 			int timestamp = ((Long) score.getTimestamp()).intValue();
@@ -100,7 +100,7 @@ public class ScoreChartFrame extends javax.swing.JFrame implements
 		return list;
 	}
 
-	public List<Score> getScoresInRange(List<Score> data, int from, int to) {
+	List<Score> getScoresInRange(List<Score> data, int from, int to) {
 		List<Score> list = new ArrayList<Score>();
 		for (Score score : externDataset) {
 			int timestamp = ((Long) score.getTimestamp()).intValue();
@@ -122,7 +122,7 @@ public class ScoreChartFrame extends javax.swing.JFrame implements
 		// throw new NotImplementedException();
 	}
 
-	public void updateSliderRanges() {
+	void updateSliderRanges() {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -149,7 +149,7 @@ public class ScoreChartFrame extends javax.swing.JFrame implements
 	public void intervalRemoved(ListDataEvent e) {
 	}
 
-	public void initChart(MonitorableArrayList<Score> inData) {
+	void initChart(MonitoredArrayList<Score> inData) {
 		inData.addListDataListener(this);
                 data = inData;
 		externDataset = Collections.synchronizedList(inData);
@@ -165,7 +165,7 @@ public class ScoreChartFrame extends javax.swing.JFrame implements
 
 	}
 
-	public void removeV(final Score inScore) {
+	void removeV(final Score inScore) {
 		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
@@ -175,7 +175,7 @@ public class ScoreChartFrame extends javax.swing.JFrame implements
 		});
 	}
 
-	public void addV(final Score inScore) {
+	void addV(final Score inScore) {
 		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
@@ -185,7 +185,7 @@ public class ScoreChartFrame extends javax.swing.JFrame implements
 		});
 	}
 
-	public void addValue(Score inScore) {
+	void addValue(Score inScore) {
 		// TODO FIX
 //		if (inScore != null) {
 //			XYDataItem item = inScore.asXYDataItem();
@@ -217,7 +217,7 @@ public class ScoreChartFrame extends javax.swing.JFrame implements
 //		}
 	}
 
-	public void removeValue(Score inScore) {
+	void removeValue(Score inScore) {
 		// TODO FIX
 //		if (inScore != null) {
 //			int timestamp = ((Long) inScore.getTimestamp()).intValue();
@@ -240,7 +240,7 @@ public class ScoreChartFrame extends javax.swing.JFrame implements
 		}
 	}
 
-	public void setChart(JFreeChart chart) {
+	void setChart(JFreeChart chart) {
 		this.chart = chart;
 	}
 
@@ -351,7 +351,7 @@ public class ScoreChartFrame extends javax.swing.JFrame implements
         pack();
     }// </editor-fold>//GEN-END:initComponents
     @SuppressWarnings("unchecked")
-	public TimeSeries<Score> load(File f){
+    TimeSeries<Score> load(File f){
     	TimeSeries<Score> l = null;
 		try {
 			l = (TimeSeries<Score>) AucomIO.getInstance().readTimeSeriesRelativeToCurrentWorking(f.getName());
@@ -417,7 +417,7 @@ public class ScoreChartFrame extends javax.swing.JFrame implements
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				MonitorableArrayList<Score> s = new MonitorableArrayList<Score>(
+				MonitoredArrayList<Score> s = new MonitoredArrayList<Score>(
 						new ArrayList<Score>());
 				ScoreChartFrame p = new ScoreChartFrame(s);
 				p.setDefaultCloseOperation(EXIT_ON_CLOSE);

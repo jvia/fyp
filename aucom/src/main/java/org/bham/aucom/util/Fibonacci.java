@@ -3,9 +3,9 @@ package org.bham.aucom.util;
 import java.util.ArrayList;
 
 public class Fibonacci {
-    static ArrayList<Integer> fibs;
+    private static ArrayList<Integer> fibs;
 
-    public static int fib(int i) {
+    private static int fib(int i) {
         if (fibs == null) {
             fibs = new ArrayList<Integer>();
             fibs.add(0);

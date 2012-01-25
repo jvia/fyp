@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<aucom:experiments xmlns:aucom="http://www.cor-lab.de">
- <aucom:experiment factory="aucom.experiment.TrainModelExperimentFactory" name="tt1">
-        <aucom:input>
-            <aucom:wd>/homes/rgolombe/experiments/aucom</aucom:wd>
-      </aucom:input>
-    </aucom:experiment>
-</aucom:experiments>

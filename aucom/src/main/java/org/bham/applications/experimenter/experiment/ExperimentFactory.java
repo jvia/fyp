@@ -14,7 +14,7 @@ import java.util.UUID;
 import static java.lang.Integer.valueOf;
 
 public abstract class ExperimentFactory {
-    protected XPathContext context = new XPathContext("aucom", "http://www.cor-lab.de");
+    final XPathContext context = new XPathContext("aucom", "http://www.cor-lab.de");
 
     public abstract Experiment createExperiment(Element experimentDescription) throws Exception;
 
@@ -27,7 +27,7 @@ public abstract class ExperimentFactory {
         return f;
     }
 
-    protected void setWorkingDirectoryIfPresentInExperimentDescription(Element xmlElement) {
+    void setWorkingDirectoryIfPresentInExperimentDescription(Element xmlElement) {
         String workingDirectory = getWorkingDirectoryFromElement(xmlElement);
         if (workingDirectory != null) {
             AucomIO.getInstance().changeCurrentWorkingDirectory(new File(workingDirectory));
@@ -45,7 +45,7 @@ public abstract class ExperimentFactory {
     }
 
 
-    protected String getAttributeValueFromExperimentElement(Element xmlElement, String attributeKey) throws ValidityException {
+    String getAttributeValueFromExperimentElement(Element xmlElement, String attributeKey) throws ValidityException {
         if (xmlElement.getQualifiedName().equals("aucom:experiment")) {
             if (xmlElement.getAttribute(attributeKey) != null) {
                 return xmlElement.getAttributeValue(attributeKey);
@@ -55,7 +55,7 @@ public abstract class ExperimentFactory {
         throw new ValidityException("cannot extract attribute name from " + xmlElement.getQualifiedName() + ". Qualified name of  element should be aucom:experiment");
     }
 
-    protected String getExperimentNameFromElement(Element xmlElement) throws ValidityException {
+    String getExperimentNameFromElement(Element xmlElement) throws ValidityException {
         return getAttributeValueFromExperimentElement(xmlElement, "name");
     }
 
@@ -116,7 +116,7 @@ public abstract class ExperimentFactory {
         return files;
     }
 
-    protected String getWorkingDirectoryFromElement(Element xmlElement) {
+    String getWorkingDirectoryFromElement(Element xmlElement) {
         Nodes nodes = xmlElement.query("./aucom:input/aucom:wd", this.context);
         if (nodes.size() > 0) {
             return nodes.get(0).getValue();
@@ -149,7 +149,7 @@ public abstract class ExperimentFactory {
         return probabilityFactory;
     }
 
-    protected Object[] getParameterValuesFromElement(Element xmlElement) {
+    Object[] getParameterValuesFromElement(Element xmlElement) {
         Nodes parameters = xmlElement.query("./aucom:parameter", this.context);
         Object[] parameterValues = new Object[parameters.size()];
         for (int i = 0; i < parameters.size(); i++) {
@@ -158,7 +158,7 @@ public abstract class ExperimentFactory {
         return parameterValues;
     }
 
-    protected Class<?>[] getParameterClassesFromElement(Element xmlElement) {
+    Class<?>[] getParameterClassesFromElement(Element xmlElement) {
         Nodes parameters = xmlElement.query("./aucom:parameter", this.context);
         Class<?>[] oneParameterSet = new Class<?>[parameters.size()];
         for (int i = 0; i < parameters.size(); i++) {
@@ -167,7 +167,7 @@ public abstract class ExperimentFactory {
         return oneParameterSet;
     }
 
-    protected Class<?> getParameterClassFromElement(Element result) {
+    Class<?> getParameterClassFromElement(Element result) {
         try {
             return Class.forName(result.getAttributeValue("type"));
         } catch (ClassNotFoundException exception) {
@@ -179,7 +179,7 @@ public abstract class ExperimentFactory {
     /*
      * @param result
      */
-    protected Object getParameterValueFromElement(Element result) {
+    Object getParameterValueFromElement(Element result) {
         try {
             Class<?> parameterClass = Class.forName(result.getAttributeValue("type"));
             String value = result.getAttributeValue("value");
@@ -204,7 +204,7 @@ public abstract class ExperimentFactory {
         return null;
     }
 
-    public Class<?> getProbabilityFactoryClassFromElement(Element xmlElement) {
+    Class<?> getProbabilityFactoryClassFromElement(Element xmlElement) {
         String type = xmlElement.getAttributeValue("type");
         try {
             return Class.forName(type);
@@ -214,7 +214,7 @@ public abstract class ExperimentFactory {
         return null;
     }
 
-    public Class<?> getThresholdClassFromElement(Element xmlElement) {
+    Class<?> getThresholdClassFromElement(Element xmlElement) {
         Element result = (Element) xmlElement.query("//aucom:Threshold", this.context).get(0);
         String type = result.getAttributeValue("type");
         try {

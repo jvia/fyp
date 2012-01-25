@@ -56,7 +56,7 @@ public class DataType extends Observation {
      *
      * @param d
      */
-    public DataType(DataType d) {
+    DataType(DataType d) {
         this(d.getFeatures(), d.getEventType(), d);
     }
 
@@ -142,7 +142,7 @@ public class DataType extends Observation {
      *
      * @return a random DataType object
      */
-    public static DataType createRandomDataType() {
+    static DataType createRandomDataType() {
         Observation rndObs = createRandomObservation();
         List<DomainFeature> rndDomainFeatureList = createRandomDomainFeature();
         int rndDataType = createRandomDT();

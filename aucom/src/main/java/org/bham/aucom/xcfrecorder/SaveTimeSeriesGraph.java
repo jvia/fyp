@@ -1,27 +1,18 @@
 package org.bham.aucom.xcfrecorder;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.UUID;
-import java.util.logging.Logger;
-
 import net.sf.xcf.fts.engine.EngineThread;
-
 import org.bham.aucom.data.Observation;
-import org.bham.aucom.data.timeseries.ObservationTimeSeries;
-import org.bham.aucom.data.timeseries.TimeSeries;
-import org.bham.aucom.data.timeseries.TimeSeriesStatusListener;
-import org.bham.aucom.data.timeseries.TimeseriesStatus;
-import org.bham.aucom.data.timeseries.TimeseriesStatusEvent;
+import org.bham.aucom.data.timeseries.*;
 import org.bham.aucom.fts.graph.AbstractAucomGraph;
 import org.bham.aucom.fts.sink.ObservableStreamSink;
 import org.bham.aucom.fts.sink.SinkStatusListener;
 import org.bham.aucom.fts.source.TimeSeriesSource;
 import org.bham.aucom.fts.tranform.MarkNextDataPointAsLast;
 import org.bham.aucom.util.Constants;
+
+import java.io.*;
+import java.util.UUID;
+import java.util.logging.Logger;
 
 public class SaveTimeSeriesGraph extends AbstractAucomGraph implements SinkStatusListener, TimeSeriesStatusListener {
 	private static final long serialVersionUID = 0L;
@@ -30,12 +21,12 @@ public class SaveTimeSeriesGraph extends AbstractAucomGraph implements SinkStatu
 	private static final String XML_VERSION = "<?xml version=\"1.0\"?>\n";
 	private static final String CLOSING_TAG = "</ts:elements></ts:timeseries>";
 	EngineThread engineThread;
-	transient OutputStream outputStream;
+	private transient OutputStream outputStream;
 
-	TimeSeriesSource<Observation> source;
-	Counter<Observation> counter;
-	MarkNextDataPointAsLast<Observation> marker;
-	ObservableStreamSink<Observation> sink;
+	private TimeSeriesSource<Observation> source;
+	private Counter<Observation> counter;
+	private MarkNextDataPointAsLast<Observation> marker;
+	private ObservableStreamSink<Observation> sink;
 
 	private TimeSeries<Observation> timeSeriesToSave;
 
@@ -106,8 +97,8 @@ public class SaveTimeSeriesGraph extends AbstractAucomGraph implements SinkStatu
 	}
 
 	@Override
-	public void timeseriesStatusChanged(TimeseriesStatusEvent status) {
-		if (status.getStatus().equals(TimeseriesStatus.ELEMENTSADDED)) {
+	public void timeSeriesStatusChanged(TimeSeriesStatusEvent status) {
+		if (status.getStatus().equals(TimeSeriesStatus.ELEMENTS_ADDED)) {
 			for (int i = status.getStartIndex(); i <= status.getEndIndex(); i++) {
 				this.source.getInput().add(this.getTimeSeriesToSave().get(i));
 			}
@@ -127,7 +118,7 @@ public class SaveTimeSeriesGraph extends AbstractAucomGraph implements SinkStatu
 	}
 
 	@Override
-	public boolean preconditionsSatisfied() {
+    protected boolean preconditionsSatisfied() {
 		return getTimeSeriesToSave() != null;	
 	}
 
@@ -140,11 +131,11 @@ public class SaveTimeSeriesGraph extends AbstractAucomGraph implements SinkStatu
 		return s;
 	}
 
-	public TimeSeries<Observation> getTimeSeriesToSave() {
+	TimeSeries<Observation> getTimeSeriesToSave() {
 		return timeSeriesToSave;
 	}
 
-	public void setTimeSeriesToSave(TimeSeries<Observation> timeSeriesToSave) {
+	void setTimeSeriesToSave(TimeSeries<Observation> timeSeriesToSave) {
 		this.timeSeriesToSave = timeSeriesToSave;
 	}
 

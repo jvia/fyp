@@ -6,8 +6,8 @@ import net.sf.xcf.fts.nodes.transform.AbstractTransformNode;
 import org.bham.aucom.data.Classification;
 import org.bham.aucom.data.SystemFaultStatus;
 
-public class ExtractTimestampScoreClassification extends AbstractTransformNode<Classification, Triple<Long, Double, SystemFaultStatus>> {
-	long firstTs;
+class ExtractTimestampScoreClassification extends AbstractTransformNode<Classification, Triple<Long, Double, SystemFaultStatus>> {
+	private long firstTs;
 
 	public ExtractTimestampScoreClassification() {
 		firstTs = -1L;

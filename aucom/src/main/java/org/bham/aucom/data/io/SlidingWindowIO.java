@@ -2,8 +2,8 @@ package org.bham.aucom.data.io;
 
 import org.bham.aucom.data.util.SlidingWindow;
 
-public class SlindingWindowIO extends BinaryIO<SlidingWindow>{
-	SlindingWindowIO(){
+class SlidingWindowIO extends BinaryIO<SlidingWindow>{
+	SlidingWindowIO(){
 		super(SlidingWindow.class);
 	}
 

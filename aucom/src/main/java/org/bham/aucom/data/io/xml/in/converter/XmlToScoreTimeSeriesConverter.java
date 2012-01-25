@@ -23,13 +23,13 @@ public class XmlToScoreTimeSeriesConverter extends XmlToTimeSeriesConverter<Scor
 		return createRangeScoreFrom(e);
 	}
 
-	public Score createSingleScoreFrom(Element e) {
+	Score createSingleScoreFrom(Element e) {
 		double scoreValue = getScoreValue(e);
 		TemporalProbabilityFeature tpf = new XmlToTemporalProbabilityFeatureTimeSeriesConverter().createDataFromElement(e);
 		return new SingleScore(tpf, scoreValue);
 	}
 
-	public RangeScore createRangeScoreFrom(Element e) {
+	RangeScore createRangeScoreFrom(Element e) {
 		Logger.getLogger(this.getClass().getCanonicalName()).info(e.toXML());
 		Element[] elements = getXmlElementsOfScoresInThisRange(e);
 		if (elements.length != 0) {
@@ -63,7 +63,7 @@ public class XmlToScoreTimeSeriesConverter extends XmlToTimeSeriesConverter<Scor
 
 	}
 
-	public boolean isSingle(Element e) {
+	boolean isSingle(Element e) {
 		return e.query("./ts:score[@type='singlescore']", getContext()).size() > 0;
 	}
 

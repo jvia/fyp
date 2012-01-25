@@ -6,9 +6,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 class ModelPopupListener extends MouseAdapter {
-    JPopupMenu selectedItempopupMenu;
-    JPopupMenu freeSpacePopupMenu;
-    JList list;
+    private final JPopupMenu selectedItempopupMenu;
+    private final JPopupMenu freeSpacePopupMenu;
+    private final JList list;
 
     ModelPopupListener(JList list, JPopupMenu selectedItempopupMenu,
                        JPopupMenu freeSpacePopupMenu) {

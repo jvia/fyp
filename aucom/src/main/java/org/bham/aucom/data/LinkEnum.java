@@ -1,5 +1,6 @@
 package org.bham.aucom.data;
 
+// TODO delete unneeded things
 public enum LinkEnum {
 	Observation,
 	generatedFromId,

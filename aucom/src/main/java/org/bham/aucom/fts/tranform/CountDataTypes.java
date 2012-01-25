@@ -26,7 +26,7 @@ public class CountDataTypes extends AbstractAucomTransformNode<DataType, DataTyp
 	}
 
 
-	protected void setCounting(HashMap<Integer, Integer> counting) {
+	void setCounting(HashMap<Integer, Integer> counting) {
 		this.counting = counting;
 	}
 

@@ -7,10 +7,10 @@ import java.util.HashMap;
 import java.util.logging.Logger;
 
 public class SystemConnectionFactoryManager {
-    static protected HashMap<String, Class<? extends SystemConnection>> map = new HashMap<String, Class<? extends SystemConnection>>();
-    protected static SystemConnectionFactoryManager instance = null;
-    static String resourcePath = "/data/source.cfg";
-    static String fileString = "data/source.cfg";
+    private static final HashMap<String, Class<? extends SystemConnection>> map = new HashMap<String, Class<? extends SystemConnection>>();
+    private static SystemConnectionFactoryManager instance = null;
+    private static final String resourcePath = "/data/source.cfg";
+    private static final String fileString = "data/source.cfg";
 
     protected SystemConnectionFactoryManager() throws FactoryManagerInitalizationException {
         initialize();
@@ -23,7 +23,7 @@ public class SystemConnectionFactoryManager {
         return instance;
     }
 
-    protected static void initialize() throws FactoryManagerInitalizationException {
+    private static void initialize() throws FactoryManagerInitalizationException {
         try {
             if (externFileExists()) {
                 loadExternClassesFile();
@@ -44,23 +44,23 @@ public class SystemConnectionFactoryManager {
         return new File(fileString).exists();
     }
 
-    protected static void loadExternClassesFile() throws NumberFormatException, IOException, ClassNotFoundException {
+    private static void loadExternClassesFile() throws NumberFormatException, IOException, ClassNotFoundException {
         loadFactories(new File(fileString));
     }
 
-    protected static void loadFactories(File file) throws IOException, ClassNotFoundException {
+    private static void loadFactories(File file) throws IOException, ClassNotFoundException {
         BufferedReader br = new BufferedReader(new FileReader(file));
         loadFactories(br);
     }
 
-    protected static void loadFactories(InputStream inStream) throws IOException, ClassNotFoundException {
+    private static void loadFactories(InputStream inStream) throws IOException, ClassNotFoundException {
         if (inStream != null) {
             loadFactories(new BufferedReader(new InputStreamReader(inStream)));
         }
     }
 
     @SuppressWarnings("unchecked")
-    protected static void loadFactories(BufferedReader br) throws IOException, ClassNotFoundException {
+    private static void loadFactories(BufferedReader br) throws IOException {
         String lineStr;
         String factoryName;
         String factoryClass;
@@ -82,7 +82,7 @@ public class SystemConnectionFactoryManager {
         }
     }
 
-    protected static void loadInternClassesFile() throws NumberFormatException, IOException, ClassNotFoundException {
+    private static void loadInternClassesFile() throws NumberFormatException, IOException, ClassNotFoundException {
         InputStream inStream = SystemConnectionFactoryManager.class.getResourceAsStream(resourcePath);
         loadFactories(inStream);
     }

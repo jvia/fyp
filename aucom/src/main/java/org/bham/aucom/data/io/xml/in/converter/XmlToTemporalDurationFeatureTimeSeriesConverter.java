@@ -1,21 +1,20 @@
 package org.bham.aucom.data.io.xml.in.converter;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.UUID;
-
 import nu.xom.Element;
 import nu.xom.Nodes;
-
 import org.bham.aucom.data.DataType;
 import org.bham.aucom.data.TemporalDurationFeature;
 import org.bham.aucom.data.timeseries.TemporalDurationFeatureTimeSeries;
 import org.bham.aucom.data.timeseries.TimeSeries;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.UUID;
+
 public class XmlToTemporalDurationFeatureTimeSeriesConverter extends XmlToTimeSeriesConverter<TemporalDurationFeature> {
 	@Override
 	public TemporalDurationFeature createDataFromElement(Element e) {
-		DataType  dtt = new XmlToDatatypeTimeSeriesConverter().createDataFromElement(e);
+		DataType  dtt = new XmlToDataTypeTimeSeriesConverter().createDataFromElement(e);
 		LinkedHashMap<DataType, Long> durations = getDurationsFrom(e);
         return new TemporalDurationFeature(dtt, durations);
 	}
@@ -25,7 +24,7 @@ public class XmlToTemporalDurationFeatureTimeSeriesConverter extends XmlToTimeSe
 		for(int i=0;i< nodes.size(); i++){
 			 Element predeCessorElement = (Element)nodes.get(i);
 			 Long duration  = getDurationFroPredecessor(predeCessorElement);
-			DataType dtt = new XmlToDatatypeTimeSeriesConverter().createDataFromElement((Element)nodes.get(i));
+			DataType dtt = new XmlToDataTypeTimeSeriesConverter().createDataFromElement((Element)nodes.get(i));
 			durations.put(dtt, duration);
 		}
 		return durations;

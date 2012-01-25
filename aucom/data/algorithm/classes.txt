@@ -33,3 +33,6 @@ ADD:place.manager:spatial.sa 28
 OVERWRITE:navgraph.process:spatial.sa 29
 ADD:navgraph.process:spatial.sa 29
 ADD:map.manager:spatial.sa 30
+ADD:chain1:updater.sa 31
+ADD:chain2:updater.sa 32
+DELETE:chain3:updater.sa 33

@@ -19,8 +19,8 @@ import java.util.ArrayList;
  * @since 2011-09-06
  */
 public class ClassificationToCSV implements Experiment {
-    private String wd;
-    private String name;
+    private final String wd;
+    private final String name;
     private TimeSeries<Classification> classificationTimeSeries;
     private FileWriter csv;
     private ArrayList<Classification> list;

@@ -20,7 +20,7 @@ import org.bham.aucom.data.timeseries.TimeSeries;
 public abstract class XmlToTimeSeriesConverter<T extends AbstractData>{
 	private final static XPathContext context = new XPathContext("ts", "http://www.cor-lab.de/formats/ts/1.0");
 
-	public static Element getRootElement(Document timeSeriesDocument) {
+	private static Element getRootElement(Document timeSeriesDocument) {
 		return (Element) timeSeriesDocument.query("//ts:timeseries", getContext()).get(0);
 	}
 	
@@ -69,7 +69,7 @@ public abstract class XmlToTimeSeriesConverter<T extends AbstractData>{
 	}
 
 
-	protected HashMap<String, String> getTimeSeriesAttributes(Document doc) {
+	HashMap<String, String> getTimeSeriesAttributes(Document doc) {
 		HashMap<String, String> attributes = new HashMap<String, String>();
 		Nodes attributeNodes = doc.getRootElement().query("./ts:attributes/ts:attribute", getContext());
 		Logger.getLogger(this.getClass().getCanonicalName()).info(attributeNodes.size() + "  attributes found");
@@ -81,10 +81,10 @@ public abstract class XmlToTimeSeriesConverter<T extends AbstractData>{
 		}
 		return attributes;
 	}
-	public abstract T createDataFromElement(Element e);
-	public abstract TimeSeries<T> createTimeSeries(UUID id, UUID generatorID, UUID generatedFromID, ArrayList<T> items);
+	protected abstract T createDataFromElement(Element e);
+	protected abstract TimeSeries<T> createTimeSeries(UUID id, UUID generatorID, UUID generatedFromID, ArrayList<T> items);
 
-	protected List<Element> getElements(Element oElement) {
+	List<Element> getElements(Element oElement) {
 		Nodes el = oElement.query("./ts:elements/ts:element", getContext());
 		List<Element> list = new ArrayList<Element>();
 		for(int i =0; i<el.size();i++){
@@ -94,18 +94,18 @@ public abstract class XmlToTimeSeriesConverter<T extends AbstractData>{
 		return list;
 	}
 
-	protected UUID getGeneratedFromID(Element oElement) {
+	UUID getGeneratedFromID(Element oElement) {
 		return getId(oElement, LinkEnum.generatedFromId);
 	}
 
-	protected UUID getGeneratorID(Element oElement) {
+	UUID getGeneratorID(Element oElement) {
 		return getId(oElement, LinkEnum.generatorId);
 	}
 
-	protected UUID getOwnId(Element ctsElement){
+	UUID getOwnId(Element ctsElement){
 		return getId(ctsElement, LinkEnum.id);
 	}
-	protected UUID getId(Element ctsElement, LinkEnum id) {
+	UUID getId(Element ctsElement, LinkEnum id) {
 		String linkName = id.toString();
 		if(ctsElement.getAttribute(linkName) == null)
 			return null;
@@ -115,7 +115,7 @@ public abstract class XmlToTimeSeriesConverter<T extends AbstractData>{
 
 
 
-	protected long getTimestamp(Element e) {
+	long getTimestamp(Element e) {
 		long timestamp = -1;
 		if(e.getAttribute("timestamp") != null){
 			timestamp = Long.valueOf(e.getAttributeValue("timestamp"));
@@ -124,7 +124,7 @@ public abstract class XmlToTimeSeriesConverter<T extends AbstractData>{
 	}
 
 
-	public static XPathContext getContext() {
+	static XPathContext getContext() {
 		return context;
 	}
 

@@ -6,8 +6,8 @@ import net.sf.xcf.fts.nodes.transform.AbstractTransformNode;
 import org.bham.aucom.data.SystemFaultStatus;
 
 
-public class CropTimestampFromtriple extends AbstractTransformNode<Triple<Long,Double,SystemFaultStatus>, Triple<Long,Double,SystemFaultStatus>>{
-	Long ts;
+class CropTimestampFromtriple extends AbstractTransformNode<Triple<Long,Double,SystemFaultStatus>, Triple<Long,Double,SystemFaultStatus>>{
+	private Long ts;
 	public CropTimestampFromtriple() {
 		ts =  -1L;
 	}

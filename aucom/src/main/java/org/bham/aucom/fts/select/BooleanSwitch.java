@@ -5,9 +5,9 @@ import java.util.logging.Logger;
 import net.sf.xcf.fts.Event;
 import net.sf.xcf.fts.nodes.filter.AbstractFilter;
 
-public class BooleanSwitch extends AbstractFilter<Object> {
-	Logger l = Logger.getLogger(this.getClass().getCanonicalName());
-	boolean filterState;
+class BooleanSwitch extends AbstractFilter<Object> {
+	private final Logger l = Logger.getLogger(this.getClass().getCanonicalName());
+	private boolean filterState;
 	public BooleanSwitch() {
 		this.filterState = false;
 	}

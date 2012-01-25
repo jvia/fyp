@@ -9,13 +9,8 @@ import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.data.management.DataAlreadyExistsException;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.data.util.SlidingWindow;
-import org.bham.aucom.diagnoser.AbstractDetector.DetectorStatus;
 import org.bham.aucom.diagnoser.*;
 import org.bham.aucom.diagnoser.t2gram.KDEProbabilityFactory;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelImp;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelTrainer;
-import org.bham.aucom.diagnoser.t2gram.detector.T2GramDetector;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.AnomalyClassifier;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.StatisticalAnomalyClassifier;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.optimizer.ClassifierOptimizer;
@@ -34,19 +29,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CrossValidateExperiment implements Experiment {
-    HashMap<T2GramDetector, String> detectors;
-    private List<TimeSeries<Observation>> timeSeries;
-    private File workingDirectory;
-    private T2GramModelTrainer trainer;
-    Document results;
-    private String name;
-    Logger logger;
+    private final HashMap<Detector, String> detectors;
+    private final List<TimeSeries<Observation>> timeSeries;
+    private final File workingDirectory;
+    private final ModelTrainer trainer;
+    private final Document results;
+    private final String name;
+    private final Logger logger;
 
     public CrossValidateExperiment(File inWorkingDirectory, String inName) {
-        detectors = new LinkedHashMap<T2GramDetector, String>();
+        detectors = new LinkedHashMap<Detector, String>();
         timeSeries = new ArrayList<TimeSeries<Observation>>();
         workingDirectory = inWorkingDirectory;
-        trainer = new T2GramModelTrainer();
+        trainer = new ModelTrainer();
         logger = Logger.getLogger(this.getClass().getCanonicalName());
         Element root = new Element("aucom:results", Constants.URI);
         name = inName;
@@ -73,7 +68,7 @@ public class CrossValidateExperiment implements Experiment {
 
     }
 
-    private void optimizeModelParameter(T2GramDetector detector, TimeSeries<Observation> obsTs) {
+    private void optimizeModelParameter(Detector detector, TimeSeries<Observation> obsTs) {
         logger.log(Level.FINE, "optimizing parameters of " + detector);
         ClassifierOptimizer optimizer = new ClassifierOptimizer(detector);
         optimizer.setTimeSeries(obsTs);
@@ -83,7 +78,7 @@ public class CrossValidateExperiment implements Experiment {
     private void createDetectors() {
         logger.log(Level.CONFIG, "creating detectors");
         for (TimeSeries<Observation> ts : timeSeries) {
-            T2GramModelI m;
+            Model m;
             if (modelFileIsMissing(ts)) {
                 m = train(ts);
             } else {
@@ -91,7 +86,7 @@ public class CrossValidateExperiment implements Experiment {
             }
             if (m != null) {
                 logger.log(Level.CONFIG, "adding model ");
-                T2GramDetector detector = new T2GramDetector();
+                Detector detector = new Detector();
                 detector.setModel(m);
                 detector.setClassificator(new StatisticalAnomalyClassifier(0.0, 0.0));
                 detector.setSlidingWindow(new SlidingWindow(100, 50));
@@ -105,13 +100,13 @@ public class CrossValidateExperiment implements Experiment {
         }
     }
 
-    private T2GramModelI loadModelFor(TimeSeries<Observation> ts) {
+    private Model loadModelFor(TimeSeries<Observation> ts) {
         logger.log(Level.FINE, "loading model for " + ts);
         String filepath = FileOperator.getPath(new File(ts.getAttributeValue("file")));
         String filename = FileOperator.getName(new File(ts.getAttributeValue("file")));
         File modelFile = new File(filepath + File.separator + filename + ".ml");
         try {
-            return (T2GramModelI) AucomIO.getInstance().readFaultDetectionModel(modelFile);
+            return AucomIO.getInstance().readFaultDetectionModel(modelFile);
         } catch (FileNotFoundException e) {
             logger.log(Level.WARNING, "file " + modelFile.getAbsolutePath() + " not found");
         } catch (ValidityException e) {
@@ -135,7 +130,7 @@ public class CrossValidateExperiment implements Experiment {
         return !modelFile.exists();
     }
 
-    private T2GramModelI train(TimeSeries<Observation> ts) {
+    private Model train(TimeSeries<Observation> ts) {
         logger.log(Level.FINE, "training model for " + ts);
         final Object obj = new Object();
         trainer.reset();
@@ -152,7 +147,7 @@ public class CrossValidateExperiment implements Experiment {
             }
         });
         try {
-            trainer.setModel(new T2GramModelImp(new KDEProbabilityFactory()));
+            trainer.setModel(new Model(new KDEProbabilityFactory()));
             trainer.start(ts);
             synchronized (obj) {
                 logger.log(Level.FINE, "waiting ");
@@ -162,7 +157,7 @@ public class CrossValidateExperiment implements Experiment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return (T2GramModelI) trainer.getModel();
+        return trainer.getModel();
     }
 
     @SuppressWarnings("unchecked")
@@ -211,7 +206,7 @@ public class CrossValidateExperiment implements Experiment {
     @Override
     public void process() {
         int i = 1, j = 1, k = 1;
-        for (T2GramDetector detector : detectors.keySet()) {
+        for (Detector detector : detectors.keySet()) {
             j = 1;
             for (TimeSeries<Observation> obsTs : timeSeries) {
                 AnomalyClassifier acBefore = detector.getClassificator().duplicate();
@@ -306,7 +301,7 @@ public class CrossValidateExperiment implements Experiment {
         }
     }
 
-    private TimeSeries<Classification> evaluate(final T2GramDetector detector, TimeSeries<Observation> evaluateTs) {
+    private TimeSeries<Classification> evaluate(final Detector detector, TimeSeries<Observation> evaluateTs) {
         final Object waitObj = new Object();
         try {
             logger.log(Level.FINE, "detector status before starting " + detector.getCurrentStatus() + " input size " + evaluateTs.size());
@@ -315,10 +310,10 @@ public class CrossValidateExperiment implements Experiment {
                 @Override
                 public void handleDetectorStatusChangedEvent(DetectorStatusChangedEvent evt) {
                     Logger.getLogger(CrossValidateExperiment.this.getClass().getCanonicalName()).log(Level.FINE, "got DetectorStatusChangedEvent " + evt);
-                    if (evt.getCurrentStatus().equals(DetectorStatus.RUNNING)) {
+                    if (evt.getCurrentStatus().equals(Detector.DetectorStatus.RUNNING)) {
                         Logger.getLogger(CrossValidateExperiment.this.getClass().getCanonicalName()).log(Level.FINE, "detector started");
                     }
-                    if (evt.getPreviousStatus().equals(DetectorStatus.RUNNING) && evt.getCurrentStatus().equals(DetectorStatus.READY)) {
+                    if (evt.getPreviousStatus().equals(Detector.DetectorStatus.RUNNING) && evt.getCurrentStatus().equals(Detector.DetectorStatus.READY)) {
                         synchronized (waitObj) {
                             detector.removeStatusListener(this);
                             waitObj.notifyAll();

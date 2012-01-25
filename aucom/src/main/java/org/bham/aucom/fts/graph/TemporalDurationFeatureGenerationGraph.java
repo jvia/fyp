@@ -20,10 +20,10 @@ import org.bham.aucom.fts.tranform.TemporalDurationFeatureGenerator;
  */
 public class TemporalDurationFeatureGenerationGraph extends AbstractAucomGraph {
     private static final long serialVersionUID = 0L;
-    protected transient TimeSeriesSource<Observation> source;
-    protected transient EncodeData encodeData;
-    protected transient GenerateTemporalDurationFeature generateDurationFeature;
-    protected transient TimeSeriesSink<TemporalDurationFeature> sink;
+    private transient TimeSeriesSource<Observation> source;
+    private transient EncodeData encodeData;
+    private transient GenerateTemporalDurationFeature generateDurationFeature;
+    private transient TimeSeriesSink<TemporalDurationFeature> sink;
 
     public TemporalDurationFeatureGenerationGraph() {
         super("TemporalDurationFeatureGenerationGraph");

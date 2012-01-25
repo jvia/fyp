@@ -42,10 +42,10 @@ public class SaveDurationsAsCSV implements Experiment {
      *
      */
     private static final String SAVE_FILE = "savefile";
-    List<File> observationTimeseriesFiles;
-    List<TimeSeries<Observation>> observationTimeseries;
-    List<TimeSeries<TemporalDurationFeature>> temporalDurationFeatureTimeseries;
-    File folder;
+    private final List<File> observationTimeseriesFiles;
+    private final List<TimeSeries<Observation>> observationTimeseries;
+    private final List<TimeSeries<TemporalDurationFeature>> temporalDurationFeatureTimeseries;
+    private final File folder;
 
     /*
      * @param inFolder

@@ -24,7 +24,7 @@ public class AnomalyClassifierGenerator {
         this.varianceValueStep = varianceValueStep;
     }
 
-    public double getInitialThresholdValue() {
+    double getInitialThresholdValue() {
         return this.initialThresholdValue;
     }
 
@@ -32,7 +32,7 @@ public class AnomalyClassifierGenerator {
         this.initialThresholdValue = initialThresholdValue;
     }
 
-    public double getMaxThresholdValue() {
+    double getMaxThresholdValue() {
         return this.maxThresholdValue;
     }
 
@@ -40,7 +40,7 @@ public class AnomalyClassifierGenerator {
         this.maxThresholdValue = maxThresholdValue;
     }
 
-    public double getThresholdValueStep() {
+    double getThresholdValueStep() {
         return this.thresholdValueStep;
     }
 
@@ -48,7 +48,7 @@ public class AnomalyClassifierGenerator {
         this.thresholdValueStep = thresholdValueStep;
     }
 
-    public double getInitialVarianceValue() {
+    double getInitialVarianceValue() {
         return this.initialVarianceValue;
     }
 
@@ -56,7 +56,7 @@ public class AnomalyClassifierGenerator {
         this.initialVarianceValue = initialVarianceValue;
     }
 
-    public double getMaxVarianceValue() {
+    double getMaxVarianceValue() {
         return this.maxVarianceValue;
     }
 
@@ -64,7 +64,7 @@ public class AnomalyClassifierGenerator {
         this.maxVarianceValue = maxVarianceValue;
     }
 
-    public double getVarianceValueStep() {
+    double getVarianceValueStep() {
         return this.varianceValueStep;
     }
 

@@ -16,7 +16,7 @@ import static org.bham.aucom.util.Constants.TIMESTAMP;
 public class Order {
     private Builder builder;
 
-    public void order(File f) {
+    void order(File f) {
         ArrayList<Element> unsortedList = extractXml(f);
         SortedMap<Long, Element> sortedMap = sort(unsortedList);
         String sortedFileName = FileOperator.getName(f);
@@ -41,7 +41,7 @@ public class Order {
         return out;
     }
 
-    public SortedMap<Long, Element> sort(ArrayList<Element> list) {
+    SortedMap<Long, Element> sort(ArrayList<Element> list) {
         SortedMap<Long, Element> sortedMap = new TreeMap<Long, Element>();
         for (Element element : list) {
             long currTimestamp = getTimestamp(element);
@@ -75,7 +75,7 @@ public class Order {
         return sortedMap;
     }
 
-    public ArrayList<Element> extractXml(File inFile) {
+    ArrayList<Element> extractXml(File inFile) {
         Document doc;
         ArrayList<Element> list = null;
         if (this.builder == null) {
@@ -111,7 +111,7 @@ public class Order {
         new Order().order(file);
     }
 
-    public void save(File file, SortedMap<Long, Element> list) {
+    void save(File file, SortedMap<Long, Element> list) {
         try {
             FileWriter out;
             out = new FileWriter(file);

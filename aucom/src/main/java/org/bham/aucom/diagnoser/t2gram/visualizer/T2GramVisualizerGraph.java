@@ -12,8 +12,8 @@ import org.bham.aucom.fts.graph.AbstractAucomGraph;
 import org.bham.aucom.fts.source.TimeSeriesSource;
 
 public class T2GramVisualizerGraph extends AbstractAucomGraph {
-	TimeSeriesSource<Classification> clSrc;
-	ExtractTimestampScoreClassification extract;
+	private TimeSeriesSource<Classification> clSrc;
+	private ExtractTimestampScoreClassification extract;
 	private final LinkedBlockingQueue<Triple<Long,Double,SystemFaultStatus>> queue;
 	private QueueSink<Triple<Long, Double, SystemFaultStatus>> sink;
 	private static final long serialVersionUID = 1L;

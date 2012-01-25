@@ -1,5 +1,6 @@
 package org.bham.aucom.data;
 
+// TODO figure out what can be deleted
 public enum FileType {
 	model, // system model file
 	obs, // timeseries with observations

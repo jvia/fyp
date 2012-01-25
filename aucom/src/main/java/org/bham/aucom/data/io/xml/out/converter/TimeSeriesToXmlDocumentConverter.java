@@ -13,7 +13,7 @@ import org.bham.aucom.util.Constants;
  * Abstract class, interface for writing timeseries to an xml Document
  */
 public abstract class TimeSeriesToXmlDocumentConverter<T extends AbstractData> {
-	XPathContext context = new XPathContext("ts", "http://www.cor-lab.de/formats/ts/1.0");
+	private final XPathContext context = new XPathContext("ts", "http://www.cor-lab.de/formats/ts/1.0");
 
 	public Document convertTimeSeries(TimeSeries<T> timeSeriesToWrite) throws IllegalArgumentException {
 		if(timeSeriesToWrite.size()==0){
@@ -42,7 +42,7 @@ public abstract class TimeSeriesToXmlDocumentConverter<T extends AbstractData> {
 		doc.getRootElement().appendChild(attributesElement);
 	}
 	@SuppressWarnings("hiding")
-    public <T extends AbstractData> Document addTimeSeriesProperties(Document xmlDocumentToWrite,TimeSeries<T> timeSeriesToWrite){
+    <T extends AbstractData> Document addTimeSeriesProperties(Document xmlDocumentToWrite, TimeSeries<T> timeSeriesToWrite){
 		xmlDocumentToWrite.getRootElement().addAttribute(new Attribute("id", timeSeriesToWrite.getId().toString()));
 		xmlDocumentToWrite.getRootElement().addAttribute(new Attribute("type", timeSeriesToWrite.getType().toString()));
 		return xmlDocumentToWrite;
@@ -60,7 +60,7 @@ public abstract class TimeSeriesToXmlDocumentConverter<T extends AbstractData> {
 		return xmlDocumentToWrite;
 	}
 
-	protected void addElementAttributesAsXml(Element element, T t) {
+	void addElementAttributesAsXml(Element element, T t) {
 			Element attributes = new Element("ts:attributes", Constants.URI);
 			for(String attributeName : t.getAttributes().keySet()){
 				Element  attr = new Element("ts:attribute", Constants.URI);

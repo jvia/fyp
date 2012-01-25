@@ -42,7 +42,7 @@ public class CastObservationCollectionFactory extends ExperimentFactory {
         return experiment;
     }
 
-    public int getObservationSize(Element element) {
+    int getObservationSize(Element element) {
         Nodes nodes = element.query("./aucom:input/aucom:observations", this.context);
         if (nodes.size() > 0)
             return Integer.parseInt(nodes.get(0).getValue());

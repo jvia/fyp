@@ -11,6 +11,7 @@
 
 package org.bham.aucom.diagnoser.t2gram.detector;
 
+import org.bham.aucom.diagnoser.Detector;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.*;
 
 import javax.swing.*;
@@ -24,10 +25,10 @@ import java.awt.event.ActionListener;
  */
 public class ClassifierSelectionPanel extends javax.swing.JPanel implements ActionListener {
     private static final long serialVersionUID = 0L;
-    T2GramDetector model;
-    AnomalyClassifierFactory acFactory;
+    private final Detector model;
+    private final AnomalyClassifierFactory acFactory;
 
-    public ClassifierSelectionPanel(T2GramDetector inModel) {
+    public ClassifierSelectionPanel(Detector inModel) {
         initComponents();
         model = inModel;
         acFactory = new AnomalyClassifierFactory();
@@ -48,7 +49,7 @@ public class ClassifierSelectionPanel extends javax.swing.JPanel implements Acti
 
         acCombobox = new javax.swing.JComboBox();
         configuratorpanel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        JButton jButton1 = new JButton();
 
         setPreferredSize(new java.awt.Dimension(600, 180));
 
@@ -74,7 +75,7 @@ public class ClassifierSelectionPanel extends javax.swing.JPanel implements Acti
         getTopFrame().dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public static Frame getTopFrame() {
+    private static Frame getTopFrame() {
         Frame[] frames = Frame.getFrames();
         for (Frame frame : frames) {
             if (frame.getFocusOwner() != null) {
@@ -95,7 +96,6 @@ public class ClassifierSelectionPanel extends javax.swing.JPanel implements Acti
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox acCombobox;
     private javax.swing.JPanel configuratorpanel;
-    private javax.swing.JButton jButton1;
     private AnomalyClassifier currentClassifier;
 
     // End of variables declaration//GEN-END:variables

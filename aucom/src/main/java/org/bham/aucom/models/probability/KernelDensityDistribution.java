@@ -11,13 +11,12 @@ import static org.bham.aucom.util.Constants.LOWEST_PROBABILITY;
 
 public class KernelDensityDistribution implements ProbabilityDistribution {
     private static final long serialVersionUID = 1378894184156772597L;
-    KernelEstimator estimator;
-    double weight = 1.0;
+    private final KernelEstimator estimator;
     private double entropy = Double.MIN_VALUE;
     private int count = 0;
-    double maxProbabilityValue = 0.0d;
+    private double maxProbabilityValue = 0.0d;
     private double maxSeenValue = 0.0d;
-    private HashMap<Double, Double> queriedValues = new HashMap<Double, Double>();
+    private final HashMap<Double, Double> queriedValues = new HashMap<Double, Double>();
 
     public KernelDensityDistribution(double precision) {
         estimator = new KernelEstimator(precision);
@@ -50,7 +49,7 @@ public class KernelDensityDistribution implements ProbabilityDistribution {
         return entropy;
     }
 
-    public double log(double value, double base) {
+    double log(double value, double base) {
         return Math.log(value) / Math.log(base);
     }
 
@@ -70,6 +69,7 @@ public class KernelDensityDistribution implements ProbabilityDistribution {
     public void update(double[] val) {
         queriedValues.clear();
         for (double aVal : val) {
+            double weight = 1.0;
             estimator.addValue(aVal, weight);
         }
         Arrays.sort(val);
@@ -134,7 +134,7 @@ public class KernelDensityDistribution implements ProbabilityDistribution {
         return maxProbabilityValue;
     }
 
-    public HashMap<Double, Double> getQueriedValues() {
+    HashMap<Double, Double> getQueriedValues() {
         return queriedValues;
     }
 
@@ -142,7 +142,7 @@ public class KernelDensityDistribution implements ProbabilityDistribution {
         this.maxSeenValue = maxSeenValue;
     }
 
-    public double getMaxSeenValue() {
+    double getMaxSeenValue() {
         return maxSeenValue;
     }
 }

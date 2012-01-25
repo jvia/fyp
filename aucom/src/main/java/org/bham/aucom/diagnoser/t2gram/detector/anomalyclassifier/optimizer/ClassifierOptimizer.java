@@ -5,8 +5,8 @@ import org.bham.aucom.data.ClassificationTimeSeriesDescriptiveStatistics;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.Score;
 import org.bham.aucom.data.timeseries.TimeSeries;
+import org.bham.aucom.diagnoser.Detector;
 import org.bham.aucom.diagnoser.Model;
-import org.bham.aucom.diagnoser.t2gram.detector.T2GramDetector;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.AnomalyClassifier;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassifier.StatisticalAnomalyClassifier;
 import org.bham.aucom.fts.graph.AbstractAucomGraph.GraphStatus;
@@ -24,13 +24,13 @@ import java.util.logging.Logger;
 
 
 public class ClassifierOptimizer implements Presentable, GraphStatusListener {
-    OptimizerGraph optimizationGraph = null;
-    ObservationToScoreGraph obsToScoreGraph = null;
-    TimeSeries<Score> scoreTs = null;
-    private T2GramDetector detector;
-    ClassifierOptimizationMethod optimizationMethod;
+    private OptimizerGraph optimizationGraph = null;
+    private ObservationToScoreGraph obsToScoreGraph = null;
+    private TimeSeries<Score> scoreTs = null;
+    private Detector detector;
+    private final ClassifierOptimizationMethod optimizationMethod;
 
-    public ClassifierOptimizer(T2GramDetector inDetector) {
+    public ClassifierOptimizer(Detector inDetector) {
         setDetector(inDetector);
         obsToScoreGraph = new ObservationToScoreGraph();
         obsToScoreGraph.addGraphListener(this);
@@ -63,7 +63,7 @@ public class ClassifierOptimizer implements Presentable, GraphStatusListener {
         }
     }
 
-    public void stop() {
+    void stop() {
         this.optimizationGraph.stop();
         this.optimizationGraph = null;
         if (this.optimizationMethod.getBestClassifier() != null) {
@@ -215,7 +215,7 @@ public class ClassifierOptimizer implements Presentable, GraphStatusListener {
     /*
       * event handling ---->
       */
-    protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
+    private final javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
     public void addStatusListener(ClassifierOptimizerStatusListener listener) {
         this.listenerList.add(ClassifierOptimizerStatusListener.class, listener);
@@ -254,11 +254,11 @@ public class ClassifierOptimizer implements Presentable, GraphStatusListener {
         return p;
     }
 
-    public T2GramDetector getDetector() {
+    public Detector getDetector() {
         return detector;
     }
 
-    public void setDetector(T2GramDetector detector) {
+    void setDetector(Detector detector) {
         this.detector = detector;
     }
 

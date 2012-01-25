@@ -4,186 +4,80 @@ import org.bham.aucom.data.DataType;
 import org.bham.aucom.data.Score;
 import org.bham.aucom.data.SingleScore;
 import org.bham.aucom.data.TemporalProbabilityFeature;
-import org.bham.aucom.diagnoser.t2gram.ProbabilityDistribution;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
+import org.bham.aucom.diagnoser.Model;
 
 import java.util.logging.Logger;
 
 
 public class CalcEntropyAvgScore extends AbstractAucomTransformNode<TemporalProbabilityFeature, Score> {
-    protected T2GramModelI model;
-
-    public CalcEntropyAvgScore(T2GramModelI inModel) {
-        super("CalcEnropyAvgScore");
-        setModel(inModel);
-    }
+    private Model model;
+    private final Logger log = Logger.getLogger(getClass().getName());
 
     public CalcEntropyAvgScore() {
-        super("CalcEnropyAvgScore");
+        super("CalcEntropyAvgScore");
+        log.info("Initialized");
     }
 
-    @Override
-    protected Score iTransform(TemporalProbabilityFeature arg0) throws Exception {
-        Logger.getLogger(this.getClass().getCanonicalName()).info("CalcEntropyAvgScore iTransformCalled");
-        return calculate(arg0);
-    }
-
-    protected Score calculate(TemporalProbabilityFeature inData) {
-        warnIfModelIsNotTrained();
-        return calculateScore(inData);
-
-    }
-
-    /**
-     * @param inData
-     * @return
-     */
-    protected Score calculateScore(TemporalProbabilityFeature inData) {
-        double sum_entropy = calculateSumEntropy(inData);
-        double denominator = calculateDenominator(sum_entropy);
-        double scoreValue;
-
-        scoreValue = calculateAbsoluteScoreValue(inData, denominator);
-//		System.out.println("predecessors " + inData.getPredecessors().size());
-//		System.out.println("predecessors " + inData.getPredecessors().get(0).getEventType());
-//		System.out.println("sum_entropy " + sum_entropy);
-//		System.out.println("denominator " + denominator);
-//		System.out.println("absolute scoreValue " + scoreValue);
-        scoreValue = normalize(inData, scoreValue);
-//		System.out.println("normalized scoreValue " + scoreValue);
-        return new SingleScore(inData, scoreValue);
-    }
-
-    /**
-     * @param sum_entropy
-     * @return
-     */
-    protected double calculateDenominator(double sum_entropy) {
-        return Math.max(Math.pow(sum_entropy, 2), 0.00001);
-    }
-
-    /*
-     * @param currentData
-     * @param sum_entropy
-     * @param scoreValue
-     * @return
-     */
-    protected double calculateAbsoluteScoreValue(TemporalProbabilityFeature currentData, double denominator) {
-        double scoreValue = 0.0d;
-        for (DataType precedessorData : currentData.getPredecessors()) {
-            warnIfDitstributionNotfound(currentData, precedessorData);
-            scoreValue += calculateSingleScoreValue(precedessorData, currentData, denominator);
-        }
-        return scoreValue;
-    }
-
-    protected double calculateSingleScoreValue(DataType precedessorData, TemporalProbabilityFeature currentData, double denominator) {
-        double probability = currentData.getProbabilityFor(precedessorData);
-        double entropy = calculateSingleEntropy(currentData, precedessorData);
-
-        warnIfProbabilityHasNaNValue(probability, currentData, precedessorData);
-        warnIfEntropyHasNaNValue(entropy, currentData, precedessorData);
-
-        return alg_calculateSingleScore(probability, entropy, denominator);
-    }
-
-    /**
-     * @param probability
-     * @param entropy
-     * @param denominator
-     * @return
-     */
-    protected double alg_calculateSingleScore(double probability, double entropy, double denominator) {
-        return probability * (1 - Math.pow(entropy, 2) / denominator);
-    }
-
-    /**
-     * @param inData
-     * @param absoluteScore
-     * @return
-     */
-    protected double normalize(TemporalProbabilityFeature inData, double absoluteScore) {
-        double normalizedScore = absoluteScore;
-        if (inData.getPredecessors().size() > 0) {
-            normalizedScore = absoluteScore / inData.getPredecessors().size();
-        }
-        return normalizedScore;
-    }
-
-    /**
-     * @param inData
-     */
-    protected double calculateSumEntropy(TemporalProbabilityFeature inData) {
-        double[] singleEntropies = new double[inData.getPredecessors().size()];
-        for (int i = 0; i < inData.getPredecessors().size(); i++) {
-            DataType predecessor = inData.getPredecessors().get(i);
-            singleEntropies[i] = calculateSingleEntropy(inData, predecessor);
-
-        }
-
-        return alg_calculateSumEntropy(singleEntropies);
-    }
-
-    protected double alg_calculateSumEntropy(double[] values) {
-        double sum = 0.0d;
-        for (double value : values) {
-            sum += value;
-        }
-        return sum;
-    }
-
-    /**
-     * @param inData
-     * @param inPrecedessor
-     * @return
-     */
-    private double calculateSingleEntropy(TemporalProbabilityFeature inData, DataType inPrecedessor) {
-        return getModel().getEntropyOfDistribution(inPrecedessor.getEventType(), inData.getEventType());
-    }
-
-    /**
-     *
-     */
-    private void warnIfModelIsNotTrained() {
-        if (this.getModel().getTransitionMatrix().size() == 0) {
-            Logger.getLogger(this.getClass().getCanonicalName()).severe("warning: model not trained");
-        }
-    }
-
-    public void setModel(T2GramModelI model) {
+    public void setModel(Model model) {
         this.model = model;
     }
 
-    public T2GramModelI getModel() {
-        return this.model;
+    @Override
+    protected Score iTransform(TemporalProbabilityFeature inData) throws Exception {
+        log.fine("CalcEntropyAvgScore iTransformCalled");
+
+        if (model.getTransitionMatrix().isEmpty())
+            log.warning("Model not trained");
+
+        double sum_entropy = calculateSumEntropy(inData);
+        // Calculate the denominator, choosing the max between entropy^2 and a minimum value
+        double denominator = Math.max(Math.pow(sum_entropy, 2), 0.00001);
+        double scoreValue;
+
+        scoreValue = calculateAbsoluteScoreValue(inData, denominator);
+        scoreValue = normalize(inData, scoreValue);
+
+        return new SingleScore(inData, scoreValue);
     }
 
-    /**
-     * @param inData
-     * @param precedessorData
-     */
-    private void warnIfEntropyHasNaNValue(double entropy, TemporalProbabilityFeature inData, DataType precedessorData) {
-        if (Double.isNaN(entropy))
-            Logger.getLogger(getClass().getCanonicalName()).info("entropy " + precedessorData.getEventType() + "--->" + inData.getEventType() + " " + entropy);
-    }
+    double calculateAbsoluteScoreValue(TemporalProbabilityFeature currentData, double denominator) {
+        double scoreValue = 0.0d;
 
-    /**
-     * @param inData
-     * @param precedessorData
-     */
-    private void warnIfProbabilityHasNaNValue(double probability, TemporalProbabilityFeature inData, DataType precedessorData) {
-        if (Double.isNaN(probability))
-            Logger.getLogger(this.getClass().getCanonicalName()).info("prob " + precedessorData.getEventType() + "--->" + inData.getEventType() + " " + probability);
-    }
-
-    /**
-     * @param inData
-     * @param precedessor
-     */
-    private void warnIfDitstributionNotfound(TemporalProbabilityFeature inData, DataType precedessor) {
-        ProbabilityDistribution distribution = getModel().getDistributionFor(precedessor.getEventType(), inData.getEventType());
-        if (distribution == null) {
-            Logger.getLogger(this.getClass().getCanonicalName()).info("no distribution for " + precedessor.getEventType() + "--->" + inData.getEventType());
+        for (DataType predecessorData : currentData.getPredecessors()) {
+            if (null == model.getDistributionFor(predecessorData.getEventType(), currentData.getEventType()))
+                log.warning(String.format("No distribution for [%d ---> %d]", predecessorData.getEventType(), currentData.getEventType()));
+            scoreValue += calculateSingleScoreValue(predecessorData, currentData, denominator);
         }
+
+        return scoreValue;
+    }
+
+    double calculateSingleScoreValue(DataType predecessor, TemporalProbabilityFeature current, double denominator) {
+        double probability = current.getProbabilityFor(predecessor);
+        double entropy = model.getEntropyOfDistribution(predecessor.getEventType(), current.getEventType());
+        log.fine(String.format("Input :: [%d ---> %d]", predecessor.getEventType(), current.getEventType()));
+
+        // Warn if probability or entropy has NaN value
+        if (Double.isNaN(probability) || Double.isNaN(entropy))
+            log.warning(String.format("%s [%d ---> %d]: %.2f", Double.isNaN(probability) ? "Probability" : "Entropy",
+                                      predecessor.getEventType(), current.getEventType(), entropy));
+
+        // Calculate the single score value
+        return probability * (1 - Math.pow(entropy, 2) / denominator);
+    }
+
+    double normalize(TemporalProbabilityFeature inData, double absoluteScore) {
+        double normalizedScore = absoluteScore;
+        if (inData.getPredecessors().size() > 0)
+            normalizedScore = absoluteScore / inData.getPredecessors().size();
+        return normalizedScore;
+    }
+
+    double calculateSumEntropy(TemporalProbabilityFeature inData) {
+        double sum = 0.0;
+        for (int i = 0; i < inData.getPredecessors().size(); i++)
+            sum += model.getEntropyOfDistribution(inData.getPredecessors().get(i).getEventType(),
+                                                  inData.getEventType());
+        return sum;
     }
 }

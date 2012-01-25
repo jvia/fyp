@@ -13,7 +13,7 @@ import org.bham.aucom.util.Constants;
 
 public class ObservableStreamSink<TIn extends AbstractData> extends AucomSinkAdapter<TIn> {
 	private final OutputStream os;
-	TimeSeriesToXmlDocumentConverterFactory factory = new TimeSeriesToXmlDocumentConverterFactory();
+	private final TimeSeriesToXmlDocumentConverterFactory factory = new TimeSeriesToXmlDocumentConverterFactory();
 	public ObservableStreamSink(OutputStream os) {
 		super("OutputStreamSink");
 		this.os = os;

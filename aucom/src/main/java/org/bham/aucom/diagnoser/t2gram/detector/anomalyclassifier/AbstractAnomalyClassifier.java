@@ -9,11 +9,12 @@ import java.util.UUID;
 
 public abstract class AbstractAnomalyClassifier implements AnomalyClassifier {
     private static final long serialVersionUID = 1L;
-    LinkedHashMap<String, Number> parameters = new LinkedHashMap<String, Number>();
-    LinkedHashMap<String, String> attributes = new LinkedHashMap<String, String>();
+    final LinkedHashMap<String, Number> parameters = new LinkedHashMap<String, Number>();
+    final LinkedHashMap<String, String> attributes = new LinkedHashMap<String, String>();
+    javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
     UUID id;
 
-    public AbstractAnomalyClassifier(String name) {
+    AbstractAnomalyClassifier(String name) {
         this.attributes.put("name", name);
         this.id = UUID.randomUUID();
     }
@@ -52,10 +53,6 @@ public abstract class AbstractAnomalyClassifier implements AnomalyClassifier {
         return this.attributes.containsKey(propertyName);
     }
 
-    /*
-      * event handling ---->
-      */
-    protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
     public void addSequenceStatusListener(AnomalyClassifierListener listener) {
         this.listenerList.add(AnomalyClassifierListener.class, listener);
@@ -76,7 +73,4 @@ public abstract class AbstractAnomalyClassifier implements AnomalyClassifier {
             }
         }
     }
-    /*
-      *  <---- event handling
-      */
 }

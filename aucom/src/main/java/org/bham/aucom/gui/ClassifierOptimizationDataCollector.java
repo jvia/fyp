@@ -7,23 +7,23 @@ import org.bham.aucom.data.Score;
 import org.bham.aucom.data.timeseries.ScoreTimeSeries;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.data.timeseries.TimeSeriesStatusListener;
-import org.bham.aucom.data.timeseries.TimeseriesStatus;
-import org.bham.aucom.data.timeseries.TimeseriesStatusEvent;
+import org.bham.aucom.data.timeseries.TimeSeriesStatus;
+import org.bham.aucom.data.timeseries.TimeSeriesStatusEvent;
 
 
 public class ClassifierOptimizationDataCollector implements TimeSeriesStatusListener {
-	int numRequiredElements = 1000;
+	private int numRequiredElements = 1000;
 	private final TimeSeries<Score> collectedData;
-	boolean isOptimizing;
-	TimeSeries<? extends Score> timseriesToCollectFrom;
+	private boolean isOptimizing;
+	private TimeSeries<? extends Score> timseriesToCollectFrom;
 	private boolean isStopAutomatically;
-	public ClassifierOptimizationDataCollector() {
+	private ClassifierOptimizationDataCollector() {
 		this.collectedData = new ScoreTimeSeries();
 		this.isOptimizing = false;
 		this.isStopAutomatically = false;
 	}
 
-	public ClassifierOptimizationDataCollector(int inNumRequiredElements) {
+	private ClassifierOptimizationDataCollector(int inNumRequiredElements) {
 		this();
 		this.numRequiredElements = inNumRequiredElements;
 
@@ -43,7 +43,7 @@ public class ClassifierOptimizationDataCollector implements TimeSeriesStatusList
 			this.isOptimizing = true;
 		}
 	}
-	public void stop(){
+	void stop(){
 		if(this.isOptimizing){
 			this.timseriesToCollectFrom.removeTimeseriesStatusListener(this);
 			this.isOptimizing = false;
@@ -57,7 +57,7 @@ public class ClassifierOptimizationDataCollector implements TimeSeriesStatusList
 	/*
 	 * event handling ---->
 	 */
-	protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
+    private final javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
 	
 
 	public void addStatusListener(ClOpDataCollectorStatusListener listener) {
@@ -113,8 +113,8 @@ public class ClassifierOptimizationDataCollector implements TimeSeriesStatusList
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void timeseriesStatusChanged(TimeseriesStatusEvent status) {
-		if (status.getStatus().equals(TimeseriesStatus.ELEMENTSADDED)) {
+	public void timeSeriesStatusChanged(TimeSeriesStatusEvent status) {
+		if (status.getStatus().equals(TimeSeriesStatus.ELEMENTS_ADDED)) {
 			for (int i = status.getStartIndex(); i <= status.getEndIndex(); i++) {
 				TimeSeries<? extends Score> ts = (TimeSeries<? extends Score>) status.getSource();
 				this.getCollectedData().add(ts.get(i));
@@ -149,7 +149,7 @@ public class ClassifierOptimizationDataCollector implements TimeSeriesStatusList
 		fireTimeseriesStatusChangedEvent(new ClOpDataCollectorStatus(this, ClOpEvent.STOPPING));
 	}
 
-	public TimeSeries<Score> getCollectedData() {
+	TimeSeries<Score> getCollectedData() {
 		return collectedData;
 	}
 

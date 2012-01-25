@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class TrainModelExperimentFactory extends ExperimentFactory {
     @Override
-    public Experiment createExperiment(Element experimentDescription) throws ValidityException, ParsingException, IOException {
+    public Experiment createExperiment(Element experimentDescription) throws ParsingException, IOException {
         File workingDirectory = new File(getWorkingDirectoryFromElement(experimentDescription));
         if (workingDirectory.isDirectory() && workingDirectory.exists()) {
             return new TrainModelOnSingleFileExperiment(new File(getWorkingDirectoryFromElement(experimentDescription)));

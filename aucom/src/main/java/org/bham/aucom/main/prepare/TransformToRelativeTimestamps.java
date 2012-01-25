@@ -1,18 +1,18 @@
 package org.bham.aucom.main.prepare;
 
-import java.io.File;
-
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
 import net.sf.xcf.fts.engine.EngineThread;
 import net.sf.xcf.fts.engine.Graph;
+
+import java.io.File;
 public class TransformToRelativeTimestamps {
-	Graph graph;
-	EngineThread thread;	
-	public TransformToRelativeTimestamps(File in, File out) {
+	private Graph graph;
+	private EngineThread thread;
+	private TransformToRelativeTimestamps(File in, File out) {
 		// TODO fix this here
-		
+
 //		ArrayList<DataType> list;
 //		try {
 //			list = ObservationLoader.getInstance()
@@ -21,7 +21,7 @@ public class TransformToRelativeTimestamps {
 //			connect(new SubClassFilter<AbstractData, PointData>(PointData.class)).
 //			connect(new CropTimestampFromData()).
 //			connect(new RawDataToCsvRow()).
-//			connect(new PostofixToString("\n")).
+//			connect(new PosToFixToString("\n")).
 //			connect(new StringToBufferOutputEvent()).
 //			connect(new OutputStreamSinkStrip(new FileOutputStream(out))).getGraph();
 //		} catch (FileNotFoundException e) {
@@ -30,7 +30,7 @@ public class TransformToRelativeTimestamps {
 //		}
 	}
 
-	public void run(){
+	void run() {
 		this.thread = new EngineThread(this.graph);
 		this.thread.start();
 	}

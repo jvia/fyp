@@ -18,11 +18,11 @@ public class CropTimestampFromData<T extends AbstractData> extends AbstractAucom
 		setFirstTimestamp(-1);
 	}
 
-	public void setFirstTimestamp(long firstTimestamp) {
+	void setFirstTimestamp(long firstTimestamp) {
 		this.firstTimestamp = firstTimestamp;
 	}
 
-	public long getFirstTimestamp() {
+	long getFirstTimestamp() {
 		return firstTimestamp;
 	}
 

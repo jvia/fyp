@@ -11,7 +11,7 @@ public class AucomSinkStatusEvent extends EventObject {
 		this.setStatus(status);
 	}
 
-	public void setStatus(NodeStatus status) {
+	void setStatus(NodeStatus status) {
 		this.status = status;
 	}
 

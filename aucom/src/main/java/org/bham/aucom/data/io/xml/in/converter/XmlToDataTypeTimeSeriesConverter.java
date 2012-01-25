@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class XmlToDatatypeTimeSeriesConverter extends XmlToTimeSeriesConverter<DataType> {
+public class XmlToDataTypeTimeSeriesConverter extends XmlToTimeSeriesConverter<DataType> {
     @Override
     public DataType createDataFromElement(Element e) {
         Observation obs = new XmlToObservationTimeSeriesConverter().createDataFromElement(e);
         int eventType = getEventTypeIdFrom(e);
-        List<DomainFeature> domainfeatures = getDomainFeaturesFrom(e);
-        return new DataType(domainfeatures, eventType, obs);
+        List<DomainFeature> domainFeatures = getDomainFeaturesFrom(e);
+        return new DataType(domainFeatures, eventType, obs);
     }
 
     private List<DomainFeature> getDomainFeaturesFrom(Element e) {

@@ -6,8 +6,8 @@ import org.bham.aucom.data.DataAttributes;
 import org.bham.aucom.data.DataType;
 import org.bham.aucom.data.timeseries.TimeSeries;
 
-public class CountDifferentClasses extends AbstractTransformNode<DataType, DataType> {
-	TimeSeries<DataType> sequence;
+class CountDifferentClasses extends AbstractTransformNode<DataType, DataType> {
+	private final TimeSeries<DataType> sequence;
 
 	public CountDifferentClasses(TimeSeries<DataType> sequence) {
 		this.sequence = sequence;

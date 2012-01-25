@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class T2GramTrainerGraph extends AbstractAucomGraph {
     private static final long serialVersionUID = 1L;
     private TimeSeriesSource<Observation> source;
-    GenerateTemporalDurationFeature tdfNode;
+    private GenerateTemporalDurationFeature tdfNode;
     private TimeSeriesSink<TemporalDurationFeature> sink;
 
     public T2GramTrainerGraph() {
@@ -54,9 +54,7 @@ public class T2GramTrainerGraph extends AbstractAucomGraph {
     }
 
     @Override
-    protected void cleanUp() {
-        // ignore
-    }
+    protected void cleanUp() {}
 
     public TimeSeries<TemporalDurationFeature> getOutput() {
         return sink.getOutput();
@@ -70,25 +68,19 @@ public class T2GramTrainerGraph extends AbstractAucomGraph {
     @Override
     protected String getReason() {
         String reason = "\n";
-        if (!isTrainingDataMissing()) {
+        if (!isTrainingDataMissing())
             reason += "\n training data missing \n";
-        }
-        if (!isFreatureGeneratorMissing()) {
+
+        if (!isFreatureGeneratorMissing())
             reason += "\n feature generator missing \n";
-        }
+
         return reason;
     }
 
-    /*
-      * @return
-      */
     private boolean isFreatureGeneratorMissing() {
         return tdfNode.getGenerator() != null;
     }
 
-    /*
-      * @return
-      */
     private boolean isTrainingDataMissing() {
         return source.getInput() != null;
     }

@@ -39,13 +39,13 @@ import java.util.logging.Logger;
 
 public class ProbabilityChartFrame extends javax.swing.JPanel {
     private static final long serialVersionUID = 1L;
-    final XYSeriesCollection dataset = new XYSeriesCollection();
-    HashMap<TimeSeries<Score>, Tuple<XYSeries, Integer>> series;
-    DefaultListModel sequencesListModel;
+    private final XYSeriesCollection dataset = new XYSeriesCollection();
+    private HashMap<TimeSeries<Score>, Tuple<XYSeries, Integer>> series;
+    private DefaultListModel sequencesListModel;
     private JFreeChart chart;
     private double thresholdValue;
-    int hrz = 100;
-    ScheduledExecutorService service;
+    private final int hrz = 100;
+    private ScheduledExecutorService service;
     private final String type;
 
     public static void main(String[] args) {
@@ -55,7 +55,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
     /*
      * Creates new form ProbabilityChartFrame
      */
-    public ProbabilityChartFrame(String type) {
+    private ProbabilityChartFrame(String type) {
         Logger.getLogger(this.getClass().getName()).setLevel(Level.SEVERE);
         this.type = type;
         initComponents();
@@ -93,11 +93,11 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
                                                + sequence);
         }
         Tuple<XYSeries, Integer> t = this.series.get(sequence);
-        this.dataset.removeSeries(t.getFirstElement());
+        this.dataset.removeSeries(t.getFirst());
         this.sequencesListModel.removeElement(sequence);
     }
 
-    public void startUpdating() {
+    void startUpdating() {
         this.service = Executors.newScheduledThreadPool(1);
         this.service.scheduleAtFixedRate(new Runnable() {
 
@@ -108,15 +108,15 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
                         if (s.isEmpty())
                             return;
                         Tuple<XYSeries, Integer> t = ProbabilityChartFrame.this.series.get(s);
-                        int from = t.getSecondElement();
+                        int from = t.getSecond();
                         int to = (int) Math.min(s.get(s.size() - 1).getTimestamp(),
                                                 from + 1000 / ProbabilityChartFrame.this.hrz);
                         updateDomainAxis();
                         updateSliderRanges();
-                        t.getFirstElement().setNotify(false);
+                        t.getFirst().setNotify(false);
                         addDataToseriesInTimespan(s, from, to);
-                        t.getFirstElement().setNotify(true);
-                        t.setSecondElement(to);
+                        t.getFirst().setNotify(true);
+                        t.setSecond(to);
                     }
                 } catch (Throwable e) {
                     // TODO: handle exception
@@ -125,14 +125,14 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
         }, 100, 1000 / this.hrz, TimeUnit.MILLISECONDS);
     }
 
-    public void addDataToseriesInTimespan(final TimeSeries<Score> sequence,
-                                          final int from, final int to) {
+    void addDataToseriesInTimespan(final TimeSeries<Score> sequence,
+                                   final int from, final int to) {
 //		final ArrayList<Score> list = sequence.getElementsInRange(from, to);
 //		if(list.size()>0){
 //		System.out.print("from " + from + " first " +list.get(0).getTimestamp());
 //		System.out.println(" to " +  to +" last " +list.get(list.size()-1).getTimestamp());
 //		}
-//		final XYSeries s = this.series.get(sequence).getFirstElement();
+//		final XYSeries s = this.series.get(sequence).getFirst();
 //
 //		SwingUtilities.invokeLater(new Runnable() {
 //			@Override
@@ -147,7 +147,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
 
     public void removeDataFromSeries(TimeSeries<Score> sequence, int from, int to) {
 //		updateDomainAxis();
-        XYSeries s = this.series.get(sequence).getFirstElement();
+        XYSeries s = this.series.get(sequence).getFirst();
         synchronized (sequence) {
 
             for (int i = from; i <= to; i++) {
@@ -165,12 +165,12 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
     }
 
     public XYSeries getScoreXYSeries(TimeSeries<Score> sequence) {
-        return this.series.get(sequence).getFirstElement();
+        return this.series.get(sequence).getFirst();
     }
 
     public TimeSeries<Score> getScoreSequence(XYSeries ser) {
         for (TimeSeries<Score> s : this.series.keySet()) {
-            if (ser.equals(this.series.get(s).getFirstElement())) {
+            if (ser.equals(this.series.get(s).getFirst())) {
                 return s;
             }
         }
@@ -196,7 +196,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
         }
     }
 
-    public void drawLine() {
+    void drawLine() {
         synchronized (dataset) {
 
             final XYSeries series;
@@ -227,7 +227,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
         }
     }
 
-    public void updateDomainAxis() {
+    void updateDomainAxis() {
         int from = this.visibleDataSlider.getValue();
         int to = from + this.rangeSlider.getValue();
         XYPlot plot = (XYPlot) this.chart.getPlot();
@@ -235,7 +235,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
         plot.getDomainAxis().setUpperBound(to);
     }
 
-    public void updateSliderRanges() {
+    void updateSliderRanges() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -257,7 +257,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
         });
     }
 
-    public void initChart() {
+    void initChart() {
         setThresholdValue(0.5);
         this.sequencesListModel = new DefaultListModel();
         this.sequencesList.setModel(this.sequencesListModel);
@@ -276,11 +276,11 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
         this.chartPanel.validate();
     }
 
-    public void setChart(JFreeChart chart) {
+    void setChart(JFreeChart chart) {
         this.chart = chart;
     }
 
-    public JFreeChart getChart() {
+    JFreeChart getChart() {
         return this.chart;
     }
 
@@ -408,12 +408,12 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
         updateDomainAxis();
     }// GEN-LAST:event_visibleDataSliderStateChanged
 
-    public void setThresholdValue(double thresholdValue) {
+    void setThresholdValue(double thresholdValue) {
         this.thresholdValue = thresholdValue;
         drawLine();
     }
 
-    public double getThresholdValue() {
+    double getThresholdValue() {
         return this.thresholdValue;
     }
 
@@ -434,7 +434,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
 //		}
     }
 
-    public void info(String msg) {
+    void info(String msg) {
         Logger.getLogger(this.getClass().getName()).info(msg);
     }
 
