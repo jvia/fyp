@@ -10,7 +10,9 @@
 
 ** DONE Find class where calculation takes place
 org.bham.aucom.fts.tranform.CalcEntropyAvgScore
-** TODO Make a simple 3-component chain
+
+T2GramModelTrainer
+** DONE Make a simple 3-component chain
 ** TODO Get data running on 3-chain
 ** TODO Get data with 3-chain taking connections into account
 ** TODO read through Jay's report and make notes
@@ -114,7 +116,7 @@ X".
 
 An interesting problem is determining how well the system scales.
 
-** COMMENT 2012-01-16
+** 2012-01-16
 
 Quantitative:
 
@@ -143,6 +145,16 @@ coding:
 - thrn try bigger change
 
 ** COMMENT 2012-01-23
+
+0.1 seems a good cutoff
+
+
+The model is represented as a matrix of probability
+distributions. What is a good way to model "empty" for a probability
+distribution? I don't think there is one.
+
+
+
 ** COMMENT 2012-01-30
 ** COMMENT 2012-02-06
 ** COMMENT 2012-02-13
