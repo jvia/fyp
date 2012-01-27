@@ -1,12 +1,11 @@
 package org.bham.aucom.fts.tranform;
 
-import java.util.ArrayList;
-import java.util.logging.Logger;
-
-import junit.framework.Assert;
 import org.bham.aucom.data.RangeScore;
 import org.bham.aucom.data.Score;
 import org.bham.aucom.data.util.SlidingWindow;
+
+import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class CalcMeanvalue extends AbstractAucomTranformNode<Score, Score> {
 	ArrayList<Score> tmp;
@@ -159,7 +158,7 @@ public class CalcMeanvalue extends AbstractAucomTranformNode<Score, Score> {
 
 	public void setSlidingWindow(SlidingWindow slidingWindow) {
 		this.slidingWindow = slidingWindow;
-		Assert.assertTrue("inSize" + this.getSlidingWindow().getIntervalSize() + " is smaller than overlap " + this.getSlidingWindow().getIntervalOverlapSize(), this.getSlidingWindow().getIntervalSize() > this.getSlidingWindow().getIntervalOverlapSize());
+		//Assert.assertTrue("inSize" + this.getSlidingWindow().getIntervalSize() + " is smaller than overlap " + this.getSlidingWindow().getIntervalOverlapSize(), this.getSlidingWindow().getIntervalSize() > this.getSlidingWindow().getIntervalOverlapSize());
 		reset();
 	}
 

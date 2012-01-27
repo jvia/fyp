@@ -140,7 +140,6 @@ public class PlayFileSystemConnectionPanel extends javax.swing.JPanel implements
 				jToggleButton1.setText("disconnect");
 			}
 		}
-		// TODO add your handling code here:
 	}// GEN-LAST:event_jToggleButton1ActionPerformed
 
 	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed

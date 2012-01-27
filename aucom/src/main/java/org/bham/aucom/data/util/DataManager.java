@@ -1,34 +1,19 @@
 package org.bham.aucom.data.util;
 
-import java.awt.Dimension;
+import nu.xom.Element;
+import org.bham.aucom.Presentable;
+import org.bham.aucom.data.*;
+import org.bham.aucom.data.timeseries.*;
+import org.bham.aucom.diagnoser.Model;
+import org.bham.aucom.util.Constants;
+import org.bham.aucom.util.TimeSeriesNotFoundException;
+
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
-
-import javax.swing.JPanel;
-
-import junit.framework.Assert;
-import nu.xom.Element;
-import org.bham.aucom.Presentable;
-import org.bham.aucom.data.AbstractData;
-import org.bham.aucom.data.Classification;
-import org.bham.aucom.data.DataType;
-import org.bham.aucom.data.DomainFeature;
-import org.bham.aucom.data.Observation;
-import org.bham.aucom.data.Score;
-import org.bham.aucom.data.TemporalDurationFeature;
-import org.bham.aucom.data.TemporalProbabilityFeature;
-import org.bham.aucom.data.timeseries.ClassificationTimeSeries;
-import org.bham.aucom.data.timeseries.DataTypeTimeSeries;
-import org.bham.aucom.data.timeseries.ScoreTimeSeries;
-import org.bham.aucom.data.timeseries.TemporalDurationFeatureTimeSeries;
-import org.bham.aucom.data.timeseries.TemporalProbabilityFeatureTimeSeries;
-import org.bham.aucom.data.timeseries.TimeSeries;
-import org.bham.aucom.data.timeseries.TimeSeriesType;
-import org.bham.aucom.diagnoser.Model;
-import org.bham.aucom.util.Constants;
-import org.bham.aucom.util.TimeSeriesNotFoundException;
 
 public class DataManager implements Presentable{
 	
@@ -42,7 +27,7 @@ public class DataManager implements Presentable{
 	}
 	
 	public TimeSeries<?> createResultTimeSeriesFor(TimeSeries<?> timeSeries) {
-		Assert.assertNotNull(timeSeries);
+		//Assert.assertNotNull(timeSeries);
 		TimeSeries<?> generatedTimeSeries = null;
 		switch (timeSeries.getType()) {
 		case obs:

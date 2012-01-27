@@ -77,7 +77,6 @@ public class PlayTimeSeriesSourceTest {
 		try {
 			src.iDisconnect();
 		} catch (ActionFailedException exception) {
-			// TODO Auto-generated catch block
 			exception.printStackTrace();
 		}
 	}

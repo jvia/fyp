@@ -1,14 +1,13 @@
 package org.bham.aucom.data.io.xml.in.converter;
 
-import java.util.ArrayList;
-import java.util.UUID;
-
-import junit.framework.Assert;
 import nu.xom.Element;
 import nu.xom.Nodes;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.timeseries.ObservationTimeSeries;
 import org.bham.aucom.data.timeseries.TimeSeries;
+
+import java.util.ArrayList;
+import java.util.UUID;
 
 public class XmlToObservationTimeSeriesConverter extends XmlToTimeSeriesConverter<Observation>{
 	/*
@@ -20,7 +19,7 @@ public class XmlToObservationTimeSeriesConverter extends XmlToTimeSeriesConverte
 	public	Observation createDataFromElement(Element e) {
 		Nodes nodes = e.query("./ts:observation", getContext());
 		if( 0 == nodes.size()){
-			Assert.fail(e.toXML());
+			//Assert.fail(e.toXML());
 		}
 		Element observationElement = (Element)nodes.get(0);
 		long timestamp = getTimestamp(observationElement);

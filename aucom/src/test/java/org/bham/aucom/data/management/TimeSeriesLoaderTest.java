@@ -1,17 +1,16 @@
 package org.bham.aucom.data.management;
 
 
-import java.io.File;
-
 import junit.framework.Assert;
 import nu.xom.Document;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import org.bham.aucom.data.io.TimeSeriesIO;
 import org.bham.aucom.data.io.xml.in.XmlTimeSeriesInput;
 import org.bham.aucom.data.io.xml.out.XmlTimeSeriesOutput;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.io.File;
+import java.util.UUID;
 
 public class TimeSeriesLoaderTest {
 	
@@ -43,57 +42,4 @@ public class TimeSeriesLoaderTest {
 		}
 	}
 
-//	@Test
-//	public void getIdTest(){
-//		Document doc;
-//		try {
-//			doc = this.reader.getXmlDocumentFromFile(this.scoreFile);
-//			UUID id = this.reader.getOwnId(this.reader.getRootElement(doc));
-//			Assert.assertNotNull(id);
-//			Assert.assertEquals(UUID.fromString(OWN_ID_TEST), id);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			Assert.fail();
-//		}
-//	}
-//	@Test
-//	public void getGeneratorIdTest(){
-//		Document doc;
-//		try {
-//			doc = this.tsl.getXmlDocumentFromFile(this.scoreFile);
-//			UUID id = this.tsl.getGeneratorID(this.tsl.getRootElement(doc));
-//			Assert.assertNotNull(id);
-//			Assert.assertEquals(UUID.fromString(GENERATOR_ID_TEST), id);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			Assert.fail();
-//		}
-//	}
-//	@Test
-//	public void getGeneratedFromIdTest(){
-//		Document doc;
-//		try {
-//			doc = this.tsl.getXmlDocumentFromFile(this.scoreFile);
-//			UUID id = this.tsl.getGeneratedFromID(this.tsl.getRootElement(doc));
-//			Assert.assertNotNull(id);
-//			Assert.assertEquals(UUID.fromString(GENERATEDFROM_ID_TEST), id);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			Assert.fail();
-//		}
-//	}
-//	@Test
-//	public void getElementsTest(){
-//		Document doc;
-//		int expectedNumberElements = 2;
-//		try {
-//			doc = this.tsl.getXmlDocumentFromFile(this.scoreFile);
-//			int actualNumberElements = this.tsl.getElements(this.tsl.getRootElement(doc)).size();
-//			Assert.assertEquals("ts:element" , this.tsl.getElements(this.tsl.getRootElement(doc)).get(0).getQualifiedName());
-//			Assert.assertEquals(expectedNumberElements, actualNumberElements);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			Assert.fail();
-//		}
-//	}
 }

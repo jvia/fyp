@@ -2,8 +2,6 @@ package org.bham.aucom.models.probability;
 
 import java.io.Serializable;
 
-import junit.framework.Assert;
-
 public class HistogramBin implements Serializable{
 	private static final long serialVersionUID = 0L;
 	private String binLabel;
@@ -14,11 +12,11 @@ public class HistogramBin implements Serializable{
 	public HistogramBin(String inBinLabel, int inBinNumber, int startValue, double inLowBorder, double inHighBorder) {
 		value = startValue;
 		setBinNumber(inBinNumber);
-		Assert.assertTrue(inBinNumber >=0);
+		//Assert.assertTrue(inBinNumber >=0);
 		setLowBorder(inLowBorder);
-		Assert.assertTrue(inLowBorder >=0);
+		//Assert.assertTrue(inLowBorder >=0);
 		setHighBorder(inHighBorder);
-		Assert.assertTrue(inHighBorder >=0);
+		//Assert.assertTrue(inHighBorder >=0);
 		setBinLabel(inBinLabel);
 	}
 	public HistogramBin(String inBinLabel, int inBinNumber, double inLowBorder, double inHighBorder) {

@@ -1,19 +1,19 @@
 package org.bham.aucom.data.management;
 
-import java.util.List;
-
 import junit.framework.Assert;
 import nu.xom.Attribute;
 import nu.xom.Element;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import org.bham.aucom.data.RangeScore;
 import org.bham.aucom.data.Score;
 import org.bham.aucom.data.SingleScore;
 import org.bham.aucom.data.io.xml.in.converter.XmlToScoreTimeSeriesConverter;
 import org.bham.aucom.data.io.xml.in.converter.XmlToTimeSeriesConverter;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.List;
+
+import static junit.framework.Assert.fail;
 
 public class ScoreTimeSeriesLoaderTest {
 	private static final String RANGEDSCORE_SINGLESCORE_TIMESTAMP_ID1 = "123456789";
@@ -92,19 +92,19 @@ public class ScoreTimeSeriesLoaderTest {
 		Assert.assertEquals(Long.valueOf(RANGEDSCORE_SINGLESCORE_TIMESTAMP_ID2).longValue(), s2.getTimestamp());
 	}
 
-	// @Test
-	// public void testCreateSingleScoreFrom() {
-	// fail("Not yet implemented");
-	// }
-	//
-	// @Test
-	// public void testCreateRangeScoreFrom() {
-	// fail("Not yet implemented");
-	// }
-	//
-	// @Test
-	// public void testIsSingle() {
-	// fail("Not yet implemented");
-	// }
+    @Test
+    public void testCreateSingleScoreFrom() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void testCreateRangeScoreFrom() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void testIsSingle() {
+        fail("Not yet implemented");
+    }
 
 }

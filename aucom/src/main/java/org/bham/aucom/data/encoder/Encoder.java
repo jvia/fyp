@@ -1,12 +1,12 @@
 package org.bham.aucom.data.encoder;
 
-import java.io.Serializable;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.bham.aucom.Configuration;
 import org.bham.aucom.data.DomainFeature;
 import org.bham.aucom.data.Observation;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Defines an abstract encoder. Encoders take system observations and turn them 
@@ -70,6 +70,7 @@ public abstract class Encoder implements Serializable {
     public static Encoder getInstance()
     {
     	if(instance == null){
+            // TODO :: fix configuration path so encoder can load
     		String encoderClass = Configuration.getInstance().getValue("encoder");
     		if (encoderClass.isEmpty()){
     			return null;

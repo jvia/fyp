@@ -1,6 +1,5 @@
 package org.bham.aucom.data;
 
-import junit.framework.Assert;
 import nu.xom.Attribute;
 import nu.xom.Element;
 import org.bham.aucom.util.Constants;
@@ -23,8 +22,8 @@ public class Observation extends AbstractData {
      */
     public Observation(Element content, long timestamp)
     {
-        Assert.assertNotNull(content);
-        Assert.assertTrue(timestamp != -1L);
+        //Assert.assertNotNull(content);
+        //Assert.assertTrue(timestamp != -1L);
         super.setTimestamp(timestamp);
         this.content = content;
     }

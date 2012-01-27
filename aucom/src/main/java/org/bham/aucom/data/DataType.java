@@ -1,5 +1,7 @@
 package org.bham.aucom.data;
 
+import org.bham.aucom.util.Constants;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -7,11 +9,9 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.bham.aucom.util.Constants;
-
 /**
  * This is a generic DataType that contains a collection of DomainFeatures.
- * 
+ *
  * @author Raphael Golombek <rgolombe@cor-lab.uni-bielefeld.de>
  */
 public class DataType extends Observation {
@@ -22,21 +22,19 @@ public class DataType extends Observation {
     /**
      * Creates an empty object.
      */
-    public DataType()
-    {
-    	selectedFeatures = new ArrayList<DomainFeature>();
+    public DataType() {
+        selectedFeatures = new ArrayList<DomainFeature>();
         // TODO remove empty/unused constructors
     }
 
     /**
      * Creates a DataType object.
-     * 
-     * @param features a collection of domain features
-     * @param eventType the type of event
+     *
+     * @param features    a collection of domain features
+     * @param eventType   the type of event
      * @param observation the observation data
      */
-    public DataType(List<DomainFeature> features, int eventType, Observation observation)
-    {
+    public DataType(List<DomainFeature> features, int eventType, Observation observation) {
         super(observation);
         selectedFeatures = new ArrayList<DomainFeature>();
         setTimestamp(observation.getTimestamp());
@@ -48,63 +46,59 @@ public class DataType extends Observation {
         this.eventType = eventType;
 
         if (selectedFeatures == null) {
-        	Logger.getLogger(this.getClass().getCanonicalName()).log(Level.WARNING, "DataType warninig: got null feature set");
+            Logger.getLogger(this.getClass().getCanonicalName()).log(Level.WARNING, "DataType warninig: got null feature set");
         }
     }
 
     /**
      * Creates a Datatype object from an existing Datatype object.
+     *
      * @param d
      */
-    public DataType(DataType d)
-    {
+    public DataType(DataType d) {
         this(d.getFeatures(), d.getEventType(), d);
     }
 
     /**
      * Return the EventType.
-     * 
+     *
      * @return the event type
      */
-    public int getEventType()
-    {
+    public int getEventType() {
         return this.eventType;
     }
 
     /**
      * Return the EventType a a String value.
-     * 
+     *
      * @return the event type
      */
-    public String getEventTypeIdAsString()
-    {
+    public String getEventTypeIdAsString() {
         return String.valueOf(this.eventType);
     }
 
 
     /**
      * Set the EventType.
-     * 
+     *
      * @param eventTypeId the event type
      */
-    public void setEventTypeId(int eventTypeId)
-    {
+    public void setEventTypeId(int eventTypeId) {
         this.eventType = eventTypeId;
     }
 
     /**
      * Return a String representation of this object.
-     * 
+     *
      * @return string representation
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         String str = "[";
 
         str += getTimestamp();
         str += ", ";
-        if (true) {
+        if (null != selectedFeatures) {
             for (DomainFeature f : this.selectedFeatures) {
                 str += (f != null) ? f.getFeatureName() + ":" + f.getFeatureValue() + ";" : "--:--;";
             }
@@ -117,21 +111,19 @@ public class DataType extends Observation {
 
     /**
      * Return the name of the DataType.
-     * 
+     *
      * @return the name
      */
-    public String getName()
-    {
+    public String getName() {
         return toString();
     }
 
     /**
      * Set the collection of DomainFeatures.
-     * 
+     *
      * @param features the domain features
      */
-    public void setFeatures(List<DomainFeature> features)
-    {
+    public void setFeatures(List<DomainFeature> features) {
         this.selectedFeatures = features;
         if (selectedFeatures == null) {
             System.err.println("-------------> DataType warninig: got null feature set");
@@ -141,34 +133,30 @@ public class DataType extends Observation {
 
     /**
      * Return the collection of domain features.
-     * 
+     *
      * @return the domain features
      */
-    public List<DomainFeature> getFeatures()
-    {
+    public List<DomainFeature> getFeatures() {
         return Collections.unmodifiableList(this.selectedFeatures);
     }
 
     /**
      * Creates a random DataType object. Mostly used for testing.
-     * 
+     *
      * @return a random DataType object
      */
-    public static DataType createRandomDataType()
-    {
+    public static DataType createRandomDataType() {
         Observation rndObs = createRandomObservation();
         List<DomainFeature> rndDomainFeatureList = createRandomDomainFeature();
         int rndDataType = createRandomDT();
         return new DataType(rndDomainFeatureList, rndDataType, rndObs);
     }
 
-    private static int createRandomDT()
-    {
+    private static int createRandomDT() {
         return (int) (1 + Math.random() * 10);
     }
 
-    private static List<DomainFeature> createRandomDomainFeature()
-    {
+    private static List<DomainFeature> createRandomDomainFeature() {
         List<DomainFeature> rndDomainFeature = new ArrayList<DomainFeature>();
         rndDomainFeature.add(new DomainFeature(Constants.SOURCE_TYPE, getRandomString(4)));
         rndDomainFeature.add(new DomainFeature(Constants.SCOPE_TYPE, getRandomString(4)));
@@ -177,8 +165,7 @@ public class DataType extends Observation {
         return rndDomainFeature;
     }
 
-    private static String getRandomString(int length)
-    {
+    private static String getRandomString(int length) {
         String value = "";
         Random rndNumber = new Random();
         int i = 0;
@@ -193,8 +180,7 @@ public class DataType extends Observation {
     }
 
     @Override
-    public Object copy()
-    {
+    public Object copy() {
         Observation obs_copy = (Observation) super.copy();
         List<DomainFeature> copied_DomainFeatures = new ArrayList<DomainFeature>();
         for (DomainFeature toCopy : getFeatures()) {

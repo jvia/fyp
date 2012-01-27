@@ -7,7 +7,6 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import junit.framework.Assert;
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Node;

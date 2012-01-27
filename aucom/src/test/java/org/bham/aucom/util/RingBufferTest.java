@@ -1,11 +1,10 @@
 package org.bham.aucom.util;
 
-import java.util.Arrays;
-
 import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Arrays;
 
 public class RingBufferTest {
 	RingBuffer<Double> buf;
