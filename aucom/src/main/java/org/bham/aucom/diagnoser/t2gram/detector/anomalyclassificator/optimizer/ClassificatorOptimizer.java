@@ -185,7 +185,7 @@ public class ClassificatorOptimizer implements Presentable, GraphStatusListener 
 	 * 
 	 */
 	private void prepareNextAnomalyClassificator() {
-		optimizationMethod.getTestedClassificators().put(this.optimizationMethod.getCurrentClassificator().duplicate(), Double.valueOf(optimizationMethod.getStatistic().getAnomalyValuePercent()));
+		optimizationMethod.getTestedClassificators().put(this.optimizationMethod.getCurrentClassificator().duplicate(), optimizationMethod.getStatistic().getAnomalyValuePercent());
 		optimizationMethod.getCurrentClassificator().copy(optimizationMethod.getClassificatorsToTest().pop());
 		optimizationMethod.getCurrentClassificator().reset();
 		Logger.getLogger(this.getClass().getCanonicalName()).info("next classificator to test " + optimizationMethod.getCurrentClassificator());

@@ -35,8 +35,8 @@ public class StatisticalAnomalyClassificator extends AbstractAnomalyClassificato
 
     public StatisticalAnomalyClassificator(Double mean, Double variance) {
         super("statistical");
-        this.setMean(mean.doubleValue());
-        this.setVariance(variance.doubleValue());
+        this.setMean(mean);
+        this.setVariance(variance);
         a = 0.95;
     }
 

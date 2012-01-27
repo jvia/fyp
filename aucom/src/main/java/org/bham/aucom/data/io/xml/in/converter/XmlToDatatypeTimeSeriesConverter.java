@@ -36,7 +36,7 @@ public class XmlToDatatypeTimeSeriesConverter extends XmlToTimeSeriesConverter<D
 		Nodes nodes = e.query("./ts:datatype/ts:parameter[@type='eventTypeId']", this.getContext());
 		int eventTypeId = -1;
 		if(nodes.size() != 0){
-			eventTypeId = Integer.valueOf(nodes.get(0).getValue()).intValue();
+			eventTypeId = Integer.valueOf(nodes.get(0).getValue());
 		}
 		return eventTypeId;
 	}

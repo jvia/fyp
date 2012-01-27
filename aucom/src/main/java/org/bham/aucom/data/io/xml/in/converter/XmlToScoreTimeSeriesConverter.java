@@ -47,7 +47,7 @@ public class XmlToScoreTimeSeriesConverter extends XmlToTimeSeriesConverter<Scor
 		Element scoreElement = (Element) e.query("./ts:score[@type='singlescore']", getContext()).get(0);
 		if (scoreElement.getAttribute("value") != null) {
 			String scoreAsString = scoreElement.getAttributeValue("value");
-			score = Double.valueOf(scoreAsString).doubleValue();
+			score = Double.valueOf(scoreAsString);
 		}
 		return score;
 	}

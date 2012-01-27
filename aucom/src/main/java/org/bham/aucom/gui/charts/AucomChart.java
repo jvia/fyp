@@ -11,20 +11,9 @@
 
 package org.bham.aucom.gui.charts;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.util.HashMap;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.DefaultListModel;
-import javax.swing.SwingUtilities;
-import javax.swing.event.ListDataEvent;
-
+import org.bham.aucom.data.Score;
+import org.bham.aucom.data.timeseries.TimeSeries;
+import org.bham.aucom.util.Tupel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -35,9 +24,15 @@ import org.jfree.data.xy.XYDataItem;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-import org.bham.aucom.data.Score;
-import org.bham.aucom.data.timeseries.TimeSeries;
-import org.bham.aucom.util.Tupel;
+import javax.swing.*;
+import javax.swing.event.ListDataEvent;
+import java.awt.*;
+import java.util.HashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AucomChart extends javax.swing.JFrame {
 	private static final long serialVersionUID = 1L;
@@ -65,7 +60,7 @@ public class AucomChart extends javax.swing.JFrame {
 			throw new IllegalArgumentException("Sequence allready registered");
 		}
 		XYSeries s = new XYSeries(this.getName());
-		this.series.put(sequence, new Tupel<XYSeries, Integer>(s, new Integer(0)));
+		this.series.put(sequence, new Tupel<XYSeries, Integer>(s, 0));
 		// s.setNotify(false);
 		getDataset().addSeries(s);
 		this.sequencesListModel.addElement(sequence);
@@ -91,7 +86,7 @@ public class AucomChart extends javax.swing.JFrame {
 					for (TimeSeries<Score> s : AucomChart.this.series.keySet()) {
 						Tupel<XYSeries, Integer> t = AucomChart.this.series.get(s);
 						int from = t.getSecondElement();
-						int to = (int) Math.min(((Score) s.get(s.size() - 1)).getTimestamp(), from + 1000 / AucomChart.this.hrz);
+						int to = (int) Math.min(s.get(s.size() - 1).getTimestamp(), from + 1000 / AucomChart.this.hrz);
 						updateDomainAxis();
 						updateSliderRanges();
 						t.getFirstElement().setNotify(false);
@@ -132,7 +127,7 @@ public class AucomChart extends javax.swing.JFrame {
 		synchronized (sequence) {
 
 			for (int i = from; i <= to; i++) {
-				Number x = ((Score) sequence.get(i)).getTimestamp();
+				Number x = sequence.get(i).getTimestamp();
 				if (s.indexOf(x) >= 0)
 					s.remove(x);
 			}
@@ -166,12 +161,12 @@ public class AucomChart extends javax.swing.JFrame {
 			if (getDataset().indexOf("Threshold") != -1) {
 				XYSeries series = getDataset().getSeries("Threshold");
 				if (!series.isEmpty()) {
-					Double min = new Double(series.getMinX());
-					Double max = new Double(series.getMaxX());
+					Double min = series.getMinX();
+					Double max = series.getMaxX();
 					if (series.indexOf(min) != -1)
-						series.remove(new Double(min));
+						series.remove(min);
 					if (series.indexOf(max) != -1)
-						series.remove(new Double(max));
+						series.remove(max);
 				}
 			}
 		}
@@ -188,12 +183,12 @@ public class AucomChart extends javax.swing.JFrame {
 			}
 			series = getDataset().getSeries("Threshold");
 			if (!series.isEmpty()) {
-				Double min = new Double(series.getMinX());
-				Double max = new Double(series.getMaxX());
+				Double min = series.getMinX();
+				Double max = series.getMaxX();
 				if (series.indexOf(min) != -1)
-					series.remove(new Double(min));
+					series.remove(min);
 				if (series.indexOf(max) != -1)
-					series.remove(new Double(max));
+					series.remove(max);
 			}
 			final double min_x = getDataset().getDomainLowerBound(false);
 			final double max_x = getDataset().getDomainUpperBound(false);

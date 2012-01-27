@@ -158,7 +158,7 @@ public class FixTimestamps {
 			XPathContext context = new XPathContext("xcf", "");
 			Nodes nodes = in.query("//TIMESTAMP", context);
 			if (nodes.size() > 0) {
-				timestamp = ((Element) nodes.get(0)).getValue();
+				timestamp = nodes.get(0).getValue();
 			}
 		} else if (name.equals("PERSON") || name.equals("PERCEPTS")) {
 			XPathContext context = new XPathContext("xcf", "");

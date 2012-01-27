@@ -190,7 +190,7 @@ public class VisualizerScoreChart extends javax.swing.JPanel {
 		// ((XYLineAndShapeRenderer)(plot).getRenderer()).setShapesVisible(true);
 		// ((XYLineAndShapeRenderer)(plot).getRenderer()).setAutoPopulateSeriesPaint(false);
 
-		((XYLineAndShapeRenderer) (plot).getRenderer()).setBasePaint(Color.black);
+		(plot).getRenderer().setBasePaint(Color.black);
 		((XYLineAndShapeRenderer) (plot).getRenderer()).setAutoPopulateSeriesPaint(false);
 		this.chartPanel.setLayout(new GridLayout(1, 1));
 		ChartPanel tmp = new ChartPanel(this.chart);

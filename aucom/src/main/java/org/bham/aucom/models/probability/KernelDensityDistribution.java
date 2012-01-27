@@ -18,7 +18,7 @@ public class KernelDensityDistribution implements ProbabilityDistribution {
 	double maxProbabilityValue = 0.0d;
 	private double maxSeenValue = 0.0d;
 	private HashMap<Double, Double> queriedValues = new HashMap<Double, Double>();
-	Double tmpValue = new Double(0.0);
+	Double tmpValue = 0.0;
 	private int lookUpTableUsed;
 	private int lookUpTableNotUsed;
 
@@ -63,14 +63,14 @@ public class KernelDensityDistribution implements ProbabilityDistribution {
 	public double getProbability(double val) {
 		boolean useBuffer = true;
 		if (useBuffer) {
-			Double dVal = Double.valueOf(val);
+			Double dVal = val;
 			if (!this.getQueriedValues().containsKey(dVal)) {
-				this.getQueriedValues().put(dVal, Double.valueOf(this.estimator.getProbability(val)));
+				this.getQueriedValues().put(dVal, this.estimator.getProbability(val));
 				this.lookUpTableUsed++;
 			}else{
 				this.lookUpTableNotUsed++;
 			}
-			double value = this.getQueriedValues().get(dVal).doubleValue();
+			double value = this.getQueriedValues().get(dVal);
 			return value;
 		} else {
 			return this.estimator.getProbability(val);

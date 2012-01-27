@@ -55,13 +55,13 @@ public class TemporalDurationFeature extends DataType {
 			Logger.getLogger(this.getClass().getCanonicalName()).info(" missing precedessor " + inPrecedessorDataType);
 			return 0L;
 		}
-		return this.getPredecessorIdToDurationsMapping().get(inPrecedessorDataType).longValue();
+		return this.getPredecessorIdToDurationsMapping().get(inPrecedessorDataType);
 	}
 
 	public long getDurationFor(int eventTypeId) {
 	    for(DataType dtp : this.getPredecessorIdToDurationsMapping().keySet()){
 	        if(dtp.getEventType() == eventTypeId){
-	            return this.getPredecessorIdToDurationsMapping().get(dtp).longValue();
+	            return this.getPredecessorIdToDurationsMapping().get(dtp);
 	        }
 	    }
 	        System.out.println(" missing precedessor with id " + eventTypeId);
@@ -106,7 +106,7 @@ public class TemporalDurationFeature extends DataType {
 		LinkedHashMap<DataType, Long> durations = new LinkedHashMap<DataType, Long>();
 		for (int i = 0; i < 5; i++) {
 			double randomVlaue = Math.random() * 1000;
-			Long duration = Long.valueOf((long) randomVlaue);
+			Long duration = (long) randomVlaue;
 			durations.put(createRandomDataType(), duration);
 		}
 		return new TemporalDurationFeature(dtp, durations);

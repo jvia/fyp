@@ -49,7 +49,7 @@ public class GenerateTemporalProbabilityFeature extends AbstractAucomTranformNod
                         + (normalizedProbabilityOfPredecessor - absolutProbabilityForPredecessor);
                 Logger.getLogger(this.getClass().getCanonicalName()).info(message);
                 
-                datatypeToProbabilities.put(predecessor, Double.valueOf(normalizedProbabilityOfPredecessor));
+                datatypeToProbabilities.put(predecessor, normalizedProbabilityOfPredecessor);
                 
                 try {
                     Logger.getLogger(this.getClass().getCanonicalName()).info(

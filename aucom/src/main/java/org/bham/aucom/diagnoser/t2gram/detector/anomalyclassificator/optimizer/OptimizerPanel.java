@@ -11,18 +11,16 @@
 
 package org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.optimizer;
 
-import java.io.File;
-import java.util.concurrent.Executors;
-
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.util.ExampleFileFilter;
+
+import javax.swing.*;
+import java.io.File;
+import java.util.concurrent.Executors;
 
 
 /**
@@ -111,7 +109,7 @@ public class OptimizerPanel extends javax.swing.JPanel implements ClassificatorO
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2, jButton3, loadFileButton});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, jButton1, jButton2, jButton3, loadFileButton);
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

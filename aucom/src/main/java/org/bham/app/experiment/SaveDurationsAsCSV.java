@@ -152,7 +152,7 @@ public class SaveDurationsAsCSV implements Experiment {
     {
         Set<Integer> set = new HashSet<Integer>();
         for (Observation obs : tsObs.getall()) {
-            set.add(Integer.valueOf(Encoder.getInstance().encode(obs)));
+            set.add(Encoder.getInstance().encode(obs));
         }
         return new ArrayList<Integer>(set);
     }
@@ -202,11 +202,11 @@ public class SaveDurationsAsCSV implements Experiment {
             		File file_after = new File(tdfTs.getAttributeValue("savefile")+ "_after");
             		
             		TimeSeries<TemporalDurationFeature> tdfTs_head = new TemporalDurationFeatureTimeSeries(); 
-            		tdfTs_head.addAll(tdfTs.getHead(induced_timestamp.longValue()));
+            		tdfTs_head.addAll(tdfTs.getHead(induced_timestamp));
             		AucomIO.getInstance().writeTimeSeries(tdfTs_head, file_before , "csv");
             		
             		TimeSeries<TemporalDurationFeature> tdfTs_tail = new TemporalDurationFeatureTimeSeries(); 
-            		tdfTs_tail.addAll(tdfTs.getTail(induced_timestamp.longValue()));
+            		tdfTs_tail.addAll(tdfTs.getTail(induced_timestamp));
             		AucomIO.getInstance().writeTimeSeries(tdfTs_tail, file_after , "csv");
             		Logger.getLogger(this.getClass().getCanonicalName()).info("saving durations as csv into two files " + tdfTs.getAttributeValue("savefile"));
             		
