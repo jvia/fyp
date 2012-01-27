@@ -1,0 +1,22 @@
+[Box: ::org.bham.aucom.main - ::<<Unknown>>::Serializable]
+X=20
+Y=291
+
+[Box: ::org.bham.aucom.main - ::org.bham.aucom.main::ModelConfiguration]
+X=529
+Y=341
+
+[Box: ::org.bham.aucom.main - ::org.bham.aucom.main::SlidingWindow]
+X=20
+Y=40
+
+[Box: ::org.bham.aucom.main - ::org.bham.aucom.main::T2GramModelConfiguration]
+X=510
+Y=18
+
+[Diagram: ::org.bham.aucom.main]
+OffsetX=0
+OffsetY=0
+Visibility=0
+ShowAssoc=0
+

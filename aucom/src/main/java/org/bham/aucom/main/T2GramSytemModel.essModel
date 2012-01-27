@@ -1,0 +1,40 @@
+[Box: ::org.bham.aucom.main - ::<<Unknown>>::Serializable]
+X=240
+Y=499
+Visible=0
+
+[Box: ::org.bham.aucom.main - ::org.bham.aucom.main::AbstractConfiguration]
+X=354
+Y=40
+
+[Box: ::org.bham.aucom.main - ::org.bham.aucom.main::Configuration]
+X=277
+Y=499
+
+[Box: ::org.bham.aucom.main - ::org.bham.aucom.main::ModelConfiguration]
+X=28
+Y=499
+
+[Box: ::org.bham.aucom.main - ::org.bham.aucom.main::SlidingWindow]
+X=240
+Y=40
+Visible=0
+
+[Box: ::org.bham.aucom.main - ::org.bham.aucom.main::SystemModel]
+X=482
+Y=1023
+
+[Box: ::org.bham.aucom.main - ::org.bham.aucom.main::T2GramModelConfiguration]
+X=20
+Y=40
+
+[Box: ::org.bham.aucom.main - ::org.bham.aucom.main::T2GramSytemModel]
+X=482
+Y=499
+
+[Diagram: ::org.bham.aucom.main]
+OffsetX=0
+OffsetY=0
+Visibility=0
+ShowAssoc=1
+

@@ -1,0 +1,22 @@
+[Box: ::org.bham.aucom.main - ::org.bham.aucom.main::ModelConfiguration]
+X=40
+Y=49
+
+[Box: ::org.bham.aucom.main - ::org.bham.aucom.main::SystemModel]
+X=277
+Y=186
+
+[Box: ::org.bham.aucom.main - ::org.bham.aucom.main::SystemModelGenerator]
+X=37
+Y=215
+
+[Box: ::org.bham.aucom.main - ::org.bham.aucom.main::T2GramSystemModelGenerator]
+X=266
+Y=12
+
+[Diagram: ::org.bham.aucom.main]
+OffsetX=0
+OffsetY=0
+Visibility=0
+ShowAssoc=1
+

@@ -10,17 +10,17 @@
             1. name
                     The name of the file you will save. It helps if it is a 
                     descriptive name.
-            2. aucom:wd
+            2. org.bham.aucom:wd
                     The working directory where the file will be saved.
-            3. aucom:observations
+            3. org.bham.aucom:observations
                     The number of observations you want to collect before you
                     save to file.
                      
 -->
 <aucom:experiments xmlns:aucom="http://www.cor-lab.de">
-    <aucom:experiment factory="org.bham.applications.experimenter.experiment.CastObservationCollectionFactory" name="debug">
+    <aucom:experiment factory="org.bham.app.experimenter.experiment.CastObservationCollectionFactory" name="debug">
         <aucom:input>        
-            <aucom:wd>/home/jxv911/Dropbox/aucom/cast</aucom:wd>
+            <aucom:wd>/home/jxv911/Dropbox/org.bham.aucom/cast</aucom:wd>
             <aucom:observations>2000</aucom:observations>
         </aucom:input>
     </aucom:experiment>
