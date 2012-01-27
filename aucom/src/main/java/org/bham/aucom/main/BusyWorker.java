@@ -29,9 +29,9 @@ public class BusyWorker {
 	@SuppressWarnings("boxing")
 	public static Long fib(Long fib){
 		if(fib==0)
-			return new Long(0);
+			return (long) 0;
 		if(fib==1)
-			return new Long(1);
+			return (long) 1;
 		return fib(fib-1) + fib(fib-2);
 	}
 	public static void main(String[] args) {

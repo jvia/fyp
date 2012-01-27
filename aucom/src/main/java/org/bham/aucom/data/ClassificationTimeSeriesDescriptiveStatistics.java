@@ -339,7 +339,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 		synchronized (getTimeSeries()) {
 			for (int i = 0; i < this.getTimeSeries().size(); i++) {
 				Score s = this.getTimeSeries().get(i);
-				double meanValue = Double.valueOf(s.getAttributeValue(StatisticalAnomalyClassificator.THRESHOLD_USED)).doubleValue();
+				double meanValue = Double.valueOf(s.getAttributeValue(StatisticalAnomalyClassificator.THRESHOLD_USED));
 				double tmpDiff = Math.max(s.getValue() - meanValue, 0);
 				distance += Math.pow(tmpDiff, 2);
 			}

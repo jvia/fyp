@@ -25,7 +25,7 @@ public class DatasetListCellRenderer extends JLabel implements ListCellRenderer 
 	{
 		String s="unknown datasequence";
 		if(value!=null)
-			s = ((TimeSeries<DataType>)value).toString();
+			s = value.toString();
 			
 		setText(s);
 		if (isSelected) {

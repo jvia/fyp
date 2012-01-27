@@ -108,6 +108,6 @@ public class TemporalDurationFeatureGenerator {
 
     private void updateLastOccurrences(DataType inTestElement)
     {
-        this.lastOccurrences.put(Integer.valueOf(inTestElement.getEventType()), inTestElement);
+        this.lastOccurrences.put(inTestElement.getEventType(), inTestElement);
     }
 }

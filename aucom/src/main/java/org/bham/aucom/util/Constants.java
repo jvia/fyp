@@ -3,9 +3,9 @@ package org.bham.aucom.util;
 public class Constants {
 	public static final int DEFAULTPRESENTABELHEIGHT = 50; 
 	public static final int DEFAULTPRESENTABEWIDTH = 500; 
-	public static final Double ABNORMAL= Double.valueOf(1);
-	public static final Double NORMAL= Double.valueOf(0);
-	public static final Double UNDEFINED=Double.valueOf(-1);
+	public static final Double ABNORMAL= (double) 1;
+	public static final Double NORMAL= (double) 0;
+	public static final Double UNDEFINED= (double) -1;
 	public static final String TEST_SINK = "testSink";
 	public static final String THRESHOLD_SOURCE = "TresholdSource";
 	public static final String TEST_SOURCE = "testSource";

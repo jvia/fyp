@@ -100,7 +100,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
 		Object[] listeners = this.listenerList.getListenerList();
 		for (int i = 0; i < listeners.length; i += 2) {
 			if (listeners[i] == GraphStatusListener.class) {
-				Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, getGraphName() + " nfires to " + (GraphStatusListener) listeners[i + 1]);
+				Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, getGraphName() + " nfires to " + listeners[i + 1]);
 				((GraphStatusListener) listeners[i + 1]).graphStatusChanged(evt);
 			}
 		}

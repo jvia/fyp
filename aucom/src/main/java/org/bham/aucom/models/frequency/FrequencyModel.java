@@ -18,7 +18,7 @@ public class FrequencyModel {
     public void put(Integer classId)
     {
         if (!getData().containsKey(classId))
-            getData().put(classId, new Integer(0));
+            getData().put(classId, 0);
         getData().put(classId, getData().get(classId) + 1);
         setNumValues(getNumValues() + 1);
     }

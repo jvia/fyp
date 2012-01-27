@@ -79,7 +79,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel{
 					+ " allready registered");
 		}
 		XYSeries s = new XYSeries(sequence.toString());
-		this.series.put(sequence, new Tupel<XYSeries, Integer>(s, new Integer(0)));
+		this.series.put(sequence, new Tupel<XYSeries, Integer>(s, 0));
 		// s.setNotify(false);
 		this.dataset.addSeries(s);
 		this.sequencesListModel.addElement(sequence);
@@ -108,7 +108,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel{
 						return;
 					Tupel<XYSeries, Integer> t = ProbabilityChartFrame.this.series.get(s);
 					int from = t.getSecondElement();
-					int to = (int) Math.min(((Score)s.get(s.size()-1)).getTimestamp(), from
+					int to = (int) Math.min(s.get(s.size()-1).getTimestamp(), from
 							+ 1000 / ProbabilityChartFrame.this.hrz);
 					updateDomainAxis();
 					updateSliderRanges();
@@ -150,7 +150,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel{
 		synchronized (sequence) {
 
 			for (int i = from; i <= to; i++) {
-				Number x = ((Score) sequence.get(i)).getTimestamp();
+				Number x = sequence.get(i).getTimestamp();
 				if (s.indexOf(x) >= 0)
 					;
 				s.remove(x);
@@ -185,12 +185,12 @@ public class ProbabilityChartFrame extends javax.swing.JPanel{
 			if (this.dataset.indexOf("Threshold") != -1) {
 				XYSeries series = this.dataset.getSeries("Threshold");
 				if (!series.isEmpty()) {
-					Double min = new Double(series.getMinX());
-					Double max = new Double(series.getMaxX());
+					Double min = series.getMinX();
+					Double max = series.getMaxX();
 					if (series.indexOf(min) != -1)
-						series.remove(new Double(min));
+						series.remove(min);
 					if (series.indexOf(max) != -1)
-						series.remove(new Double(max));
+						series.remove(max);
 				}
 			}
 		}
@@ -207,12 +207,12 @@ public class ProbabilityChartFrame extends javax.swing.JPanel{
 			}
 			series = this.dataset.getSeries("Threshold");
 			if (!series.isEmpty()) {
-				Double min = new Double(series.getMinX());
-				Double max = new Double(series.getMaxX());
+				Double min = series.getMinX();
+				Double max = series.getMaxX();
 				if (series.indexOf(min) != -1)
-					series.remove(new Double(min));
+					series.remove(min);
 				if (series.indexOf(max) != -1)
-					series.remove(new Double(max));
+					series.remove(max);
 			}
 			final double min_x = this.dataset.getDomainLowerBound(false);
 			final double max_x = this.dataset.getDomainUpperBound(false);

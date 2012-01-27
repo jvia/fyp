@@ -228,7 +228,7 @@ public class SourceScopeTypeEncoder extends Encoder {
 		if (this.classes.values().size() == 0) {
 			return 1;
 		}
-		return new TreeSet<Integer>(this.classes.values()).last().intValue() + 1;
+		return new TreeSet<Integer>(this.classes.values()).last() + 1;
 	}
 
 	@Override
@@ -238,7 +238,7 @@ public class SourceScopeTypeEncoder extends Encoder {
 
 	private String decodeToString(int inId) {
 		for (String key : this.classes.keySet()) {
-			if (inId == this.classes.get(key).intValue())
+			if (inId == this.classes.get(key))
 				return key;
 		}
 		return "";
@@ -249,17 +249,17 @@ public class SourceScopeTypeEncoder extends Encoder {
 		if (isEncodingMissing(d)) {
 			if (createMissingEncoding) {
 				createEncodingFor(d);
-				encoding = this.classes.get(d).intValue();
+				encoding = this.classes.get(d);
 			}
 		} else {
-			encoding = this.classes.get(d).intValue();
+			encoding = this.classes.get(d);
 		}
 		return encoding;
 	}
 
 	public void createEncodingWithName(String inName) {
 		int nextKey = getNextKey();
-		this.classes.put(inName, Integer.valueOf(nextKey));
+		this.classes.put(inName, nextKey);
 	}
 
 	@Override
@@ -287,7 +287,7 @@ public class SourceScopeTypeEncoder extends Encoder {
 	public void createEncodingFor(String str) {
 		if (isEncodingMissing(str)) {
 			int nextKey = getNextKey();
-			getEncoding().put(str, Integer.valueOf(nextKey));
+			getEncoding().put(str, nextKey);
 		}
 	}
 

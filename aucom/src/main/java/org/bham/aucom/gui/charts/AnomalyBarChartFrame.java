@@ -108,7 +108,7 @@ public class AnomalyBarChartFrame extends javax.swing.JFrame implements ListData
 	private void increaseValueForSequence(String status, String sequenceName) {
 		Double val = (Double) this.dataSet.getValue(sequenceName, status);
 		if (val != null) {
-			this.dataSet.addValue(val.doubleValue() + 1, sequenceName, status);
+			this.dataSet.addValue(val + 1, sequenceName, status);
 		} else {
 			this.dataSet.addValue(1, sequenceName, status);
 		}

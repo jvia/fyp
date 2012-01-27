@@ -1,6 +1,6 @@
 package org.bham.aucom.util;
 
-public class RingBuffer<T> extends Object {
+public class RingBuffer<T> {
 	T[] data;
 	private int nextInsertPosition;
 	private final int capacity;

@@ -7,8 +7,8 @@ import java.util.UUID;
 
 public class HysteresisAnomalyClassificator extends AbstractAnomalyClassificator {
 	private static final long serialVersionUID = 1L;
-	private Double lower = new Double(0.0);
-	private Double upper = new Double(0.0);
+	private Double lower = 0.0;
+	private Double upper = 0.0;
 	private boolean isLastElementSatisfies = true;
 
     // TODO unused? ass tests
@@ -22,7 +22,7 @@ public class HysteresisAnomalyClassificator extends AbstractAnomalyClassificator
 	@Override
 	public boolean satisfies(Score s) {
 		Double currentThreshold = getCurrentThreshold();
-		boolean isSatisfies = s.getValue() >= currentThreshold.doubleValue();
+		boolean isSatisfies = s.getValue() >= currentThreshold;
 		this.setLastElementSatisfies(isSatisfies);
 		return isSatisfies;
 	}
