@@ -5,14 +5,8 @@ import java.util.logging.LogRecord;
 
 public class AucomFilter implements Filter {
 
-	@Override
-	public boolean isLoggable(LogRecord lr) {
-		String msg = lr.getMessage();
-		if (msg.startsWith("ALG")) {
-			return false;
-		}
-		return true;
-
-	}
-
+    @Override
+    public boolean isLoggable(LogRecord lr) {
+        return !lr.getMessage().startsWith("ALG");
+    }
 }

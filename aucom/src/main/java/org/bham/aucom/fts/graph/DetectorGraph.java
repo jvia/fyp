@@ -115,8 +115,8 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
         }
     }
 	@Override
-	protected void setStatus(GraphStatus inNewStatus) {
-		super.setStatus(inNewStatus);
+	protected void setStatus(GraphStatus newStatus) {
+		super.setStatus(newStatus);
 	}
     /**
      * 

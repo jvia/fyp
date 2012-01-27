@@ -1,11 +1,5 @@
 package org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.optimizer;
 
-import java.awt.Dimension;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.JPanel;
-
 import org.bham.aucom.Presentable;
 import org.bham.aucom.data.ClassificationTimeSeriesDescriptiveStatistics;
 import org.bham.aucom.data.Observation;
@@ -15,13 +9,18 @@ import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.diagnoser.t2gram.detector.T2GramDetector;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.StatisticalAnomalyClassificator;
+import org.bham.aucom.fts.graph.AbstractAucomGraph.GraphStatus;
 import org.bham.aucom.fts.graph.ObservationToScoreGraph;
 import org.bham.aucom.fts.graph.OptimizerGraph;
-import org.bham.aucom.fts.graph.AbstractAucomGraph.GraphStatus;
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.main.GraphStateChangedEvent;
 import org.bham.aucom.main.GraphStatusListener;
 import org.bham.aucom.util.Constants;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ClassificatorOptimizer implements Presentable, GraphStatusListener {
 	OptimizerGraph optimizationGraph = null;
@@ -61,8 +60,7 @@ public class ClassificatorOptimizer implements Presentable, GraphStatusListener 
 		if (scoreTs == null) {
 			setModel(getDetector().getModel());
 			obsToScoreGraph.start();
-			return;
-		}
+        }
 	}
 
 	public void stop() {

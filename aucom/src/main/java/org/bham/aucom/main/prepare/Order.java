@@ -31,10 +31,9 @@ public class Order {
 		long out = -1;
 		if (in.getAttribute("timestamp") != null) {
 			timestamp = in.getAttribute("timestamp")
-					.getValue().toString();
+                          .getValue();
 		} else if (in.getAttribute(TIMESTAMP) != null) {
-			timestamp = in.getAttribute(TIMESTAMP).getValue()
-					.toString();
+			timestamp = in.getAttribute(TIMESTAMP).getValue();
 		}
 		try{
 			out = Long.parseLong(timestamp);

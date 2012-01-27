@@ -1,29 +1,17 @@
 package org.bham.app.experiment;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Handler;
-import java.util.logging.Logger;
-
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
-import nu.xom.Builder;
-import nu.xom.Document;
-import nu.xom.Element;
-import nu.xom.Nodes;
-import nu.xom.ParsingException;
-import nu.xom.ValidityException;
-import nu.xom.XPathContext;
-
+import nu.xom.*;
 import org.bham.aucom.util.AucomFormatter;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.concurrent.*;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
 
 
 public class Experimenter {
@@ -164,7 +152,6 @@ public class Experimenter {
                     }
                 } else {
                     System.out.println("no such file " + experimentDescription.getAbsolutePath());
-                    return;
                 }
             } else {
                 System.out.println("no such file " + experimentDescription.getAbsolutePath());

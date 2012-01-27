@@ -132,16 +132,16 @@ public class SourceScopeTypeEncoder extends Encoder {
 	protected String getGenerator(Element in) {
 		String generator = "";
 		if (in.getAttribute(SOURCE_TYPE) != null) {
-			generator = in.getAttribute(SOURCE_TYPE).getValue().toString();
+			generator = in.getAttribute(SOURCE_TYPE).getValue();
 		} else if (in.getAttribute("generator") != null) {
-			generator = in.getAttribute("generator").getValue().toString();
+			generator = in.getAttribute("generator").getValue();
 		} else {
 			Nodes nodes = in.query("./GENERATOR");
 			if (nodes.size() > 0) {
 				Node node = in.query("./GENERATOR").get(0);
 				generator = node.getValue();
 			} else if (generator.equals("") && in.getAttribute("source") != null) {
-				generator = in.getAttribute("source").getValue().toString();
+				generator = in.getAttribute("source").getValue();
 			}
 		}
 		return generator;
@@ -150,11 +150,11 @@ public class SourceScopeTypeEncoder extends Encoder {
 	protected String getmemoryName(Element in) {
 		String memoryName = "";
 		if (in.getAttribute(SCOPE_TYPE) != null) {
-			memoryName = in.getAttribute(SCOPE_TYPE).getValue().toString();
+			memoryName = in.getAttribute(SCOPE_TYPE).getValue();
 		} else if (in.getAttribute("memoryName") != null) {
-			memoryName = in.getAttribute("memoryName").getValue().toString();
+			memoryName = in.getAttribute("memoryName").getValue();
 		} else if (in.getAttribute("memoryname") != null) {
-			memoryName = in.getAttribute("memoryname").getValue().toString();
+			memoryName = in.getAttribute("memoryname").getValue();
 		}
 		return memoryName;
 	}

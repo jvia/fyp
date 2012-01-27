@@ -124,10 +124,10 @@ public class Report {
 	private String getGenerator(Element in) {
 		String generator = "";
 		if (in.getAttribute(GENERATOR_TYPE) != null) {
-			generator = in.getAttribute(GENERATOR_TYPE).getValue().toString();
+			generator = in.getAttribute(GENERATOR_TYPE).getValue();
 			// System.out.println("generator1 " +generator);
 		} else if (in.getAttribute("generator") != null) {
-			generator = in.getAttribute("generator").getValue().toString();
+			generator = in.getAttribute("generator").getValue();
 			// System.out.println("generator2 " +generator);
 		} else {
 			try {
@@ -144,7 +144,7 @@ public class Report {
 			}
 			// System.out.println("generator3 " +generator);
 			if (generator.equals("") && in.getAttribute("source") != null) {
-				generator = in.getAttribute("source").getValue().toString();
+				generator = in.getAttribute("source").getValue();
 			}
 			// System.out.println("generator4 " +generator);
 			// System.out.println("<-------------------");
@@ -157,9 +157,9 @@ public class Report {
 		String timestamp = "";
 		long out = -1;
 		if (in.getAttribute("timestamp") != null) {
-			timestamp = in.getAttribute("timestamp").getValue().toString();
+			timestamp = in.getAttribute("timestamp").getValue();
 		} else if (in.getAttribute(TIMESTAMP) != null) {
-			timestamp = in.getAttribute(TIMESTAMP).getValue().toString();
+			timestamp = in.getAttribute(TIMESTAMP).getValue();
 		}
 		out = Long.parseLong(timestamp);
 		return out;
