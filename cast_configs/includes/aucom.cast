@@ -1,0 +1,6 @@
+HOST localhost
+
+SUBARCHITECTURE fault.sa
+JAVA WM cast.architecture.SubarchitectureWorkingMemory
+JAVA TM cast.architecture.AlwaysPositiveTaskManager
+JAVA MG skimmer cast.ExternalPublisher

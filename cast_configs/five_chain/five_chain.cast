@@ -1,0 +1,24 @@
+HOST localhost
+
+# The chain is this pattern:
+#
+#        +-> 2 -> 3 
+#       /          \
+# 0 -> 1           +-> 6 -> 7 
+#       \          /
+#        +-> 4 -> 5
+#
+SUBARCHITECTURE five.sa
+JAVA WM cast.architecture.SubarchitectureWorkingMemory
+JAVA TM cast.architecture.AlwaysPositiveTaskManager
+JAVA MG node0 experiments.Node --start                  --delay "random 1000 2000"
+JAVA MG node1 experiments.Node --follows "node0"        --delay "random 1000 2000"
+JAVA MG node2 experiments.Node --follows "node1"        --delay "random 1000 2000"
+JAVA MG node3 experiments.Node --follows "node2"        --delay "random 1000 2000"
+JAVA MG node4 experiments.Node --follows "node1"        --delay "random 1000 2000"
+JAVA MG node5 experiments.Node --follows "node4"        --delay "random 1000 2000"
+JAVA MG node6 experiments.Node --follows "node6"        --delay "random 1000 2000"
+JAVA MG node7 experiments.Node --follows "node6 node5"  --delay "random 2000 4000" --end
+
+INCLUDE ../includes/aucom.cast
+#INCLUDE ../includes/counter.cast
