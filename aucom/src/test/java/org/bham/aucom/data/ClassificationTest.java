@@ -1,5 +1,7 @@
 package org.bham.aucom.data;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -193,5 +195,61 @@ public class ClassificationTest {
     @Test
     public void testEquals() throws Exception {
         fail("Not implemented yet.");
+    }
+
+    /**
+     * Test of isFirstElement method, of class Classification.
+     */
+    @Test
+    public void testIsFirstElement() {
+        System.out.println("isFirstElement");
+        Classification instance = null;
+        boolean expResult = false;
+        boolean result = instance.isFirstElement();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isLastElement method, of class Classification.
+     */
+    @Test
+    public void testIsLastElement() {
+        System.out.println("isLastElement");
+        Classification instance = null;
+        boolean expResult = false;
+        boolean result = instance.isLastElement();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getDataTypeToProbabilityMapping method, of class Classification.
+     */
+    @Test
+    public void testGetDataTypeToProbabilityMapping() {
+        System.out.println("getDataTypeToProbabilityMapping");
+        Classification instance = null;
+        HashMap expResult = null;
+        HashMap result = instance.getDataTypeToProbabilityMapping();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getPredecessorIdToDurationsMapping method, of class Classification.
+     */
+    @Test
+    public void testGetPredecessorIdToDurationsMapping() {
+        System.out.println("getPredecessorIdToDurationsMapping");
+        Classification instance = null;
+        LinkedHashMap expResult = null;
+        LinkedHashMap result = instance.getPredecessorIdToDurationsMapping();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }

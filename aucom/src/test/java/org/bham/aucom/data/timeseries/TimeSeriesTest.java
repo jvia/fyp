@@ -3,8 +3,10 @@ package org.bham.aucom.data.timeseries;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 import junit.framework.Assert;
+import org.bham.aucom.data.AbstractData;
 
 import org.junit.Test;
 
@@ -215,5 +217,308 @@ public class TimeSeriesTest {
 		}
 		return clTs;
 	}
+
+    /**
+     * Test of setGeneratedFrom method, of class TimeSeries.
+     */
+    @Test
+    public void testSetGeneratedFrom() {
+        System.out.println("setGeneratedFrom");
+        UUID dataTypeTimeSeriesId = null;
+        TimeSeries instance = new TimeSeriesImpl();
+        instance.setGeneratedFrom(dataTypeTimeSeriesId);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setGenerator method, of class TimeSeries.
+     */
+    @Test
+    public void testSetGenerator() {
+        System.out.println("setGenerator");
+        UUID generatoId = null;
+        TimeSeries instance = new TimeSeriesImpl();
+        instance.setGenerator(generatoId);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getGeneratorID method, of class TimeSeries.
+     */
+    @Test
+    public void testGetGeneratorID() {
+        System.out.println("getGeneratorID");
+        TimeSeries instance = new TimeSeriesImpl();
+        UUID expResult = null;
+        UUID result = instance.getGeneratorID();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getGeneratedFromID method, of class TimeSeries.
+     */
+    @Test
+    public void testGetGeneratedFromID() {
+        System.out.println("getGeneratedFromID");
+        TimeSeries instance = new TimeSeriesImpl();
+        UUID expResult = null;
+        UUID result = instance.getGeneratedFromID();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of hasGenerator method, of class TimeSeries.
+     */
+    @Test
+    public void testHasGenerator() {
+        System.out.println("hasGenerator");
+        TimeSeries instance = new TimeSeriesImpl();
+        boolean expResult = false;
+        boolean result = instance.hasGenerator();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of hasgeneratedFrom method, of class TimeSeries.
+     */
+    @Test
+    public void testHasgeneratedFrom() {
+        System.out.println("hasgeneratedFrom");
+        TimeSeries instance = new TimeSeriesImpl();
+        boolean expResult = false;
+        boolean result = instance.hasgeneratedFrom();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of get method, of class TimeSeries.
+     */
+    @Test
+    public void testGet() {
+        System.out.println("get");
+        int index = 0;
+        TimeSeries instance = new TimeSeriesImpl();
+        AbstractData expResult = null;
+        AbstractData result = instance.get(index);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of add method, of class TimeSeries.
+     */
+    @Test
+    public void testAdd() {
+        System.out.println("add");
+        AbstractData s = null;
+        TimeSeries instance = new TimeSeriesImpl();
+        instance.add(s);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of addAll method, of class TimeSeries.
+     */
+    @Test
+    public void testAddAll() {
+        System.out.println("addAll");
+        Collection<T> c = null;
+        TimeSeries instance = new TimeSeriesImpl();
+        instance.addAll(c);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of remove method, of class TimeSeries.
+     */
+    @Test
+    public void testRemove() {
+        System.out.println("remove");
+        int i = 0;
+        TimeSeries instance = new TimeSeriesImpl();
+        instance.remove(i);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of clear method, of class TimeSeries.
+     */
+    @Test
+    public void testClear() {
+        System.out.println("clear");
+        TimeSeries instance = new TimeSeriesImpl();
+        instance.clear();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of size method, of class TimeSeries.
+     */
+    @Test
+    public void testSize() {
+        System.out.println("size");
+        TimeSeries instance = new TimeSeriesImpl();
+        int expResult = 0;
+        int result = instance.size();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getall method, of class TimeSeries.
+     */
+    @Test
+    public void testGetall() {
+        System.out.println("getall");
+        TimeSeries instance = new TimeSeriesImpl();
+        Collection expResult = null;
+        Collection result = instance.getall();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of addTimeSeriesStatusListener method, of class TimeSeries.
+     */
+    @Test
+    public void testAddTimeSeriesStatusListener() {
+        System.out.println("addTimeSeriesStatusListener");
+        TimeSeriesStatusListener listener = null;
+        TimeSeries instance = new TimeSeriesImpl();
+        instance.addTimeSeriesStatusListener(listener);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of removeTimeseriesStatusListener method, of class TimeSeries.
+     */
+    @Test
+    public void testRemoveTimeseriesStatusListener() {
+        System.out.println("removeTimeseriesStatusListener");
+        TimeSeriesStatusListener listener = null;
+        TimeSeries instance = new TimeSeriesImpl();
+        instance.removeTimeseriesStatusListener(listener);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of fireTimeseriesStatusChangedEvent method, of class TimeSeries.
+     */
+    @Test
+    public void testFireTimeseriesStatusChangedEvent() {
+        System.out.println("fireTimeseriesStatusChangedEvent");
+        TimeseriesStatusEvent evt = null;
+        TimeSeries instance = new TimeSeriesImpl();
+        instance.fireTimeseriesStatusChangedEvent(evt);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isEmpty method, of class TimeSeries.
+     */
+    @Test
+    public void testIsEmpty() {
+        System.out.println("isEmpty");
+        TimeSeries instance = new TimeSeriesImpl();
+        boolean expResult = false;
+        boolean result = instance.isEmpty();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of equals method, of class TimeSeries.
+     */
+    @Test
+    public void testEquals() {
+        System.out.println("equals");
+        Object arg0 = null;
+        TimeSeries instance = new TimeSeriesImpl();
+        boolean expResult = false;
+        boolean result = instance.equals(arg0);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of toString method, of class TimeSeries.
+     */
+    @Test
+    public void testToString() {
+        System.out.println("toString");
+        TimeSeries instance = new TimeSeriesImpl();
+        String expResult = "";
+        String result = instance.toString();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isOfType method, of class TimeSeries.
+     */
+    @Test
+    public void testIsOfType() {
+        System.out.println("isOfType");
+        Class<? extends AbstractData> classToCheck = null;
+        TimeSeries instance = new TimeSeriesImpl();
+        boolean expResult = false;
+        boolean result = instance.isOfType(classToCheck);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setType method, of class TimeSeries.
+     */
+    @Test
+    public void testSetType() {
+        System.out.println("setType");
+        TimeSeriesType type = null;
+        TimeSeries instance = new TimeSeriesImpl();
+        instance.setType(type);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getType method, of class TimeSeries.
+     */
+    @Test
+    public void testGetType() {
+        System.out.println("getType");
+        TimeSeries instance = new TimeSeriesImpl();
+        TimeSeriesType expResult = null;
+        TimeSeriesType result = instance.getType();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    public class TimeSeriesImpl extends TimeSeries {
+    }
 	
 }

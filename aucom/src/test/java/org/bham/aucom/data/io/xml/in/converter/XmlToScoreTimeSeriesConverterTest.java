@@ -49,4 +49,49 @@ public class XmlToScoreTimeSeriesConverterTest {
 	private Element getFirstEelement(Element e) {
 		return (Element)e.query("./ts:elements/ts:element", XmlToTimeSeriesConverter.getContext()).get(0);
 	}
+
+    /**
+     * Test of createDataFromElement method, of class XmlToScoreTimeSeriesConverter.
+     */
+    @Test
+    public void testCreateDataFromElement() {
+        System.out.println("createDataFromElement");
+        Element e = null;
+        XmlToScoreTimeSeriesConverter instance = new XmlToScoreTimeSeriesConverter();
+        Score expResult = null;
+        Score result = instance.createDataFromElement(e);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of createSingleScoreFrom method, of class XmlToScoreTimeSeriesConverter.
+     */
+    @Test
+    public void testCreateSingleScoreFrom() {
+        System.out.println("createSingleScoreFrom");
+        Element e = null;
+        XmlToScoreTimeSeriesConverter instance = new XmlToScoreTimeSeriesConverter();
+        Score expResult = null;
+        Score result = instance.createSingleScoreFrom(e);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isSingle method, of class XmlToScoreTimeSeriesConverter.
+     */
+    @Test
+    public void testIsSingle() {
+        System.out.println("isSingle");
+        Element e = null;
+        XmlToScoreTimeSeriesConverter instance = new XmlToScoreTimeSeriesConverter();
+        boolean expResult = false;
+        boolean result = instance.isSingle(e);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

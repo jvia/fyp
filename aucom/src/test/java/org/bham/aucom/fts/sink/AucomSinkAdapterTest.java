@@ -71,4 +71,38 @@ public class AucomSinkAdapterTest {
 		adapter.removeAucomSinkStatusListener(s);
 		Assert.assertEquals(0, adapter.getNumberListeners());
 	}
+
+    /**
+     * Test of fireAucomSinkStatusChangedEvent method, of class AucomSinkAdapter.
+     */
+    @Test
+    public void testFireAucomSinkStatusChangedEvent() {
+        System.out.println("fireAucomSinkStatusChangedEvent");
+        AucomSinkStatusEvent evt = null;
+        AucomSinkAdapter instance = null;
+        instance.fireAucomSinkStatusChangedEvent(evt);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getNumberListeners method, of class AucomSinkAdapter.
+     */
+    @Test
+    public void testGetNumberListeners() {
+        System.out.println("getNumberListeners");
+        AucomSinkAdapter instance = null;
+        int expResult = 0;
+        int result = instance.getNumberListeners();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    public class AucomSinkAdapterImpl extends AucomSinkAdapter {
+
+        public AucomSinkAdapterImpl() {
+            super("");
+        }
+    }
 }

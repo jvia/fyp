@@ -1,5 +1,6 @@
 package org.bham.aucom.data.util;
 
+import nu.xom.XPathContext;
 import static org.junit.Assert.fail;
 
 import org.junit.Before;
@@ -39,5 +40,32 @@ public class XmlToJavaObjectConverterTest {
 	public void testGetObjectFrom() {
 		fail("Not yet implemented");
 	}
+
+    /**
+     * Test of getContext method, of class XmlToJavaObjectConverter.
+     */
+    @Test
+    public void testGetContext() {
+        System.out.println("getContext");
+        XmlToJavaObjectConverter instance = new XmlToJavaObjectConverter();
+        XPathContext expResult = null;
+        XPathContext result = instance.getContext();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setContext method, of class XmlToJavaObjectConverter.
+     */
+    @Test
+    public void testSetContext() {
+        System.out.println("setContext");
+        XPathContext context = null;
+        XmlToJavaObjectConverter instance = new XmlToJavaObjectConverter();
+        instance.setContext(context);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 
 }

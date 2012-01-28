@@ -2,6 +2,7 @@ package org.bham.aucom.data.io.xml.in.converter;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import junit.framework.Assert;
@@ -59,4 +60,37 @@ public class XmlToClassificationTimeSeriesConverterTest {
 	private Element getFirstEelement(Element e) {
 		return (Element)e.query("./ts:elements/ts:element", XmlToTimeSeriesConverter.getContext()).get(0);
 	}
+
+    /**
+     * Test of createDataFromElement method, of class XmlToClassificationTimeSeriesConverter.
+     */
+    @Test
+    public void testCreateDataFromElement() {
+        System.out.println("createDataFromElement");
+        Element e = null;
+        XmlToClassificationTimeSeriesConverter instance = new XmlToClassificationTimeSeriesConverter();
+        Classification expResult = null;
+        Classification result = instance.createDataFromElement(e);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of createTimeSeries method, of class XmlToClassificationTimeSeriesConverter.
+     */
+    @Test
+    public void testCreateTimeSeries() {
+        System.out.println("createTimeSeries");
+        UUID id = null;
+        UUID generatorID = null;
+        UUID generatedFromID = null;
+        ArrayList<Classification> items = null;
+        XmlToClassificationTimeSeriesConverter instance = new XmlToClassificationTimeSeriesConverter();
+        TimeSeries expResult = null;
+        TimeSeries result = instance.createTimeSeries(id, generatorID, generatedFromID, items);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

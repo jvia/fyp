@@ -4,6 +4,7 @@ package org.bham.aucom.fts.graph;
 import java.util.ArrayList;
 
 import junit.framework.Assert;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -183,5 +184,123 @@ public class OptimizerGraphTest implements GraphStatusListener {
 		System.out.println("tester got : " + evt);
 		status.add(evt);
 	}
+
+    /**
+     * Test of initGraph method, of class OptimizerGraph.
+     */
+    @Test
+    public void testInitGraph() {
+        System.out.println("initGraph");
+        OptimizerGraph instance = new OptimizerGraph();
+        instance.initGraph();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of cleanUp method, of class OptimizerGraph.
+     */
+    @Test
+    public void testCleanUp() {
+        System.out.println("cleanUp");
+        OptimizerGraph instance = new OptimizerGraph();
+        instance.cleanUp();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of preconditionsSatisfied method, of class OptimizerGraph.
+     */
+    @Test
+    public void testPreconditionsSatisfied() {
+        System.out.println("preconditionsSatisfied");
+        OptimizerGraph instance = new OptimizerGraph();
+        boolean expResult = false;
+        boolean result = instance.preconditionsSatisfied();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setInput method, of class OptimizerGraph.
+     */
+    @Test
+    public void testSetInput() {
+        System.out.println("setInput");
+        TimeSeries<Score> input = null;
+        OptimizerGraph instance = new OptimizerGraph();
+        instance.setInput(input);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getClassificator method, of class OptimizerGraph.
+     */
+    @Test
+    public void testGetClassificator() {
+        System.out.println("getClassificator");
+        OptimizerGraph instance = new OptimizerGraph();
+        AnomalyClassificator expResult = null;
+        AnomalyClassificator result = instance.getClassificator();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setClassificator method, of class OptimizerGraph.
+     */
+    @Test
+    public void testSetClassificator() {
+        System.out.println("setClassificator");
+        AnomalyClassificator inAc = null;
+        OptimizerGraph instance = new OptimizerGraph();
+        instance.setClassificator(inAc);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getOutput method, of class OptimizerGraph.
+     */
+    @Test
+    public void testGetOutput() {
+        System.out.println("getOutput");
+        OptimizerGraph instance = new OptimizerGraph();
+        TimeSeries expResult = null;
+        TimeSeries result = instance.getOutput();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of resetOutput method, of class OptimizerGraph.
+     */
+    @Test
+    public void testResetOutput() {
+        System.out.println("resetOutput");
+        OptimizerGraph instance = new OptimizerGraph();
+        instance.resetOutput();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getReason method, of class OptimizerGraph.
+     */
+    @Test
+    public void testGetReason() {
+        System.out.println("getReason");
+        OptimizerGraph instance = new OptimizerGraph();
+        String expResult = "";
+        String result = instance.getReason();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 
 }

@@ -105,4 +105,19 @@ public class TemporalDurationFeatureTimeSeriesToCSVConverterTest {
         return featureOrderA;
     }
 
+    /**
+     * Test of convertTimeSeriesElement method, of class TemporalDurationFeatureTimeSeriesToCSVConverter.
+     */
+    @Test
+    public void testConvertTimeSeriesElement() {
+        System.out.println("convertTimeSeriesElement");
+        TemporalDurationFeature e = null;
+        TemporalDurationFeatureTimeSeriesToCSVConverter instance = new TemporalDurationFeatureTimeSeriesToCSVConverter();
+        String expResult = "";
+        String result = instance.convertTimeSeriesElement(e);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
 }

@@ -188,4 +188,58 @@ public class GenerateTemporalDurationFeatureTest {
         return tdpTs;
     }
 
+    /**
+     * Test of iTransform method, of class GenerateTemporalDurationFeature.
+     */
+    @Test
+    public void testITransform() throws Exception {
+        System.out.println("iTransform");
+        DataType input = null;
+        GenerateTemporalDurationFeature instance = new GenerateTemporalDurationFeature();
+        TemporalDurationFeature expResult = null;
+        TemporalDurationFeature result = instance.iTransform(input);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of reset method, of class GenerateTemporalDurationFeature.
+     */
+    @Test
+    public void testReset() {
+        System.out.println("reset");
+        GenerateTemporalDurationFeature instance = new GenerateTemporalDurationFeature();
+        instance.reset();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setGenerator method, of class GenerateTemporalDurationFeature.
+     */
+    @Test
+    public void testSetGenerator() {
+        System.out.println("setGenerator");
+        TemporalDurationFeatureGenerator generator = null;
+        GenerateTemporalDurationFeature instance = new GenerateTemporalDurationFeature();
+        instance.setGenerator(generator);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getGenerator method, of class GenerateTemporalDurationFeature.
+     */
+    @Test
+    public void testGetGenerator() {
+        System.out.println("getGenerator");
+        GenerateTemporalDurationFeature instance = new GenerateTemporalDurationFeature();
+        TemporalDurationFeatureGenerator expResult = null;
+        TemporalDurationFeatureGenerator result = instance.getGenerator();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
 }

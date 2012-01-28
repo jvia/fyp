@@ -7,51 +7,43 @@ public abstract class Score extends TemporalProbabilityFeature {
     private double value;
     private double variance = 0.0d;
 
-    public Score(TemporalProbabilityFeature f, double value)
-    {
+    public Score(TemporalProbabilityFeature f, double value) {
         super(f);
         setValue(value);
         setVariance(0.0d);
     }
 
-    public Score(Score s)
-    {
+    public Score(Score s) {
         this(s, s.getValue());
     }
 
     public Score() {
-		super();
-	}
+        super();
+    }
 
-	public void setValue(double value)
-    {
+    public void setValue(double value) {
         this.value = value;
     }
 
-    public double getValue()
-    {
+    public double getValue() {
         return this.value;
     }
 
-    public void setVariance(double variance)
-    {
+    public void setVariance(double variance) {
         this.variance = variance;
     }
 
-    public double getVariance()
-    {
+    public double getVariance() {
         return this.variance;
     }
 
-    public static Score createRandomScore()
-    {
+    public static Score createRandomScore() {
         if (Math.random() <= 0.5)
             return createRandomSingleScore();
         return createRandomRangeScore();
     }
 
-    public static Score createRandomRangeScore()
-    {
+    public static Score createRandomRangeScore() {
         TemporalProbabilityFeature tpf = Score.createRandomTemporalProbabilityFeature();
         int numberSubScores = 1 + (int) (Math.random() * 10);
         ArrayList<Score> subScores = new ArrayList<Score>();
@@ -61,14 +53,12 @@ public abstract class Score extends TemporalProbabilityFeature {
         return new RangeScore(subScores);
     }
 
-    public static Score createRandomSingleScore()
-    {
+    public static Score createRandomSingleScore() {
         return new SingleScore(Score.createRandomTemporalProbabilityFeature(), Math.random());
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return super.toString() + " sval:" + getValue() + ";svar:" + getVariance();
     }
 }

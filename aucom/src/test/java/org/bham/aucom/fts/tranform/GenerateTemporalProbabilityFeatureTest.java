@@ -211,4 +211,61 @@ public class GenerateTemporalProbabilityFeatureTest {
         return model;
     }
 
+    /**
+     * Test of iTransform method, of class GenerateTemporalProbabilityFeature.
+     */
+    @Test
+    public void testITransform() throws Exception {
+        System.out.println("iTransform");
+        TemporalDurationFeature arg0 = null;
+        GenerateTemporalProbabilityFeature instance = new GenerateTemporalProbabilityFeature();
+        TemporalProbabilityFeature expResult = null;
+        TemporalProbabilityFeature result = instance.iTransform(arg0);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of generate method, of class GenerateTemporalProbabilityFeature.
+     */
+    @Test
+    public void testGenerate() {
+        System.out.println("generate");
+        TemporalDurationFeature dataToTest = null;
+        GenerateTemporalProbabilityFeature instance = new GenerateTemporalProbabilityFeature();
+        TemporalProbabilityFeature expResult = null;
+        TemporalProbabilityFeature result = instance.generate(dataToTest);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setModel method, of class GenerateTemporalProbabilityFeature.
+     */
+    @Test
+    public void testSetModel() {
+        System.out.println("setModel");
+        T2GramModelI model = null;
+        GenerateTemporalProbabilityFeature instance = new GenerateTemporalProbabilityFeature();
+        instance.setModel(model);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getModel method, of class GenerateTemporalProbabilityFeature.
+     */
+    @Test
+    public void testGetModel() {
+        System.out.println("getModel");
+        GenerateTemporalProbabilityFeature instance = new GenerateTemporalProbabilityFeature();
+        T2GramModelI expResult = null;
+        T2GramModelI result = instance.getModel();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
 }

@@ -1,9 +1,12 @@
 package org.bham.aucom.fts.source;
 
 import java.util.ArrayList;
+import java.util.concurrent.BlockingQueue;
 
 import junit.framework.Assert;
 import net.sf.xcf.fts.Event;
+import org.bham.aucom.data.AbstractData;
+import org.bham.aucom.data.timeseries.TimeseriesStatusEvent;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -202,4 +205,150 @@ public class TimeSeriesSourceTest implements SourceStatusListener {
 		System.out.println("sequenceQueueSourceStatusChanged: " + status.getStatus());
 		this.status.add(status);
 	}
+
+    /**
+     * Test of iNextItem method, of class TimeSeriesSource.
+     */
+    @Test
+    public void testINextItem() throws Exception {
+        System.out.println("iNextItem");
+        TimeSeriesSource instance = null;
+        AbstractData expResult = null;
+        AbstractData result = instance.iNextItem();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getQueue method, of class TimeSeriesSource.
+     */
+    @Test
+    public void testGetQueue() {
+        System.out.println("getQueue");
+        TimeSeriesSource instance = null;
+        BlockingQueue expResult = null;
+        BlockingQueue result = instance.getQueue();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of reset method, of class TimeSeriesSource.
+     */
+    @Test
+    public void testReset() {
+        System.out.println("reset");
+        TimeSeriesSource instance = null;
+        instance.reset();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of size method, of class TimeSeriesSource.
+     */
+    @Test
+    public void testSize() {
+        System.out.println("size");
+        TimeSeriesSource instance = null;
+        int expResult = 0;
+        int result = instance.size();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of copyDataFromTimeSeriesToSourceQueue method, of class TimeSeriesSource.
+     */
+    @Test
+    public void testCopyDataFromTimeSeriesToSourceQueue() {
+        System.out.println("copyDataFromTimeSeriesToSourceQueue");
+        int startIndex = 0;
+        int endIndex = 0;
+        TimeSeriesSource instance = null;
+        instance.copyDataFromTimeSeriesToSourceQueue(startIndex, endIndex);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of timeseriesStatusChanged method, of class TimeSeriesSource.
+     */
+    @Test
+    public void testTimeseriesStatusChanged() {
+        System.out.println("timeseriesStatusChanged");
+        TimeseriesStatusEvent status = null;
+        TimeSeriesSource instance = null;
+        instance.timeseriesStatusChanged(status);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setInput method, of class TimeSeriesSource.
+     */
+    @Test
+    public void testSetInput() {
+        System.out.println("setInput");
+        TimeSeries<T> newInput = null;
+        TimeSeriesSource instance = null;
+        instance.setInput(newInput);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getInput method, of class TimeSeriesSource.
+     */
+    @Test
+    public void testGetInput() {
+        System.out.println("getInput");
+        TimeSeriesSource instance = null;
+        TimeSeries expResult = null;
+        TimeSeries result = instance.getInput();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of iDisconnect method, of class TimeSeriesSource.
+     */
+    @Test
+    public void testIDisconnect() throws Exception {
+        System.out.println("iDisconnect");
+        TimeSeriesSource instance = null;
+        instance.iDisconnect();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of iConnect method, of class TimeSeriesSource.
+     */
+    @Test
+    public void testIConnect() throws Exception {
+        System.out.println("iConnect");
+        TimeSeriesSource instance = null;
+        instance.iConnect();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isReady method, of class TimeSeriesSource.
+     */
+    @Test
+    public void testIsReady() {
+        System.out.println("isReady");
+        TimeSeriesSource instance = null;
+        boolean expResult = false;
+        boolean result = instance.isReady();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

@@ -37,6 +37,20 @@ public class ObservationTimeSeriesToXmlConverterTest {
 		 obs.add(Observation.createRandomObservation());
 		return obs;
 	}
+
+    /**
+     * Test of appendElementContentAsXml method, of class ObservationTimeSeriesToXmlConverter.
+     */
+    @Test
+    public void testAppendElementContentAsXml() {
+        System.out.println("appendElementContentAsXml");
+        Element containerElement = null;
+        Observation data = null;
+        ObservationTimeSeriesToXmlConverter instance = new ObservationTimeSeriesToXmlConverter();
+        instance.appendElementContentAsXml(containerElement, data);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 	
 
 }

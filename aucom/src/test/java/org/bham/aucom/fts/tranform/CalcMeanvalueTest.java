@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 
 import junit.framework.Assert;
 import nu.xom.Element;
+import org.bham.aucom.data.RangeScore;
 
 import org.junit.Test;
 
@@ -122,4 +123,201 @@ public class CalcMeanvalueTest extends CalcMeanvalue {
 			exception.printStackTrace();
 		}
 	}
+
+    /**
+     * Test of reset method, of class CalcMeanvalue.
+     */
+    @Test
+    public void testReset() {
+        System.out.println("reset");
+        CalcMeanvalue instance = new CalcMeanvalue();
+        instance.reset();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of store method, of class CalcMeanvalue.
+     */
+    @Test
+    public void testStore() {
+        System.out.println("store");
+        Score dataToStore = null;
+        CalcMeanvalue instance = new CalcMeanvalue();
+        instance.store(dataToStore);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of calcMeanScore method, of class CalcMeanvalue.
+     */
+    @Test
+    public void testCalcMeanScore() {
+        System.out.println("calcMeanScore");
+        ArrayList<Score> list = null;
+        CalcMeanvalue instance = new CalcMeanvalue();
+        RangeScore expResult = null;
+        RangeScore result = instance.calcMeanScore(list);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of hasReceivedLastSequenceElement method, of class CalcMeanvalue.
+     */
+    @Test
+    public void testHasReceivedLastSequenceElement() {
+        System.out.println("hasReceivedLastSequenceElement");
+        Score element = null;
+        CalcMeanvalue instance = new CalcMeanvalue();
+        boolean expResult = false;
+        boolean result = instance.hasReceivedLastSequenceElement(element);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of iTransform method, of class CalcMeanvalue.
+     */
+    @Test
+    public void testITransform() throws Exception {
+        System.out.println("iTransform");
+        Score arg0 = null;
+        CalcMeanvalue instance = new CalcMeanvalue();
+        Score expResult = null;
+        Score result = instance.iTransform(arg0);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getElementsToRemove method, of class CalcMeanvalue.
+     */
+    @Test
+    public void testGetElementsToRemove() {
+        System.out.println("getElementsToRemove");
+        ArrayList<Score> tmp2 = null;
+        long tmpLastTimestampOfTheWindow2 = 0L;
+        CalcMeanvalue instance = new CalcMeanvalue();
+        ArrayList expResult = null;
+        ArrayList result = instance.getElementsToRemove(tmp2, tmpLastTimestampOfTheWindow2);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of checkIfLastTimestampOfTheWindowIsValid method, of class CalcMeanvalue.
+     */
+    @Test
+    public void testCheckIfLastTimestampOfTheWindowIsValid() {
+        System.out.println("checkIfLastTimestampOfTheWindowIsValid");
+        CalcMeanvalue instance = new CalcMeanvalue();
+        instance.checkIfLastTimestampOfTheWindowIsValid();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getNextLastTimestampOfTheWindow method, of class CalcMeanvalue.
+     */
+    @Test
+    public void testGetNextLastTimestampOfTheWindow() {
+        System.out.println("getNextLastTimestampOfTheWindow");
+        CalcMeanvalue instance = new CalcMeanvalue();
+        long expResult = 0L;
+        long result = instance.getNextLastTimestampOfTheWindow();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getWindowElements method, of class CalcMeanvalue.
+     */
+    @Test
+    public void testGetWindowElements() {
+        System.out.println("getWindowElements");
+        ArrayList<Score> tmp2 = null;
+        long tmpLastTimestampOfTheWindow2 = 0L;
+        CalcMeanvalue instance = new CalcMeanvalue();
+        ArrayList expResult = null;
+        ArrayList result = instance.getWindowElements(tmp2, tmpLastTimestampOfTheWindow2);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getOldestTimestamp method, of class CalcMeanvalue.
+     */
+    @Test
+    public void testGetOldestTimestamp() {
+        System.out.println("getOldestTimestamp");
+        CalcMeanvalue instance = new CalcMeanvalue();
+        long expResult = 0L;
+        long result = instance.getOldestTimestamp();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of hasEnoughElementsForNextSlidingWindow method, of class CalcMeanvalue.
+     */
+    @Test
+    public void testHasEnoughElementsForNextSlidingWindow() {
+        System.out.println("hasEnoughElementsForNextSlidingWindow");
+        CalcMeanvalue instance = new CalcMeanvalue();
+        boolean expResult = false;
+        boolean result = instance.hasEnoughElementsForNextSlidingWindow();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getFirstTimestampOfTheWindow method, of class CalcMeanvalue.
+     */
+    @Test
+    public void testGetFirstTimestampOfTheWindow() {
+        System.out.println("getFirstTimestampOfTheWindow");
+        CalcMeanvalue instance = new CalcMeanvalue();
+        long expResult = 0L;
+        long result = instance.getFirstTimestampOfTheWindow();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setSlidingWindow method, of class CalcMeanvalue.
+     */
+    @Test
+    public void testSetSlidingWindow() {
+        System.out.println("setSlidingWindow");
+        SlidingWindow slidingWindow = null;
+        CalcMeanvalue instance = new CalcMeanvalue();
+        instance.setSlidingWindow(slidingWindow);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getSlidingWindow method, of class CalcMeanvalue.
+     */
+    @Test
+    public void testGetSlidingWindow() {
+        System.out.println("getSlidingWindow");
+        CalcMeanvalue instance = new CalcMeanvalue();
+        SlidingWindow expResult = null;
+        SlidingWindow result = instance.getSlidingWindow();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

@@ -1,5 +1,6 @@
 package org.bham.aucom.fts.tranform;
 
+import java.util.Collection;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -206,5 +207,45 @@ public class TemporalDurationFeatureGeneratorTest {
     	tdpTs.add(dtp12);
     	tdpTs.add(dtp22);
     	return tdpTs;
+    }
+
+    /**
+     * Test of addInitalClasses method, of class TemporalDurationFeatureGenerator.
+     */
+    @Test
+    public void testAddInitalClasses() {
+        System.out.println("addInitalClasses");
+        Collection<Integer> inInitialClassesToAdd = null;
+        TemporalDurationFeatureGenerator instance = null;
+        instance.addInitalClasses(inInitialClassesToAdd);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of initializeLastOccurances method, of class TemporalDurationFeatureGenerator.
+     */
+    @Test
+    public void testInitializeLastOccurances() {
+        System.out.println("initializeLastOccurances");
+        TemporalDurationFeatureGenerator instance = null;
+        instance.initializeLastOccurances();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of generateFeature method, of class TemporalDurationFeatureGenerator.
+     */
+    @Test
+    public void testGenerateFeature() {
+        System.out.println("generateFeature");
+        DataType in = null;
+        TemporalDurationFeatureGenerator instance = null;
+        TemporalDurationFeature expResult = null;
+        TemporalDurationFeature result = instance.generateFeature(in);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }

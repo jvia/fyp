@@ -74,4 +74,69 @@ public class TemporalDurationFeatureGenerationGraphTest {
         Assert.assertEquals(true, graph.getGenerator().isLastOccurancesInitialized());
         Assert.assertEquals(0, graph.getOutTimeSeries().size());
     }
+
+    /**
+     * Test of initGraph method, of class TemporalDurationFeatureGenerationGraph.
+     */
+    @Test
+    public void testInitGraph() {
+        System.out.println("initGraph");
+        TemporalDurationFeatureGenerationGraph instance = new TemporalDurationFeatureGenerationGraph();
+        instance.initGraph();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of cleanUp method, of class TemporalDurationFeatureGenerationGraph.
+     */
+    @Test
+    public void testCleanUp() {
+        System.out.println("cleanUp");
+        TemporalDurationFeatureGenerationGraph instance = new TemporalDurationFeatureGenerationGraph();
+        instance.cleanUp();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getReason method, of class TemporalDurationFeatureGenerationGraph.
+     */
+    @Test
+    public void testGetReason() {
+        System.out.println("getReason");
+        TemporalDurationFeatureGenerationGraph instance = new TemporalDurationFeatureGenerationGraph();
+        String expResult = "";
+        String result = instance.getReason();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setGenerator method, of class TemporalDurationFeatureGenerationGraph.
+     */
+    @Test
+    public void testSetGenerator() {
+        System.out.println("setGenerator");
+        TemporalDurationFeatureGenerator inGenerator = null;
+        TemporalDurationFeatureGenerationGraph instance = new TemporalDurationFeatureGenerationGraph();
+        instance.setGenerator(inGenerator);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getGenerator method, of class TemporalDurationFeatureGenerationGraph.
+     */
+    @Test
+    public void testGetGenerator() {
+        System.out.println("getGenerator");
+        TemporalDurationFeatureGenerationGraph instance = new TemporalDurationFeatureGenerationGraph();
+        TemporalDurationFeatureGenerator expResult = null;
+        TemporalDurationFeatureGenerator result = instance.getGenerator();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

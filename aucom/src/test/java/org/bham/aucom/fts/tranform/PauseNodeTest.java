@@ -1,6 +1,7 @@
 package org.bham.aucom.fts.tranform;
 
 import junit.framework.Assert;
+import org.bham.aucom.data.AbstractData;
 
 import org.junit.After;
 import org.junit.Before;
@@ -82,5 +83,34 @@ public class PauseNodeTest {
 			Assert.fail();
 		}
 	}
+
+    /**
+     * Test of iTransform method, of class PauseNode.
+     */
+    @Test
+    public void testITransform() throws Exception {
+        System.out.println("iTransform");
+        AbstractData input = null;
+        PauseNode instance = new PauseNode();
+        AbstractData expResult = null;
+        AbstractData result = instance.iTransform(input);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isPaused method, of class PauseNode.
+     */
+    @Test
+    public void testIsPaused() {
+        System.out.println("isPaused");
+        PauseNode instance = new PauseNode();
+        boolean expResult = false;
+        boolean result = instance.isPaused();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 
 }

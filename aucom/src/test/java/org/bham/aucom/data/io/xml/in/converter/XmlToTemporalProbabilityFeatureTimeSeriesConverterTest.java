@@ -1,10 +1,13 @@
 package org.bham.aucom.data.io.xml.in.converter;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.UUID;
 
 import junit.framework.Assert;
 import nu.xom.Document;
 import nu.xom.Element;
+import org.bham.aucom.data.timeseries.TimeSeries;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -45,4 +48,37 @@ public class XmlToTemporalProbabilityFeatureTimeSeriesConverterTest {
 	private Element getFirstEelement(Element e) {
 		return (Element)e.query("./ts:elements/ts:element", XmlToTimeSeriesConverter.getContext()).get(0);
 	}
+
+    /**
+     * Test of createDataFromElement method, of class XmlToTemporalProbabilityFeatureTimeSeriesConverter.
+     */
+    @Test
+    public void testCreateDataFromElement() {
+        System.out.println("createDataFromElement");
+        Element e = null;
+        XmlToTemporalProbabilityFeatureTimeSeriesConverter instance = new XmlToTemporalProbabilityFeatureTimeSeriesConverter();
+        TemporalProbabilityFeature expResult = null;
+        TemporalProbabilityFeature result = instance.createDataFromElement(e);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of createTimeSeries method, of class XmlToTemporalProbabilityFeatureTimeSeriesConverter.
+     */
+    @Test
+    public void testCreateTimeSeries() {
+        System.out.println("createTimeSeries");
+        UUID id = null;
+        UUID generatorID = null;
+        UUID generatedFromID = null;
+        ArrayList<TemporalProbabilityFeature> items = null;
+        XmlToTemporalProbabilityFeatureTimeSeriesConverter instance = new XmlToTemporalProbabilityFeatureTimeSeriesConverter();
+        TimeSeries expResult = null;
+        TimeSeries result = instance.createTimeSeries(id, generatorID, generatedFromID, items);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

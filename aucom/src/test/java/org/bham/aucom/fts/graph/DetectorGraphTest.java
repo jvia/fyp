@@ -3,6 +3,10 @@ package org.bham.aucom.fts.graph;
 import java.util.ArrayList;
 
 import junit.framework.Assert;
+import org.bham.aucom.data.timeseries.TimeseriesStatusEvent;
+import org.bham.aucom.data.util.SlidingWindow;
+import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
 
 import org.junit.After;
 import org.junit.Before;
@@ -146,5 +150,258 @@ public class DetectorGraphTest implements GraphStatusListener {
 		System.out.println("tester got : " + evt + " " +this.zaehler);
 		this.status.add(evt);
 	}
+
+    /**
+     * Test of setModel method, of class DetectorGraph.
+     */
+    @Test
+    public void testSetModel() {
+        System.out.println("setModel");
+        T2GramModelI inModel = null;
+        DetectorGraph instance = new DetectorGraph();
+        instance.setModel(inModel);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setStatus method, of class DetectorGraph.
+     */
+    @Test
+    public void testSetStatus() {
+        System.out.println("setStatus");
+        GraphStatus newStatus = null;
+        DetectorGraph instance = new DetectorGraph();
+        instance.setStatus(newStatus);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setClassificator method, of class DetectorGraph.
+     */
+    @Test
+    public void testSetClassificator() {
+        System.out.println("setClassificator");
+        AnomalyClassificator classificatorToSet = null;
+        DetectorGraph instance = new DetectorGraph();
+        instance.setClassificator(classificatorToSet);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of initGraph method, of class DetectorGraph.
+     */
+    @Test
+    public void testInitGraph() {
+        System.out.println("initGraph");
+        DetectorGraph instance = new DetectorGraph();
+        instance.initGraph();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getModel method, of class DetectorGraph.
+     */
+    @Test
+    public void testGetModel() {
+        System.out.println("getModel");
+        DetectorGraph instance = new DetectorGraph();
+        T2GramModelI expResult = null;
+        T2GramModelI result = instance.getModel();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of reset method, of class DetectorGraph.
+     */
+    @Test
+    public void testReset() {
+        System.out.println("reset");
+        DetectorGraph instance = new DetectorGraph();
+        instance.reset();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getName method, of class DetectorGraph.
+     */
+    @Test
+    public void testGetName() {
+        System.out.println("getName");
+        DetectorGraph instance = new DetectorGraph();
+        String expResult = "";
+        String result = instance.getName();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setInput method, of class DetectorGraph.
+     */
+    @Test
+    public void testSetInput() throws Exception {
+        System.out.println("setInput");
+        TimeSeries<Observation> inTimeSeries = null;
+        DetectorGraph instance = new DetectorGraph();
+        instance.setInput(inTimeSeries);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getClassificator method, of class DetectorGraph.
+     */
+    @Test
+    public void testGetClassificator() {
+        System.out.println("getClassificator");
+        DetectorGraph instance = new DetectorGraph();
+        AnomalyClassificator expResult = null;
+        AnomalyClassificator result = instance.getClassificator();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setSlidingWindow method, of class DetectorGraph.
+     */
+    @Test
+    public void testSetSlidingWindow() {
+        System.out.println("setSlidingWindow");
+        SlidingWindow slidingWindow = null;
+        DetectorGraph instance = new DetectorGraph();
+        instance.setSlidingWindow(slidingWindow);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of updateSlidingWindow method, of class DetectorGraph.
+     */
+    @Test
+    public void testUpdateSlidingWindow() {
+        System.out.println("updateSlidingWindow");
+        SlidingWindow slidingWindow = null;
+        DetectorGraph instance = new DetectorGraph();
+        instance.updateSlidingWindow(slidingWindow);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getSlidingWindow method, of class DetectorGraph.
+     */
+    @Test
+    public void testGetSlidingWindow() {
+        System.out.println("getSlidingWindow");
+        DetectorGraph instance = new DetectorGraph();
+        SlidingWindow expResult = null;
+        SlidingWindow result = instance.getSlidingWindow();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getClassificationTimeSeries method, of class DetectorGraph.
+     */
+    @Test
+    public void testGetClassificationTimeSeries() {
+        System.out.println("getClassificationTimeSeries");
+        DetectorGraph instance = new DetectorGraph();
+        TimeSeries expResult = null;
+        TimeSeries result = instance.getClassificationTimeSeries();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of cleanUp method, of class DetectorGraph.
+     */
+    @Test
+    public void testCleanUp() {
+        System.out.println("cleanUp");
+        DetectorGraph instance = new DetectorGraph();
+        instance.cleanUp();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of preconditionsSatisfied method, of class DetectorGraph.
+     */
+    @Test
+    public void testPreconditionsSatisfied() {
+        System.out.println("preconditionsSatisfied");
+        DetectorGraph instance = new DetectorGraph();
+        boolean expResult = false;
+        boolean result = instance.preconditionsSatisfied();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getReason method, of class DetectorGraph.
+     */
+    @Test
+    public void testGetReason() {
+        System.out.println("getReason");
+        DetectorGraph instance = new DetectorGraph();
+        String expResult = "";
+        String result = instance.getReason();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getScoreTimeSeries method, of class DetectorGraph.
+     */
+    @Test
+    public void testGetScoreTimeSeries() {
+        System.out.println("getScoreTimeSeries");
+        DetectorGraph instance = new DetectorGraph();
+        TimeSeries expResult = null;
+        TimeSeries result = instance.getScoreTimeSeries();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of timeseriesStatusChanged method, of class DetectorGraph.
+     */
+    @Test
+    public void testTimeseriesStatusChanged() {
+        System.out.println("timeseriesStatusChanged");
+        TimeseriesStatusEvent status = null;
+        DetectorGraph instance = new DetectorGraph();
+        instance.timeseriesStatusChanged(status);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getInfoAsString method, of class DetectorGraph.
+     */
+    @Test
+    public void testGetInfoAsString() {
+        System.out.println("getInfoAsString");
+        DetectorGraph instance = new DetectorGraph();
+        String expResult = "";
+        String result = instance.getInfoAsString();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 
 }

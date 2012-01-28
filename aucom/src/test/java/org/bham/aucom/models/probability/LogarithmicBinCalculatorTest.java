@@ -26,4 +26,19 @@ public class LogarithmicBinCalculatorTest {
 	public void testGetLowBoundary() {
 	}
 
+    /**
+     * Test of log method, of class LogarithmicBinCalculator.
+     */
+    @Test
+    public void testLog() {
+        System.out.println("log");
+        double value = 0.0;
+        LogarithmicBinCalculator instance = null;
+        double expResult = 0.0;
+        double result = instance.log(value);
+        assertEquals(expResult, result, 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
 }

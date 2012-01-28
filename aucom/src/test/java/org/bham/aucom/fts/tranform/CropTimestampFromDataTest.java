@@ -1,5 +1,6 @@
 package org.bham.aucom.fts.tranform;
 
+import org.bham.aucom.data.AbstractData;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
@@ -70,5 +71,47 @@ public class CropTimestampFromDataTest {
             e.printStackTrace();
         }
 
+    }
+
+    /**
+     * Test of setFirstTimestamp method, of class CropTimestampFromData.
+     */
+    @Test
+    public void testSetFirstTimestamp() {
+        System.out.println("setFirstTimestamp");
+        long firstTimestamp = 0L;
+        CropTimestampFromData instance = new CropTimestampFromData();
+        instance.setFirstTimestamp(firstTimestamp);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getFirstTimestamp method, of class CropTimestampFromData.
+     */
+    @Test
+    public void testGetFirstTimestamp() {
+        System.out.println("getFirstTimestamp");
+        CropTimestampFromData instance = new CropTimestampFromData();
+        long expResult = 0L;
+        long result = instance.getFirstTimestamp();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of iTransform method, of class CropTimestampFromData.
+     */
+    @Test
+    public void testITransform() throws Exception {
+        System.out.println("iTransform");
+        AbstractData input = null;
+        CropTimestampFromData instance = new CropTimestampFromData();
+        AbstractData expResult = null;
+        AbstractData result = instance.iTransform(input);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }

@@ -55,4 +55,18 @@ public class TemporalProbabilityFeatureTimeSeriesToXmlConverterTest {
 
 	}
 
+    /**
+     * Test of appendElementContentAsXml method, of class TemporalProbabilityFeatureTimeSeriesToXmlConverter.
+     */
+    @Test
+    public void testAppendElementContentAsXml() {
+        System.out.println("appendElementContentAsXml");
+        Element containerElement = null;
+        TemporalProbabilityFeature data = null;
+        TemporalProbabilityFeatureTimeSeriesToXmlConverter instance = new TemporalProbabilityFeatureTimeSeriesToXmlConverter();
+        instance.appendElementContentAsXml(containerElement, data);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
 }

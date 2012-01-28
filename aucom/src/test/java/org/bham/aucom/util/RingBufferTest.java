@@ -138,4 +138,85 @@ public class RingBufferTest {
 	public void testIsFilled() {
 	}
 
+    /**
+     * Test of toArray method, of class RingBuffer.
+     */
+    @Test
+    public void testToArray() {
+        System.out.println("toArray");
+        RingBuffer instance = new RingBuffer();
+        Object[] expResult = null;
+        Object[] result = instance.toArray();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setFilled method, of class RingBuffer.
+     */
+    @Test
+    public void testSetFilled() {
+        System.out.println("setFilled");
+        boolean filled = false;
+        RingBuffer instance = new RingBuffer();
+        instance.setFilled(filled);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isEmpty method, of class RingBuffer.
+     */
+    @Test
+    public void testIsEmpty() {
+        System.out.println("isEmpty");
+        RingBuffer instance = new RingBuffer();
+        boolean expResult = false;
+        boolean result = instance.isEmpty();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of clear method, of class RingBuffer.
+     */
+    @Test
+    public void testClear() {
+        System.out.println("clear");
+        RingBuffer instance = new RingBuffer();
+        instance.clear();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getCapacity method, of class RingBuffer.
+     */
+    @Test
+    public void testGetCapacity() {
+        System.out.println("getCapacity");
+        RingBuffer instance = new RingBuffer();
+        int expResult = 0;
+        int result = instance.getCapacity();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getNextInsertPosition method, of class RingBuffer.
+     */
+    @Test
+    public void testGetNextInsertPosition() {
+        System.out.println("getNextInsertPosition");
+        RingBuffer instance = new RingBuffer();
+        int expResult = 0;
+        int result = instance.getNextInsertPosition();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
 }

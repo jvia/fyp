@@ -73,4 +73,18 @@ public class ClassificationTimeSeriesToXmlConverterTest {
 			
 		}
 	}
+
+    /**
+     * Test of appendElementContentAsXml method, of class ClassificationTimeSeriesToXmlConverter.
+     */
+    @Test
+    public void testAppendElementContentAsXml() {
+        System.out.println("appendElementContentAsXml");
+        Element containerElement = null;
+        Classification data = null;
+        ClassificationTimeSeriesToXmlConverter instance = new ClassificationTimeSeriesToXmlConverter();
+        instance.appendElementContentAsXml(containerElement, data);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

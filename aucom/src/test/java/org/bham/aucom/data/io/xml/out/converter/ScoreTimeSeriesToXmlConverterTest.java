@@ -58,5 +58,19 @@ public class ScoreTimeSeriesToXmlConverterTest {
 
 	}
 
+    /**
+     * Test of appendElementContentAsXml method, of class ScoreTimeSeriesToXmlConverter.
+     */
+    @Test
+    public void testAppendElementContentAsXml() {
+        System.out.println("appendElementContentAsXml");
+        Element containerElement = null;
+        Score data = null;
+        ScoreTimeSeriesToXmlConverter instance = new ScoreTimeSeriesToXmlConverter();
+        instance.appendElementContentAsXml(containerElement, data);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
 }
 

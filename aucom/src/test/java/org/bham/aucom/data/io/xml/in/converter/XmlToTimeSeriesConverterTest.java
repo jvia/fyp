@@ -2,12 +2,19 @@ package org.bham.aucom.data.io.xml.in.converter;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 
 import junit.framework.Assert;
 import nu.xom.Builder;
 import nu.xom.Document;
+import nu.xom.Element;
 import nu.xom.ParsingException;
 import nu.xom.ValidityException;
+import nu.xom.XPathContext;
+import org.bham.aucom.data.AbstractData;
+import org.bham.aucom.data.LinkEnum;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -74,4 +81,181 @@ public class XmlToTimeSeriesConverterTest {
 		return null;
 
 	}
+
+    /**
+     * Test of getRootElement method, of class XmlToTimeSeriesConverter.
+     */
+    @Test
+    public void testGetRootElement() {
+        System.out.println("getRootElement");
+        Document timeSeriesDocument = null;
+        Element expResult = null;
+        Element result = XmlToTimeSeriesConverter.getRootElement(timeSeriesDocument);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of convert method, of class XmlToTimeSeriesConverter.
+     */
+    @Test
+    public void testConvert() {
+        System.out.println("convert");
+        Document timeSeriesDocument = null;
+        XmlToTimeSeriesConverter instance = new XmlToTimeSeriesConverterImpl();
+        TimeSeries expResult = null;
+        TimeSeries result = instance.convert(timeSeriesDocument);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getTimeSeriesAttributes method, of class XmlToTimeSeriesConverter.
+     */
+    @Test
+    public void testGetTimeSeriesAttributes() {
+        System.out.println("getTimeSeriesAttributes");
+        Document doc = null;
+        XmlToTimeSeriesConverter instance = new XmlToTimeSeriesConverterImpl();
+        HashMap expResult = null;
+        HashMap result = instance.getTimeSeriesAttributes(doc);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of createDataFromElement method, of class XmlToTimeSeriesConverter.
+     */
+    @Test
+    public void testCreateDataFromElement() {
+        System.out.println("createDataFromElement");
+        Element e = null;
+        XmlToTimeSeriesConverter instance = new XmlToTimeSeriesConverterImpl();
+        AbstractData expResult = null;
+        AbstractData result = instance.createDataFromElement(e);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of createTimeSeries method, of class XmlToTimeSeriesConverter.
+     */
+    @Test
+    public void testCreateTimeSeries() {
+        System.out.println("createTimeSeries");
+        UUID id = null;
+        UUID generatorID = null;
+        UUID generatedFromID = null;
+        ArrayList<T> items = null;
+        XmlToTimeSeriesConverter instance = new XmlToTimeSeriesConverterImpl();
+        TimeSeries expResult = null;
+        TimeSeries result = instance.createTimeSeries(id, generatorID, generatedFromID, items);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getGeneratedFromID method, of class XmlToTimeSeriesConverter.
+     */
+    @Test
+    public void testGetGeneratedFromID() {
+        System.out.println("getGeneratedFromID");
+        Element oElement = null;
+        XmlToTimeSeriesConverter instance = new XmlToTimeSeriesConverterImpl();
+        UUID expResult = null;
+        UUID result = instance.getGeneratedFromID(oElement);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getGeneratorID method, of class XmlToTimeSeriesConverter.
+     */
+    @Test
+    public void testGetGeneratorID() {
+        System.out.println("getGeneratorID");
+        Element oElement = null;
+        XmlToTimeSeriesConverter instance = new XmlToTimeSeriesConverterImpl();
+        UUID expResult = null;
+        UUID result = instance.getGeneratorID(oElement);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getOwnId method, of class XmlToTimeSeriesConverter.
+     */
+    @Test
+    public void testGetOwnId() {
+        System.out.println("getOwnId");
+        Element ctsElement = null;
+        XmlToTimeSeriesConverter instance = new XmlToTimeSeriesConverterImpl();
+        UUID expResult = null;
+        UUID result = instance.getOwnId(ctsElement);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getId method, of class XmlToTimeSeriesConverter.
+     */
+    @Test
+    public void testGetId() {
+        System.out.println("getId");
+        Element ctsElement = null;
+        LinkEnum id = null;
+        XmlToTimeSeriesConverter instance = new XmlToTimeSeriesConverterImpl();
+        UUID expResult = null;
+        UUID result = instance.getId(ctsElement, id);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getTimestamp method, of class XmlToTimeSeriesConverter.
+     */
+    @Test
+    public void testGetTimestamp() {
+        System.out.println("getTimestamp");
+        Element e = null;
+        XmlToTimeSeriesConverter instance = new XmlToTimeSeriesConverterImpl();
+        long expResult = 0L;
+        long result = instance.getTimestamp(e);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getContext method, of class XmlToTimeSeriesConverter.
+     */
+    @Test
+    public void testGetContext() {
+        System.out.println("getContext");
+        XPathContext expResult = null;
+        XPathContext result = XmlToTimeSeriesConverter.getContext();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    public class XmlToTimeSeriesConverterImpl extends XmlToTimeSeriesConverter {
+
+        public T createDataFromElement(Element e) {
+            return null;
+        }
+
+        public TimeSeries<T> createTimeSeries(UUID id, UUID generatorID, UUID generatedFromID, ArrayList<T> items) {
+            return null;
+        }
+    }
 }

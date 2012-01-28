@@ -193,4 +193,17 @@ public class ClassificationTimeSeriesDescriptiveStatisticsTest {
         clTs.add(cl);
         return clTs;
     }
+
+    /**
+     * Test of setTimeSeries method, of class ClassificationTimeSeriesDescriptiveStatistics.
+     */
+    @Test
+    public void testSetTimeSeries() {
+        System.out.println("setTimeSeries");
+        TimeSeries<Classification> classificationTimeSeries = null;
+        ClassificationTimeSeriesDescriptiveStatistics instance = new ClassificationTimeSeriesDescriptiveStatistics();
+        instance.setTimeSeries(classificationTimeSeries);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

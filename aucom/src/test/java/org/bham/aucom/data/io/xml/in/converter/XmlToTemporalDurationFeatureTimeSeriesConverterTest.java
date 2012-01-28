@@ -1,5 +1,8 @@
 package org.bham.aucom.data.io.xml.in.converter;
 
+import java.util.ArrayList;
+import java.util.UUID;
+import org.bham.aucom.data.timeseries.TimeSeries;
 import static org.junit.Assert.fail;
 
 import java.io.File;
@@ -47,5 +50,38 @@ public class XmlToTemporalDurationFeatureTimeSeriesConverterTest {
 	private Element getFirstEelement(Element e) {
 		return (Element)e.query("./ts:elements/ts:element", XmlToTimeSeriesConverter.getContext()).get(0);
 	}
+
+    /**
+     * Test of createDataFromElement method, of class XmlToTemporalDurationFeatureTimeSeriesConverter.
+     */
+    @Test
+    public void testCreateDataFromElement() {
+        System.out.println("createDataFromElement");
+        Element e = null;
+        XmlToTemporalDurationFeatureTimeSeriesConverter instance = new XmlToTemporalDurationFeatureTimeSeriesConverter();
+        TemporalDurationFeature expResult = null;
+        TemporalDurationFeature result = instance.createDataFromElement(e);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of createTimeSeries method, of class XmlToTemporalDurationFeatureTimeSeriesConverter.
+     */
+    @Test
+    public void testCreateTimeSeries() {
+        System.out.println("createTimeSeries");
+        UUID id = null;
+        UUID generatorID = null;
+        UUID generatedFromID = null;
+        ArrayList<TemporalDurationFeature> items = null;
+        XmlToTemporalDurationFeatureTimeSeriesConverter instance = new XmlToTemporalDurationFeatureTimeSeriesConverter();
+        TimeSeries expResult = null;
+        TimeSeries result = instance.createTimeSeries(id, generatorID, generatedFromID, items);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 
 }

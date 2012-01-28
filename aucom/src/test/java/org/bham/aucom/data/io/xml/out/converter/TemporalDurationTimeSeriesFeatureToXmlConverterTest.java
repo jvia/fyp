@@ -74,4 +74,18 @@ public class TemporalDurationTimeSeriesFeatureToXmlConverterTest {
 		return obs;
 	}
 
+    /**
+     * Test of appendElementContentAsXml method, of class TemporalDurationTimeSeriesFeatureToXmlConverter.
+     */
+    @Test
+    public void testAppendElementContentAsXml() {
+        System.out.println("appendElementContentAsXml");
+        Element containerElement = null;
+        TemporalDurationFeature data = null;
+        TemporalDurationTimeSeriesFeatureToXmlConverter instance = new TemporalDurationTimeSeriesFeatureToXmlConverter();
+        instance.appendElementContentAsXml(containerElement, data);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
 }
