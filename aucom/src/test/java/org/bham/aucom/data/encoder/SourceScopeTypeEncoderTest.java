@@ -1,9 +1,5 @@
 package org.bham.aucom.data.encoder;
 
-import java.io.File;
-import java.io.InputStream;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 import junit.framework.Assert;
 import nu.xom.Attribute;
 import nu.xom.Element;
@@ -13,7 +9,14 @@ import org.bham.aucom.util.Constants;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.InputStream;
 import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 public class SourceScopeTypeEncoderTest {
 
@@ -390,7 +393,8 @@ public class SourceScopeTypeEncoderTest {
     }
 
     /**
-     * Test of setCreateMissingEncoding method, of class SourceScopeTypeEncoder.
+     * Test of setCreateMissingEncoding method, of class
+     * SourceScopeTypeEncoder.
      */
     @Test
     public void testSetCreateMissingEncoding() {

@@ -3,15 +3,18 @@ package org.bham.aucom;
 import junit.framework.Assert;
 import org.junit.Test;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
+
 public class ConfigurationTest {
 
-	@Test
-	public void testGetInstance() {
+    @Test
+    public void testGetInstance() {
         // TODO :: load configuration file correctly
-		Configuration c = Configuration.getInstance();
-		Assert.assertNotNull(c);
-		Assert.assertEquals(2, c.size());
-	}
+        Configuration c = Configuration.getInstance();
+        Assert.assertNotNull(c);
+        Assert.assertEquals(2, c.size());
+    }
 
     /**
      * Test of getValue method, of class Configuration.

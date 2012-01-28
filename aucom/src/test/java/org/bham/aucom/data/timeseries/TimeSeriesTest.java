@@ -13,6 +13,9 @@ import org.junit.Test;
 import org.bham.aucom.data.Classification;
 import org.bham.aucom.data.Observation;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
+
 public class TimeSeriesTest {
 	boolean hasReceivedEvent = false;
 	@Test
@@ -334,9 +337,9 @@ public class TimeSeriesTest {
     @Test
     public void testAddAll() {
         System.out.println("addAll");
-        Collection<T> c = null;
-        TimeSeries instance = new TimeSeriesImpl();
-        instance.addAll(c);
+//        Collection<T> c = null;
+//        TimeSeries instance = new TimeSeriesImpl();
+//        instance.addAll(c);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

@@ -1,71 +1,73 @@
 package org.bham.aucom.fts.source;
 
-import static org.junit.Assert.fail;
 import junit.framework.Assert;
-
+import org.bham.aucom.data.Observation;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.bham.aucom.data.Observation;
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class AucomSourceAdapterTest {
-	class TestSourceAdapter extends AucomSourceAdapter<Observation>{
+    class TestSourceAdapter extends AucomSourceAdapter<Observation> {
 
-		public TestSourceAdapter() {
-			super("TestSourceAdapter");
-		}
+        public TestSourceAdapter() {
+            super("TestSourceAdapter");
+        }
 
-		@Override
-		protected void iDisconnect() throws ActionFailedException {
-			
-		}
+        @Override
+        protected void iDisconnect() throws ActionFailedException {
 
-		@Override
-		protected void iConnect() throws ActionFailedException {
-			
-		}
+        }
 
-		@Override
-		protected Observation iNextItem() throws Exception {
-			return null;
-		}
-		
-	}
-	AucomSourceAdapter<Observation> adapter;
-	@Before
-	public void setUp() throws Exception {
-		adapter = new TestSourceAdapter();
-	}
+        @Override
+        protected void iConnect() throws ActionFailedException {
 
-	@Test
-	public void testAddSourceStatusListener() {
-		SourceStatusListener l = new SourceStatusListener() {
-			
-			@Override
-			public void sourceStatusChanged(SourceStatusEvent event) {
-				
-			}
-		};
-		adapter.addSourceStatusListener(l);
-		Assert.assertEquals(1, adapter.getNumberListeners());
-		adapter.addSourceStatusListener(l);
-		Assert.assertEquals(1, adapter.getNumberListeners());
-		
-	}
+        }
 
-	@Test
-	public void testRemoveSourceStatusListener() {
-		SourceStatusListener l = new SourceStatusListener() {
-			
-			@Override
-			public void sourceStatusChanged(SourceStatusEvent event) {
-				
-			}
-		};
-		adapter.addSourceStatusListener(l);
-		adapter.removeSourceStatusListener(l);
-		Assert.assertEquals(0, adapter.getNumberListeners());
-	}
+        @Override
+        protected Observation iNextItem() throws Exception {
+            return null;
+        }
+
+    }
+
+    AucomSourceAdapter<Observation> adapter;
+
+    @Before
+    public void setUp() throws Exception {
+        adapter = new TestSourceAdapter();
+    }
+
+    @Test
+    public void testAddSourceStatusListener() {
+        SourceStatusListener l = new SourceStatusListener() {
+
+            @Override
+            public void sourceStatusChanged(SourceStatusEvent event) {
+
+            }
+        };
+        adapter.addSourceStatusListener(l);
+        Assert.assertEquals(1, adapter.getNumberListeners());
+        adapter.addSourceStatusListener(l);
+        Assert.assertEquals(1, adapter.getNumberListeners());
+
+    }
+
+    @Test
+    public void testRemoveSourceStatusListener() {
+        SourceStatusListener l = new SourceStatusListener() {
+
+            @Override
+            public void sourceStatusChanged(SourceStatusEvent event) {
+
+            }
+        };
+        adapter.addSourceStatusListener(l);
+        adapter.removeSourceStatusListener(l);
+        Assert.assertEquals(0, adapter.getNumberListeners());
+    }
 
     /**
      * Test of getNumberListeners method, of class AucomSourceAdapter.
@@ -97,7 +99,8 @@ public class AucomSourceAdapterTest {
     }
 
     /**
-     * Test of fireSourceStatusChangedEvent method, of class AucomSourceAdapter.
+     * Test of fireSourceStatusChangedEvent method, of class
+     * AucomSourceAdapter.
      */
     @Test
     public void testFireSourceStatusChangedEvent() {
@@ -274,7 +277,7 @@ public class AucomSourceAdapterTest {
         fail("The test case is a prototype.");
     }
 
-    public class AucomSourceAdapterImpl extends AucomSourceAdapter {
+    public class AucomSourceAdapterImpl<T> extends AucomSourceAdapter {
 
         public AucomSourceAdapterImpl() {
             super("");

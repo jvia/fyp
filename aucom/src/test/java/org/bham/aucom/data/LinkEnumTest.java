@@ -10,7 +10,9 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 /**
  *
@@ -49,6 +51,8 @@ public class LinkEnumTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+
 
     /**
      * Test of valueOf method, of class LinkEnum.

@@ -15,6 +15,8 @@ import org.bham.aucom.data.timeseries.ObservationTimeSeries;
 import org.bham.aucom.data.timeseries.TemporalDurationFeatureTimeSeries;
 import org.bham.aucom.util.Constants;
 
+import static junit.framework.Assert.fail;
+
 public class TemporalDurationTimeSeriesFeatureToXmlConverterTest {
 	TemporalDurationFeatureTimeSeries tdTs = null;
 	DataTypeTimeSeries dtpTs= null;

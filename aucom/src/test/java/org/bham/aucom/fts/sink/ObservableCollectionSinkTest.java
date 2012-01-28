@@ -5,14 +5,13 @@
 
 package org.bham.aucom.fts.sink;
 
+import org.junit.*;
+
 import java.util.Collection;
 import java.util.Observable;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  *
@@ -45,9 +44,9 @@ public class ObservableCollectionSinkTest {
     @Test
     public void testPushItem() throws Exception {
         System.out.println("pushItem");
-        Object arg = null;
-        ObservableCollectionSink instance = null;
-        instance.pushItem(arg);
+//        Object arg = null;
+//        ObservableCollectionSink instance = null;
+//        instance.pushItem(arg);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -72,9 +71,9 @@ public class ObservableCollectionSinkTest {
     @Test
     public void testSetData() {
         System.out.println("setData");
-        Collection<T> data = null;
-        ObservableCollectionSink instance = null;
-        instance.setData(data);
+//        Collection<T> data = null;
+//        ObservableCollectionSink instance = null;
+//        instance.setData(data);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

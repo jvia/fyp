@@ -1,16 +1,7 @@
 package org.bham.aucom.fts.tranform;
 
-import java.util.Collection;
-import static org.junit.Assert.fail;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import junit.framework.Assert;
 import nu.xom.Element;
-
-import org.junit.Test;
-
 import org.bham.aucom.data.DataType;
 import org.bham.aucom.data.DomainFeature;
 import org.bham.aucom.data.Observation;
@@ -18,6 +9,14 @@ import org.bham.aucom.data.TemporalDurationFeature;
 import org.bham.aucom.data.encoder.SourceScopeTypeEncoder;
 import org.bham.aucom.data.timeseries.DataTypeTimeSeries;
 import org.bham.aucom.data.timeseries.TimeSeries;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class TemporalDurationFeatureGeneratorTest {
     TemporalDurationFeatureGenerator tdfg;

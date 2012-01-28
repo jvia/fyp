@@ -5,14 +5,12 @@
 
 package org.bham.aucom.util;
 
-import java.util.Collection;
+import org.junit.*;
+
 import javax.swing.event.ListDataListener;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  *
@@ -171,11 +169,11 @@ public class MonitorableArrayListTest {
     @Test
     public void testAddAll() {
         System.out.println("addAll");
-        Collection<? extends E> o = null;
-        MonitorableArrayList instance = null;
-        boolean expResult = false;
-        boolean result = instance.addAll(o);
-        assertEquals(expResult, result);
+//        Collection<? extends E> o = null;
+//        MonitorableArrayList instance = null;
+//        boolean expResult = false;
+//        boolean result = instance.addAll(o);
+//        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

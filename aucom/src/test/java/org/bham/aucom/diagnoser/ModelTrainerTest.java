@@ -12,6 +12,9 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import javax.swing.*;
+
 import static org.junit.Assert.*;
 
 /**
@@ -166,6 +169,11 @@ public class ModelTrainerTest {
         }
 
         public void reset() {
+        }
+
+        @Override
+        public JPanel getPanel() {
+            throw new UnsupportedOperationException("getPanel() not implemented yet");
         }
     }
 

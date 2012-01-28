@@ -1,13 +1,16 @@
 package org.bham.aucom.system;
 
 
+import junit.framework.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
-import junit.framework.Assert;
 
-import org.junit.Before;
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 
 public class SystemConnectionFactoryManagerTest {
@@ -123,7 +126,7 @@ public class SystemConnectionFactoryManagerTest {
      * Test of containsKey method, of class SystemConnectionFactoryManager.
      */
     @Test
-    public void testContainsKey() {
+    public void testContainsKey() throws FactoryManagerInitalizationException {
         System.out.println("containsKey");
         String key = "";
         SystemConnectionFactoryManager instance = new SystemConnectionFactoryManager();

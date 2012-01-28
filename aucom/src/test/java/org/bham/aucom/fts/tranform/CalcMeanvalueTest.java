@@ -1,23 +1,17 @@
 package org.bham.aucom.fts.tranform;
 
+import junit.framework.Assert;
+import nu.xom.Element;
+import org.bham.aucom.data.*;
+import org.bham.aucom.data.util.SlidingWindow;
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import junit.framework.Assert;
-import nu.xom.Element;
-import org.bham.aucom.data.RangeScore;
-
-import org.junit.Test;
-
-import org.bham.aucom.data.DataType;
-import org.bham.aucom.data.DomainFeature;
-import org.bham.aucom.data.Observation;
-import org.bham.aucom.data.Score;
-import org.bham.aucom.data.SingleScore;
-import org.bham.aucom.data.TemporalDurationFeature;
-import org.bham.aucom.data.TemporalProbabilityFeature;
-import org.bham.aucom.data.util.SlidingWindow;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 public class CalcMeanvalueTest extends CalcMeanvalue {
 

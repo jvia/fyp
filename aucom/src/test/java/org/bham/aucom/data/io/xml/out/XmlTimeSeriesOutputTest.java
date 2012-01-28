@@ -5,14 +5,14 @@
 
 package org.bham.aucom.data.io.xml.out;
 
-import java.io.File;
+import org.bham.aucom.data.Classification;
 import org.bham.aucom.data.timeseries.TimeSeries;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.*;
+
+import java.io.File;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  *
@@ -45,7 +45,7 @@ public class XmlTimeSeriesOutputTest {
     @Test
     public void testWrite() {
         System.out.println("write");
-        TimeSeries<T> timeSeriesTowrite = null;
+        TimeSeries<Classification> timeSeriesTowrite = null;
         File file = null;
         XmlTimeSeriesOutput instance = new XmlTimeSeriesOutput();
         boolean expResult = false;

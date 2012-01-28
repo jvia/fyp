@@ -1,18 +1,20 @@
 package org.bham.aucom.fts.tranform;
 
-import java.util.LinkedHashMap;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import org.bham.aucom.data.DataType;
 import org.bham.aucom.data.Score;
 import org.bham.aucom.data.TemporalProbabilityFeature;
 import org.bham.aucom.diagnoser.t2gram.KDEProbabilityFactory;
+import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelImp;
 import org.bham.aucom.util.Constants;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.LinkedHashMap;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 public class CalcEntropyAvgScoreTest {
 

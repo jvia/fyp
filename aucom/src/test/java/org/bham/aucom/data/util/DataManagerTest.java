@@ -1,7 +1,5 @@
 package org.bham.aucom.data.util;
 
-import java.util.List;
-import javax.swing.JPanel;
 import junit.framework.Assert;
 import nu.xom.ParsingException;
 import nu.xom.ValidityException;
@@ -17,9 +15,14 @@ import org.bham.aucom.diagnoser.Model;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 public class DataManagerTest {
 
@@ -176,11 +179,11 @@ public class DataManagerTest {
     @Test
     public void testGetTimeSeriesOfType() {
         System.out.println("getTimeSeriesOfType");
-        Class<T> classToSelectAfter = null;
-        DataManager instance = null;
-        List expResult = null;
-        List result = instance.getTimeSeriesOfType(classToSelectAfter);
-        assertEquals(expResult, result);
+//        Class<T> classToSelectAfter = null;
+//        DataManager instance = null;
+//        List expResult = null;
+//        List result = instance.getTimeSeriesOfType(classToSelectAfter);
+//        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

@@ -7,6 +7,9 @@ import org.junit.Test;
 import org.bham.aucom.data.DataType;
 import org.bham.aucom.data.Observation;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
+
 public class EncodeDataTest {
 	EncodeData ed;
 	@Before

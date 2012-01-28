@@ -1,6 +1,9 @@
 package org.bham.aucom.util;
 
 
+import org.junit.Before;
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,8 +11,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Before;
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 public class HashMatrixTest {
 	HashMatrix<Integer, Integer, Integer> matrix;
@@ -66,6 +69,8 @@ public class HashMatrixTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+
 
     /**
      * Test of put method, of class HashMatrix.

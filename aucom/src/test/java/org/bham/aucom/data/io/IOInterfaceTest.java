@@ -5,20 +5,16 @@
 
 package org.bham.aucom.data.io;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import nu.xom.ParsingException;
-import nu.xom.ValidityException;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.*;
+
+import java.io.File;
+import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
- *
  * @author jxv911
  */
 public class IOInterfaceTest {
@@ -73,9 +69,9 @@ public class IOInterfaceTest {
         fail("The test case is a prototype.");
     }
 
-    public class IOInterfaceImpl implements IOInterface {
+    public class IOInterfaceImpl<T> implements IOInterface<T> {
 
-        public T read(File fileToLoad) throws FileNotFoundException, ValidityException, ParsingException, IOException {
+        public T read(File fileToLoad) throws ParsingException, IOException {
             return null;
         }
 

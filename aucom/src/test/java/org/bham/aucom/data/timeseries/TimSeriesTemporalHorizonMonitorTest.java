@@ -53,7 +53,7 @@ public class TimSeriesTemporalHorizonMonitorTest {
      * Test of finalize method, of class TimSeriesTemporalHorizonMonitor.
      */
     @Test
-    public void testFinalize() throws Exception {
+    public void testFinalize() throws Throwable {
         System.out.println("finalize");
         TimSeriesTemporalHorizonMonitor instance = null;
         instance.finalize();

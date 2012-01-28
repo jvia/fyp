@@ -1,6 +1,5 @@
 package org.bham.aucom.data.io.csv.out.converter;
-
-import junit.framework.Assert;
+    import junit.framework.Assert;
 import nu.xom.Element;
 import org.bham.aucom.data.DataType;
 import org.bham.aucom.data.DomainFeature;
@@ -12,6 +11,9 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 public class TemporalDurationFeatureTimeSeriesToCSVConverterTest {
 

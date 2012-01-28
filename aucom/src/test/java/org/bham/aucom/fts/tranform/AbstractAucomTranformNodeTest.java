@@ -2,50 +2,54 @@ package org.bham.aucom.fts.tranform;
 
 import junit.framework.Assert;
 import org.bham.aucom.data.AbstractData;
-
+import org.bham.aucom.data.Observation;
+import org.bham.aucom.data.Score;
+import org.bham.aucom.data.timeseries.ObservationTimeSeries;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.bham.aucom.data.Observation;
-import org.bham.aucom.data.timeseries.ObservationTimeSeries;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 public class AbstractAucomTranformNodeTest {
-	AbstractAucomTranformNode<Observation, Observation> absTs;
-	@Before
-	public void setUp() throws Exception {
-		absTs= new  AbstractAucomTranformNode<Observation, Observation>("") {
-			
-			@Override
-			protected Observation iTransform(Observation input) throws Exception {
-				return null;
-			}
-		};
-	}
+    AbstractAucomTranformNode<Observation, Observation> absTs;
 
-	@Test
-	public void testSetTimeSeries() {
-		absTs.setTimeSeries(new ObservationTimeSeries());
-		Assert.assertNotNull(absTs.ts);
-	}
+    @Before
+    public void setUp() throws Exception {
+        absTs = new AbstractAucomTranformNode<Observation, Observation>("") {
 
-	@Test
-	public void testGetTimeSeries() {
-		absTs.setTimeSeries(new ObservationTimeSeries());
-		Assert.assertNotNull(absTs.getTimeSeries());
-	}
-	@Test 
-	public void testAddTransformNodeListener(){
-		TransformNodeEventListener l = new TransformNodeEventListener() {
-			
-			@Override
-			public void handleTransformNodeEvent(TransformNodeEvent evt) {
-			}
-		};
-		absTs.addTransformNodeListener(l);
-		Assert.assertEquals(1, absTs.getNumberListeners());
-		absTs.addTransformNodeListener(l);
-		Assert.assertEquals(1, absTs.getNumberListeners());
-	}
+            @Override
+            protected Observation iTransform(Observation input) throws Exception {
+                return null;
+            }
+        };
+    }
+
+    @Test
+    public void testSetTimeSeries() {
+        absTs.setTimeSeries(new ObservationTimeSeries());
+        Assert.assertNotNull(absTs.ts);
+    }
+
+    @Test
+    public void testGetTimeSeries() {
+        absTs.setTimeSeries(new ObservationTimeSeries());
+        Assert.assertNotNull(absTs.getTimeSeries());
+    }
+
+    @Test
+    public void testAddTransformNodeListener() {
+        TransformNodeEventListener l = new TransformNodeEventListener() {
+
+            @Override
+            public void handleTransformNodeEvent(TransformNodeEvent evt) {
+            }
+        };
+        absTs.addTransformNodeListener(l);
+        Assert.assertEquals(1, absTs.getNumberListeners());
+        absTs.addTransformNodeListener(l);
+        Assert.assertEquals(1, absTs.getNumberListeners());
+    }
 
     /**
      * Test of transform method, of class AbstractAucomTranformNode.
@@ -120,7 +124,8 @@ public class AbstractAucomTranformNodeTest {
     }
 
     /**
-     * Test of removeTransformNodeListener method, of class AbstractAucomTranformNode.
+     * Test of removeTransformNodeListener method, of class
+     * AbstractAucomTranformNode.
      */
     @Test
     public void testRemoveTransformNodeListener() {
@@ -144,13 +149,13 @@ public class AbstractAucomTranformNodeTest {
         fail("The test case is a prototype.");
     }
 
-    public class AbstractAucomTranformNodeImpl extends AbstractAucomTranformNode {
+    public class AbstractAucomTranformNodeImpl extends AbstractAucomTranformNode<Score, Score> {
 
         public AbstractAucomTranformNodeImpl() {
             super("");
         }
 
-        public TOut iTransform(TIn input) throws Exception {
+        public Score iTransform(Score input) throws Exception {
             return null;
         }
     }

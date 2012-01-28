@@ -58,9 +58,9 @@ public class TimeSeriesSinkTest {
     @Test
     public void testSetOutput() {
         System.out.println("setOutput");
-        TimeSeries<TIn> data = null;
-        TimeSeriesSink instance = new TimeSeriesSink();
-        instance.setOutput(data);
+//        TimeSeries<TIn> data = null;
+//        TimeSeriesSink instance = new TimeSeriesSink();
+//        instance.setOutput(data);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

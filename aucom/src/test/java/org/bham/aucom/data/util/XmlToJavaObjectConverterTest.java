@@ -1,10 +1,11 @@
 package org.bham.aucom.data.util;
 
 import nu.xom.XPathContext;
-import static org.junit.Assert.fail;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class XmlToJavaObjectConverterTest {
 

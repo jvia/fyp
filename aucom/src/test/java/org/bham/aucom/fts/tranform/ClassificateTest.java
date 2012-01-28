@@ -10,6 +10,9 @@ import org.junit.Test;
 
 import org.bham.aucom.data.timeseries.ObservationTimeSeries;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
+
 public class ClassificateTest {
 	Classificate absTs;
 	@Before

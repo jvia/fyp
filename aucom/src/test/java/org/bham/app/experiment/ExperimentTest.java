@@ -83,6 +83,11 @@ public class ExperimentTest {
 
         public void postprocess() throws Exception {
         }
+
+        @Override
+        public Result call() throws Exception {
+            throw new UnsupportedOperationException("call() not implemented yet");
+        }
     }
 
 }

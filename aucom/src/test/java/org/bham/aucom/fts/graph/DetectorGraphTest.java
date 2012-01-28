@@ -1,25 +1,26 @@
 package org.bham.aucom.fts.graph;
 
-import java.util.ArrayList;
-
 import junit.framework.Assert;
-import org.bham.aucom.data.timeseries.TimeseriesStatusEvent;
-import org.bham.aucom.data.util.SlidingWindow;
-import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.Score;
 import org.bham.aucom.data.timeseries.ObservationTimeSeries;
 import org.bham.aucom.data.timeseries.TimeSeries;
+import org.bham.aucom.data.timeseries.TimeseriesStatusEvent;
+import org.bham.aucom.data.util.SlidingWindow;
+import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
 import org.bham.aucom.fts.graph.AbstractAucomGraph.GraphStatus;
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.main.GraphStateChangedEvent;
 import org.bham.aucom.main.GraphStatusListener;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 public class DetectorGraphTest implements GraphStatusListener {
 	int zaehler = 0;

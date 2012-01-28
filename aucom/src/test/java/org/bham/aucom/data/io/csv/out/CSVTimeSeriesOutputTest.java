@@ -5,14 +5,14 @@
 
 package org.bham.aucom.data.io.csv.out;
 
-import java.io.File;
+import org.bham.aucom.data.Classification;
 import org.bham.aucom.data.timeseries.TimeSeries;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.*;
+
+import java.io.File;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  *
@@ -45,7 +45,7 @@ public class CSVTimeSeriesOutputTest {
     @Test
     public void testWrite() {
         System.out.println("write");
-        TimeSeries<T> timeSeriesToWrite = null;
+        TimeSeries<Classification> timeSeriesToWrite = null;
         File file = null;
         CSVTimeSeriesOutput instance = new CSVTimeSeriesOutput();
         boolean expResult = false;

@@ -1,8 +1,8 @@
 package org.bham.aucom.data.io;
 
-import java.util.UUID;
 import junit.framework.Assert;
 import nu.xom.ParsingException;
+import org.bham.aucom.data.Classification;
 import org.bham.aucom.data.management.DataAlreadyExistsException;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.diagnoser.Model;
@@ -12,31 +12,33 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
-import static org.junit.Assert.fail;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 public class AucomIOTest {
 
-	@Before
-	public void setUp() throws Exception {
-			
-	}
+    @Before
+    public void setUp() throws Exception {
 
-	@Test
-	public void testGetInstance() {
-		Assert.assertNotNull(AucomIO.getInstance());
-	}
+    }
 
-	@Test
-	public void testReadFaultDetectionModel() throws DataAlreadyExistsException, IOException, ParsingException {
+    @Test
+    public void testGetInstance() {
+        Assert.assertNotNull(AucomIO.getInstance());
+    }
+
+    @Test
+    public void testReadFaultDetectionModel() throws DataAlreadyExistsException, IOException, ParsingException {
         // TODO :: make test
-		T2GramModelI m = (T2GramModelI)AucomIO.getInstance().readFaultDetectionModel(new File("/home/rgolombe/workspace/diagnoser/4bd1830b-bd3b-4dcf-a5aa-c33996cdcb9c.ml"));
-		Assert.assertNotNull(m.getTransitionMatrix());
-		m = (T2GramModelI)AucomIO.getInstance().readFaultDetectionModel(new File("/home/rgolombe/workspace/diagnoser/2b0f3e45-3769-483c-aabb-c8c6a3724116.ml"));
-		Assert.assertNotNull(m.getTransitionMatrix());
-		m = (T2GramModelI)AucomIO.getInstance().readFaultDetectionModel(new File("/home/rgolombe/workspace/diagnoser/510d4eaf-e168-4978-81af-ba721a59c60d.ml"));
-		Assert.assertNotNull(m.getTransitionMatrix());
-	}
+        T2GramModelI m = (T2GramModelI) AucomIO.getInstance().readFaultDetectionModel(new File("/home/rgolombe/workspace/diagnoser/4bd1830b-bd3b-4dcf-a5aa-c33996cdcb9c.ml"));
+        Assert.assertNotNull(m.getTransitionMatrix());
+        m = (T2GramModelI) AucomIO.getInstance().readFaultDetectionModel(new File("/home/rgolombe/workspace/diagnoser/2b0f3e45-3769-483c-aabb-c8c6a3724116.ml"));
+        Assert.assertNotNull(m.getTransitionMatrix());
+        m = (T2GramModelI) AucomIO.getInstance().readFaultDetectionModel(new File("/home/rgolombe/workspace/diagnoser/510d4eaf-e168-4978-81af-ba721a59c60d.ml"));
+        Assert.assertNotNull(m.getTransitionMatrix());
+    }
 
 
     @Test
@@ -116,7 +118,7 @@ public class AucomIOTest {
     @Test
     public void testWriteTimeSeries_TimeSeries() {
         System.out.println("writeTimeSeries");
-        TimeSeries<T> timeSeries = null;
+        TimeSeries<Classification> timeSeries = null;
         AucomIO instance = null;
         boolean expResult = false;
         boolean result = instance.writeTimeSeries(timeSeries);
@@ -131,7 +133,7 @@ public class AucomIOTest {
     @Test
     public void testWriteTimeSeries_TimeSeries_File() {
         System.out.println("writeTimeSeries");
-        TimeSeries<T> timeSeries = null;
+        TimeSeries<Classification> timeSeries = null;
         File fileToWriteTo = null;
         AucomIO instance = null;
         boolean expResult = false;
@@ -147,7 +149,7 @@ public class AucomIOTest {
     @Test
     public void testWriteTimeSeries_TimeSeries_String() throws Exception {
         System.out.println("writeTimeSeries");
-        TimeSeries<T> timeSeries = null;
+        TimeSeries<Classification> timeSeries = null;
         String type = "";
         AucomIO instance = null;
         boolean expResult = false;
@@ -163,7 +165,7 @@ public class AucomIOTest {
     @Test
     public void testWriteTimeSeries_3args() throws Exception {
         System.out.println("writeTimeSeries");
-        TimeSeries<T> timeSeries = null;
+        TimeSeries<Classification> timeSeries = null;
         File fileToWriteTo = null;
         String type = "";
         AucomIO instance = null;

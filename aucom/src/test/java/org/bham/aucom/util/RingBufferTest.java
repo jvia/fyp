@@ -6,6 +6,9 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
+
 public class RingBufferTest {
 	RingBuffer<Double> buf;
 	@Before

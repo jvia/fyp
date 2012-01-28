@@ -1,14 +1,17 @@
 package org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator;
 
-import java.util.List;
 import junit.framework.Assert;
 import org.bham.aucom.data.Score;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 public class StatisticalAnomalyClassificatorTest {
 

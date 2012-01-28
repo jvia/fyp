@@ -8,6 +8,7 @@ import org.bham.aucom.util.Constants;
 import org.junit.Before;
 import org.junit.Test;
 
+import static junit.framework.Assert.fail;
 public class ClassificationTimeSeriesDescriptiveStatisticsTest {
     TimeSeries<Classification> clTsFalseAlarm;
     ClassificationTimeSeriesDescriptiveStatistics ctsds;

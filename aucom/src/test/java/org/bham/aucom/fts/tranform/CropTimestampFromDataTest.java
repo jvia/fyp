@@ -1,19 +1,18 @@
 package org.bham.aucom.fts.tranform;
 
-import org.bham.aucom.data.AbstractData;
-import static org.junit.Assert.assertEquals;
-
-import java.util.ArrayList;
-
 import net.sf.xcf.fts.DefaultEvent;
 import nu.xom.Element;
-
-import org.junit.Before;
-import org.junit.Test;
-
+import org.bham.aucom.data.AbstractData;
 import org.bham.aucom.data.DataType;
 import org.bham.aucom.data.DomainFeature;
 import org.bham.aucom.data.Observation;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
+
+import static junit.framework.Assert.fail;
+import static org.junit.Assert.assertEquals;
 
 public class CropTimestampFromDataTest {
 

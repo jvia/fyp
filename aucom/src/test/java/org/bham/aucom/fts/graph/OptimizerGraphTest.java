@@ -1,21 +1,22 @@
 package org.bham.aucom.fts.graph;
 
 
-import java.util.ArrayList;
-
 import junit.framework.Assert;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import org.bham.aucom.data.Score;
 import org.bham.aucom.data.timeseries.ScoreTimeSeries;
 import org.bham.aucom.data.timeseries.TimeSeries;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
 import org.bham.aucom.fts.graph.AbstractAucomGraph.GraphStatus;
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.main.GraphStateChangedEvent;
 import org.bham.aucom.main.GraphStatusListener;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 public class OptimizerGraphTest implements GraphStatusListener {
 

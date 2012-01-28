@@ -3,16 +3,17 @@
  */
 package org.bham.aucom.fts.graph;
 
-import java.util.ArrayList;
-
 import junit.framework.Assert;
-
-import org.junit.Test;
-
 import org.bham.aucom.data.TemporalDurationFeature;
 import org.bham.aucom.data.timeseries.ObservationTimeSeries;
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.fts.tranform.TemporalDurationFeatureGenerator;
+import org.junit.Test;
+
+import java.util.ArrayList;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 
 /**

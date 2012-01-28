@@ -11,7 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-
+  import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 public class XmlToScoreTimeSeriesConverterTest {
 	File scoreFile = new File("data"+File.separatorChar+"unittest" + File.separatorChar+"UTScoreTimeSeries.score");
 	ScoreTimeSeries scoreTs = null;

@@ -1,20 +1,19 @@
 package org.bham.aucom.diagnoser.t2gram;
 
-import org.bham.aucom.diagnoser.TrainerStatus;
-import static org.junit.Assert.*;
-
-import javax.swing.JPanel;
-
 import junit.framework.Assert;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.diagnoser.ModelTrainerListener;
 import org.bham.aucom.diagnoser.StatusChangedEvent;
+import org.bham.aucom.diagnoser.TrainerStatus;
+import org.junit.Before;
+import org.junit.Test;
+
+import javax.swing.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class AbstractModelTrainerTest {
 	AbstractModelTrainer t ;
@@ -143,6 +142,35 @@ public class AbstractModelTrainerTest {
     }
 
     public class AbstractModelTrainerImpl extends AbstractModelTrainer {
+        @Override
+        public void start(TimeSeries<Observation> trainingData) throws Exception {
+            throw new UnsupportedOperationException("start() not implemented yet");
+        }
+
+        @Override
+        public void stop() throws Exception {
+            throw new UnsupportedOperationException("stop() not implemented yet");
+        }
+
+        @Override
+        public Model getModel() {
+            throw new UnsupportedOperationException("getModel() not implemented yet");
+        }
+
+        @Override
+        public void setModel(Model inModel) throws ClassCastException {
+            throw new UnsupportedOperationException("setModel() not implemented yet");
+        }
+
+        @Override
+        public void reset() {
+            throw new UnsupportedOperationException("reset() not implemented yet");
+        }
+
+        @Override
+        public JPanel getPanel() {
+            throw new UnsupportedOperationException("getPanel() not implemented yet");
+        }
     }
 
 }

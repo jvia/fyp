@@ -1,11 +1,14 @@
 package org.bham.aucom.models.probability;
 
 
-import java.util.HashMap;
 import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.HashMap;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 public class KernelDensityDistributionTest {
 
@@ -59,6 +62,8 @@ public class KernelDensityDistributionTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+
 
     /**
      * Test of getType method, of class KernelDensityDistribution.

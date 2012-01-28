@@ -1,20 +1,20 @@
 package org.bham.aucom.data.io.xml.out.converter;
 
-import java.util.List;
-
 import junit.framework.Assert;
 import nu.xom.Element;
 import nu.xom.Nodes;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import org.bham.aucom.data.Classification;
 import org.bham.aucom.data.DomainFeature;
 import org.bham.aucom.data.SystemFaultStatus;
 import org.bham.aucom.data.io.xml.in.converter.XmlToTimeSeriesConverter;
 import org.bham.aucom.data.timeseries.ClassificationTimeSeries;
 import org.bham.aucom.util.Constants;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.List;
+
+import static junit.framework.Assert.fail;
 
 public class ClassificationTimeSeriesToXmlConverterTest {
 	ClassificationTimeSeries clTs = null;

@@ -5,16 +5,14 @@
 
 package org.bham.aucom.models.probability;
 
+import org.bham.aucom.diagnoser.t2gram.KDEProbabilityFactory;
 import org.bham.aucom.diagnoser.t2gram.ProbabilityFactory;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
- *
  * @author jxv911
  */
 public class ProbabilityFamiliyFactoryTest {
@@ -44,7 +42,7 @@ public class ProbabilityFamiliyFactoryTest {
     @Test
     public void testGetFactory() {
         System.out.println("getFactory");
-        D[] parameters = null;
+        Double[] parameters = null;
         ProbabilityFamiliyFactory instance = new ProbabilityFamiliyFactoryImpl();
         ProbabilityFactory expResult = null;
         ProbabilityFactory result = instance.getFactory(parameters);
@@ -67,9 +65,9 @@ public class ProbabilityFamiliyFactoryTest {
         fail("The test case is a prototype.");
     }
 
-    public class ProbabilityFamiliyFactoryImpl implements ProbabilityFamiliyFactory {
+    public class ProbabilityFamiliyFactoryImpl implements ProbabilityFamiliyFactory<KDEProbabilityFactory, Double> {
 
-        public P getFactory(D[] parameters) {
+        public KDEProbabilityFactory getFactory(Double[] parameters) {
             return null;
         }
 

@@ -5,15 +5,12 @@
 
 package org.bham.aucom.data;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.*;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 /**
- *
  * @author jxv911
  */
 public class SystemFaultStatusTest {

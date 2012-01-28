@@ -1,21 +1,8 @@
 package org.bham.aucom.fts.tranform;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.UUID;
-
 import junit.framework.Assert;
 import nu.xom.Element;
-
-import org.junit.Test;
-
-import org.bham.aucom.data.DataType;
-import org.bham.aucom.data.DomainFeature;
-import org.bham.aucom.data.Observation;
-import org.bham.aucom.data.TemporalDurationFeature;
-import org.bham.aucom.data.TemporalProbabilityFeature;
+import org.bham.aucom.data.*;
 import org.bham.aucom.data.encoder.SourceScopeTypeEncoder;
 import org.bham.aucom.diagnoser.t2gram.ProbabilityDistribution;
 import org.bham.aucom.diagnoser.t2gram.ProbabilityFactory;
@@ -24,6 +11,12 @@ import org.bham.aucom.diagnoser.t2gram.T2GramModelImp;
 import org.bham.aucom.models.probability.KernelDensityDistribution;
 import org.bham.aucom.util.Constants;
 import org.bham.aucom.util.HashMatrix;
+import org.junit.Test;
+
+import java.util.*;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 public class GenerateTemporalProbabilityFeatureTest {
     @Test

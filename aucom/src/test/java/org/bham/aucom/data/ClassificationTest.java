@@ -1,14 +1,16 @@
 package org.bham.aucom.data;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
 
 /**
  * @author Jeremiah Via <jxv911@cs.bham.ac.uk>
@@ -240,7 +242,8 @@ public class ClassificationTest {
     }
 
     /**
-     * Test of getPredecessorIdToDurationsMapping method, of class Classification.
+     * Test of getPredecessorIdToDurationsMapping method, of class
+     * Classification.
      */
     @Test
     public void testGetPredecessorIdToDurationsMapping() {

@@ -1,22 +1,22 @@
 package org.bham.aucom.data.util;
 
-import java.util.LinkedHashMap;
-import java.util.UUID;
-
 import junit.framework.Assert;
 import nu.xom.Element;
 import org.bham.aucom.data.AbstractData;
+import org.bham.aucom.data.Observation;
+import org.bham.aucom.data.timeseries.ObservationTimeSeries;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.data.timeseries.TimeseriesStatusEvent;
 import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import org.bham.aucom.data.Observation;
-import org.bham.aucom.data.timeseries.ObservationTimeSeries;
+import java.util.LinkedHashMap;
+import java.util.UUID;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 public class DataModelTest {
 
 	@Before

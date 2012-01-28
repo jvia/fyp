@@ -1,21 +1,21 @@
 package org.bham.aucom.data.io.xml.in.converter;
 
+import junit.framework.Assert;
+import nu.xom.Document;
+import nu.xom.Element;
+import org.bham.aucom.data.TemporalProbabilityFeature;
+import org.bham.aucom.data.io.TimeSeriesIO;
+import org.bham.aucom.data.timeseries.TemporalProbabilityFeatureTimeSeries;
+import org.bham.aucom.data.timeseries.TimeSeries;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import junit.framework.Assert;
-import nu.xom.Document;
-import nu.xom.Element;
-import org.bham.aucom.data.timeseries.TimeSeries;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import org.bham.aucom.data.TemporalProbabilityFeature;
-import org.bham.aucom.data.io.TimeSeriesIO;
-import org.bham.aucom.data.timeseries.TemporalProbabilityFeatureTimeSeries;
-
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 public class XmlToTemporalProbabilityFeatureTimeSeriesConverterTest {
 	File observationFile = new File("data"+File.separatorChar+"unittestdata" + File.separatorChar+"UTTemporalProbabilityFeatureTimeSeries.tpf");
 	TemporalProbabilityFeatureTimeSeries tpfTs = null;

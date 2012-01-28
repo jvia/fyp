@@ -1,13 +1,16 @@
 package org.bham.aucom.diagnoser.t2gram;
 
-import javax.swing.JPanel;
 import org.bham.aucom.data.Observation;
+import org.bham.aucom.data.timeseries.ObservationTimeSeries;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.main.GraphStateChangedEvent;
 import org.junit.Test;
 
-import org.bham.aucom.data.timeseries.ObservationTimeSeries;
+import javax.swing.*;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 public class T2GramModelTrainerTest {
 

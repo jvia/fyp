@@ -5,13 +5,9 @@
 
 package org.bham.aucom.fts.filter;
 
-import net.sf.xcf.fts.Event;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.*;
+
+import static org.junit.Assert.fail;
 
 /**
  *
@@ -44,11 +40,11 @@ public class SubClassFilterTest {
     @Test
     public void testIsMatch() throws Exception {
         System.out.println("isMatch");
-        Event<? extends Tin> e = null;
-        SubClassFilter instance = null;
-        boolean expResult = false;
-        boolean result = instance.isMatch(e);
-        assertEquals(expResult, result);
+        //Event<? extends Tin> e = null;
+        //SubClassFilter instance = null;
+        //boolean expResult = false;
+        //boolean result = instance.isMatch(e);
+        //assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -59,11 +55,11 @@ public class SubClassFilterTest {
     @Test
     public void testHandleEvent() throws Exception {
         System.out.println("handleEvent");
-        Event<? extends Tin> input = null;
-        SubClassFilter instance = null;
-        Event expResult = null;
-        Event result = instance.handleEvent(input);
-        assertEquals(expResult, result);
+//        Event<? extends Tin> input = null;
+//        SubClassFilter instance = null;
+//        Event expResult = null;
+//        Event result = instance.handleEvent(input);
+//        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

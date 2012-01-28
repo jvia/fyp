@@ -1,10 +1,13 @@
 package org.bham.aucom.data;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 public class DataTypeTest {
     @Before

@@ -5,15 +5,15 @@
 
 package org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator;
 
-import java.util.UUID;
 import org.bham.aucom.data.Score;
 import org.bham.aucom.data.timeseries.AnomalyClassificatorListener;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.*;
+
+import java.util.HashMap;
+import java.util.UUID;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  *
@@ -174,6 +174,31 @@ public class AnomalyClassificatorTest {
         }
 
         public void reset() {
+        }
+
+        @Override
+        public HashMap<String, String> getAttributes() {
+            throw new UnsupportedOperationException("getAttributes() not implemented yet");
+        }
+
+        @Override
+        public void addAttribute(String propertyName, String propertyValue) {
+            throw new UnsupportedOperationException("addAttribute() not implemented yet");
+        }
+
+        @Override
+        public void deleteAttribute(String propertyName) {
+            throw new UnsupportedOperationException("deleteAttribute() not implemented yet");
+        }
+
+        @Override
+        public String getAttributeValue(String propertyName) {
+            throw new UnsupportedOperationException("getAttributeValue() not implemented yet");
+        }
+
+        @Override
+        public boolean containsAttribute(String propertyName) {
+            throw new UnsupportedOperationException("containsAttribute() not implemented yet");
         }
     }
 

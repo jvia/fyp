@@ -5,14 +5,14 @@
 
 package org.bham.aucom.diagnoser.t2gram;
 
-import java.util.Collection;
 import org.bham.aucom.util.HashMatrix;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.*;
+
+import java.util.Collection;
+import java.util.UUID;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  *
@@ -248,6 +248,31 @@ public class T2GramModelITest {
 
         public HashMatrix<Integer, Integer, ProbabilityDistribution> getTransitionMatrix() {
             return null;
+        }
+
+        @Override
+        public boolean isTrained() {
+            throw new UnsupportedOperationException("isTrained() not implemented yet");
+        }
+
+        @Override
+        public String getName() {
+            throw new UnsupportedOperationException("getName() not implemented yet");
+        }
+
+        @Override
+        public UUID getId() {
+            throw new UnsupportedOperationException("getId() not implemented yet");
+        }
+
+        @Override
+        public void addModelListener() {
+            throw new UnsupportedOperationException("addModelListener() not implemented yet");
+        }
+
+        @Override
+        public void removeModelListener() {
+            throw new UnsupportedOperationException("removeModelListener() not implemented yet");
         }
     }
 

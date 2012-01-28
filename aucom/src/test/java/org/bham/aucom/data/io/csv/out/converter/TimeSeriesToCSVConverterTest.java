@@ -7,15 +7,12 @@ package org.bham.aucom.data.io.csv.out.converter;
 
 import org.bham.aucom.data.AbstractData;
 import org.bham.aucom.data.timeseries.TimeSeries;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
- *
  * @author jxv911
  */
 public class TimeSeriesToCSVConverterTest {
@@ -45,7 +42,7 @@ public class TimeSeriesToCSVConverterTest {
     @Test
     public void testConvertTimeSeries() {
         System.out.println("convertTimeSeries");
-        TimeSeries<T> timeSeriesToWrite = null;
+        TimeSeries<?> timeSeriesToWrite = null;
         TimeSeriesToCSVConverter instance = new TimeSeriesToCSVConverterImpl();
         String expResult = "";
         String result = instance.convertTimeSeries(timeSeriesToWrite);
@@ -55,7 +52,8 @@ public class TimeSeriesToCSVConverterTest {
     }
 
     /**
-     * Test of convertTimeSeriesElement method, of class TimeSeriesToCSVConverter.
+     * Test of convertTimeSeriesElement method, of class
+     * TimeSeriesToCSVConverter.
      */
     @Test
     public void testConvertTimeSeriesElement() {
@@ -69,10 +67,10 @@ public class TimeSeriesToCSVConverterTest {
         fail("The test case is a prototype.");
     }
 
-    public class TimeSeriesToCSVConverterImpl extends TimeSeriesToCSVConverter {
-
-        public String convertTimeSeriesElement(T e) {
-            return "";
+    public class TimeSeriesToCSVConverterImpl<T> extends TimeSeriesToCSVConverter {
+        @Override
+        protected String convertTimeSeriesElement(AbstractData e) {
+            throw new UnsupportedOperationException("convertTimeSeriesElement() not implemented yet");
         }
     }
 

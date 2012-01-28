@@ -12,6 +12,8 @@ import org.bham.aucom.data.io.xml.in.converter.XmlToTimeSeriesConverter;
 import org.bham.aucom.data.timeseries.ScoreTimeSeries;
 import org.bham.aucom.util.Constants;
 
+import static junit.framework.Assert.fail;
+
 public class ScoreTimeSeriesToXmlConverterTest {
 	ScoreTimeSeries sTs = null;
 	@Before

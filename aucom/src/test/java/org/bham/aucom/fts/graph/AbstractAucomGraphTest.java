@@ -1,23 +1,25 @@
 package org.bham.aucom.fts.graph;
 
-import java.util.Iterator;
 import junit.framework.Assert;
 import net.sf.xcf.fts.Node;
+import org.bham.aucom.data.Observation;
+import org.bham.aucom.data.timeseries.ObservationTimeSeries;
 import org.bham.aucom.fts.graph.AbstractAucomGraph.GraphStatus;
 import org.bham.aucom.fts.sink.AucomSinkStatusEvent;
+import org.bham.aucom.fts.sink.TimeSeriesSink;
+import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.fts.source.SourceStatusEvent;
+import org.bham.aucom.fts.source.TimeSeriesSource;
 import org.bham.aucom.fts.tranform.TransformNodeEvent;
-
+import org.bham.aucom.main.GraphStateChangedEvent;
+import org.bham.aucom.main.GraphStatusListener;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.bham.aucom.data.Observation;
-import org.bham.aucom.data.timeseries.ObservationTimeSeries;
-import org.bham.aucom.fts.sink.TimeSeriesSink;
-import org.bham.aucom.fts.source.ActionFailedException;
-import org.bham.aucom.fts.source.TimeSeriesSource;
-import org.bham.aucom.main.GraphStateChangedEvent;
-import org.bham.aucom.main.GraphStatusListener;
+import java.util.Iterator;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 public class AbstractAucomGraphTest {
 	class TestGraph extends AbstractAucomGraph{
@@ -26,50 +28,50 @@ public class AbstractAucomGraphTest {
 		}
 
 		public boolean pcs = true;
-		TimeSeriesSource<Observation> obsSource; 
+		TimeSeriesSource<Observation> obsSource;
 		TimeSeriesSink<Observation> obsSink;
 		@Override
 		public boolean preconditionsSatisfied() {
 			return pcs;
 		}
-		
+
 		@Override
 		protected void initGraph() {
 			obsSource = new TimeSeriesSource<Observation>("source");
 			obsSink = new TimeSeriesSink<Observation>(new ObservationTimeSeries());
 			graph.connect(obsSource, obsSink);
 		}
-		
+
 		@Override
 		protected String getReason() {
 			return "no reason";
 		}
-		
+
 		@Override
 		protected void cleanUp() {
 			// ingore
 		}
 	}
 	AbstractAucomGraph aucomGraph;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		aucomGraph = new TestGraph();
 	}
-	
+
 	@Test
 	public void testStart() throws ActionFailedException{
 		aucomGraph.start();
 	}
-	
+
 	@Test
 	public void testAddGraphListener() {
 		aucomGraph.addGraphListener(new GraphStatusListener() {
-			
+
 			@Override
 			public void graphStatusChanged(GraphStateChangedEvent evt) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 		Assert.assertEquals(1,aucomGraph.getNumberGraphListeners());
@@ -104,12 +106,12 @@ public class AbstractAucomGraphTest {
 		GraphStatusListener l = new GraphStatusListener() {
 			@Override
 			public void graphStatusChanged(GraphStateChangedEvent evt) {
-				
+
 			}
 		};
 		aucomGraph.addGraphListener(l);
 	}
-	@Test 
+	@Test
 	public void testlistenToNodes(){
 	}
 
@@ -347,5 +349,7 @@ public class AbstractAucomGraphTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-		
+
+
+
 }

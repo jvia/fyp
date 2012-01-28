@@ -5,17 +5,16 @@
 
 package org.bham.app.experiment;
 
-import java.io.File;
-import java.util.LinkedList;
 import nu.xom.Element;
 import org.bham.aucom.diagnoser.t2gram.ProbabilityFactory;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.*;
+
+import java.io.File;
+import java.util.LinkedList;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 /**
  *

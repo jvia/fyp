@@ -2,7 +2,8 @@ package org.bham.aucom.models.probability;
 
 import org.junit.Before;
 import org.junit.Test;
-
+   import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 public class LogarithmicBinCalculatorTest {
 	int num = 129;
 	LogarithmicBinCalculator calculator;

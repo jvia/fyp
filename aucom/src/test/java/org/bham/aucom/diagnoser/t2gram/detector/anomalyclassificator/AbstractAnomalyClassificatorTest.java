@@ -5,16 +5,16 @@
 
 package org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator;
 
-import java.util.HashMap;
-import java.util.UUID;
+import org.bham.aucom.data.Score;
 import org.bham.aucom.data.timeseries.AnomalyClassificatorListener;
 import org.bham.aucom.data.timeseries.AnomalyClassificatorStatusEvent;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.*;
+
+import java.util.HashMap;
+import java.util.UUID;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  *
@@ -183,6 +183,31 @@ public class AbstractAnomalyClassificatorTest {
 
         public AbstractAnomalyClassificatorImpl() {
             super("");
+        }
+
+        @Override
+        public boolean satisfies(Score s) {
+            throw new UnsupportedOperationException("satisfies() not implemented yet");
+        }
+
+        @Override
+        public void setClassificator(AnomalyClassificator classificator) throws ClassCastException {
+            throw new UnsupportedOperationException("setClassificator() not implemented yet");
+        }
+
+        @Override
+        public void copy(AnomalyClassificator classificator) {
+            throw new UnsupportedOperationException("copy() not implemented yet");
+        }
+
+        @Override
+        public AnomalyClassificator duplicate() {
+            throw new UnsupportedOperationException("duplicate() not implemented yet");
+        }
+
+        @Override
+        public void reset() {
+            throw new UnsupportedOperationException("reset() not implemented yet");
         }
     }
 
