@@ -19,11 +19,11 @@ public class Classification extends Score {
     }
 
     public SystemFaultStatus getStatus() {
-        return this.status;
+        return status;
     }
 
     public double getStatusAsDouble() {
-        if (this.status.equals(SystemFaultStatus.ABNORMAL))
+        if (status.equals(SystemFaultStatus.ABNORMAL))
             return 1.0;
         return 0.0;
     }
@@ -33,15 +33,15 @@ public class Classification extends Score {
     }
 
     public void setIsAbnormal() {
-        this.status = SystemFaultStatus.ABNORMAL;
+        status = SystemFaultStatus.ABNORMAL;
     }
 
     public void setIsNormal() {
-        this.status = SystemFaultStatus.NORMAL;
+        status = SystemFaultStatus.NORMAL;
     }
 
     public void setIsUnknown() {
-        this.status = SystemFaultStatus.UNKNOWN;
+        status = SystemFaultStatus.UNKNOWN;
     }
 
     public static Classification createRandomClassification() {
@@ -55,94 +55,94 @@ public class Classification extends Score {
       */
     @Override
     public void addAttribute(String propertyName, String propertyValue) {
-        this.score.addAttribute(propertyName, propertyValue);
+        score.addAttribute(propertyName, propertyValue);
     }
 
     @Override
     public boolean containsAttribute(String propertyName) {
-        return this.score.containsAttribute(propertyName);
+        return score.containsAttribute(propertyName);
     }
 
     @Override
     public HashMap<String, String> getAttributes() {
-        return this.score.getAttributes();
+        return score.getAttributes();
     }
 
     @Override
     public String getAttributeValue(String propertyName) {
-        return this.score.getAttributeValue(propertyName);
+        return score.getAttributeValue(propertyName);
     }
 
     @Override
     public double getValue() {
-        return this.score.getValue();
+        return score.getValue();
     }
 
     @Override
     public void setValue(double value) {
-        this.score.setValue(value);
+        score.setValue(value);
     }
 
     @Override
     public double getVariance() {
-        return this.score.getVariance();
+        return score.getVariance();
     }
 
     @Override
     public void setVariance(double variance) {
-        this.score.setVariance(variance);
+        score.setVariance(variance);
     }
 
     @Override
     public long getTimestamp() {
-        return this.score.getTimestamp();
+        return score.getTimestamp();
     }
 
     @Override
     public void setTimestamp(long inTimestamp) {
-        this.score.setTimestamp(inTimestamp);
+        score.setTimestamp(inTimestamp);
     }
 
     @Override
     public Element getContent() {
-        return this.score.getContent();
+        return score.getContent();
     }
 
     @Override
     public Object copy() {
         Score score_copy = (Score) score.copy();
-        Classification cl_copy = new Classification(score_copy, this.status);
+        Classification cl_copy = new Classification(score_copy, status);
         return cl_copy;
     }
 
     @Override
     public void markAsFirstElement() {
-        this.score.markAsFirstElement();
+        score.markAsFirstElement();
     }
 
     @Override
     public void unmarkAsFirstElement() {
-        this.score.unmarkAsFirstElement();
+        score.unmarkAsFirstElement();
     }
 
     @Override
     public void unmarkAsLastElement() {
-        this.score.unmarkAsLastElement();
+        score.unmarkAsLastElement();
     }
 
     @Override
     public void markAsLastElement() {
-        this.score.markAsLastElement();
+        score.markAsLastElement();
     }
 
     @Override
     protected boolean isFirstElement() {
-        return this.score.isFirstElement();
+        return score.isFirstElement();
     }
 
     @Override
     protected boolean isLastElement() {
-        return this.score.isLastElement();
+        return score.isLastElement();
     }
 
     @Override
@@ -152,42 +152,42 @@ public class Classification extends Score {
 
     @Override
     public ArrayList<Double> getDurationProbabilities() {
-        return this.score.getDurationProbabilities();
+        return score.getDurationProbabilities();
     }
 
     @Override
     public double getProbabilityFor(DataType eventType) {
-        return this.score.getProbabilityFor(eventType);
+        return score.getProbabilityFor(eventType);
     }
 
     @Override
     protected HashMap<DataType, Double> getDataTypeToProbabilityMapping() {
-        return this.score.getDataTypeToProbabilityMapping();
+        return score.getDataTypeToProbabilityMapping();
     }
 
     @Override
     public long getDurationFor(DataType inPrecedessorDataType) {
-        return this.score.getDurationFor(inPrecedessorDataType);
+        return score.getDurationFor(inPrecedessorDataType);
     }
 
     @Override
     public int getEventType() {
-        return this.score.getEventType();
+        return score.getEventType();
     }
 
     @Override
     public String getEventTypeIdAsString() {
-        return this.score.getEventTypeIdAsString();
+        return score.getEventTypeIdAsString();
     }
 
     @Override
     public List<DomainFeature> getFeatures() {
-        return this.score.getFeatures();
+        return score.getFeatures();
     }
 
     @Override
     public String getName() {
-        return this.score.getName();
+        return score.getName();
     }
 
     @Override
@@ -202,6 +202,6 @@ public class Classification extends Score {
 
     @Override
     public boolean equals(Object o) {
-        return o.getClass() == Classification.class && this.getTimestamp() == ((Classification) o).getTimestamp();
+        return o.getClass() == Classification.class && getTimestamp() == ((Classification) o).getTimestamp();
     }
 }
