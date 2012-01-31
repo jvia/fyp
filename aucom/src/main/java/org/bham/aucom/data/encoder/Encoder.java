@@ -66,17 +66,18 @@ public abstract class Encoder implements Serializable {
      * 
      * @return an appropriate encoder
      */
-    @SuppressWarnings("static-access")
     public static Encoder getInstance()
     {
     	if(instance == null){
             // TODO :: fix configuration path so encoder can load
     		String encoderClass = Configuration.getInstance().getValue("encoder");
+            if (encoderClass == null)
+                encoderClass = "org.bham.aucom.data.encoder.SourceScopeTypeEncoder";
     		if (encoderClass.isEmpty()){
     			return null;
     		}
     		try {
-    			instance = (Encoder) Encoder.class.forName(encoderClass).newInstance();
+    			instance = (Encoder) Class.forName(encoderClass).newInstance();
     		} catch (Exception exception) {
     			instance = null;
     		}

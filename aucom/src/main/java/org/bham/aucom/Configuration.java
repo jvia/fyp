@@ -1,16 +1,11 @@
 package org.bham.aucom;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import org.bham.aucom.system.SystemConnectionFactoryManager;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
-
-import org.bham.aucom.system.SystemConnectionFactoryManager;
 
 /**
  * This class loads properties about the system from file and maintains those
@@ -22,8 +17,8 @@ import org.bham.aucom.system.SystemConnectionFactoryManager;
  */
 public final class Configuration {
 
-    private static String resourcePath = "/data/org.bham.aucom.cfg";
-    private static String fileString = "data/org.bham.aucom.cfg";
+    private static String resourcePath = "/data/aucom.cfg";
+    private static String fileString = "data/aucom.cfg";
     private static Configuration instance = null;
     private HashMap<String, String> map;
 
