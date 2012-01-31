@@ -10,6 +10,7 @@ import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
 import java.util.logging.Logger;
 
 public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProbabilityFeature, Score> {
+    private final Logger log = Logger.getLogger(getClass().getName());
     protected T2GramModelI model;
 
     public CalcEntropyAvgScore(T2GramModelI inModel) {
@@ -23,7 +24,7 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
 
     @Override
     protected Score iTransform(TemporalProbabilityFeature arg0) throws Exception {
-        Logger.getLogger(this.getClass().getCanonicalName()).info("CalcEntropyAvgScore iTransformCalled");
+        log.fine("CalcEntropyAvgScore iTransformCalled");
         return calculate(arg0);
     }
 
@@ -41,12 +42,11 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
     protected Score calculateScore(TemporalProbabilityFeature inData) {
         double sum_entropy = calculateSumEntropy(inData);
         double denominator = calculateDenominator(sum_entropy);
-        double scoreValue = 0.0d;
+        double scoreValue;
 
         scoreValue = calculateAbsoluteScoreValue(inData, denominator);
         scoreValue = normalize(inData, scoreValue);
-        Score out = new SingleScore(inData, scoreValue);
-        return out;
+        return new SingleScore(inData, scoreValue);
     }
 
     protected double calculateDenominator(double sum_entropy) {
@@ -67,23 +67,10 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
         double entropy = calculateSingleEntropy(current, predecessor);
         double output;
 
-        /*
-        * Experiment: Only allow 17 -> 31, 31 -> 32, 32 -> 33
-        * ADD:updater:updater.sa   17
-        * ADD:chain1:updater.sa    31
-        * ADD:chain2:updater.sa    32
-        * DELETE:chain3:updater.sa 33
-        */
-        int pre = predecessor.getEventType();
-        int cur = current.getEventType();
-        if ((pre == 17 && cur == 31) || (pre == 31 && cur == 32) || (pre == 31 && cur == 33)) {
-            warnIfProbabilityHasNaNValue(probability, current, predecessor);
-            warnIfEntropyHasNaNValue(entropy, current, predecessor);
-            output = alg_calculateSingleScore(probability, entropy, denominator);
-            System.out.printf("[%d ---> %d] => %.2f\n", predecessor.getEventType(), current.getEventType(), output);
-        } else {
-            output = 0;
-        }
+        warnIfProbabilityHasNaNValue(probability, current, predecessor);
+        warnIfEntropyHasNaNValue(entropy, current, predecessor);
+        output = alg_calculateSingleScore(probability, entropy, denominator);
+        log.fine(String.format("[%d ---> %d] => %.2f\n", predecessor.getEventType(), current.getEventType(), output));
 
         return output;
     }
@@ -147,7 +134,7 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
      */
     private void warnIfModelIsNotTrained() {
         if (this.getModel().getTransitionMatrix().size() == 0) {
-            Logger.getLogger(this.getClass().getCanonicalName()).severe("warning: model not trained");
+            log.severe("warning: model not trained");
         }
     }
 
@@ -174,7 +161,7 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
      */
     private void warnIfProbabilityHasNaNValue(double probability, TemporalProbabilityFeature inData, DataType precedessorData) {
         if (Double.isNaN(probability))
-            Logger.getLogger(this.getClass().getCanonicalName()).info("prob " + precedessorData.getEventType() + "--->" + inData.getEventType() + " " + probability);
+            log.info("prob " + precedessorData.getEventType() + "--->" + inData.getEventType() + " " + probability);
     }
 
     /**
@@ -184,7 +171,7 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
     private void warnIfDitstributionNotfound(TemporalProbabilityFeature inData, DataType precedessor) {
         ProbabilityDistribution distribution = getModel().getDistributionFor(precedessor.getEventType(), inData.getEventType());
         if (distribution == null) {
-            Logger.getLogger(this.getClass().getCanonicalName()).info("no distribution for " + precedessor.getEventType() + "--->" + inData.getEventType());
+            log.info("no distribution for " + precedessor.getEventType() + "--->" + inData.getEventType());
         }
     }
 }

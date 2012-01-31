@@ -33,7 +33,7 @@ import org.bham.aucom.fts.tranform.GenerateTemporalProbabilityFeature;
 
 /**
  * This class represent the implementation of the detection algorithm. It sets up the FTS nodes that perform all of the aspects of fault detection.
- * 
+ *
  * @author Raphael Golombek <rgolombe@cor-lab.uni-bielefeld.de>
  */
 public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatusListener {
@@ -56,7 +56,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     /**
      * Constructs the DetectorGraph with the specified model, classifier, and
      * sliding window.
-     * 
+     *
      * @param model detector model to use
      * @param classificator the classifier to use
      * @param slindingWindow the sliding window to use
@@ -96,7 +96,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     }
 
     /**
-     * Sets the model used by this detector graph.  
+     * Sets the model used by this detector graph.
      * @param inModel
      */
     public void setModel(T2GramModelI inModel)
@@ -119,7 +119,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
 		super.setStatus(newStatus);
 	}
     /**
-     * 
+     *
      * @param classificatorToSet
      */
     public void setClassificator(AnomalyClassificator classificatorToSet)
@@ -128,7 +128,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     }
 
     /**
-     * 
+     *
      */
     @Override
     protected void initGraph()
@@ -171,7 +171,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
 		this.graph.connect(this.anomalyClassification, this.sink);
 	}
     /**
-     * 
+     *
      * @return
      */
     public T2GramModelI getModel()
@@ -199,7 +199,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
 	}
 
 	/**
-     * 
+     *
      * @param inTimeSeries
      * @throws ActionFailedException
      */
@@ -210,7 +210,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     }
 
     /**
-     * 
+     *
      * @return
      */
     public AnomalyClassificator getClassificator()
@@ -219,7 +219,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     }
 
     /**
-     * 
+     *
      * @param slidingWindow
      */
     public void setSlidingWindow(SlidingWindow slidingWindow)
@@ -228,7 +228,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     }
 
     /**
-     * 
+     *
      * @param slidingWindow
      */
     public void updateSlidingWindow(SlidingWindow slidingWindow)
@@ -237,7 +237,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     }
 
     /**
-     * 
+     *
      * @return
      */
     public SlidingWindow getSlidingWindow()
@@ -246,7 +246,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     }
 
     /**
-     * 
+     *
      * @return
      */
     public TimeSeries<Classification> getClassificationTimeSeries()
@@ -255,7 +255,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     }
 
     /**
-     * 
+     *
      */
     @Override
     protected void cleanUp()
@@ -266,9 +266,9 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
 
     /**
      * Determines if all of the preconditions required to run the graph are
-     * satisfied. In order for the graph to be ready, there must be valid input, 
+     * satisfied. In order for the graph to be ready, there must be valid input,
      * a feature generator, a model, and an anomaly detector.
-     * 
+     *
      * @return true if ready.
      */
     @Override
@@ -279,7 +279,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
 
     /**
      * Returns the reasons why the DetectorGraph is not working.
-     * 
+     *
      * @return reasons for malfunction
      */
     @Override
@@ -301,7 +301,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
 
     /**
      * Determines if the {@link TimeSeriesSource} is ready.
-     * 
+     *
      * @return true if ready
      */
     private boolean inputIsPresent()
@@ -311,7 +311,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
 
     /**
      * Determines if the {@link Classificate} classificator is ready.
-     * 
+     *
      * @return true if ready
      */
     private boolean anomalyDetectorIsReady()
@@ -321,7 +321,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
 
     /**
      * Determines if the {@link GenerateTemporalProbabilityFeature} is ready.
-     * 
+     *
      * @return true if ready
      */
     private boolean modelIsReady()
@@ -349,7 +349,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
 
     /**
      * Determines if the {@link GenerateTemporalDurationFeature} generator is ready.
-     * 
+     *
      * @return true if ready
      */
     private boolean featureGeneratorIsReady()

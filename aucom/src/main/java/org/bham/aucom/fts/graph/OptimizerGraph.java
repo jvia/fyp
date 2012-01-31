@@ -1,7 +1,5 @@
 package org.bham.aucom.fts.graph;
 
-import java.util.logging.Logger;
-
 import org.bham.aucom.data.Classification;
 import org.bham.aucom.data.Score;
 import org.bham.aucom.data.timeseries.ClassificationTimeSeries;
@@ -10,6 +8,8 @@ import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClas
 import org.bham.aucom.fts.sink.TimeSeriesSink;
 import org.bham.aucom.fts.source.TimeSeriesSource;
 import org.bham.aucom.fts.tranform.Classificate;
+
+import java.util.logging.Logger;
 
 public class OptimizerGraph extends AbstractAucomGraph {
 	private static final long serialVersionUID = 0L;
@@ -26,26 +26,26 @@ public class OptimizerGraph extends AbstractAucomGraph {
 	protected void initGraph() {
 
 		// source
-		this.source = new TimeSeriesSource<Score>("scoreSource");
-		this.source.addSourceStatusListener(this);
+		source = new TimeSeriesSource<Score>("scoreSource");
+		source.addSourceStatusListener(this);
 
 		// node
-		this.classificate = new Classificate();
+		classificate = new Classificate();
 
 		// sink
-		this.sink = new TimeSeriesSink<Classification>(new ClassificationTimeSeries());
-		this.sink.addSinkStatusListener(this);
+		sink = new TimeSeriesSink<Classification>(new ClassificationTimeSeries());
+		sink.addSinkStatusListener(this);
 
 		// connection
-		this.graph.connect(source, classificate);
-		this.graph.connect(classificate, sink);
+		graph.connect(source, classificate);
+		graph.connect(classificate, sink);
 	}
 
 	@Override
 	protected void cleanUp() {
-		this.source.setInput(null);
-		this.classificate.setClassificator(null);
-		this.sink.setOutput(null);
+		source.setInput(null);
+		classificate.setClassificator(null);
+		sink.setOutput(null);
 	}
 
 	@Override
@@ -56,10 +56,10 @@ public class OptimizerGraph extends AbstractAucomGraph {
 	public void setInput(TimeSeries<Score> input) {
 		try {
 			if (input != null && input.size() == 0) {
-				Logger.getLogger(this.getClass().getCanonicalName()).severe(this.getClass().getName() + " warning: input queue is empty");
+				Logger.getLogger(getClass().getCanonicalName()).severe(getClass().getName() + " warning: input queue is empty");
 			}
-			this.source.setInput(input);
-			Logger.getLogger(this.getClass().getCanonicalName()).info("set input to " + input);
+			source.setInput(input);
+			Logger.getLogger(getClass().getCanonicalName()).info("set input to " + input);
 		} catch (Exception exception) {
 			exception.printStackTrace();
 		}
@@ -74,12 +74,12 @@ public class OptimizerGraph extends AbstractAucomGraph {
 	}
 
 	public TimeSeries<Classification> getOutput() {
-		return this.sink.getOutput();
+		return sink.getOutput();
 	}
 
 	public void resetOutput() {
-		if (this.sink.getOutput() != null) {
-			this.sink.getOutput().clear();
+		if (sink.getOutput() != null) {
+			sink.getOutput().clear();
 		}
 	}
 

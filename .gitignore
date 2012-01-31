@@ -13,3 +13,4 @@ target/
 *.pdf
 *.ml
 *.ser
+.#project.org
