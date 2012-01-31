@@ -1,0 +1,6 @@
+HOST localhost
+
+SUBARCHITECTURE counter.sa
+JAVA WM cast.architecture.SubarchitectureWorkingMemory
+JAVA TM cast.architecture.AlwaysPositiveTaskManager
+JAVA MG counter experiments.Counter

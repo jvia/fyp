@@ -18,7 +18,7 @@ JAVA MG node3 experiments.Node --follows "node2"        --delay "random 1000 200
 JAVA MG node4 experiments.Node --follows "node1"        --delay "random 1000 2000"
 JAVA MG node5 experiments.Node --follows "node4"        --delay "random 1000 2000"
 JAVA MG node6 experiments.Node --follows "node6"        --delay "random 1000 2000"
-JAVA MG node7 experiments.Node --follows "node6 node5"  --delay "random 2000 4000" --end
+JAVA MG node7 experiments.Node --follows "node6 node5"  --delay "random 100  200" --end
 
 INCLUDE ../includes/aucom.cast
-#INCLUDE ../includes/counter.cast
+INCLUDE ../includes/counter.cast
