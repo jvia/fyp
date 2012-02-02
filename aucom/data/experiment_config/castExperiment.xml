@@ -26,10 +26,10 @@
 
 -->
 <aucom:experiments xmlns:aucom="http://www.cor-lab.de">
-    <aucom:experiment factory="org.bham.app.experiment.CastExperimentFactory" name="debug">
+    <aucom:experiment factory="org.bham.app.experiment.CastExperimentFactory" name="5chain-fault">
         <aucom:input>
             <aucom:wd>/home/jxv911/Dropbox/aucom/cast</aucom:wd>
-            <aucom:observation>debug</aucom:observation>
+            <aucom:observation>5chain</aucom:observation>
             <!--<aucom:model></aucom:model>-->
             <aucom:size>4000</aucom:size>
         </aucom:input>
