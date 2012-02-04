@@ -11,6 +11,27 @@
 ** DONE Find class where calculation takes place
 org.bham.aucom.fts.tranform.CalcEntropyAvgScore
 
+
+#+begin_src java
+  /*
+   * Experiment: Only allow 17 -> 31, 31 -> 32, 32 -> 33
+   * ADD:updater:updater.sa   17
+   * ADD:chain1:updater.sa    31
+   * ADD:chain2:updater.sa    32
+   * DELETE:chain3:updater.sa 33
+   */
+  int pre = predecessor.getEventType();
+  int cur = current.getEventType();
+  if ((pre == 17 && cur == 31) || (pre == 31 && cur == 32) || (pre == 31 && cur == 33)) {
+      warnIfProbabilityHasNaNValue(probability, current, predecessor);
+      warnIfEntropyHasNaNValue(entropy, current, predecessor);
+      output = alg_calculateSingleScore(probability, entropy, denominator);
+      System.out.printf("[%d ---> %d] => %.2f\n", predecessor.getEventType(), current.getEventType(), output);
+  } else {
+      output = 0;
+  }
+#+end_src
+
 T2GramModelTrainer
 ** DONE Make a simple 3-component chain
 ** TODO Get data running on 3-chain
@@ -144,18 +165,24 @@ coding:
 - set non-conecteds ones to 0
 - thrn try bigger change
 
-** COMMENT 2012-01-23
-
+** 2012-01-23
 0.1 seems a good cutoff
-
 
 The model is represented as a matrix of probability
 distributions. What is a good way to model "empty" for a probability
 distribution? I don't think there is one.
 
+** 2012-01-30
 
+Experiments worth conducting for Raphael:
+- Component crash
+- Resource starvation
 
-** COMMENT 2012-01-30
+Experiments to test the algorithm:
+- Really long chains
+- Many disjoint chains
+- Tons of individual components
+
 ** COMMENT 2012-02-06
 ** COMMENT 2012-02-13
 ** COMMENT 2012-02-20
