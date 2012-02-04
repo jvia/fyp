@@ -14,3 +14,4 @@ target/
 *.ml
 *.ser
 .#project.org
+aucom/data/algorithm/.#classes.txt
