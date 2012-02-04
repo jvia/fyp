@@ -251,6 +251,11 @@ public class T2GramModelITest {
         }
 
         @Override
+        public boolean isEmpty() {
+            return size() == 0;
+        }
+
+        @Override
         public boolean isTrained() {
             throw new UnsupportedOperationException("isTrained() not implemented yet");
         }

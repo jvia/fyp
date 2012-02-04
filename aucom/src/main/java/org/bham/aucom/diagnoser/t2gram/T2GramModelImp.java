@@ -1,17 +1,17 @@
 package org.bham.aucom.diagnoser.t2gram;
 
-import static org.bham.aucom.util.Constants.LOWESTPROBABILITY;
+import org.bham.aucom.data.DomainFeature;
+import org.bham.aucom.data.encoder.Encoder;
+import org.bham.aucom.fts.AbstractLinkableNode;
+import org.bham.aucom.util.HashMatrix;
+import org.bham.aucom.util.Tupel;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-import org.bham.aucom.data.DomainFeature;
-import org.bham.aucom.data.encoder.Encoder;
-import org.bham.aucom.fts.AbstractLinkableNode;
-import org.bham.aucom.util.HashMatrix;
-import org.bham.aucom.util.Tupel;
+import static org.bham.aucom.util.Constants.LOWESTPROBABILITY;
 
 public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI {
 	private static final long serialVersionUID = 1L;
@@ -107,7 +107,12 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
 		this.getTransitionMatrix().put(from, to, dist);
 	}
 
-	@Override
+    @Override
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
+    @Override
 	public int size() {
 		return getTransitionMatrix().size();
 	}

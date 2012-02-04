@@ -157,6 +157,11 @@ public class GenerateTemporalProbabilityFeatureTest {
             public void addDistribution(Integer from, Integer to, ProbabilityDistribution dist)
             {
             }
+
+            @Override
+            public boolean isEmpty() {
+                throw new UnsupportedOperationException("isEmpty() not implemented yet");
+            }
         };
     }
 
