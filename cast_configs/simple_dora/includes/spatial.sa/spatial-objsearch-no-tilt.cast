@@ -1,0 +1,4 @@
+CPP GD relation.manager ObjectRelationManager -c instantiations/cureconfig/cogxp3.ccf --log --no-vision --display-objects-in-pb #--debug #--no-ptz --laser-range 2.0 --planemap-size 100 --planemap-cellsize 0.05 --display-objects-in-pb --debug
+
+
+CPP GD visual.search VisualObjectSearch -c instantiations/cureconfig/cogxp3.ccf --cam-horizangle 41 --cam-vertangle 31 --samplesize 50 --tiltinterval 15 --ctrl-ptu --gridsize 700 --cellsize 0.05  --kernel-width-factor 0.7 --sampleawayfromobs 0.45 --publishsimcones --usepeekabot --log --tpose "table 5.3 0.6 1.57" --ignore-tilt

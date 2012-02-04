@@ -1,0 +1,5 @@
+SUBARCHITECTURE default.sa
+JAVA WM cast.architecture.SubarchitectureWorkingMemory
+CPP TM AlwaysPositiveTaskManager
+
+

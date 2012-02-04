@@ -1,0 +1,4 @@
+SUBARCHITECTURE coma
+JAVA WM cast.architecture.SubarchitectureWorkingMemory
+JAVA TM cast.architecture.AlwaysPositiveTaskManager
+

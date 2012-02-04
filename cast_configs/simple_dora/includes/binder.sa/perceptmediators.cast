@@ -1,0 +1,17 @@
+
+# simple mediators:
+JAVA MG pm-place	binder.perceptmediator.components.PlaceMediator --debug
+JAVA MG pm-agent 	binder.perceptmediator.components.AgentMediator --debug
+JAVA MG pm-person 	binder.perceptmediator.components.PersonMediator --debug
+JAVA MG pm-object 	binder.perceptmediator.components.VisualObjectMediator --debug
+JAVA MG pm-room 	binder.perceptmediator.components.RoomMediator --debug
+
+# additional features:
+JAVA MG pm-gateway 	binder.perceptmediator.components.PlaceGatewayMediator --debug
+
+# relation mediators:
+JAVA MG pm-place-conn 	binder.perceptmediator.components.PlaceConnectivityMediator --debug
+#JAVA MG pm-agent-rel 	binder.perceptmediator.components.PlaceContainmentAgentMediator --debug
+#JAVA MG pm-person-rel 	binder.perceptmediator.components.PersonRelationMediator --debug
+#JAVA MG pm-object-rel 	binder.perceptmediator.components.VisualObjectRelationMediator --debug
+#JAVA MG pm-room-rel 	binder.perceptmediator.components.RoomRelationMediator --debug

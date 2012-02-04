@@ -1,0 +1,6 @@
+JAVA MG vision.mediator eu.cogx.perceptmediator.components.VisualObjectMediatorComponent 
+
+# simple tracking (to planner.sa)
+JAVA MG pt-spatial 	 eu.cogx.percepttracker.components.VisualObjectTracker --debug --write-to-sa binder
+
+

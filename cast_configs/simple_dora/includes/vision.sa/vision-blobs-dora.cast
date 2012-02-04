@@ -1,0 +1,7 @@
+JAVA MG blobdetector  vision.components.BlobjectDetector --label-cerealbox 255,0,0 --label-milk_carton 0,255,0 --label-chocolate_chips 0,0,255  --label-sugar 255,0,255  --log
+
+JAVA MG peopledetector  vision.components.BlobbyPeopleDetector --person-colour=0,0,255 
+
+
+
+

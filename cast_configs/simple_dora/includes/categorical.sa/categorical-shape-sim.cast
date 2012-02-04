@@ -1,0 +1,9 @@
+SUBARCHITECTURE categorical.sa
+JAVA WM cast.architecture.SubarchitectureWorkingMemory
+CPP TM AlwaysPositiveTaskManager
+
+CPP GD categorical.dataprovider CategoricalDataProvider --config subarchitectures/categorical.sa/config/dora-yr2-shape-sim.cfg --laser-robot-servers-hostname localhost
+CPP GD categorical.laserprocessor CategoricalLaserProcessor --config subarchitectures/categorical.sa/config/dora-yr2-shape-sim.cfg
+CPP GD categorical.shapeintegrator CategoricalShapeIntegrator --config subarchitectures/categorical.sa/config/dora-yr2-shape-sim.cfg --placemanager place.manager
+
+

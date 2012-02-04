@@ -1,0 +1,1 @@
+CPP GD objsearch.process ObjectSearch -c subarchitectures/nav.sa/config/cogxp3.ccf --explore-range 5 --gridsize 250 --cellsize 0.1 --objects "journal milk_carton bookshelf teabox" --samplesize 1000 --cam-range 4 --cam-fov 45 --coverage-threshold 30  --vp-threshold 8 --away-from-obstacles 0.5 --disp-magn 1  --cam-step 60 --tilt 45 #--display-coverage 

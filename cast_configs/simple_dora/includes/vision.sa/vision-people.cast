@@ -1,0 +1,5 @@
+# run the people detector in detector mode... do not track!
+
+CPP MG people-detector PeopleDetector --log --videohost localhost --videoname VideoServer --camid 0 --deinterlace 0 --sleepForSync 0 --faceCascade "/usr/share/opencv/haarcascades/haarcascade_frontalface_alt2.xml" --fullbodyCascade "/usr/local/share/opencv/haarcascades/haarcascade_fullbody.xml"  --numattempts 5 --trackerThreshold -1
+
+CPP MG people-test PeopleDetectorTest --log --videohost localhost --videoname VideoServer --camid 0 

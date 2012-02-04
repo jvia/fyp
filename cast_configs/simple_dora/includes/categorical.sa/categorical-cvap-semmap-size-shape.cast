@@ -1,0 +1,8 @@
+SUBARCHITECTURE categorical.sa
+JAVA WM cast.architecture.SubarchitectureWorkingMemory
+CPP TM AlwaysPositiveTaskManager
+
+CPP GD categorical.dataprovider CategoricalDataProvider --config subarchitectures/categorical.sa/config/cvap-semmap-size-shape.cfg --laser-robot-servers-hostname localhost --correct-scans --convert-scans-to-sick
+CPP GD categorical.laserprocessor CategoricalLaserProcessor --config subarchitectures/categorical.sa/config/cvap-semmap-size-shape.cfg
+CPP GD categorical.shapeintegrator CategoricalShapeIntegrator --config subarchitectures/categorical.sa/config/cvap-semmap-size-shape.cfg --placemanager place.manager
+CPP GD categorical.sizeintegrator CategoricalSizeIntegrator --config subarchitectures/categorical.sa/config/cvap-semmap-size-shape.cfg --placemanager place.manager

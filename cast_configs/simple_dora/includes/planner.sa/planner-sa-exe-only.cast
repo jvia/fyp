@@ -1,0 +1,9 @@
+SUBARCHITECTURE planner.sa
+
+###############################################################################
+JAVA WM cast.architecture.SubarchitectureWorkingMemory
+CPP TM AlwaysPositiveTaskManager
+
+# execution ####################################################################
+JAVA MG manual-execution execution.components.GraphicalExecutionManager
+JAVA MG executor execution.components.DoraExecutionMediator

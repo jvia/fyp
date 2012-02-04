@@ -1,0 +1,7 @@
+# to redirect, set to: --redirect-to-host hostname
+VARDEFAULT displaysrv_param_redirect=
+
+SUBARCHITECTURE visualization.sa 
+CPP WM SubarchitectureWorkingMemory
+CPP TM AlwaysPositiveTaskManager
+CPP MG display.srv DisplayServer %(displaysrv_param_redirect)

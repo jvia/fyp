@@ -1,0 +1,9 @@
+SUBARCHITECTURE categorical.sa
+JAVA WM cast.architecture.SubarchitectureWorkingMemory
+CPP TM AlwaysPositiveTaskManager
+
+CPP GD categorical.dataprovider CategoricalDataProvider --config subarchitectures/categorical.sa/config/dora-yr2-saving.cfg  --laser-robot-servers-hostname localhost  --debug true
+CPP GD categorical.datasaver CategoricalDataSaver --config subarchitectures/categorical.sa/config/dora-yr2-saving.cfg  --debug true
+
+
+

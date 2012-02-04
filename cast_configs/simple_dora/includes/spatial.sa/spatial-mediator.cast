@@ -1,0 +1,16 @@
+
+# simple mediators:
+JAVA MG pm-place	eu.cogx.perceptmediator.components.PlaceMediator 
+JAVA MG pm-agent 	eu.cogx.perceptmediator.components.AgentMediator 
+JAVA MG pm-viewpoint 	eu.cogx.perceptmediator.dora.ViewPointMediator 
+
+# property mediators
+JAVA MG pm-gateway 	eu.cogx.perceptmediator.components.GatewayPropertyMediator
+JAVA MG pm-space 	eu.cogx.perceptmediator.components.AssociatedSpacePropertyMediator
+JAVA MG pm-border 	eu.cogx.perceptmediator.components.AssociatedBorderPropertyMediator
+
+
+# relation mediators:
+JAVA MG pm-place-conn 	eu.cogx.perceptmediator.components.PlaceConnectivityMediator 
+JAVA MG pm-placeholder-cat 	eu.cogx.perceptmediator.components.PlaceholderCategoryMediator 
+#JAVA MG pm-agent-rel 	eu.cogx.perceptmediator.components.PlaceContainmentAgentMediator 

@@ -1,0 +1,5 @@
+CPP GD conceptual.queryhandler ConceptualQueryHandler
+CPP GD conceptual.observer ConceptualObserver --shape-threshold 0.05 --size-threshold 0.05 --appearance-threshold 0.05 --beta-threshold 0.01 --gateway-placeholder-threshold 0.05 --associatedspace-placeholder-threshold 50
+CPP GD conceptual.chaingraphinferencer ConceptualChainGraphInferencer --freespace-placholder-rate 300 --defaultchaingraphinferencer default.chaingraphinferencer  --add-unobserved-shape --add-unobserved-size --add-unobserved-appearance --add-unobserved-objects book,cerealbox,computer,robot,stapler,toiletpaper  --opm-observation-model  # --save-graph conceptual.fg --save-graph-info conceptual.info 
+CPP GD conceptual.comaroomupdater ConceptualComaRoomUpdater --queryhandler conceptual.queryhandler
+

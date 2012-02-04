@@ -1,0 +1,12 @@
+# Include file for model 'cvap-semmap'
+
+SUBARCHITECTURE categorical.sa
+JAVA WM cast.architecture.SubarchitectureWorkingMemory
+CPP TM AlwaysPositiveTaskManager
+
+CPP GD categorical.dataprovider CategoricalDataProvider --config subarchitectures/categorical.sa/config/cvap-semmap-size-shape-appearance.cfg --laser-robot-servers-hostname 192.168.0.10  --correct-scans --convert-scans-to-sick
+CPP GD categorical.visualprocessor CategoricalVisualProcessor --config subarchitectures/categorical.sa/config/cvap-semmap-size-shape-appearance.cfg 
+CPP GD categorical.appearanceintegrator CategoricalAppearanceIntegrator --config subarchitectures/categorical.sa/config/cvap-semmap-size-shape-appearance.cfg --placemanager place.manager
+CPP GD categorical.laserprocessor CategoricalLaserProcessor --config subarchitectures/categorical.sa/config/cvap-semmap-size-shape-appearance.cfg
+CPP GD categorical.shapeintegrator CategoricalShapeIntegrator --config subarchitectures/categorical.sa/config/cvap-semmap-size-shape-appearance.cfg --placemanager place.manager
+CPP GD categorical.sizeintegrator CategoricalSizeIntegrator --config subarchitectures/categorical.sa/config/cvap-semmap-size-shape-appearance.cfg --placemanager place.manager

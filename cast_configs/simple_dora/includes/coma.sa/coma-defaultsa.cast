@@ -1,0 +1,7 @@
+# JAVA MG hfcserver coma.components.HFCServer --nsFile subarchitectures/coma.sa/ontologies/dora.ns --ruleFile subarchitectures/coma.sa/ontologies/default.rdl --tupleFile subarchitectures/coma.sa/ontologies/dora_omics_thingloc.nt --log
+
+JAVA MG hfcserver coma.components.HFCServer --stdNSFile "subarchitectures/coma.sa/ontologies/dora-yr2/dora.ns" --stdRuleFile "subarchitectures/coma.sa/ontologies/hfcowl/default.rdl" --otherRuleFiles "subarchitectures/coma.sa/ontologies/defaultsa/defaultsa.rdl" --stdTupleFile "subarchitectures/coma.sa/ontologies/hfcowl/default.nt" --otherTupleFiles "subarchitectures/coma.sa/ontologies/defaultsa/objloc-defaults-subset1_5.nt,subarchitectures/coma.sa/ontologies/dora-yr2/dora-yr2-objs.nt" --log true
+
+#--tupleFile subarchitectures/coma.sa/ontologies/omics-locations-coocmatrix-subset1full.nt --log
+
+# JAVA MG hfctester coma.components.HFCTester --hfcserver-name hfcserver --log true

@@ -1,0 +1,6 @@
+# dialogue stuff ##############################################################
+
+SUBARCHITECTURE dialogue
+JAVA WM			cast.architecture.SubarchitectureWorkingMemory
+JAVA TM			cast.architecture.AlwaysPositiveTaskManager
+

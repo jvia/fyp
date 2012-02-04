@@ -1,0 +1,3 @@
+CPP GD display.process DisplayNavInPB --no-objects --retry-interval 10 --no-properties --no-walls --no-labels --room-categories anteroom,bathroom,doubleoffice,hallway,kitchen,meetingroom,professorsoffice,robotlab,singleoffice -c instantiations/cureconfig/cogxp3.ccf
+
+

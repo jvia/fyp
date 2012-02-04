@@ -9,45 +9,17 @@ INCLUDE includes/visualization.sa/v11n-base.cast
 # Spatial.SA ################################################################
 COMPONENT CPP ptz.server PlayerActServer --ptz-device 0
 INCLUDE includes/spatial.sa/spatial-base.cast
-#INCLUDE includes/spatial.sa/spatial-peekabot.cast
 
-# CANDIDATE TO MESS WITH:
-CPP GD slam.process SlamProcess -c instantiations/cureconfig/cogxp3.ccf --max-scan-rate 5 -m tmpmap.metric
-# CANDIDATE TO MESS WITH:
+CPP GD slam.process SlamProcess         -c instantiations/cureconfig/cogxp3.ccf --max-scan-rate 5 -m tmpmap.metric
 CPP GD navgraph.process NavGraphProcess -c instantiations/cureconfig/cogxp3.ccf -m tmpmap.graph
-CPP GD spatial.control SpatialControl -c instantiations/cureconfig/cogxp3.ccf --explore-range 2.0 
-# CANDIDATE TO MESS WITH:
+CPP GD spatial.control SpatialControl   -c instantiations/cureconfig/cogxp3.ccf --explore-range 2.0 
 CPP MG spatial.translation SpatialTranslation 
 CPP GD place.manager PlaceManager --max-frontier-dist 2.5 --min-frontier-dist 0.5 --min-frontier-length 0.6 --min-node-separation 1 --hyp-path-length 2.0 --no-placeholders 
-#CPP GD path.query PathQueryProcessor #--no-indirect-paths 
+CPP GD path.query PathQueryProcessor #--no-indirect-paths 
 CPP GD map.manager LocalMapManager -c instantiations/cureconfig/cogxp3.ccf --no-local-map-window --no-tentative-window --laser-range 2.0 --planemap-size 100 --planemap-cellsize 0.05 --detect-doors
 
 JAVA MG manual.gui spatial.manual.ManualNavControl
-#JAVA MG explorer exploration.GraphExplorer
-#JAVA MG traveller navigation.RouteTraveller
 
 SUBARCHITECTURE coma
 JAVA WM cast.architecture.SubarchitectureWorkingMemory
 JAVA TM cast.architecture.AlwaysPositiveTaskManager
-
-#CPP GD slam.process SlamProcess -c instantiations/cureconfig/cogxp3.ccf --max-scan-rate 5 -m tmpmap.metric
-
-# Conceptual.SA  ############################################################
-#INCLUDE includes/conceptual.sa/conceptual-base.cast
-#INCLUDE includes/conceptual.sa/conceptual-main.cast
-
-# Default.SA ################################################################
-#INCLUDE includes/default.sa/default-base.cast
-#INCLUDE includes/coma.sa/coma-defaultsa.cast
-#INCLUDE includes/default.sa/default-main-ICAPS.cast
-
-# Updater.sa (just to add more data)
-SUBARCHITECTURE updater.sa
-JAVA WM cast.architecture.SubarchitectureWorkingMemory
-JAVA TM cast.architecture.AlwaysPositiveTaskManager
-JAVA MG updater updater.Updater --gaussian "200 1"
-SUBARCHITECTURE monitor.sa
-JAVA WM cast.architecture.SubarchitectureWorkingMemory
-JAVA TM cast.architecture.AlwaysPositiveTaskManager
-JAVA MG monitor monitor.Monitor
-

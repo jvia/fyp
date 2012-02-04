@@ -1,0 +1,2 @@
+COMPONENT PYTHON PlannerPythonServer PythonServer --domain avs/dora-avs.pddl --log --nodot --pdb  --low-p-threshold 0.01
+COMPONENT CPP PlannerDTServer DTPCONTROL --log --debug

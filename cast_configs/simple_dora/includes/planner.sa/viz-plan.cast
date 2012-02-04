@@ -1,0 +1,1 @@
+CPP MG fileviewer.cli FileMonitorDC $V11N_STANDALONE $V11N_STANDALONE_HOST --displayserver "display.srv" --setvars "plandir=subarchitectures/planner.sa/src/python"  --monitor "CurrentPlan=dot:%(plandir)/{plan*.dot}"

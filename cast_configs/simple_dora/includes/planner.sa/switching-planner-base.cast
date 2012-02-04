@@ -1,0 +1,9 @@
+COMPONENT PYTHON PlannerPythonServer PythonServer --domain switchtest-tfd.pddl --log --nodot --problem switchtest-tfd-problem.pddl
+COMPONENT CPP PlannerDTServer DTPCONTROL --log --debug
+
+SUBARCHITECTURE planner.sa
+
+###############################################################################
+JAVA WM cast.architecture.SubarchitectureWorkingMemory
+CPP TM AlwaysPositiveTaskManager
+

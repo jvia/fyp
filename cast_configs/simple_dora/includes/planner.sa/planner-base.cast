@@ -1,0 +1,7 @@
+
+SUBARCHITECTURE planner.sa
+
+###############################################################################
+JAVA WM cast.architecture.SubarchitectureWorkingMemory
+CPP TM AlwaysPositiveTaskManager
+CPP MG Planner WMControl --belief-timeout 2000 --log 

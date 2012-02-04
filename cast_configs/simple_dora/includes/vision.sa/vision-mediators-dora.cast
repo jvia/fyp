@@ -1,0 +1,3 @@
+JAVA MG vision.mediator eu.cogx.perceptmediator.dora.VisualObjectMediatorComponent 
+
+JAVA MG tracking.visualobject eu.cogx.percepttracker.dora.DoraVisualObjectTracker

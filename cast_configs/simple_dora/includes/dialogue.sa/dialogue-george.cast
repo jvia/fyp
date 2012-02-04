@@ -1,0 +1,12 @@
+JAVA MG	gui	de.dfki.lt.tr.cast.dialogue.DialogueGUI --log true
+JAVA MG	parser	de.dfki.lt.tr.cast.dialogue.IncrStringParser --grammar ./subarchitectures/dialogue.sa/resources/grammars/openccg/moloko.v6/grammar.xml --log true
+JAVA MG parseselect	de.dfki.lt.tr.cast.dialogue.ParseSelection --log true
+JAVA MG refmonitor	de.dfki.lt.tr.cast.dialogue.ReferenceMonitor --dumpfile /tmp/belief-model.abd --log true
+JAVA MG	refresolve	de.dfki.lt.tr.cast.dialogue.ReferenceResolution --ruleset-construct ./subarchitectures/dialogue.sa/resources/abduction/cogx/current/INDEX.construct.txt --dumpfile /tmp/belief-model.abd --correlfile ./subarchitectures/dialogue.sa/resources/abduction/cogx/current/correlations.abd --appendfile ./subarchitectures/dialogue.sa/resources/abduction/cogx/current/reference-resolution.abd --log true
+JAVA MG	cint-recognizer	de.dfki.lt.tr.cast.dialogue.CommunicativeIntentionRecognizer --ruleset ./subarchitectures/dialogue.sa/resources/abduction/cogx/current/INDEX.U.txt --log true
+JAVA MG dialmanager	de.dfki.lt.tr.cast.dialogue.DialogueManagement --policy ./subarchitectures/dialogue.sa/config/policies/yr2/fullpolicy_george.xml --useAck true --log true
+JAVA MG	cint-realizer	de.dfki.lt.tr.cast.dialogue.CommunicativeIntentionRealizer --ruleset ./subarchitectures/dialogue.sa/resources/abduction/cogx/current/INDEX.G.txt --log true
+JAVA MG cplan	de.dfki.lt.tr.cast.dialogue.ContentPlanner --domainFile ./subarchitectures/dialogue.sa/resources/contentplanning/allRuleFiles.trf --contentRel Content --log true
+JAVA MG realizer	de.dfki.lt.tr.cast.dialogue.CCGRealizer --ccg ./subarchitectures/dialogue.sa/resources/grammars/openccg/moloko.v6/grammar.xml --ngrams ./subarchitectures/dialogue.sa/resources/grammars/openccg/moloko.v6/ngram-corpus.txt  --log true
+JAVA GD mary-tts	de.dfki.lt.tr.cast.dialogue.MaryTTS --serverHost localhost --serverPort 59125 --voice cmu-slt-hsmm --log true #--debug true
+#JAVA MG	asr		de.dfki.lt.tr.cast.dialogue.LoquendoASR --serverName LoquendoASRServer --serverEndpoint "tcp -h -p 9021" --threshold 0.4 --log true

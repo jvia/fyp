@@ -1,0 +1,20 @@
+
+VARDEFAULT VisLearnerDispPrefix = VisLearner
+VARDEFAULT VisLearnerDir = subarchitectures/vision.sa/config/test-vislearner/files/disp
+VARDEFAULT VisLearnerConfig = subarchitectures/vision.sa/config/test-vislearner/cmLearn.config
+
+CPP MG vis.learner VisualLearner --clfconfig "%(VisLearnerConfig)" --log # --debug
+
+VARDEFAULT VisLearnerFilemonParams = <multiline>
+   %(VisLearnerDispPrefix).bmp.Recognition=%(VisLearnerDir)/{mGR.png}
+   %(VisLearnerDispPrefix).bmp.Learning=%(VisLearnerDir)/{mGL.png}
+   %(VisLearnerDispPrefix).bmp.D=%(VisLearnerDir)/{mGD.png}
+   %(VisLearnerDispPrefix).htm.Recognition=%(VisLearnerDir)/{mTR.html}
+   %(VisLearnerDispPrefix).htm.Learning=%(VisLearnerDir)/{mTL.html}
+   %(VisLearnerDispPrefix).htm.D=%(VisLearnerDir)/{mTD.html}
+</multiline>
+
+CPP MG matlab.display FileMonitorDC --displayserver "display.srv" --monitor "%(VisLearnerFilemonParams)" # --debug true
+
+
+

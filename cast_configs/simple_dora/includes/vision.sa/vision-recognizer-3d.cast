@@ -1,0 +1,17 @@
+
+# The recognizer should run after the ProtoObject is created
+# %(CONFIG_DIR) can be used to make the paths relative to the main cast file.
+VARDEFAULT siftroot_=../dora-yr2/instantiations/sift-models
+VARDEFAULT plyroot_=../dora-yr2/instantiations/ply-models
+VARDEFAULT or3d_sift_files=<multiline>
+   %(siftroot_)/frosties.sift
+   %(siftroot_)/kleenex.sift
+   %(siftroot_)/mammer.sift
+</multiline>
+VARDEFAULT or3d_ply_files=<multiline>
+   %(plyroot_)/frosties.ply
+   %(plyroot_)/kleenex.ply
+   %(plyroot_)/mammer.ply
+</multiline>
+VARDEFAULT or3d_labels=frosties kleenex mammer
+CPP MG recognizer.3D ObjectRecognizer3D2 --stereoname stereoserver --labels "%(or3d_labels)" --siftfiles "%(or3d_sift_files)" --plyfiles "%(or3d_ply_files)"

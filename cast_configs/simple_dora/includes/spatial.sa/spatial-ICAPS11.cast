@@ -1,0 +1,20 @@
+CPP GD slam.process SlamProcess -c instantiations/cureconfig/cogxp3.ccf --max-scan-rate 5 -m tmpmap.metric #--no-file-output
+CPP GD navgraph.process NavGraphProcess -c instantiations/cureconfig/cogxp3.ccf -m tmpmap.graph #--no-file-output
+CPP GD spatial.control SpatialControl -c instantiations/cureconfig/cogxp3.ccf --explore-range 2.0 
+
+CPP MG spatial.translation SpatialTranslation 
+
+VARDEFAULT excludeArea=<multiline>
+	--exclude-from-exploration "x < 0.0"
+</multiline>
+
+
+CPP GD place.manager PlaceManager --max-frontier-dist 2.5 --min-frontier-dist 0.5 --min-frontier-length 0.6 --min-node-separation 1 --hyp-path-length 2.0 	%(excludeArea) #--no-placeholders
+
+
+ #--no-placeholders --log
+CPP GD path.query PathQueryProcessor #--no-indirect-paths 
+
+CPP GD map.manager LocalMapManager -c instantiations/cureconfig/cogxp3.ccf --no-local-map-window --no-tentative-window --laser-range 2.0 --planemap-size 100 --planemap-cellsize 0.05 --log --detect-doors 
+
+JAVA MG exe-spatial spatial.execution.SpatialActionInterface  --detections 8 

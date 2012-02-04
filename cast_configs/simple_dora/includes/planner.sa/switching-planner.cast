@@ -1,0 +1,2 @@
+COMPONENT PYTHON PlannerPythonServer PythonServer --domain avs/dora-avs.pddl --log --nodot --pdb --problem avs/dora-avs.problem.pddl
+COMPONENT CPP PlannerDTServer DTPCONTROL --log --debug

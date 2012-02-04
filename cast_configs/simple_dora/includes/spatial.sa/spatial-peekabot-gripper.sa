@@ -1,0 +1,2 @@
+CPP GD display.process DisplayNavInPB --no-objects --retry-interval 10 -c instantiations/cureconfig/cogxp3-gripper.ccf
+CPP GD peekabot.control SpatialPeekabotControl -c instantiations/cureconfig/cogxp3-gripper.ccf --retry-interval 10 --do-path-query

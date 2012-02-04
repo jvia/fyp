@@ -1,0 +1,11 @@
+# Include file for model 'teknikringen'
+
+SUBARCHITECTURE categorical.sa
+JAVA WM cast.architecture.SubarchitectureWorkingMemory
+CPP TM AlwaysPositiveTaskManager
+
+CPP GD categorical.dataprovider CategoricalDataProvider --config subarchitectures/categorical.sa/config/teknikringen-shape-appearance.cfg --laser-robot-servers-hostname localhost
+CPP GD categorical.visualprocessor CategoricalVisualProcessor --config subarchitectures/categorical.sa/config/teknikringen-shape-appearance.cfg
+CPP GD categorical.appearanceintegrator CategoricalAppearanceIntegrator --config subarchitectures/categorical.sa/config/teknikringen-shape-appearance.cfg --placemanager place.manager
+CPP GD categorical.laserprocessor CategoricalLaserProcessor --config subarchitectures/categorical.sa/config/teknikringen-shape-appearance.cfg
+CPP GD categorical.shapeintegrator CategoricalShapeIntegrator --config subarchitectures/categorical.sa/config/teknikringen-shape-appearance.cfg --placemanager place.manager

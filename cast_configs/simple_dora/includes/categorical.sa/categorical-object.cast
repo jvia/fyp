@@ -1,0 +1,4 @@
+CPP MG categorical.objectrecognitionmanager CategoricalObjectRecognizerManager --labels "book robot stapler cerealbox" --placemanager place.manager
+
+
+

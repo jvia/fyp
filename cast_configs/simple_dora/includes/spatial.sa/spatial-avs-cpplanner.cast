@@ -1,0 +1,4 @@
+CPP GD relation.manager ObjectRelationManager -c instantiations/cureconfig/cogxp3.ccf --log --no-vision --display-objects-in-pb #--debug #--no-ptz --laser-range 2.0 --planemap-size 100 --planemap-cellsize 0.05  --debug
+
+CPP MG avs.cpplanner AVS_ContinualPlanner -c instantiations/cureconfig/cogxp3.ccf --cam-horizangle 41 --cam-vertangle 31 --samplesize 200 --tiltstep 10 --panstep 30 --ctrl-ptu --gridsize 700 --cellsize 0.05  --cam-conedepth 3 --kernel-width-factor 0.7 --sampleawayfromobs 0.35 --log --queryhandler conceptual.queryhandler --ctrl-ptz --usepeekabot --ARtagobjects "table bookcase counter desk" --siftobjects "marker paperclip cerealbox stapler box"
+

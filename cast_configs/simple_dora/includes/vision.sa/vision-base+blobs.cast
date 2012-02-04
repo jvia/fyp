@@ -1,0 +1,5 @@
+SUBARCHITECTURE vision.sa
+JAVA WM                       cast.architecture.SubarchitectureWorkingMemory 
+JAVA TM                       cast.architecture.AlwaysPositiveTaskManager
+
+INCLUDE vision-blobs.cast

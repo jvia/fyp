@@ -1,0 +1,4 @@
+JAVA GD grouping binder.components.PerceptualGrouping_fake --log
+JAVA GD mmestimation binder.components.MultiModalEstimation_fake --log
+JAVA GD tracking binder.components.Tracking_MLN --log
+JAVA GD smoothing binder.components.TemporalSmoothing_fake --log

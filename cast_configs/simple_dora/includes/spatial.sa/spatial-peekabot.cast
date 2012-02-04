@@ -1,0 +1,4 @@
+CPP GD display.process DisplayNavInPB --no-objects --retry-interval 10 --room-categories corridor,kitchen,office,meetingroom --debug -c instantiations/cureconfig/cogxp3.ccf --log-path #--log-commands
+# Vivid Yellow: corridor, Strong Purple: kitchen, Vivid Orange: office, Very Light Blue: meetingroom
+
+#CPP GD peekabot.control SpatialPeekabotControl -c instantiations/cureconfig/cogxp3.ccf --retry-interval 10  --do-path-query

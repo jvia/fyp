@@ -1,0 +1,2 @@
+CPP MG ARTAAAG ARTagRecognizer --videoname VideoServer --camid "0" --log --tagpath "/home/cogx/avs-yr3/subarchitectures/vision.sa/config/ARdata/" --cfgfilename "ARConfig" --pre-known-object-file "preKnownObjects.txt" #--send-self-command
+

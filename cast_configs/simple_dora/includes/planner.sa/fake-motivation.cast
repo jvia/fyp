@@ -1,0 +1,4 @@
+#CPP MG FakeMotivation FakeMotivationSA --log --debug --goal "(exists (?r - robot) (forall (?p - place) (kval ?r (name ?p))))"
+#CPP MG FakeMotivation FakeMotivationSA --log --debug --goal "(and (kval dora (is-in o-cf)))"
+CPP MG FakeMotivation FakeMotivationSA --log --debug --goal "(and (exists (?o - visualobject) (and (= (label ?o) cornflakes) (kval dora (is-in ?o)))))"
+

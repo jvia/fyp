@@ -1,0 +1,6 @@
+SUBARCHITECTURE vision.sa
+JAVA WM                       cast.architecture.SubarchitectureWorkingMemory 
+JAVA TM                       cast.architecture.AlwaysPositiveTaskManager
+JAVA MG not-much-of-a-looker  vision.components.ObjectDetectorFAKE --gui true --confidence-0.7 journal,milk_carton,bookshelf,teabox --default-confidence 0
+# never sees anything
+#JAVA MG not-much-of-a-looker  vision.components.ObjectDetectorFAKE --default-confidence 0
