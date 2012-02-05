@@ -25,18 +25,17 @@ public class CalcEntropyAvgScoreTest {
     public TemporalProbabilityFeature createTPFWithZereoProbabilities() {
         TemporalProbabilityFeature tpf = TemporalProbabilityFeature.createRandomTemporalProbabilityFeature();
         LinkedHashMap<DataType, Double> predecessors = new LinkedHashMap<DataType, Double>();
-        for (DataType dtp : tpf.getPredecessors()) {
-            predecessors.put(dtp, 0.0d);
-        }
+        for (DataType dtp : tpf.getPredecessors())
+            predecessors.put(dtp, 0.0);
         return new TemporalProbabilityFeature(tpf, predecessors);
     }
 
     public TemporalProbabilityFeature createTPFWithLOWESTPROBABILITYProbabilities() {
         TemporalProbabilityFeature tpf = TemporalProbabilityFeature.createRandomTemporalProbabilityFeature();
         LinkedHashMap<DataType, Double> predecessors = new LinkedHashMap<DataType, Double>();
-        for (DataType dtp : tpf.getPredecessors()) {
+        for (DataType dtp : tpf.getPredecessors())
             predecessors.put(dtp, (double) Constants.LOWESTPROBABILITY);
-        }
+
         return new TemporalProbabilityFeature(tpf, predecessors);
     }
 
