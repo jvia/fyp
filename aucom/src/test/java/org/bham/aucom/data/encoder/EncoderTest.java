@@ -5,16 +5,15 @@
 
 package org.bham.aucom.data.encoder;
 
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 import org.bham.aucom.data.DomainFeature;
 import org.bham.aucom.data.Observation;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.*;
+
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  *
@@ -121,9 +120,9 @@ public class EncoderTest {
     @Test
     public void testGetInstance() {
         System.out.println("getInstance");
-        Encoder expResult = null;
-        Encoder result = Encoder.getInstance();
-        assertEquals(expResult, result);
+        //Encoder expResult = null;
+        //Encoder result = Encoder.getInstance();
+        //assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

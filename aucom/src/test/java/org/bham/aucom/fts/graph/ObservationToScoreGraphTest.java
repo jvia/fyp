@@ -5,15 +5,9 @@
 
 package org.bham.aucom.fts.graph;
 
-import org.bham.aucom.data.Observation;
-import org.bham.aucom.data.timeseries.TimeSeries;
-import org.bham.aucom.diagnoser.Model;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.*;
+
+import static org.junit.Assert.fail;
 
 /**
  *
@@ -46,8 +40,8 @@ public class ObservationToScoreGraphTest {
     @Test
     public void testInitGraph() {
         System.out.println("initGraph");
-        ObservationToScoreGraph instance = new ObservationToScoreGraph();
-        instance.initGraph();
+//        ObservationToScoreGraph instance = new ObservationToScoreGraph();
+//        instance.initGraph();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -58,10 +52,10 @@ public class ObservationToScoreGraphTest {
     @Test
     public void testGetReason() {
         System.out.println("getReason");
-        ObservationToScoreGraph instance = new ObservationToScoreGraph();
-        String expResult = "";
-        String result = instance.getReason();
-        assertEquals(expResult, result);
+//        ObservationToScoreGraph instance = new ObservationToScoreGraph();
+//        String expResult = "";
+//        String result = instance.getReason();
+//        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -72,10 +66,10 @@ public class ObservationToScoreGraphTest {
     @Test
     public void testPreconditionsSatisfied() {
         System.out.println("preconditionsSatisfied");
-        ObservationToScoreGraph instance = new ObservationToScoreGraph();
-        boolean expResult = false;
-        boolean result = instance.preconditionsSatisfied();
-        assertEquals(expResult, result);
+//        ObservationToScoreGraph instance = new ObservationToScoreGraph();
+//        boolean expResult = false;
+//        boolean result = instance.preconditionsSatisfied();
+//        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -86,8 +80,8 @@ public class ObservationToScoreGraphTest {
     @Test
     public void testCleanUp() {
         System.out.println("cleanUp");
-        ObservationToScoreGraph instance = new ObservationToScoreGraph();
-        instance.cleanUp();
+//        ObservationToScoreGraph instance = new ObservationToScoreGraph();
+//        instance.cleanUp();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -98,9 +92,9 @@ public class ObservationToScoreGraphTest {
     @Test
     public void testSetInput() {
         System.out.println("setInput");
-        TimeSeries<Observation> ts = null;
-        ObservationToScoreGraph instance = new ObservationToScoreGraph();
-        instance.setInput(ts);
+//        TimeSeries<Observation> ts = null;
+//        ObservationToScoreGraph instance = new ObservationToScoreGraph();
+//        instance.setInput(ts);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -111,10 +105,10 @@ public class ObservationToScoreGraphTest {
     @Test
     public void testGetOutput() {
         System.out.println("getOutput");
-        ObservationToScoreGraph instance = new ObservationToScoreGraph();
-        TimeSeries expResult = null;
-        TimeSeries result = instance.getOutput();
-        assertEquals(expResult, result);
+//        ObservationToScoreGraph instance = new ObservationToScoreGraph();
+//        TimeSeries expResult = null;
+//        TimeSeries result = instance.getOutput();
+//        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -125,9 +119,9 @@ public class ObservationToScoreGraphTest {
     @Test
     public void testSetModel() {
         System.out.println("setModel");
-        Model inModel = null;
-        ObservationToScoreGraph instance = new ObservationToScoreGraph();
-        instance.setModel(inModel);
+//        Model inModel = null;
+//        ObservationToScoreGraph instance = new ObservationToScoreGraph();
+//        instance.setModel(inModel);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
