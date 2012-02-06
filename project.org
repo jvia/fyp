@@ -151,6 +151,18 @@ distribution? I don't think there is one.
 
 ** 2012-01-30
 *** Meeting with Nick
+
+Key questions I need to answer:
+- What can I show different between the two?
+- Where and how will differences manifest?
+
+I need to create systems that test the algorithm and ones that are
+necessarily faithful to a real system. It's more important to find the
+limits of the algorithm.
+
+Main goal: results! I need to create graphs to compare
+performance. This is of critical importance!
+
 *** Talk with Raphael
 
 Experiments worth conducting for Raphael:
@@ -161,6 +173,8 @@ Experiments to test the algorithm:
 - Really long chains
 - Many disjoint chains
 - Tons of individual components
+
+Score does not change because there is a bug in the system right now.
 
 ** COMMENT 2012-02-06
 ** COMMENT 2012-02-13
