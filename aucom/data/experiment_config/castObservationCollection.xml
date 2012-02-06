@@ -18,9 +18,9 @@
                      
 -->
 <aucom:experiments xmlns:aucom="http://www.cor-lab.de">
-    <aucom:experiment factory="org.bham.app.experiment.CastObservationCollectionFactory" name="debug">
+    <aucom:experiment factory="org.bham.app.experiment.CastObservationCollectionFactory" name="10x1chain">
         <aucom:input>        
-            <aucom:wd>/home/jxv911/Dropbox/aucom/cast</aucom:wd>
+            <aucom:wd>/home/jxv911/Dropbox/aucom/cast/10x1chain/standard</aucom:wd>
             <aucom:observations>2000</aucom:observations>
         </aucom:input>
     </aucom:experiment>
