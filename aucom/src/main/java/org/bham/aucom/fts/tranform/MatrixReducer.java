@@ -54,8 +54,11 @@ public class MatrixReducer {
     }
 
     public boolean areConnected(int predecessor, int current) {
-        for (Integer successor : connections.get(predecessor))
+        if (!connections.containsKey(predecessor)) return false;
+
+        for (Integer successor : connections.get(predecessor)) {
             if (current == successor) return true;
+        }
         return false;
     }
 }
