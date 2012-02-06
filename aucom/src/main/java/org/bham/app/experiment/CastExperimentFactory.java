@@ -1,11 +1,10 @@
 package org.bham.app.experiment;
 
-import java.io.IOException;
-
 import nu.xom.Element;
 import nu.xom.Nodes;
 import nu.xom.ParsingException;
-import nu.xom.ValidityException;
+
+import java.io.IOException;
 
 /**
  * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk>
@@ -13,7 +12,7 @@ import nu.xom.ValidityException;
 public class CastExperimentFactory extends ExperimentFactory {
 
     @Override
-    public Experiment createExperiment(Element element) throws ValidityException, ParsingException, IOException {
+    public Experiment createExperiment(Element element) throws ParsingException, IOException {
         setWorkingDirectoryIfPresentInExperimentDescription(element);
         String name = getExperimentNameFromElement(element);
         String wd = getWorkingDirectoryFromElement(element);
