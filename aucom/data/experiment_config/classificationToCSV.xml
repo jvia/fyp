@@ -16,7 +16,7 @@
                     The working directory where the file will be saved.
 -->
 <aucom:experiments xmlns:aucom="http://www.cor-lab.de">
-    <aucom:experiment factory="org.bham.app.experiment.ClassificationToCSVFactory" name="10x1">
+    <aucom:experiment factory="org.bham.app.experiment.ClassificationToCSVFactory" name="10x1chain-fault">
         <aucom:input>
             <aucom:wd>/home/jxv911/Dropbox/aucom/cast/10x1chain/standard</aucom:wd>
         </aucom:input>

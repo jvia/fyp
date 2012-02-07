@@ -6,6 +6,16 @@
 #+infojs_opt: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+startup: hidestars indent
 
+Thanks for trying this! It is indeed hard.
+
+I will outline steps 7 to 8 and then you can see if you can do the
+rest.
+
+1. xxx
+   1. 
+2. 
+
+
 * Project
 ** DONE Find class where calculation takes place
 org.bham.aucom.fts.tranform.CalcEntropyAvgScore
@@ -78,13 +88,13 @@ criteria that can be answered with a yes or no question. Rather, I
 should select criteria which allows me to compare on multiple
 dimensions.
 
-** TODO COMMENT 2011-10-24
-** TODO COMMENT 2011-10-31
-** TODO COMMENT 2011-11-07
-** TODO COMMENT 2011-11-14
-** TODO COMMENT 2011-11-21
-** TODO COMMENT 2011-11-28
-** TODO COMMENT 2011-12-05
+** TODO 2011-10-24
+** TODO 2011-10-31
+** TODO 2011-11-07
+** TODO 2011-11-14
+** TODO 2011-11-21
+** TODO 2011-11-28
+** TODO 2011-12-05
 ** 2012-01-09
 *** Wednesday
 
@@ -143,6 +153,41 @@ coding:
 - thrn try bigger change
 
 ** 2012-01-23
+*** FYP Talk: Evaluating Software
+
+- How well does the project meet the spec?
+
+- How systematic has evaluation been?
+
+- Have a section & break it up into quantitative analysis &
+  qualitative analysis.
+
+- Evaluating the process
+  - the design decision made along the way
+  - need to justify the steps taken
+
+- Need to identify differences between other approaches, i.e., prior
+  techniques.
+
+- *Qualitative analysis*
+  - How could the end user receive this?
+  - Focus on feature analysis on finished project.
+  - Case studies? Hard to replicate, but used to evaluate
+    scalability. 
+
+- *Literature review*
+  - Appears in background but can also be used to in evaluation by
+    comparing features.
+  - Be ethical & honest.
+  - There is always some delta by which to compare.
+
+- *Feature analysis*
+  - List all features & define them with a scale
+  - Evaluate this software against features.
+  - Document for evaluation on FYP website.
+
+*** Observations
+
 0.1 seems a good cutoff
 
 The model is represented as a matrix of probability

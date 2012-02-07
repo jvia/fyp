@@ -1,14 +1,7 @@
 package org.bham.app.experiment;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import nu.xom.ParsingException;
 import nu.xom.ValidityException;
-
 import org.bham.aucom.ActionNotPermittedException;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.io.AucomIO;
@@ -26,8 +19,14 @@ import org.bham.aucom.diagnoser.t2gram.detector.T2GramDetector;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.StatisticalAnomalyClassificator;
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.system.SystemConnectionFailedException;
-
+import org.bham.aucom.util.Tupel;
 import org.bham.system.cast.CastSystemConnection;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This experiment handles the steps required to run through an experiment
@@ -51,7 +50,8 @@ public class CastExperiment implements Experiment {
      * Creates the CAST experiment.
      *
      * @param name experiment name - will be used to name model and results
-     * @param wd   working directory - where all data will be read fro and written to
+     * @param wd   working directory - where all data will be read fro and
+     *             written to
      * @param obs  observation file name
      * @param ml   model file name
      * @param size number of samples to collect
@@ -75,8 +75,8 @@ public class CastExperiment implements Experiment {
         }
 
         Logger.getLogger(CastExperiment.class.getName()).log(Level.INFO,
-                String.format("Working Directory: %s\nFile: %s\nModel: %s\nObservation: %s\nSize: %d",
-                        wd, name, ml, obs, size));
+                                                             String.format("Working Directory: %s\nFile: %s\nModel: %s\nObservation: %s\nSize: %d",
+                                                                           wd, name, ml, obs, size));
         printBlockMessage(70, "STARTING EXPERIMENT");
     }
 
@@ -121,6 +121,14 @@ public class CastExperiment implements Experiment {
      * @param model the model to save
      */
     private void saveModel(String wd, String name, T2GramModelI model) {
+        System.out.printf("%s with %d distributions\n", model.getName(), model.getNumberDistirbutions());
+        for (Tupel<Integer, Integer> indices : model.getTransitionMatrix().keySet()) {
+            System.out.printf("(%d, %d) = %s\n",
+                              indices.getFirstElement(),
+                              indices.getSecondElement(),
+                              model.getTransitionMatrix().get(indices.getFirstElement()).get(indices.getSecondElement()));
+        }
+
         System.out.println("Saving model: " + wd + "/" + name + ".ml");
         AucomIO.getInstance().writeFaultDetectionModel(model, new File(wd + "/" + name + ".ml"));
     }
@@ -157,7 +165,8 @@ public class CastExperiment implements Experiment {
             System.out.println("Sliding window: " + faultDetector.getSlidingWindow().getIntervalSize());
 
             // wait here until it is done
-            while (faultDetector.getOutput().size() < size || !cast.isConnected());
+            while (faultDetector.getOutput().size() < size || !cast.isConnected())
+                ;
 
             // stop fault detector and shutdown cast
             faultDetector.stop();
@@ -267,7 +276,7 @@ public class CastExperiment implements Experiment {
      * @return a new fault detector
      */
     private T2GramDetector createDetector(T2GramModelI model) {
-        T2GramDetector detector  =new T2GramDetector(); 
+        T2GramDetector detector = new T2GramDetector();
         detector.setModel(model);
         detector.setClassificator(new StatisticalAnomalyClassificator(0.5, 0.25));
         detector.setSlidingWindow(new SlidingWindow(100, 50));
