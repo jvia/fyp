@@ -18,19 +18,17 @@ public class TemporalDurationFeatureGenerator {
     ConcurrentHashMap<Integer, DataType> lastOccurrences = new ConcurrentHashMap<Integer, DataType>(new LinkedHashMap<Integer, DataType>());
     Collection<Integer> initialClasses;
     MatrixReducer reducer;
+    private final Logger log = Logger.getLogger(getClass().getName());
 
     /**
      * null is permitted
      *
      * @param inInitialClasses
      */
-
     public TemporalDurationFeatureGenerator(Collection<Integer> inInitialClasses) {
         initialClasses = new ArrayList<Integer>();
-        if (inInitialClasses != null) {
+        if (inInitialClasses != null)
             initialClasses.addAll(inInitialClasses);
-        }
-
         reducer = new MatrixReducer();
     }
 
@@ -39,9 +37,7 @@ public class TemporalDurationFeatureGenerator {
     }
 
     public void addInitalClasses(Collection<Integer> inInitialClassesToAdd) {
-        if (inInitialClassesToAdd == null) {
-            return;
-        }
+        if (inInitialClassesToAdd == null) return;
         initialClasses.addAll(inInitialClassesToAdd);
     }
 
@@ -51,9 +47,8 @@ public class TemporalDurationFeatureGenerator {
 
     public boolean isLastOccurancesInitialized() {
         boolean isLastOccurancesInitialized = true;
-        for (Integer id : lastOccurrences.keySet()) {
+        for (int id : lastOccurrences.keySet())
             isLastOccurancesInitialized &= lastOccurrences.get(id).getTimestamp() == 0;
-        }
         return isLastOccurancesInitialized;
     }
 
@@ -63,26 +58,31 @@ public class TemporalDurationFeatureGenerator {
     }
 
     private void initializeLastOccurancesWithValue(long initializationValue) {
-        this.lastOccurrences.clear();
-        Logger.getLogger(this.getClass().getCanonicalName()).info("adding initial data points as last occurrences of " + initialClasses.size() + " classes");
-        for (Integer classId : initialClasses) {
-            Logger.getLogger(this.getClass().getCanonicalName()).info("adding initial occurrances for classId " + classId);
+        lastOccurrences.clear();
+        log.info(String.format("Adding initial data points as last occurrences of %d classes", initialClasses.size()));
+
+        for (int classId : initialClasses) {
+            log.info("adding initial occurrances for classId " + classId);
             List<DomainFeature> features = Encoder.getInstance().decode(classId);
+
             DataType dummy = new DataType(features, classId, new Observation(new Element("emptyContent"), initializationValue));
             dummy.setEventTypeId(classId);
-            this.lastOccurrences.put(classId, dummy);
+
+            lastOccurrences.put(classId, dummy);
         }
     }
 
     public TemporalDurationFeature generateFeature(DataType in) {
         long timespan = 0l;
         LinkedHashMap<DataType, Long> durations = new LinkedHashMap<DataType, Long>();
+
         if (isLastOccurancesInitialized()) {
             initializeLastOccurancesWithValue(in.getTimestamp());
         }
+
         for (DataType lastOccurrence : this.lastOccurrences.values()) {
-                timespan = calculateTimespanForElements(in, lastOccurrence);
-                durations.put(lastOccurrence, timespan);
+            timespan = calculateTimespanForElements(in, lastOccurrence);
+            durations.put(lastOccurrence, timespan);
         }
         TemporalDurationFeature f = new TemporalDurationFeature(in, durations);
         updateLastOccurrences(in);

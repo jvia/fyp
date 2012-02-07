@@ -24,18 +24,21 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class T2GramModelTrainer extends AbstractModelTrainer implements GraphStatusListener {
-    JPanel panel;
-    T2GramModelI model;
-    T2GramTrainerGraph graph;
+    private JPanel panel;
+    private T2GramModelI model;
+    private final T2GramTrainerGraph graph;
     private HashMatrix<Integer, Integer, ArrayList<Double>> trainingData;
     private LinkedHashMap<String, DataType> lastTrainOccurances;
+    private final transient Logger log = Logger.getLogger(getClass().getName());
 
     public T2GramModelTrainer(T2GramModelI inModel) {
         model = inModel;
         graph = new T2GramTrainerGraph();
         graph.addGraphListener(this);
+
         setTrainingData(new HashMatrix<Integer, Integer, ArrayList<Double>>());
         setLastTrainOccurances(new LinkedHashMap<String, DataType>());
+
         currentStatus = TrainerStatus.READY;
         previousStatus = TrainerStatus.READY;
     }
@@ -43,16 +46,18 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
     public T2GramModelTrainer() {
         graph = new T2GramTrainerGraph();
         graph.addGraphListener(this);
+
         setTrainingData(new HashMatrix<Integer, Integer, ArrayList<Double>>());
         setLastTrainOccurances(new LinkedHashMap<String, DataType>());
+
         currentStatus = TrainerStatus.READY;
         previousStatus = TrainerStatus.READY;
     }
 
     public double[] getValuesFromTrainingData(Integer firstKey, Integer secondKey) {
-        double[] values = new double[this.trainingData.get(firstKey, secondKey).size()];
+        double[] values = new double[trainingData.get(firstKey, secondKey).size()];
         for (int i = 0; i < values.length; i++) {
-            values[i] = this.trainingData.get(firstKey, secondKey).get(i);
+            values[i] = trainingData.get(firstKey, secondKey).get(i);
         }
         return values;
     }
@@ -60,12 +65,12 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
     @Override
     public void start(TimeSeries<Observation> inTrainingData) throws Exception {
         if (inTrainingData == null) {
-            Logger.getLogger(this.getClass().getCanonicalName()).info("cannot train with empty input");
+            log.info("cannot train with empty input");
             return;
         }
-        Logger.getLogger(this.getClass().getCanonicalName()).info("start called with " + inTrainingData.toString());
+        log.info("start called with " + inTrainingData.toString());
         if (currentStatus.equals(TrainerStatus.READY)) {
-            Logger.getLogger(this.getClass().getCanonicalName()).info("trainer ready starting training " + graph.getOutput().size());
+            log.info("trainer ready starting training " + graph.getOutput().size());
             graph.setInput(inTrainingData);
             graph.start();
         } else {
@@ -75,30 +80,32 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
     }
 
     private void trainModel(TimeSeries<TemporalDurationFeature> output) {
+        log.info("Starting training");
         try {
-            Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, "staring training");
             HashMatrix<Integer, Integer, ArrayList<Double>> values = computeTrainingset(output);
-            Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, "iterating through trainingset with " + values.size() + " elements");
+            log.finer(String.format("Iterating through trainingset with %d elements", values.size()));
+
             for (Tupel<Integer, Integer> t : values.keySet()) {
                 double[] durations = getDurationsAsDoubleArray(values, t);
-                updateModel(model, t.getFirstElement(), t.getSecondElement(), durations);
+                updateModel(t.getFirstElement(), t.getSecondElement(), durations);
             }
         } catch (Exception exception) {
             exception.printStackTrace();
         }
     }
 
-    private void updateModel(T2GramModelI model2, Integer firstElement, Integer secondElement, double[] durations) {
+    private void updateModel(Integer firstElement, Integer secondElement, double[] durations) {
         createDistributionInModelIfMissing(model, firstElement, secondElement);
-        model.getDistributionFor(firstElement, secondElement).update(durations);
+        ProbabilityDistribution distribution = model.getDistributionFor(firstElement, secondElement);
+        distribution.update(durations);
+//        model.getDistributionFor(firstElement, secondElement).update(durations);
     }
 
-    /**
-     * @param t
-     */
     private void createDistributionInModelIfMissing(T2GramModelI inModel, Integer firstElement, Integer secondElement) {
         if (!inModel.hasDistributionFor(firstElement, secondElement)) {
-            inModel.addDistribution(firstElement, secondElement, inModel.getDistributionFactory().create());
+            ProbabilityFactory probabilityFactory = inModel.getDistributionFactory();
+            ProbabilityDistribution distribution = probabilityFactory.create();
+            inModel.addDistribution(firstElement, secondElement, distribution);
         }
     }
 
@@ -111,23 +118,27 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
     }
 
     private HashMatrix<Integer, Integer, ArrayList<Double>> computeTrainingset(TimeSeries<TemporalDurationFeature> input) {
-        Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, "computing training set. input " + input.size());
+        log.info(String.format("Computing training set. Input = %d elements", input.size()));
         HashMatrix<Integer, Integer, ArrayList<Double>> out = new HashMatrix<Integer, Integer, ArrayList<Double>>();
+
         try {
             for (int i = 0; i < input.size(); i++) {
-                TemporalDurationFeature f = input.get(i);
-                for (DataType precedessor : f.getPredecessors()) {
-                    Logger.getLogger(this.getClass().getCanonicalName()).log(Level.FINE, "output size " + input.size() + " predecessors " + f.getPredecessors().size());
-                    Integer predecessorEventType = precedessor.getEventType();
-                    Integer currentEventType = f.getEventType();
-                    if (!out.containsKey(predecessorEventType, currentEventType)) {
+                TemporalDurationFeature feature = input.get(i);
+                for (DataType precedessor : feature.getPredecessors()) {
+                    // Get the event types & compute time between them
+                    int predecessorEventType = precedessor.getEventType();
+                    int currentEventType = feature.getEventType();
+                    double duration = (double) feature.getDurationFor(precedessor);
+                    log.fine(String.format("Timespan of [%d --> %d] is %.2f", predecessorEventType, currentEventType, duration));
+
+                    // Add to matrix
+                    if (!out.containsKey(predecessorEventType, currentEventType))
                         out.put(predecessorEventType, currentEventType, new ArrayList<Double>());
-                    }
-                    out.get(predecessorEventType, currentEventType).add((double) f.getDurationFor(precedessor));
+                    out.get(predecessorEventType, currentEventType).add(duration);
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.log(Level.SEVERE, "Error occured creating training set.", e);
         }
         return out;
     }
@@ -143,9 +154,9 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
     @Override
     public void reset() {
         graph.getOutput().clear();
-        this.lastTrainOccurances.clear();
-        this.trainingData = new HashMatrix<Integer, Integer, ArrayList<Double>>();
-        Logger.getLogger(this.getClass().getCanonicalName()).info("SimpleModelTrainer reseted");
+        lastTrainOccurances.clear();
+        trainingData = new HashMatrix<Integer, Integer, ArrayList<Double>>();
+        log.info("SimpleModelTrainer reset");
     }
 
     @Override
@@ -168,45 +179,46 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
         model = (T2GramModelI) inModel;
     }
 
+    /**
+     * Change the status of the graph base on a {@link GraphStateChangedEvent}.
+     *
+     * @param evt the event
+     */
     @Override
     public void graphStatusChanged(GraphStateChangedEvent evt) {
-        Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, "receives event " + evt);
+        log.fine("Receives event: " + evt);
         switch (evt.getNewState()) {
-            case RUNNING: {
-                Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, "new state is running");
+            case RUNNING:
+                log.fine("New state is running");
                 setStatus(TrainerStatus.RUNNING);
                 break;
-            }
-            case READY: {
-                Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, "new state is ready");
+            case READY:
+                log.fine("New state is ready");
                 if (evt.getPreviousState().equals(GraphStatus.RUNNING)) {
                     // training is finished
-                    Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, "previous was running");
+                    log.fine("Previous state was running");
                     TimeSeries<TemporalDurationFeature> output = graph.getOutput();
-                    Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, "got output from graph");
+                    log.finer("Got output from graph");
                     trainModel(output);
-                    Logger.getLogger(this.getClass().getCanonicalName()).log(Level.INFO, "trained ");
+                    log.finer("Trained");
                     setStatus(TrainerStatus.READY);
                 }
                 break;
-            }
+
         }
 
     }
 
-    /*
-      * returns the size of the training input timeseries
-      */
+    /**
+     * Returns the size of the training input timeseries
+     *
+     * @return size of input timeseries
+     */
     public int getInputSize() {
-        if (graph.getInput() != null) {
-            return graph.getInput().size();
-        }
-        return 0;
+        return (graph.getInput() == null) ? 0
+                                          : graph.getInput().size();
     }
 
     @Override
-    public void stop() throws Exception {
-        // TODO code this here
-    }
-
+    public void stop() throws Exception {}
 }

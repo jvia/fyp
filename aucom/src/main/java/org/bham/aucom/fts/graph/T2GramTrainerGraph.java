@@ -15,7 +15,6 @@ import java.util.ArrayList;
 public class T2GramTrainerGraph extends AbstractAucomGraph {
     private static final long serialVersionUID = 1L;
     private TimeSeriesSource<Observation> source;
-    private EncodeData encodeNode;
     GenerateTemporalDurationFeature tdfNode;
     private TimeSeriesSink<TemporalDurationFeature> sink;
 
@@ -27,13 +26,16 @@ public class T2GramTrainerGraph extends AbstractAucomGraph {
     @Override
     protected void initGraph() {
         source = new TimeSeriesSource<Observation>("trainerGraphSource");
-        encodeNode = new EncodeData();
+        EncodeData encodeNode = new EncodeData();
+
         tdfNode = new GenerateTemporalDurationFeature();
         tdfNode.setGenerator(new TemporalDurationFeatureGenerator(new ArrayList<Integer>()));
+
         sink = new TimeSeriesSink<TemporalDurationFeature>(new TemporalDurationFeatureTimeSeries());
-        this.graph.connect(source, encodeNode);
-        this.graph.connect(encodeNode, tdfNode);
-        this.graph.connect(tdfNode, sink);
+
+        graph.connect(source, encodeNode);
+        graph.connect(encodeNode, tdfNode);
+        graph.connect(tdfNode, sink);
     }
 
     public void setInput(TimeSeries<Observation> trainingData) {
@@ -62,25 +64,19 @@ public class T2GramTrainerGraph extends AbstractAucomGraph {
     @Override
     protected String getReason() {
         String reason = "\n";
-        if (!isTrainingDataMissing())
-            reason += "\n training data missing \n";
 
+        if (!isTrainingDataMissing())
+            reason += "\n Training data missing \n";
         if (!isFreatureGeneratorMissing())
-            reason += "\n feature generator missing \n";
+            reason += "\n Feature generator missing \n";
 
         return reason;
     }
 
-    /**
-     * @return
-     */
     private boolean isFreatureGeneratorMissing() {
         return tdfNode.getGenerator() == null;
     }
 
-    /**
-     * @return
-     */
     private boolean isTrainingDataMissing() {
         return source.getInput() == null;
     }
@@ -90,5 +86,4 @@ public class T2GramTrainerGraph extends AbstractAucomGraph {
      */
     @Override
     protected void cleanUp() {}
-
 }

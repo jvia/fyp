@@ -1,15 +1,8 @@
 package org.bham.aucom.data.io;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 import nu.xom.ParsingException;
-import nu.xom.ValidityException;
+
+import java.io.*;
 
 public abstract class BinaryIO<T>  implements IOInterface<T> {
 	Class<T> cl;
@@ -17,7 +10,7 @@ public abstract class BinaryIO<T>  implements IOInterface<T> {
 		this.cl = cl ;
 	}
 	@Override
-	public T read(File fileToLoadFrom) throws FileNotFoundException, ValidityException, ParsingException, IOException {
+	public T read(File fileToLoadFrom) throws ParsingException, IOException {
 			ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(fileToLoadFrom));
 			Object faultDetectionModel;
 			try {
