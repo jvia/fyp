@@ -1,169 +1,155 @@
 package org.bham.aucom.models.probability;
 
-import static org.bham.aucom.util.Constants.LOWESTPROBABILITY;
+import org.bham.aucom.diagnoser.t2gram.ProbabilityDistribution;
+import weka.estimators.KernelEstimator;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
-import weka.estimators.KernelEstimator;
-import org.bham.aucom.diagnoser.t2gram.ProbabilityDistribution;
+import static org.bham.aucom.util.Constants.LOWESTPROBABILITY;
 
 public class KernelDensityDistribution implements ProbabilityDistribution {
-	private static final long serialVersionUID = 1378894184156772597L;
-	KernelEstimator estimator;
-	double weight = 1.0;
-	private double entropy = Double.MIN_VALUE;
-	private int count = 0;
-	double maxProbabilityValue = 0.0d;
-	private double maxSeenValue = 0.0d;
-	private HashMap<Double, Double> queriedValues = new HashMap<Double, Double>();
-	Double tmpValue = 0.0;
-	private int lookUpTableUsed;
-	private int lookUpTableNotUsed;
+    private static final long serialVersionUID = 1378894184156772597L;
+    private final KernelEstimator estimator;
+    private double entropy = Double.MIN_VALUE;
+    private int count = 0;
+    private double maxProbabilityValue = 0.0d;
+    private double maxSeenValue = 0.0d;
+    private final HashMap<Double, Double> queriedValues = new HashMap<Double, Double>();
+    private final transient Logger log = Logger.getLogger(getClass().getName());
 
-	public KernelDensityDistribution(double precision) {
-		this.estimator = new KernelEstimator(precision);
-	}
+    public KernelDensityDistribution(double precision) {
+        estimator = new KernelEstimator(precision);
+    }
 
-	public KernelDensityDistribution(double precision, double[] values) {
-		this.estimator = new KernelEstimator(precision);
-		this.lookUpTableUsed = 0;
-		this.lookUpTableNotUsed = 0;
-		update(values);
-	}
+    public KernelDensityDistribution(double precision, double[] values) {
+        estimator = new KernelEstimator(precision);
+        update(values);
+    }
 
-	@Override
-	public double getEntropy() {
-		if (this.entropy == Double.MIN_VALUE) {
-			double[] means = this.estimator.getMeans();
-			for (int i = 0; i < this.estimator.getNumKernels(); i++) {
-				if (Double.isNaN(getProbability(means[i]) * log(getProbability(means[i]), 2))) {
-					Logger.getLogger(this.getClass().getCanonicalName()).severe("not a number entropy value ");
-					Logger.getLogger(this.getClass().getCanonicalName()).severe("prob " + (getProbability(means[i])));
-					Logger.getLogger(this.getClass().getCanonicalName()).severe("logprob " + (log(getProbability(means[i]), 2)));
-					return LOWESTPROBABILITY;
-				}
-				this.entropy += getProbability(means[i]) * log(getProbability(means[i]), 2);
-				// Logger.getLogger(this.getClass().getCanonicalName()).info("prob for "
-				// +means[i]+ " is " + this.estimator.getProbability(means[i]));
-			}
-			if (Double.isNaN(this.entropy))
-				Logger.getLogger(this.getClass().getCanonicalName()).info("num kernels " + this.estimator.getNumKernels() + " entropy " + (-this.entropy));
-			this.entropy = -this.entropy;
-		}
-		return this.entropy;
-	}
+    @Override
+    public double getEntropy() {
+        if (entropy == Double.MIN_VALUE) {
+            double[] means = estimator.getMeans();
+            for (int i = 0; i < estimator.getNumKernels(); i++) {
+                if (Double.isNaN(getProbability(means[i]) * log(getProbability(means[i]), 2))) {
+                    log.severe("not a number entropy value ");
+                    log.severe("prob " + (getProbability(means[i])));
+                    log.severe("logprob " + (log(getProbability(means[i]), 2)));
+                    return LOWESTPROBABILITY;
+                }
+                entropy += getProbability(means[i]) * log(getProbability(means[i]), 2);
+                // log.info("prob for "
+                // +means[i]+ " is " + estimator.getProbability(means[i]));
+            }
+            if (Double.isNaN(entropy))
+                log.info("num kernels " + estimator.getNumKernels() + " entropy " + (-entropy));
+            entropy = -entropy;
+        }
+        return entropy;
+    }
 
-	public double log(double value, double base) {
-		return Math.log(value) / Math.log(base);
-	}
+    public double log(double value, double base) {
+        return Math.log(value) / Math.log(base);
+    }
 
-	@Override
-	public double getProbability(double val) {
-		boolean useBuffer = true;
-		if (useBuffer) {
-			Double dVal = val;
-			if (!this.getQueriedValues().containsKey(dVal)) {
-				this.getQueriedValues().put(dVal, this.estimator.getProbability(val));
-				this.lookUpTableUsed++;
-			}else{
-				this.lookUpTableNotUsed++;
-			}
-			double value = this.getQueriedValues().get(dVal);
-			return value;
-		} else {
-			return this.estimator.getProbability(val);
-		}
-	}
+    @Override
+    public double getProbability(double val) {
+        // TODO :: perhaps this is where I will override it!
+        if (!getQueriedValues().containsKey(val)) {
+            getQueriedValues().put(val, estimator.getProbability(val));
+        }
+        return getQueriedValues().get(val);
+    }
 
-	@Override
-	public String getType() {
-		return "kernelDensity";
-	}
+    @Override
+    public String getType() {
+        return "kernelDensity";
+    }
 
-	@Override
-	public void update(double[] val) {
-		this.queriedValues.clear();
-		for (int i = 0; i < val.length; i++) {
-			this.estimator.addValue(val[i], this.weight);
-		}
-		Arrays.sort(val);
-		this.setMaxSeenValue(val[val.length - 1]);
-		double[] samples = sampleProbability();
-		Arrays.sort(samples);
-		this.maxProbabilityValue = samples[samples.length - 1];
-		// System.out.println("distribution trained with " +val.length+
-		// "  max value is " +this.maxProbabilityValue);
-		this.count += val.length;
-	}
+    @Override
+    public void update(double[] val) {
+        queriedValues.clear();
+        double weight = 1.0;
+        for (double aVal : val)
+            estimator.addValue(aVal, weight);
 
-	@Override
-	public int getCount() {
-		return this.count;
-	}
+        Arrays.sort(val);
+        setMaxSeenValue(val[val.length - 1]);
+        double[] samples = sampleProbability();
+        Arrays.sort(samples);
+        maxProbabilityValue = samples[samples.length - 1];
+        // System.out.println("distribution trained with " +val.length+
+        // "  max value is " +maxProbabilityValue);
+        count += val.length;
+    }
 
-	@Override
-	public double[] sampleProbability() {
-		double sample[] = sample();
-		double[] sampleProbabilities = new double[sample.length];
-		for (int i = 0; i < sample.length; i++) {
-			sampleProbabilities[i] = this.getProbability(sample[i]);
-		}
-		return sampleProbabilities;
-	}
+    @Override
+    public int getCount() {
+        return count;
+    }
 
-	@Override
-	public double expectedValue() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    @Override
+    public double[] sampleProbability() {
+        double sample[] = sample();
+        double[] sampleProbabilities = new double[sample.length];
+        for (int i = 0; i < sample.length; i++) {
+            sampleProbabilities[i] = getProbability(sample[i]);
+        }
+        return sampleProbabilities;
+    }
 
-	@Override
-	public double variance() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    @Override
+    public double expectedValue() {
+        return 0;
+    }
 
-	@Override
-	public double[] sample() {
-		double precision = this.estimator.getPrecision();
-		int numberCernels = this.estimator.getNumKernels();
-		double[] means = this.estimator.getMeans();
-		int numberSample = 800;
-		double stdDev = this.estimator.getStdDev();
-		Arrays.sort(means, 0, this.estimator.getNumKernels() - 1);
-		double lowestValue = 0.0d;
-		double currentValue = lowestValue;
-		double highestValue = this.getMaxSeenValue() * 10;
-		double sampleRange = highestValue - currentValue;
-		// System.out.println("stdDev " + stdDev);
-		// System.out.println("lowestValue " + currentValue);
-		// System.out.println("highestValue " + highestValue);
-		// System.out.println("sampleRange " + sampleRange);
-		double stepSize = sampleRange / numberSample;
-		double[] samples = new double[numberSample];
-		for (int i = 0; i < numberSample; i++) {
-			samples[i] = Math.round(currentValue);
-			currentValue += stepSize;
-		}
-		return samples;
-	}
+    @Override
+    public double variance() {
+        return 0;
+    }
 
-	@Override
-	public double getMaxProbability() {
-		return this.maxProbabilityValue;
-	}
+    @Override
+    public double[] sample() {
+        double[] means = estimator.getMeans();
+        int numberSample = 800;
+        Arrays.sort(means, 0, estimator.getNumKernels() - 1);
+        double currentValue = 0.0d;
+        double highestValue = getMaxSeenValue() * 10;
+        double sampleRange = highestValue - currentValue;
+        double stepSize = sampleRange / numberSample;
+        double[] samples = new double[numberSample];
 
-	public HashMap<Double, Double> getQueriedValues() {
-		return this.queriedValues;
-	}
+        for (int i = 0; i < numberSample; i++) {
+            samples[i] = Math.round(currentValue);
+            currentValue += stepSize;
+        }
+        return samples;
+    }
 
-	void setMaxSeenValue(double maxSeenValue) {
-		this.maxSeenValue = maxSeenValue;
-	}
+    @Override
+    public double getMaxProbability() {
+        return maxProbabilityValue;
+    }
 
-	public double getMaxSeenValue() {
-		return this.maxSeenValue;
-	}
+    public HashMap<Double, Double> getQueriedValues() {
+        return queriedValues;
+    }
+
+    void setMaxSeenValue(double maxSeenValue) {
+        this.maxSeenValue = maxSeenValue;
+    }
+
+    public double getMaxSeenValue() {
+        return maxSeenValue;
+    }
+
+
+    public String toString() {
+        return String.format("{%s} %s",
+                             getClass().getName(),
+                             estimator);
+
+    }
 }
