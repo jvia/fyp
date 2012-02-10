@@ -10,7 +10,12 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static java.lang.String.format;
+
 /**
+ * A class which takes source information to determine if two components can be
+ * connected to one another.
+ *
  * @author Jeremiah Via <jxv911@cs.bham.ac.uk>
  */
 public class MatrixReducer {
@@ -24,7 +29,7 @@ public class MatrixReducer {
 
         Scanner s = null;
         try {
-            log.config("Loading connectons file from " + getClass().getResource(FILE_NAME).getPath());
+            log.config(format("Loading connectons file from %s", getClass().getResource(FILE_NAME).getPath()));
             s = new Scanner(new BufferedReader(new FileReader(getClass().getResource(FILE_NAME).getFile())));
 
             while (s.hasNextLine()) {
@@ -54,11 +59,22 @@ public class MatrixReducer {
     }
 
     public boolean areConnected(int predecessor, int current) {
-        if (!connections.containsKey(predecessor)) return false;
+        boolean connected = false;
 
-        for (Integer successor : connections.get(predecessor)) {
-            if (current == successor) return true;
+        if (predecessor == current) {
+            connected = true;
+        } else if (!connections.containsKey(predecessor)) {
+            connected = false;
+        } else {
+            for (Integer successor : connections.get(predecessor)) {
+                if (current == successor) {
+                    connected = true;
+                    break;
+                }
+            }
         }
-        return false;
+
+        log.finer(format("Connected([%d --> %d]) = %b", predecessor, current, connected));
+        return connected;
     }
 }
