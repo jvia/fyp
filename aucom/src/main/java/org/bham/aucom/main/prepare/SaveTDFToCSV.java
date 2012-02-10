@@ -1,15 +1,14 @@
 package org.bham.aucom.main.prepare;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import nu.xom.ParsingException;
 import nu.xom.ValidityException;
 import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.data.io.IllegalOutputType;
-import org.bham.aucom.data.management.DataAlreadyExistsException;
 import org.bham.aucom.data.timeseries.TimeSeries;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class SaveTDFToCSV {
 	public SaveTDFToCSV(File in, File out) {
@@ -19,8 +18,6 @@ public class SaveTDFToCSV {
 		} catch (FileNotFoundException exception) {
 			exception.printStackTrace();
 		} catch (ValidityException exception) {
-			exception.printStackTrace();
-		} catch (DataAlreadyExistsException exception) {
 			exception.printStackTrace();
 		} catch (ParsingException exception) {
 			exception.printStackTrace();

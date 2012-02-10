@@ -8,7 +8,6 @@ import org.bham.aucom.data.DataType;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.Score;
 import org.bham.aucom.data.io.AucomIO;
-import org.bham.aucom.data.management.DataAlreadyExistsException;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.data.timeseries.TimeSeriesType;
 import org.bham.aucom.diagnoser.Model;
@@ -46,8 +45,6 @@ public class DataManagerTest {
         } catch (FileNotFoundException exception) {
             Assert.fail(exception.getLocalizedMessage());
         } catch (ValidityException exception) {
-            Assert.fail(exception.getLocalizedMessage());
-        } catch (DataAlreadyExistsException exception) {
             Assert.fail(exception.getLocalizedMessage());
         } catch (IOException exception) {
             Assert.fail(exception.getLocalizedMessage());

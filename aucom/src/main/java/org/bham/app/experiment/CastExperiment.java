@@ -5,7 +5,6 @@ import nu.xom.ValidityException;
 import org.bham.aucom.ActionNotPermittedException;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.io.AucomIO;
-import org.bham.aucom.data.management.DataAlreadyExistsException;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.data.util.SlidingWindow;
 import org.bham.aucom.diagnoser.ModelTrainerListener;
@@ -144,8 +143,6 @@ public class CastExperiment implements Experiment {
         TimeSeries<Observation> ts = null;
         try {
             ts = (TimeSeries<Observation>) AucomIO.getInstance().readTimeSeries(file);
-        } catch (DataAlreadyExistsException e) {
-            e.printStackTrace();
         } catch (ParsingException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -164,17 +161,31 @@ public class CastExperiment implements Experiment {
             faultDetector.start(cast.getObservationTimeSeries());
             System.out.println("Sliding window: " + faultDetector.getSlidingWindow().getIntervalSize());
 
+
             // wait here until it is done
-            while (faultDetector.getOutput().size() < size || !cast.isConnected())
-                ;
+            while (faultDetector.getOutput().size() < size) ;
+            //            faultDetector.addStatusListener(new DetectorStatusChangedListener() {
+//                @Override
+//                public void handleDetectorStatusChangedEvent(DetectorStatusChangedEvent evt) {
+//                    if (faultDetector.getOutput().size() >= size)
+//                        notifyAll();
+//                }
+//            });
+
+            // Guarded wait
+            while (faultDetector.getOutput().size() < size) {
+                try {
+                    wait();
+                } catch (InterruptedException ignored) {
+                }
+            }
 
             // stop fault detector and shutdown cast
+            System.out.println("Quitting.");
             faultDetector.stop();
             cast.disconnect();
         } catch (ActionFailedException e) {
             e.printStackTrace();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
         } catch (ActionNotPermittedException e) {
             e.printStackTrace();
         }
@@ -247,18 +258,17 @@ public class CastExperiment implements Experiment {
      */
     private T2GramModelI loadModelFile(String ml) {
         T2GramModelI _model = null;
+        File modelFile = new File(wd + "/" + ml);
         try {
-            _model = (T2GramModelI) AucomIO.getInstance().readFaultDetectionModel(new File(ml));
+            _model = (T2GramModelI) AucomIO.getInstance().readFaultDetectionModel(modelFile);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(CastExperiment.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DataAlreadyExistsException ex) {
-            Logger.getLogger(CastExperiment.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CastExperiment.class.getName()).log(Level.SEVERE, "Could not find file.", ex);
         } catch (IOException ex) {
-            Logger.getLogger(CastExperiment.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CastExperiment.class.getName()).log(Level.SEVERE, "Error reading file.", ex);
         } catch (ValidityException ex) {
-            Logger.getLogger(CastExperiment.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CastExperiment.class.getName()).log(Level.SEVERE, "Not valid.", ex);
         } catch (ParsingException ex) {
-            Logger.getLogger(CastExperiment.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CastExperiment.class.getName()).log(Level.SEVERE, "Could not parse model file.", ex);
         }
         return _model;
     }

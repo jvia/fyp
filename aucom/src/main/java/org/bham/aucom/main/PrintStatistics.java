@@ -64,9 +64,6 @@ public class PrintStatistics {
 			} catch (ValidityException exception) {
 				// TODO Auto-generated catch block
 				exception.printStackTrace();
-			} catch (DataAlreadyExistsException exception) {
-				// TODO Auto-generated catch block
-				exception.printStackTrace();
 			} catch (ParsingException exception) {
 				// TODO Auto-generated catch block
 				exception.printStackTrace();

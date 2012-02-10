@@ -1,22 +1,20 @@
 package org.bham.aucom.data.management;
 
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.UUID;
-
 import junit.framework.Assert;
 import nu.xom.ParsingException;
 import nu.xom.ValidityException;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.data.util.DataModel;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.UUID;
 
 public class DataLoaderTest {
 	
@@ -81,7 +79,6 @@ public class DataLoaderTest {
 		} catch (FileNotFoundException exception) {
 			exceptionCatched = true;
 		} catch (ValidityException exception) {
-		} catch (DataAlreadyExistsException exception) {
 		} catch (ParsingException exception) {
 		} catch (IOException exception) {
 		}

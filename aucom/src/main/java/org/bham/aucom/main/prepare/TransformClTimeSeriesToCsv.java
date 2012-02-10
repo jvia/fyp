@@ -1,11 +1,5 @@
 package org.bham.aucom.main.prepare;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.UUID;
-
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
@@ -15,13 +9,18 @@ import nu.xom.ParsingException;
 import nu.xom.ValidityException;
 import org.bham.aucom.data.Classification;
 import org.bham.aucom.data.io.AucomIO;
-import org.bham.aucom.data.management.DataAlreadyExistsException;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.fts.sink.OutputStreamSinkStrip;
 import org.bham.aucom.fts.source.TimeSeriesSource;
 import org.bham.aucom.fts.tranform.PostofixToString;
 import org.bham.aucom.fts.tranform.RawDataToCsvRow;
 import org.bham.aucom.fts.tranform.StringToBufferOutputEvent;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.UUID;
 public class TransformClTimeSeriesToCsv {
 	Graph g;
 	private EngineThread engineThread;
@@ -42,8 +41,6 @@ public class TransformClTimeSeriesToCsv {
 						} catch (FileNotFoundException exception) {
 							exception.printStackTrace();
 						} catch (ValidityException exception) {
-							exception.printStackTrace();
-						} catch (DataAlreadyExistsException exception) {
 							exception.printStackTrace();
 						} catch (ParsingException exception) {
 							exception.printStackTrace();

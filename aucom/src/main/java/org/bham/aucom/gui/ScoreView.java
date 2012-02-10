@@ -11,22 +11,20 @@
 
 package org.bham.aucom.gui;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.UUID;
-
-import javax.swing.JFileChooser;
-
 import nu.xom.ParsingException;
 import nu.xom.ValidityException;
 import org.bham.aucom.data.Score;
 import org.bham.aucom.data.io.AucomIO;
-import org.bham.aucom.data.management.DataAlreadyExistsException;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.data.util.DataManager;
 import org.bham.aucom.util.ExampleFileFilter;
 import org.bham.aucom.util.TimeSeriesNotFoundException;
+
+import javax.swing.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.UUID;
 
 /**
  *
@@ -95,9 +93,6 @@ public class ScoreView extends javax.swing.JFrame {
 			// TODO Auto-generated catch block
 			exception.printStackTrace();
 		} catch (ValidityException exception) {
-			// TODO Auto-generated catch block
-			exception.printStackTrace();
-		} catch (DataAlreadyExistsException exception) {
 			// TODO Auto-generated catch block
 			exception.printStackTrace();
 		} catch (ParsingException exception) {

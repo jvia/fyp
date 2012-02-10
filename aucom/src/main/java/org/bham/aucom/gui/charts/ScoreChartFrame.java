@@ -11,38 +11,30 @@
 
 package org.bham.aucom.gui.charts;
 
-import java.awt.GridBagLayout;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.swing.JFileChooser;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
-
 import nu.xom.ParsingException;
 import nu.xom.ValidityException;
-
+import org.bham.aucom.data.Score;
+import org.bham.aucom.data.io.AucomIO;
+import org.bham.aucom.data.timeseries.TimeSeries;
+import org.bham.aucom.data.util.DataManager;
+import org.bham.aucom.util.ExampleFileFilter;
+import org.bham.aucom.util.MonitorableArrayList;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeriesCollection;
 
-import org.bham.aucom.data.Score;
-import org.bham.aucom.data.io.AucomIO;
-import org.bham.aucom.data.management.DataAlreadyExistsException;
-import org.bham.aucom.data.timeseries.TimeSeries;
-import org.bham.aucom.data.util.DataManager;
-import org.bham.aucom.util.ExampleFileFilter;
-import org.bham.aucom.util.MonitorableArrayList;
+import javax.swing.*;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
+import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class ScoreChartFrame extends javax.swing.JFrame implements
 		ListDataListener {
@@ -360,9 +352,6 @@ public class ScoreChartFrame extends javax.swing.JFrame implements
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (ValidityException exception) {
-			// TODO Auto-generated catch block
-			exception.printStackTrace();
-		} catch (DataAlreadyExistsException exception) {
 			// TODO Auto-generated catch block
 			exception.printStackTrace();
 		} catch (ParsingException exception) {

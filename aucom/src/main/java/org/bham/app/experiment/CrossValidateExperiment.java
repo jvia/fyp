@@ -1,38 +1,14 @@
 package org.bham.app.experiment;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import nu.xom.Attribute;
-import nu.xom.Document;
-import nu.xom.Element;
-import nu.xom.ParsingException;
-import nu.xom.Serializer;
-import nu.xom.ValidityException;
-
+import nu.xom.*;
 import org.bham.aucom.data.Classification;
 import org.bham.aucom.data.ClassificationTimeSeriesDescriptiveStatistics;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.io.AucomIO;
-import org.bham.aucom.data.management.DataAlreadyExistsException;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.data.util.SlidingWindow;
 import org.bham.aucom.diagnoser.AbstractDetector.DetectorStatus;
-import org.bham.aucom.diagnoser.DetectorStatusChangedEvent;
-import org.bham.aucom.diagnoser.DetectorStatusChangedListener;
-import org.bham.aucom.diagnoser.ModelTrainerListener;
-import org.bham.aucom.diagnoser.StatusChangedEvent;
-import org.bham.aucom.diagnoser.TrainerStatus;
+import org.bham.aucom.diagnoser.*;
 import org.bham.aucom.diagnoser.t2gram.KDEProbabilityFactory;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelImp;
@@ -46,6 +22,14 @@ import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.optimizer.C
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.util.Constants;
 import org.bham.aucom.util.FileOperator;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CrossValidateExperiment implements Experiment {
     HashMap<T2GramDetector, String> detectors;
@@ -135,8 +119,6 @@ public class CrossValidateExperiment implements Experiment {
             logger.log(Level.WARNING, "file " + modelFile.getAbsolutePath() + " not found");
         } catch (ValidityException e) {
             logger.log(Level.WARNING, "could not validate file " + modelFile.getAbsolutePath());
-        } catch (DataAlreadyExistsException e) {
-            logger.log(Level.WARNING, "model already loaded from file " + modelFile.getAbsolutePath());
         } catch (IOException e) {
             logger.log(Level.WARNING, "io exception while reading " + modelFile.getAbsolutePath());
         } catch (ParsingException e) {
@@ -218,8 +200,6 @@ public class CrossValidateExperiment implements Experiment {
                 System.out.println("coudn't find file " + file.getAbsolutePath());
             } catch (ValidityException e) {
                 System.out.println("coudn't validate file " + file.getAbsolutePath());
-            } catch (DataAlreadyExistsException e) {
-                System.out.println("data allready exists for file " + file.getAbsolutePath());
             } catch (ParsingException e) {
                 System.out.println("coudn't parse file " + file.getAbsolutePath());
             } catch (IOException e) {
