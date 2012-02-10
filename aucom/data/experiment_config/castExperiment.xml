@@ -26,11 +26,11 @@
 
 -->
 <aucom:experiments xmlns:aucom="http://www.cor-lab.de">
-    <aucom:experiment factory="org.bham.app.experiment.CastExperimentFactory" name="10x1chain-fault">
+    <aucom:experiment factory="org.bham.app.experiment.CastExperimentFactory" name="4x4chain_fault">
         <aucom:input>
-            <aucom:wd>/home/jxv911/Dropbox/aucom/cast/10x1chain/standard</aucom:wd>
-            <aucom:observation>10x1chain</aucom:observation>
-            <!--<aucom:model></aucom:model>-->
+            <aucom:wd>/home/jxv911/Dropbox/aucom/cast/4x4chain/standard</aucom:wd>
+            <aucom:observation>4x4chain</aucom:observation>
+            <!--<aucom:model>10x10chain-normal</aucom:model>-->
             <aucom:size>4000</aucom:size>
         </aucom:input>
     </aucom:experiment>
