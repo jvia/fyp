@@ -23,6 +23,8 @@ import java.util.LinkedHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static java.lang.String.format;
+
 public class T2GramModelTrainer extends AbstractModelTrainer implements GraphStatusListener {
     private JPanel panel;
     private T2GramModelI model;
@@ -56,21 +58,20 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
 
     public double[] getValuesFromTrainingData(Integer firstKey, Integer secondKey) {
         double[] values = new double[trainingData.get(firstKey, secondKey).size()];
-        for (int i = 0; i < values.length; i++) {
+        for (int i = 0; i < values.length; i++)
             values[i] = trainingData.get(firstKey, secondKey).get(i);
-        }
         return values;
     }
 
     @Override
     public void start(TimeSeries<Observation> inTrainingData) throws Exception {
         if (inTrainingData == null) {
-            log.info("cannot train with empty input");
+            log.info("Cannot train with empty input");
             return;
         }
-        log.info("start called with " + inTrainingData.toString());
+        log.info("Start called with " + inTrainingData.toString());
         if (currentStatus.equals(TrainerStatus.READY)) {
-            log.info("trainer ready starting training " + graph.getOutput().size());
+            log.info(format("Trainer ready. Starting training with %d elements", graph.getOutput().size()));
             graph.setInput(inTrainingData);
             graph.start();
         } else {
@@ -83,7 +84,7 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
         log.info("Starting training");
         try {
             HashMatrix<Integer, Integer, ArrayList<Double>> values = computeTrainingset(output);
-            log.finer(String.format("Iterating through trainingset with %d elements", values.size()));
+            log.finer(format("Iterating through trainingset with %d elements", values.size()));
 
             for (Tupel<Integer, Integer> t : values.keySet()) {
                 double[] durations = getDurationsAsDoubleArray(values, t);
@@ -94,15 +95,17 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
         }
     }
 
-    private void updateModel(Integer firstElement, Integer secondElement, double[] durations) {
+    private void updateModel(int firstElement, int secondElement, double[] durations) {
         createDistributionInModelIfMissing(model, firstElement, secondElement);
         ProbabilityDistribution distribution = model.getDistributionFor(firstElement, secondElement);
+        log.finer(format("Adding to distribution [%d --> %d] durations %s", firstElement, secondElement, durations));
         distribution.update(durations);
 //        model.getDistributionFor(firstElement, secondElement).update(durations);
     }
 
-    private void createDistributionInModelIfMissing(T2GramModelI inModel, Integer firstElement, Integer secondElement) {
+    private void createDistributionInModelIfMissing(T2GramModelI inModel, int firstElement, int secondElement) {
         if (!inModel.hasDistributionFor(firstElement, secondElement)) {
+            log.fine(format("No distribution for [%d --> %d], creating one.", firstElement, secondElement));
             ProbabilityFactory probabilityFactory = inModel.getDistributionFactory();
             ProbabilityDistribution distribution = probabilityFactory.create();
             inModel.addDistribution(firstElement, secondElement, distribution);
@@ -118,7 +121,7 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
     }
 
     private HashMatrix<Integer, Integer, ArrayList<Double>> computeTrainingset(TimeSeries<TemporalDurationFeature> input) {
-        log.info(String.format("Computing training set. Input = %d elements", input.size()));
+        log.info(format("Computing training set. Input = %d elements", input.size()));
         HashMatrix<Integer, Integer, ArrayList<Double>> out = new HashMatrix<Integer, Integer, ArrayList<Double>>();
 
         try {
@@ -129,7 +132,7 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
                     int predecessorEventType = precedessor.getEventType();
                     int currentEventType = feature.getEventType();
                     double duration = (double) feature.getDurationFor(precedessor);
-                    log.fine(String.format("Timespan of [%d --> %d] is %.2f", predecessorEventType, currentEventType, duration));
+                    log.fine(format("Timespan of [%3d --> %3d] is %6f", predecessorEventType, currentEventType, duration));
 
                     // Add to matrix
                     if (!out.containsKey(predecessorEventType, currentEventType))

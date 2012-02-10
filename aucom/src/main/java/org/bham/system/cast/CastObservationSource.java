@@ -1,55 +1,58 @@
 package org.bham.system.cast;
 
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import nu.xom.Attribute;
 import nu.xom.Element;
-
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.fts.source.AucomSourceAdapter;
 import org.bham.aucom.fts.source.SourceStatus;
 
+import java.util.Arrays;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.logging.Logger;
+
+import static java.lang.String.format;
+
 /**
- *
  * @author Jeremiah Via <jxv911@cs.bham.ac.uk>
  */
 public class CastObservationSource extends AucomSourceAdapter<Observation> {
 
     private ConnectionManager cast;
     private LinkedBlockingQueue<String[]> queue;
+    private long count;
+    private final Logger log = Logger.getLogger(getClass().getName());
 
-    public CastObservationSource()
-    {
+    public CastObservationSource() {
         super("CastObservationSource");
         queue = new LinkedBlockingQueue<String[]>();
+        count = 0;
     }
 
     @Override
-    protected void iDisconnect() throws ActionFailedException
-    {
+    protected void iDisconnect() throws ActionFailedException {
         cast.shutdown();
         setState(SourceStatus.DISCONNECTED);
+        log.info("Disconnected");
     }
 
     @Override
-    protected void iConnect() throws ActionFailedException
-    {
+    protected void iConnect() throws ActionFailedException {
         if (getStatus().equals(SourceStatus.CONNECTED))
             return;
         cast = new ConnectionManager(queue);
         setState(SourceStatus.CONNECTED);
+        log.info("Connected");
     }
 
     @Override
-    protected Observation iNextItem() throws Exception
-    {
+    protected Observation iNextItem() throws Exception {
         String[] msg = queue.take();
-        Observation obs = null;
-        
+        log.finer(format("Received msg %d from CAST: %s", ++count, Arrays.toString(msg)));
+        Observation obs;
+
         if (msg[0].equals(".")) {
+            log.info("Received shutdown from CAST.");
             setsendLastElement();
             obs = new Observation(null, 0L);
         } else {
@@ -61,10 +64,5 @@ public class CastObservationSource extends AucomSourceAdapter<Observation> {
             obs = new Observation(element, Long.parseLong(msg[0]));
         }
         return obs;
-    }
-    
-    private void log(Level level, String msg, Object ex)
-    {
-        Logger.getLogger(CastObservationSource.class.getName()).log(level, msg, ex);
     }
 }

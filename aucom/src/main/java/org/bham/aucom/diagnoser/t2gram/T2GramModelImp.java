@@ -15,8 +15,6 @@ import static org.bham.aucom.util.Constants.LOWESTPROBABILITY;
 
 public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI {
     private static final long serialVersionUID = 1L;
-    private static final boolean warnOnLowestProbability = false;
-
     private String name;
     private final HashMatrix<Integer, Integer, ProbabilityDistribution> transitionMatrix;
     private final ProbabilityFactory factory;
@@ -74,17 +72,17 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
         for (DomainFeature f : Encoder.getInstance().decode(indexTwo)) {
             decodedIndexTwo += f.toString() + " ";
         }
-        log.severe("CALC_ENTROPY: distribution for " + decodedIndexOne + "(" + indexOne + ")  to " + decodedIndexTwo + "(" + indexTwo + ") not found");
+        log.severe(String.format("CALC_ENTROPY: H(%d,%d) = H(%s,%s) = Ø",
+                                 indexOne, indexTwo, decodedIndexOne, decodedIndexTwo));
         return 0.0f;
     }
 
     @Override
     public double getMaxProbabilityFor(int from, int to) {
         ProbabilityDistribution distribution = getDistributionFor(from, to);
-        if (distribution != null) {
+        if (distribution != null)
             return distribution.getMaxProbability();
-        }
-        System.out.println(this.getClass().getCanonicalName() + " max probability for " + from + " " + to + " is missing");
+        log.warning(String.format("Probability Distribution for [%d --> %d] is missing.", from, to));
         return LOWESTPROBABILITY;
     }
 
@@ -92,17 +90,15 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
     public double getProbability(int from, int to, long timespan) {
         // TODO :: Perhaps matrix reducer can go here
         double probability;
-        log.info(String.format("Calculating probability for timespan %d from %d to %d", timespan, from, to));
+        log.info(String.format("Calculating P(timespan|to,from) => P(%d|%d,%d)", timespan, to, from));
 
         if (hasDistributionFor(from, to)) {
             ProbabilityDistribution distribution = getDistributionFor(from, to);
             probability = distribution.getProbability(timespan);
-            log.info("from " + from + " to " + to + "present, prob is " + probability);
+            log.fine(String.format("P(%d|%d,%d) = %f", timespan, to, from, probability));
         } else {
             probability = LOWESTPROBABILITY;
-            if (warnOnLowestProbability) {
-                System.out.println("DurationPobabilityModel: from " + from + " to " + to + "NOT present, returning " + LOWESTPROBABILITY);
-            }
+            log.warning(String.format("P(%d|%d,%d) = Ø. Using %f instead", timespan, to, from, probability));
         }
         return probability;
     }
@@ -134,7 +130,7 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
 
     @Override
     public String toString() {
-        return "name: " + this.getName() + "trained: " + isTrained();
+        return String.format("Name: %s; Trained: %b", this.getName(), isTrained());
     }
 
     protected void setName(String name) {
