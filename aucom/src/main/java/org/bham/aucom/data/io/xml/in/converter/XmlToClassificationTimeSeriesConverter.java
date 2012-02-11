@@ -17,7 +17,11 @@ public class XmlToClassificationTimeSeriesConverter extends XmlToTimeSeriesConve
         SystemFaultStatus status = getSystemStatus(e);
         Score s = new XmlToScoreTimeSeriesConverter().createDataFromElement(e);
         if (s != null) {
-            Classification a = new Classification(new SingleScore(new TemporalProbabilityFeature(), 0.0), status);
+            try {
+                new Classification(new SingleScore(new TemporalProbabilityFeature(), 0.0), status);
+            } catch (NullPointerException npe) {
+                Logger.getLogger(getClass().getName()).log(Level.WARNING, "Error creating classification", npe);
+            }
             Classification c;
             c = new Classification(s, status);
             return c;

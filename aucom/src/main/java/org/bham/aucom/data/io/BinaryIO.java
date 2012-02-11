@@ -23,7 +23,7 @@ public abstract class BinaryIO<T>  implements IOInterface<T> {
 	}
 
 	@Override
-	public boolean write(Object faultDetectionModelTowrite, File file) {
+	public boolean write(T faultDetectionModelTowrite, File file) {
 		try {
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file));
 			objectOutputStream.writeObject(faultDetectionModelTowrite);
