@@ -10,6 +10,8 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Logger;
 
+import static java.lang.String.format;
+
 public class TimeSeriesSource<T extends AbstractData> extends AucomSourceAdapter<T> implements TimeSeriesStatusListener {
     private static final long serialVersionUID = 0L;
     final BlockingQueue<T> queue;
@@ -23,7 +25,7 @@ public class TimeSeriesSource<T extends AbstractData> extends AucomSourceAdapter
         setInput(input);
         setState(SourceStatus.CONNECTED);
         copyDataFromTimeSeriesToSourceQueue(0, getInput().size() - 1);
-        log.config(String.format("Init: %s elements %d", noficifactionName, queue.size()));
+        log.config(format("Init: %s elements %d", noficifactionName, queue.size()));
     }
 
     public TimeSeriesSource(String noficifactionName) {
@@ -31,7 +33,7 @@ public class TimeSeriesSource<T extends AbstractData> extends AucomSourceAdapter
         queue = new LinkedBlockingQueue<T>();
         setInput(null);
         setState(SourceStatus.CONNECTED);
-        log.info(String.format("Initializing queue with notification name: %s and %d elements", noficifactionName, queue.size()));
+        log.info(format("Initializing queue with notification name: %s and %d elements", noficifactionName, queue.size()));
     }
 
     @Override

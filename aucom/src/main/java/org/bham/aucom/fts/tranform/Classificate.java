@@ -8,52 +8,52 @@ import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClas
 import java.util.logging.Logger;
 
 public class Classificate extends AbstractAucomTranformNode<Score, Classification> {
-	private AnomalyClassificator classificator = null;
+    private AnomalyClassificator classificator = null;
 
-	public Classificate(AnomalyClassificator inThreshold) {
-		super("ClassificateScore");
-		setClassificator(inThreshold);
-	}
+    public Classificate(AnomalyClassificator inThreshold) {
+        super("ClassificateScore");
+        setClassificator(inThreshold);
+    }
 
-	public Classificate() {
-		super("ClassificateScore");
-	}
+    public Classificate() {
+        super("ClassificateScore");
+    }
 
-	private Classification decide(Score in) {
+    private Classification decide(Score in) {
 
-		Classification cl = null;
-        // TODO Look into this!
-		if (getClassificator().satisfies(in)) {
-			cl = new Classification(in, SystemFaultStatus.NORMAL);
-		} else {
-			cl = new Classification(in, SystemFaultStatus.ABNORMAL);
-		}
-		Logger.getLogger(this.getClass().getCanonicalName()).info(in.toString() + " classificated as " + cl.getStatus());
-		return cl;
-	}
+        Classification cl = null;
 
-	@Override
-	protected Classification iTransform(Score arg0) throws Exception {
-		try {
-			Logger.getLogger(this.getClass().getCanonicalName()).info("classificating score " + arg0);
-			return decide(arg0);
-		} catch (Exception exception) {
-			exception.printStackTrace();
-		}
-		return null;
-	}
+        if (getClassificator().satisfies(in))
+            cl = new Classification(in, SystemFaultStatus.NORMAL);
+        else
+            cl = new Classification(in, SystemFaultStatus.ABNORMAL);
 
-	public void setClassificator(AnomalyClassificator threshold) {
-		this.classificator = threshold;
-	}
+        Logger.getLogger(this.getClass().getCanonicalName()).info(in.toString() + " classificated as " + cl.getStatus());
+        return cl;
+    }
 
-	public AnomalyClassificator getClassificator() {
-		return this.classificator;
-	}
+    @Override
+    protected Classification iTransform(Score arg0) throws Exception {
+        try {
+            Logger.getLogger(this.getClass().getCanonicalName()).info("classificating score " + arg0);
+            return decide(arg0);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return null;
+    }
 
-	public void reset() {
-		if (classificator != null) {
-			classificator.reset();
-		}
-	}
+    public void setClassificator(AnomalyClassificator threshold) {
+        this.classificator = threshold;
+    }
+
+    public AnomalyClassificator getClassificator() {
+        return this.classificator;
+    }
+
+    public void reset() {
+        if (classificator != null) {
+            classificator.reset();
+        }
+    }
 }

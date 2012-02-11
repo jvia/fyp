@@ -1,45 +1,35 @@
 package org.bham.aucom.fts.graph;
 
-import static org.bham.aucom.util.Constants.TEST_SOURCE;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.bham.aucom.data.Classification;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.Score;
-import org.bham.aucom.data.timeseries.ClassificationTimeSeries;
-import org.bham.aucom.data.timeseries.ScoreTimeSeries;
-import org.bham.aucom.data.timeseries.TimeSeries;
-import org.bham.aucom.data.timeseries.TimeSeriesStatusListener;
-import org.bham.aucom.data.timeseries.TimeseriesStatusEvent;
+import org.bham.aucom.data.timeseries.*;
 import org.bham.aucom.data.util.DataManager;
 import org.bham.aucom.data.util.SlidingWindow;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
 import org.bham.aucom.fts.sink.TimeSeriesSink;
 import org.bham.aucom.fts.source.ActionFailedException;
-import org.bham.aucom.fts.source.IllegalStateChange;
 import org.bham.aucom.fts.source.TimeSeriesSource;
-import org.bham.aucom.fts.tranform.CalcEntropyAvgScore;
-import org.bham.aucom.fts.tranform.CalcMeanvalue;
-import org.bham.aucom.fts.tranform.Classificate;
-import org.bham.aucom.fts.tranform.CountDataTypes;
-import org.bham.aucom.fts.tranform.CropTimestampFromData;
-import org.bham.aucom.fts.tranform.EncodeData;
-import org.bham.aucom.fts.tranform.GenerateTemporalDurationFeature;
-import org.bham.aucom.fts.tranform.TemporalDurationFeatureGenerator;
-import org.bham.aucom.fts.tranform.GenerateTemporalProbabilityFeature;
+import org.bham.aucom.fts.tranform.*;
+
+import java.util.logging.Logger;
+
+import static org.bham.aucom.util.Constants.TEST_SOURCE;
 
 /**
- * This class represent the implementation of the detection algorithm. It sets up the FTS nodes that perform all of the aspects of fault detection.
+ * This class represent the implementation of the detection algorithm. It sets
+ * up the FTS nodes that perform all of the aspects of fault detection.
  *
  * @author Raphael Golombek <rgolombe@cor-lab.uni-bielefeld.de>
  */
 public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatusListener {
     private static final long serialVersionUID = 1L;
+    private final transient Logger log = Logger.getLogger(getClass().getName());
+
     // graph stateful fields
     private T2GramModelI model;
+
     // transient fields
     private transient TimeSeriesSource<Observation> observationTimeseriesSource;
     private transient TimeSeriesSource<Score> scoreTimeseriesSource;
@@ -54,226 +44,160 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     private transient CropTimestampFromData<Observation> cropTimestampFromData;
 
     /**
-     * Constructs the DetectorGraph with the specified model, classifier, and
-     * sliding window.
-     *
-     * @param model detector model to use
-     * @param classificator the classifier to use
-     * @param slindingWindow the sliding window to use
+     * Constructs the DetectorGraph.
      */
-    public DetectorGraph()
-    {
+    public DetectorGraph() {
         super("detectorGraph");
         initGraph();
     }
 
-    /**
-     * @param model
-     * @param classificator
-     * @param slidingWindow
-     */
-    private void setMonitorState(T2GramModelI model, AnomalyClassificator classificator, SlidingWindow slidingWindow)
-    {
-        if (getStatus().equals(GraphStatus.RUNNING)) {
-            try {
-                pause();
-            } catch (IllegalStateChange e) {
-                e.printStackTrace();
-            }
-        }
-        setModel(model);
-        setClassificator(classificator);
-        if (model == null) {
-            return ;
-        } else {
-            this.generateDurationFeature.setGenerator(new TemporalDurationFeatureGenerator(model.getDimensions()));
-        }
-        setSlidingWindow(slidingWindow);
-        if (getStatus().equals(GraphStatus.PAUSED)) {
-            resume();
-        }
-
-    }
+//    /**
+//     * @param model         detector model to use
+//     * @param classificator the classifier to use
+//     * @param slidingWindow the sliding window to use
+//     */
+//    private void setMonitorState(T2GramModelI model, AnomalyClassificator classificator, SlidingWindow slidingWindow) {
+//        if (getStatus().equals(GraphStatus.RUNNING)) {
+//            try {
+//                pause();
+//            } catch (IllegalStateChange e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        setModel(model);
+//        setClassificator(classificator);
+//        if (model == null) {
+//            return;
+//        } else {
+//            generateDurationFeature.setGenerator(new TemporalDurationFeatureGenerator(model.getDimensions()));
+//        }
+//        setSlidingWindow(slidingWindow);
+//        if (getStatus().equals(GraphStatus.PAUSED)) {
+//            resume();
+//        }
+//
+//    }
 
     /**
      * Sets the model used by this detector graph.
-     * @param inModel
+     *
+     * @param inModel the model to use
      */
-    public void setModel(T2GramModelI inModel)
-    {
-        if(inModel == null){
-            throw new IllegalArgumentException("model must not be null");
+    public void setModel(T2GramModelI inModel) {
+        if (inModel == null) {
+            log.severe("Model must not be null.");
+            throw new IllegalArgumentException("Model must not be null");
         }
-        this.model = inModel;
-        this.test.setModel(inModel);
-        this.calculateScore.setModel(inModel);
+
+        model = inModel;
+        test.setModel(inModel);
+        calculateScore.setModel(inModel);
         if (generateDurationFeature.getGenerator() != null) {
-                generateDurationFeature.getGenerator().clearInitialClasses();
-                generateDurationFeature.getGenerator().addInitalClasses(model.getDimensions());
+            generateDurationFeature.getGenerator().clearInitialClasses();
+            generateDurationFeature.getGenerator().addInitalClasses(model.getDimensions());
         } else {
             generateDurationFeature.setGenerator(new TemporalDurationFeatureGenerator(inModel.getDimensions()));
         }
     }
-	@Override
-	protected void setStatus(GraphStatus newStatus) {
-		super.setStatus(newStatus);
-	}
-    /**
-     *
-     * @param classificatorToSet
-     */
-    public void setClassificator(AnomalyClassificator classificatorToSet)
-    {
-        this.anomalyClassification.setClassificator(classificatorToSet);
-    }
 
-    /**
-     *
-     */
     @Override
-    protected void initGraph()
-    {
-        this.observationTimeseriesSource = new TimeSeriesSource<Observation>(TEST_SOURCE);
+    protected void setStatus(GraphStatus newStatus) {
+        super.setStatus(newStatus);
+    }
 
-        this.observationTimeseriesSource.addSourceStatusListener(this);
+    public void setClassificator(AnomalyClassificator classificatorToSet) {
+        anomalyClassification.setClassificator(classificatorToSet);
+    }
 
-        this.scoreTimeseriesSource = new TimeSeriesSource<Score>("scoreTimeseriesSource");
-		this.encodeData = new EncodeData();
-		this.countDataTypes = new CountDataTypes();
-		this.test = new GenerateTemporalProbabilityFeature();
-		this.generateDurationFeature = new GenerateTemporalDurationFeature();
-		this.calculateScore = new CalcEntropyAvgScore();
-		this.mean = new CalcMeanvalue();
-		this.mean.setSlidingWindow(new SlidingWindow(100, 50));
-		this.anomalyClassification = new Classificate();
-		this.sink = new TimeSeriesSink<Classification>(new ClassificationTimeSeries());
-
+    @Override
+    protected void initGraph() {
+        observationTimeseriesSource = new TimeSeriesSource<Observation>(TEST_SOURCE);
+        observationTimeseriesSource.addSourceStatusListener(this);
+        cropTimestampFromData = new CropTimestampFromData<Observation>();
+        scoreTimeseriesSource = new TimeSeriesSource<Score>("scoreTimeseriesSource");
+        encodeData = new EncodeData();
+        countDataTypes = new CountDataTypes();
+        test = new GenerateTemporalProbabilityFeature();
+        generateDurationFeature = new GenerateTemporalDurationFeature();
+        calculateScore = new CalcEntropyAvgScore();
+        mean = new CalcMeanvalue();
+        mean.setSlidingWindow(new SlidingWindow(100, 50));
+        anomalyClassification = new Classificate();
+        sink = new TimeSeriesSink<Classification>(new ClassificationTimeSeries());
         DataManager.getInstance().addTimeSeries(sink.getOutput());
-		sink.getOutput().addTimeSeriesStatusListener(this);
-		cropTimestampFromData = new CropTimestampFromData<Observation>();
+        sink.getOutput().addTimeSeriesStatusListener(this);
 
-        this.graph.connect(this.observationTimeseriesSource, cropTimestampFromData);
-		this.graph.connect(cropTimestampFromData, this.encodeData);
-		this.graph.connect(this.encodeData, this.countDataTypes);
-		this.graph.connect(this.countDataTypes, this.generateDurationFeature);
-		this.graph.connect(this.generateDurationFeature, this.test);
-		this.graph.connect(this.test, this.calculateScore);
-		this.graph.connect(this.scoreTimeseriesSource, this.anomalyClassification);
-		boolean useMeanCalculationOfScore = true;
+        graph.connect(observationTimeseriesSource, cropTimestampFromData);
+        graph.connect(cropTimestampFromData, encodeData);
+        graph.connect(encodeData, countDataTypes);
+        graph.connect(countDataTypes, generateDurationFeature);
+        graph.connect(generateDurationFeature, test);
+        graph.connect(test, calculateScore);
+        graph.connect(calculateScore, mean);
+        graph.connect(mean, anomalyClassification);
 
-        if (useMeanCalculationOfScore) {
-			Logger.getLogger(this.getClass().getCanonicalName()).log(Level.CONFIG, "mean calculation on");
-			this.graph.connect(this.calculateScore, this.mean);
-			this.graph.connect(this.mean, this.anomalyClassification);
-		} else {
-			this.graph.connect(this.calculateScore, this.anomalyClassification);
-		}
-		this.graph.connect(this.anomalyClassification, this.sink);
-	}
-    /**
-     *
-     * @return
-     */
-    public T2GramModelI getModel()
-    {
-        return this.model;
+        graph.connect(scoreTimeseriesSource, anomalyClassification);
+
+        graph.connect(anomalyClassification, sink);
     }
 
-	public void reset() {
-		observationTimeseriesSource.reset();
-		scoreTimeseriesSource.reset();
-		sink.getOutput().clear();
-		if(mean != null){
-			mean.reset();
-		}
-		if(generateDurationFeature != null){
-			generateDurationFeature.reset();
-		}
-		if(anomalyClassification != null){
-			anomalyClassification.reset();
-		}
-	}
-
-	public String getName() {
-		return "testgraph";
-	}
-
-	/**
-     *
-     * @param inTimeSeries
-     * @throws ActionFailedException
-     */
-    @SuppressWarnings("unchecked")
-    public void setInput(TimeSeries<Observation> inTimeSeries) throws ActionFailedException
-    {
-        this.observationTimeseriesSource.setInput(inTimeSeries);
+    public T2GramModelI getModel() {
+        return model;
     }
 
-    /**
-     *
-     * @return
-     */
-    public AnomalyClassificator getClassificator()
-    {
-        return this.anomalyClassification.getClassificator();
+    public void reset() {
+        observationTimeseriesSource.reset();
+        scoreTimeseriesSource.reset();
+        sink.getOutput().clear();
+        mean.reset();
+        generateDurationFeature.reset();
+        anomalyClassification.reset();
     }
 
-    /**
-     *
-     * @param slidingWindow
-     */
-    public void setSlidingWindow(SlidingWindow slidingWindow)
-    {
-        this.mean.setSlidingWindow(slidingWindow);
+    public String getName() {
+        return "testgraph";
     }
 
-    /**
-     *
-     * @param slidingWindow
-     */
-    public void updateSlidingWindow(SlidingWindow slidingWindow)
-    {
+    public void setInput(TimeSeries<Observation> inTimeSeries) throws ActionFailedException {
+        observationTimeseriesSource.setInput(inTimeSeries);
+    }
+
+    public AnomalyClassificator getClassificator() {
+        return anomalyClassification.getClassificator();
+    }
+
+    public void setSlidingWindow(SlidingWindow slidingWindow) {
+        mean.setSlidingWindow(slidingWindow);
+    }
+
+    public void updateSlidingWindow(SlidingWindow slidingWindow) {
         getSlidingWindow().copy(slidingWindow);
     }
 
-    /**
-     *
-     * @return
-     */
-    public SlidingWindow getSlidingWindow()
-    {
-        return this.mean.getSlidingWindow();
+    public SlidingWindow getSlidingWindow() {
+        return mean.getSlidingWindow();
     }
 
-    /**
-     *
-     * @return
-     */
-    public TimeSeries<Classification> getClassificationTimeSeries()
-    {
-        return this.sink.getOutput();
+    public TimeSeries<Classification> getClassificationTimeSeries() {
+        return sink.getOutput();
     }
 
-    /**
-     *
-     */
     @Override
-    protected void cleanUp()
-    {
-        this.scoreTimeseriesSource.setInput(new ScoreTimeSeries());
-        this.scoreTimeseriesSource.setInput(new ScoreTimeSeries());
+    protected void cleanUp() {
+        scoreTimeseriesSource.setInput(new ScoreTimeSeries());
+        scoreTimeseriesSource.setInput(new ScoreTimeSeries());
     }
 
     /**
      * Determines if all of the preconditions required to run the graph are
-     * satisfied. In order for the graph to be ready, there must be valid input,
+     * satisfied. In order for the graph to be ready, there must be valid
+     * input,
      * a feature generator, a model, and an anomaly detector.
      *
      * @return true if ready.
      */
     @Override
-    public boolean preconditionsSatisfied()
-    {
+    public boolean preconditionsSatisfied() {
         return inputIsPresent() && featureGeneratorIsReady() && modelIsReady() && anomalyDetectorIsReady();
     }
 
@@ -283,8 +207,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
      * @return reasons for malfunction
      */
     @Override
-    protected String getReason()
-    {
+    protected String getReason() {
         String reason = "\n";
 
         if (!inputIsPresent())
@@ -304,8 +227,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
      *
      * @return true if ready
      */
-    private boolean inputIsPresent()
-    {
+    private boolean inputIsPresent() {
         return observationTimeseriesSource.getInput() != null;
     }
 
@@ -314,8 +236,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
      *
      * @return true if ready
      */
-    private boolean anomalyDetectorIsReady()
-    {
+    private boolean anomalyDetectorIsReady() {
         return anomalyClassification.getClassificator() != null;
     }
 
@@ -324,36 +245,26 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
      *
      * @return true if ready
      */
-    private boolean modelIsReady()
-    {
+    private boolean modelIsReady() {
         return test.getModel() != null;
     }
 
-	public TimeSeries<Score> getScoreTimeSeries() {
-		return this.calculateScore.getTimeSeries();
-	}
+    public TimeSeries<Score> getScoreTimeSeries() {
+        return calculateScore.getTimeSeries();
+    }
 
-	@Override
-	public void timeseriesStatusChanged(TimeseriesStatusEvent status) {
+    @Override
+    public void timeseriesStatusChanged(TimeseriesStatusEvent status) {
 
-	}
-
-	public String getInfoAsString() {
-		String info = "";
-		info += "no info yet";
-		return info;
-	}
-
-
-
+    }
 
     /**
-     * Determines if the {@link GenerateTemporalDurationFeature} generator is ready.
+     * Determines if the {@link GenerateTemporalDurationFeature} generator is
+     * ready.
      *
      * @return true if ready
      */
-    private boolean featureGeneratorIsReady()
-    {
+    private boolean featureGeneratorIsReady() {
         return generateDurationFeature.getGenerator() != null;
     }
 }

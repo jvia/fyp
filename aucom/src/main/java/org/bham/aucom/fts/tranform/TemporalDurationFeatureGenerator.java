@@ -29,7 +29,6 @@ public class TemporalDurationFeatureGenerator {
         initialClasses = new ArrayList<Integer>();
         if (inInitialClasses != null)
             initialClasses.addAll(inInitialClasses);
-        reducer = new MatrixReducer();
     }
 
     public void clearInitialClasses() {
@@ -73,38 +72,36 @@ public class TemporalDurationFeatureGenerator {
     }
 
     public TemporalDurationFeature generateFeature(DataType in) {
-        long timespan = 0l;
         LinkedHashMap<DataType, Long> durations = new LinkedHashMap<DataType, Long>();
 
         if (isLastOccurancesInitialized()) {
             initializeLastOccurancesWithValue(in.getTimestamp());
         }
 
-        for (DataType lastOccurrence : this.lastOccurrences.values()) {
-            timespan = calculateTimespanForElements(in, lastOccurrence);
-            durations.put(lastOccurrence, timespan);
+        for (DataType lastOccurrence : lastOccurrences.values()) {
+            durations.put(lastOccurrence, calculateTimespanForElements(in, lastOccurrence));
         }
+
         TemporalDurationFeature f = new TemporalDurationFeature(in, durations);
         updateLastOccurrences(in);
         return f;
     }
 
     /**
-     * calculates the duration for the two elements. In case th
+     * Calculates the duration for the two elements. In case th
      *
      * @param inTestElement  the currently occurred event as datatype object
      * @param lastOccurrence last occurrence of an event with a specific
      *                       datatype
-     * @return
+     * @return the duration between two elements
      */
     private long calculateTimespanForElements(DataType inTestElement, DataType lastOccurrence) {
-        if (lastOccurrence.getTimestamp() != -1) {
+        if (lastOccurrence.getTimestamp() != -1)
             return inTestElement.getTimestamp() - lastOccurrence.getTimestamp();
-        }
-        return 0l;
+        return 0;
     }
 
     private void updateLastOccurrences(DataType inTestElement) {
-        this.lastOccurrences.put(inTestElement.getEventType(), inTestElement);
+        lastOccurrences.put(inTestElement.getEventType(), inTestElement);
     }
 }
