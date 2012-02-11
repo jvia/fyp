@@ -15,7 +15,6 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
     private final Logger log = Logger.getLogger(getClass().getName());
 
     private T2GramModelI model;
-    private MatrixReducer reducer;
 
     /**
      * Create the score calculating node.
@@ -25,7 +24,6 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
     public CalcEntropyAvgScore(T2GramModelI model) {
         super("CalcEnropyAvgScore");
         this.model = model;
-        this.reducer = new MatrixReducer();
     }
 
     /**
@@ -33,7 +31,6 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
      */
     public CalcEntropyAvgScore() {
         super("CalcEnropyAvgScore");
-        this.reducer = new MatrixReducer();
     }
 
     /**
