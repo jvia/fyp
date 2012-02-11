@@ -48,7 +48,7 @@ public class TemporalProbabilityFeature extends TemporalDurationFeature {
 //	}
 
     public TemporalProbabilityFeature() {
-
+        super();
     }
 
     public ArrayList<Double> getDurationProbabilities() {

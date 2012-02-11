@@ -14,6 +14,11 @@ public class Classification extends Score {
         this.status = status;
     }
 
+    public Classification() {
+        score = new RangeScore(new ArrayList<Score>());
+        status = SystemFaultStatus.ABNORMAL;
+    }
+
     public Classification(Classification cl) {
         this(cl.score, cl.status);
     }

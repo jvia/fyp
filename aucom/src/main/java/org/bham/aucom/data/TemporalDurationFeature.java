@@ -20,7 +20,7 @@ public class TemporalDurationFeature extends DataType {
      */
     public TemporalDurationFeature() {
         predecessorIdToDurationsMapping = new LinkedHashMap<DataType, Long>();
-        log.config(format("Creating TemporalDurationFeature : %s", getName()));
+        //log.config(format("Creating TemporalDurationFeature : %s", getName()));
     }
 
     /**
