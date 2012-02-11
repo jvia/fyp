@@ -1,5 +1,7 @@
 package org.bham.aucom.data;
 
+import org.bham.aucom.fts.tranform.MatrixReducer;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.logging.Logger;
@@ -11,6 +13,7 @@ public class TemporalDurationFeature extends DataType {
      * this event and each last occurrence of all other known data types
      */
     protected LinkedHashMap<DataType, Long> predecessorIdToDurationsMapping;
+    private static transient MatrixReducer reducer = new MatrixReducer();
 
     /**
      * Creates a non-initialized TemporalDurationFeature
@@ -87,7 +90,8 @@ public class TemporalDurationFeature extends DataType {
     public ArrayList<DataType> getPredecessors() {
         ArrayList<DataType> out = new ArrayList<DataType>();
         for (DataType dtt : this.predecessorIdToDurationsMapping.keySet()) {
-            out.add(dtt);
+            if (reducer.areConnected(dtt.getEventType(), getEventType()))
+                out.add(dtt);
         }
         return out;
     }
