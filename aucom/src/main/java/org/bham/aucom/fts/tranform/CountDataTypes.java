@@ -32,18 +32,32 @@ public class CountDataTypes extends AbstractAucomTranformNode<DataType, DataType
      */
     @Override
     protected DataType iTransform(DataType input) throws Exception {
+        // TODO :: determine if this node can be removed. Seem useless.
+        // Create the mapping if necessary
         if (!(counting.containsKey(input.getEventType())))
             counting.put(input.getEventType(), 0);
+
+        // Increment the count
         counting.put(input.getEventType(), counting.get(input.getEventType()) + 1);
 
         return input;
     }
 
 
+    /**
+     * Set the counter.
+     *
+     * @param counting the new counter.
+     */
     protected void setCounting(HashMap<Integer, Integer> counting) {
         this.counting = counting;
     }
 
+    /**
+     * Get the counter.
+     *
+     * @return the counter.
+     */
     public HashMap<Integer, Integer> getCounting() {
         return counting;
     }

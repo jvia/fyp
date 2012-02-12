@@ -17,7 +17,6 @@ import java.util.logging.Logger;
 public class TemporalDurationFeatureGenerator {
     ConcurrentHashMap<Integer, DataType> lastOccurrences = new ConcurrentHashMap<Integer, DataType>(new LinkedHashMap<Integer, DataType>());
     Collection<Integer> initialClasses;
-    MatrixReducer reducer;
     private final Logger log = Logger.getLogger(getClass().getName());
 
     /**

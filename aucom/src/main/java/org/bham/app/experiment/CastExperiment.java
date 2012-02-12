@@ -163,7 +163,11 @@ public class CastExperiment implements Experiment {
 
 
             // wait here until it is done
-            while (faultDetector.getOutput().size() < size) ;
+            while (faultDetector.getOutput().size() < size) {
+                //       int size = faultDetector.getOutput().size();
+                //if (size % 100 == 0)
+                //    System.out.printf("Fault detector contains %d elements\n", size);
+            }
             //            faultDetector.addStatusListener(new DetectorStatusChangedListener() {
 //                @Override
 //                public void handleDetectorStatusChangedEvent(DetectorStatusChangedEvent evt) {
