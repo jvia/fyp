@@ -11,75 +11,91 @@ import java.util.logging.Logger;
 
 import static java.lang.String.format;
 
+/**
+ * This node generates the {@link TemporalProbabilityFeature} from a given
+ * {@link TemporalDurationFeature}.
+ *
+ * @author Raphael Golombek <rgolombe@cor-lab.uni-bielefeld.de>
+ * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk
+ */
 public class GenerateTemporalProbabilityFeature extends AbstractAucomTranformNode<TemporalDurationFeature, TemporalProbabilityFeature> {
-    private T2GramModelI model = null;
+    private T2GramModelI model;
     private transient final Logger log = Logger.getLogger(getClass().getName());
 
+    /**
+     * Create the node with an empty model.
+     */
     public GenerateTemporalProbabilityFeature() {
         super("TestModel");
     }
 
+    /**
+     * Transform a {@link TemporalDurationFeature} into a {@link
+     * TemporalProbabilityFeature}.
+     *
+     * @param tdf the temporal duration feature to transform
+     * @return the temporal probability feature
+     * @throws Exception something went wrong
+     */
     @Override
-    protected TemporalProbabilityFeature iTransform(TemporalDurationFeature arg0) throws Exception {
+    protected TemporalProbabilityFeature iTransform(TemporalDurationFeature tdf) throws Exception {
         if (checkIfModelNotTrained()) return null;
-        return generate(arg0);
-    }
 
-    protected TemporalProbabilityFeature generate(TemporalDurationFeature dataToTest) {
-        int eventTypeToTest = dataToTest.getEventType();
+        HashMap<DataType, Double> probabilities = new HashMap<DataType, Double>();
+        int eventType = tdf.getEventType();
 
-        double maximalProbabilityForPredecessor;
-        double absolutProbabilityForPredecessor;
-        double normalizedProbabilityOfPredecessor;
+        for (DataType predecessor : tdf.getPredecessors()) {
+            long timespan = tdf.getDurationFor(predecessor);
 
-        HashMap<DataType, Double> datatypeToProbabilities = new HashMap<DataType, Double>();
-        long timespanToPredecessor;
+            // Calculate normalized probability from the raw & max probabilities
+            double normalized = normalize(getModel().getProbability(predecessor.getEventType(), eventType, timespan),
+                                          getModel().getMaxProbabilityFor(predecessor.getEventType(), eventType));
 
-        for (DataType predecessor : dataToTest.getPredecessors()) {
-            try {
-                timespanToPredecessor = dataToTest.getDurationFor(predecessor);
-
-                absolutProbabilityForPredecessor = getModel().getProbability(predecessor.getEventType(), eventTypeToTest, timespanToPredecessor);
-                maximalProbabilityForPredecessor = getModel().getMaxProbabilityFor(predecessor.getEventType(), eventTypeToTest);
-                normalizedProbabilityOfPredecessor = normalizePrecedessorProbability(absolutProbabilityForPredecessor, maximalProbabilityForPredecessor);
-                log.finer(format("Max probability: %f; Absolute probability: %f; Normalized Probability: %f; Difference: %f",
-                                 maximalProbabilityForPredecessor, absolutProbabilityForPredecessor, normalizedProbabilityOfPredecessor,
-                                 normalizedProbabilityOfPredecessor - absolutProbabilityForPredecessor));
-                datatypeToProbabilities.put(predecessor, normalizedProbabilityOfPredecessor);
-                log.fine(format("P(%d|%d --> %d) = %f", timespanToPredecessor, predecessor.getEventType(),
-                                dataToTest.getEventType(), normalizedProbabilityOfPredecessor));
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
+            probabilities.put(predecessor, normalized);
+            log.fine(format("P(%d|%d --> %d) = %f", timespan, predecessor.getEventType(), tdf.getEventType(), normalized));
         }
 
-        log.info("Tested: " + dataToTest);
-        return new TemporalProbabilityFeature(dataToTest, datatypeToProbabilities);
+        return new TemporalProbabilityFeature(tdf, probabilities);
     }
 
-    private boolean checkIfModelNotTrained() {
-        return model == null || !model.isTrained();
-    }
-
-    private double normalizePrecedessorProbability(double probabilityOfPrecedessor, double maxProbability) {
-        double normalizedPredecessorProbability = probabilityOfPrecedessor;
-
-        if (maxProbability == Constants.LOWESTPROBABILITY) {
-            System.out.println("TestModel: maxProbability is " + maxProbability);
-        } else {
-            normalizedPredecessorProbability /= maxProbability;
-        }
-
-        normalizedPredecessorProbability = Math.min(normalizedPredecessorProbability, 1.0);
-        return normalizedPredecessorProbability;
-    }
-
+    /**
+     * Set the model to generate the {@link TemporalProbabilityFeature}.
+     *
+     * @param model the model to use
+     */
     public void setModel(T2GramModelI model) {
         this.model = model;
     }
 
+    /**
+     * Get the model.
+     *
+     * @return the model
+     */
     public T2GramModelI getModel() {
         return this.model;
     }
 
+
+    /**
+     * Checks if the model has not yet been trained.
+     *
+     * @return true if model not yet trained
+     */
+    private boolean checkIfModelNotTrained() {
+        return model == null || !model.isTrained();
+    }
+
+    /**
+     * Normalize the probability.
+     *
+     * @param raw the raw probability
+     * @param max the max probability
+     * @return the normalized probability
+     */
+    private double normalize(double raw, double max) {
+        if (max != Constants.LOWESTPROBABILITY)
+            raw /= max;
+        return Math.min(raw, 1.0);
+    }
 }
