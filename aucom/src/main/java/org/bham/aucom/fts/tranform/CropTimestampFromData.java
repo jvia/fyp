@@ -1,36 +1,72 @@
 package org.bham.aucom.fts.tranform;
 
-import java.io.Serializable;
-
 import org.bham.aucom.data.AbstractData;
 
+import java.io.Serializable;
+
+/**
+ * This node shifts the timestamps of all incoming data. Essetially, all input
+ * is shifted the amount which makes the first input's timestamp 0.
+ *
+ * @param <T> a datum of type AbstractData
+ */
 public class CropTimestampFromData<T extends AbstractData> extends AbstractAucomTranformNode<T, T> implements Serializable {
-	private static final long serialVersionUID = 1L;
 
-	public CropTimestampFromData() {
-		super("CropTimestampFromData");
-	}
+    // -1 is the placeholder for there beig no timestamp set
+    private static final long NO_TIMESTAMP = -1;
+    private static final long serialVersionUID = 1L;
 
-	private long firstTimestamp = -1;
+    private long firstTimestamp;
 
-	public void reset() {
-		setFirstTimestamp(-1);
-	}
+    /**
+     * Create the timestamp cropping node.
+     */
+    public CropTimestampFromData() {
+        super("CropTimestampFromData");
+        firstTimestamp = NO_TIMESTAMP;
+    }
 
-	public void setFirstTimestamp(long firstTimestamp) {
-		this.firstTimestamp = firstTimestamp;
-	}
+    /**
+     * Shifts the timestamp of the incoming input by the timestamp of the first
+     * input. This has the effect of shifting the whole timeseries such that
+     * the
+     * first entry occurs at timestamp 0.
+     *
+     * @param input the input
+     * @return the input with a shifted timestamp
+     * @throws Exception something went wrong
+     */
+    @Override
+    protected T iTransform(T input) throws Exception {
+        if (getFirstTimestamp() == NO_TIMESTAMP)
+            setFirstTimestamp(input.getTimestamp());
+        input.setTimestamp(input.getTimestamp() - getFirstTimestamp());
+        return input;
+    }
 
-	public long getFirstTimestamp() {
-		return firstTimestamp;
-	}
+    /**
+     * Unset the first timestamp.
+     */
+    public void reset() {
+        setFirstTimestamp(NO_TIMESTAMP);
+    }
 
-	@Override
-	protected T iTransform(T input) throws Exception {
-		if (getFirstTimestamp() == -1) {
-			setFirstTimestamp(input.getTimestamp());
-		}
-		input.setTimestamp(input.getTimestamp() - getFirstTimestamp());
-		return input;
-	}
+    /**
+     * Set the time of the first timestamp. This is the value that will be used
+     * to shift all other timestamps.
+     *
+     * @param firstTimestamp the timestamp
+     */
+    public void setFirstTimestamp(long firstTimestamp) {
+        this.firstTimestamp = firstTimestamp;
+    }
+
+    /**
+     * Get the timestamp offset.
+     *
+     * @return the value by which to shift timestamps
+     */
+    public long getFirstTimestamp() {
+        return firstTimestamp;
+    }
 }
