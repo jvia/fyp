@@ -9,11 +9,16 @@ import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
 import java.util.logging.Logger;
 
 /**
- * Calculates the score for the system.
+ * Calculates the score for the system. The score is calculated from a {@link
+ * TemporalProbabilityFeature} input.
+ * <p/>
+ *
+ * @author Raphael Golombek <rgolombe@cor-lab.uni-bielefeld.de>
+ * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk>
  */
 public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProbabilityFeature, Score> {
-    private final Logger log = Logger.getLogger(getClass().getName());
 
+    private final Logger log = Logger.getLogger(getClass().getName());
     private T2GramModelI model;
 
     /**
@@ -70,14 +75,20 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
         return scoreValue;
     }
 
+    /**
+     * Calculates the score for the given current event type and a given
+     * predecessor event type.
+     *
+     * @param predecessor a previous system event
+     * @param current     the current system event
+     * @param denominator the entropy of the distribution (normalized not to
+     *                    divide by 0)
+     * @return
+     */
     protected double calculateSingleScoreValue(DataType predecessor, TemporalProbabilityFeature current, double denominator) {
         double probability = current.getProbabilityFor(predecessor);
         double entropy = calculateSingleEntropy(current, predecessor);
         double output;
-
-        // Ensure components can be connected
-//        if (!reducer.areConnected(predecessor.getEventType(), current.getEventType()))
-//            return 0.0;
 
         // Warn if values are illegal
         if (Double.isNaN(probability))

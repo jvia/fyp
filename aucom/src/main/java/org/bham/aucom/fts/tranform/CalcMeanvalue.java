@@ -5,154 +5,238 @@ import org.bham.aucom.data.Score;
 import org.bham.aucom.data.util.SlidingWindow;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import static java.lang.String.format;
 
+/**
+ * This node calculates an averaged score by taking into account the score over
+ * time.
+ *
+ * @author Raphael Golombek <rgolombe@cor-lab.uni-bielefeld.de>
+ * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk>
+ */
 public class CalcMeanvalue extends AbstractAucomTranformNode<Score, Score> {
-    private final ArrayList<Score> tmp;
+    private final List<Score> history;
     // TODO :: determine if slidingWindow can be removed from class
     private SlidingWindow slidingWindow;
-    protected long tmpFirstTimestampOfTheWindow;
-    protected long tmpLastTimestampOfTheWindow;
+    protected long windowStart;
+    protected long windowEnd;
     private transient final Logger log = Logger.getLogger(getClass().getName());
 
+    /**
+     * Construct the node.
+     */
     public CalcMeanvalue() {
         super("CalcMeanValue");
-        tmp = new ArrayList<Score>();
+        history = new ArrayList<Score>();
     }
 
-    public void reset() {
-        log.info("Resetting CalcMean");
-        tmp.clear();
-        tmpFirstTimestampOfTheWindow = 0l;
-        tmpLastTimestampOfTheWindow = getSlidingWindow().getIntervalSize();
-    }
-
-    protected void store(Score dataToStore) {
-        tmp.add(dataToStore);
-    }
-
-    protected RangeScore calcMeanScore(ArrayList<Score> list) {
-        if (list.size() == 0) {
-            log.fine("Score list is empty. Returning null.");
-            return null;
-        }
-        return new RangeScore(list);
-    }
-
-    protected boolean hasReceivedLastSequenceElement(Score element) {
-        if (element.isMarkedAsLastElement())
-            log.info(format("Received last item. Queue size is %d", tmp.size()));
-        return element.isMarkedAsLastElement();
-    }
-
+    /**
+     * Transform a raw score value into a modified score value based on the
+     * score history.
+     *
+     * @param score the raw score
+     * @return the modified score
+     * @throws Exception something went wrong
+     */
     @Override
-    protected Score iTransform(Score arg0) throws Exception {
+    protected Score iTransform(Score score) throws Exception {
         log.finest(format("Calling iTransform with sliding window %s", getSlidingWindow()));
-        Score meanScore = null;
-        store(arg0);
 
-        if (shouldCalculateNewSlidingWindow(arg0)) {
+        history.add(score);
+        Score mean = null;
+
+        if (shouldCalculateNewSlidingWindow(score)) {
             log.info("Calculating new window");
-            ArrayList<Score> windowElements = getWindowElements(tmp, tmpLastTimestampOfTheWindow);
-            ArrayList<Score> elementsToRemove = getElementsToRemove(tmp, tmpLastTimestampOfTheWindow);
 
-            tmpLastTimestampOfTheWindow = getNextLastTimestampOfTheWindow();
+            List<Score> windowElements = getWindowElements(history, windowEnd);
+            List<Score> elementsToRemove = getElementsToRemove(history, windowEnd);
+            windowEnd = getNextWindowEnd();
+            mean = calcMeanScore(windowElements);
 
-            meanScore = calcMeanScore(windowElements);
-            if (meanScore == null) {
+            if (mean == null) {
                 log.info("Not enough elements for mean score, returning null");
                 return null;
             }
-            if (hasReceivedLastSequenceElement(arg0)) {
-                meanScore.getAttributes().put("lastElement", "yes");
+
+            if (lastElement(score)) {
+                mean.getAttributes().put("lastElement", "yes");
                 log.info("got last element, marking the output too");
             }
 
-            tmp.removeAll(elementsToRemove);
-            elementsToRemove.clear();
+            history.removeAll(elementsToRemove);
         } else {
             checkIfLastTimestampOfTheWindowIsValid();
         }
-        return meanScore;
+
+        return mean;
     }
 
-    private boolean shouldCalculateNewSlidingWindow(Score arg0) {
-        return hasReceivedLastSequenceElement(arg0) || hasEnoughElementsForNextSlidingWindow();
+    /**
+     * Resets all data in the node.
+     */
+    public void reset() {
+        log.info("Resetting CalcMean");
+        history.clear();
+        windowStart = 0;
+        windowEnd = getSlidingWindow().getIntervalSize();
     }
 
-    protected ArrayList<Score> getElementsToRemove(ArrayList<Score> tmp2, long tmpLastTimestampOfTheWindow2) {
-        ArrayList<Score> out = new ArrayList<Score>();
-        try {
-            for (Score s : tmp2) {
-                if (s.getTimestamp() >= tmpLastTimestampOfTheWindow2 - getSlidingWindow().getIntervalOverlapSize())
-                    return out;
-                out.add(s);
-            }
-        } catch (Exception e) {
-            System.out.println("this is " + this);
+    /**
+     * Adds a score value to the history.
+     *
+     * @param score the score to remember
+     */
+    protected void store(Score score) {
+        history.add(score);
+    }
+
+    /**
+     * Calculate the mean score.
+     *
+     * @param scores the list of score
+     * @return a range score
+     */
+    protected RangeScore calcMeanScore(List<Score> scores) {
+        if (scores.isEmpty()) {
+            log.fine("Score scores is empty. Returning null.");
+            return null;
         }
-        return new ArrayList<Score>();
+        return new RangeScore(scores);
     }
 
-    protected void checkIfLastTimestampOfTheWindowIsValid() {
-        if (tmp.size() != 0 && tmp.get(0).getTimestamp() > tmpLastTimestampOfTheWindow) {
-            log.info("lastTimeStamp is not valid");
-            tmpLastTimestampOfTheWindow = tmp.get(0).getTimestamp();
-        }
+    /**
+     * Determines if this score is the last score in the series.
+     *
+     * @param score the score
+     * @return true if last element
+     */
+    protected boolean lastElement(Score score) {
+        return score.isMarkedAsLastElement();
     }
 
-    protected long getNextLastTimestampOfTheWindow() {
-        long next = tmpLastTimestampOfTheWindow + getSlidingWindow().getIntervalSize() - getSlidingWindow().getIntervalOverlapSize();
-        if (tmp.size() != 0 && tmp.get(0).getTimestamp() > next) {
-            next = tmp.get(0).getTimestamp();
-        }
-        return next;
+    /**
+     * Determines if a new sliding window should be calculated. This is returns
+     * true when the score is the final score or if the sliding window has
+     * reached its maximum size.
+     *
+     * @param score the score
+     * @return true if new sliding window needs to be calculated
+     */
+    private boolean shouldCalculateNewSlidingWindow(Score score) {
+        return lastElement(score) || hasEnoughElementsForNextSlidingWindow();
     }
 
-    protected ArrayList<Score> getWindowElements(ArrayList<Score> tmp2, long tmpLastTimestampOfTheWindow2) {
-        ArrayList<Score> out = new ArrayList<Score>();
-        if (hasReceivedLastSequenceElement(tmp.get(tmp.size() - 1))) {
-            out.addAll(tmp);
-            return out;
-        }
-        try {
-            for (Score s : tmp2) {
-                if (s.getTimestamp() >= tmpLastTimestampOfTheWindow2)
-                    return out;
-                out.add(s);
-            }
-        } catch (Exception e) {
-            System.out.println("ConcurrentModificationException catched in getWindowElements");
+    /**
+     * Calculates which elements need to be removed from the sliding window.
+     *
+     * @param scores    the list of scores
+     * @param windowEnd the window end
+     * @return the list of elements to remove
+     */
+    protected List<Score> getElementsToRemove(List<Score> scores, long windowEnd) {
+        List<Score> out = new ArrayList<Score>();
+        for (Score s : scores) {
+            if (s.getTimestamp() >= windowEnd - slidingWindow.getIntervalOverlapSize())
+                break;
+            out.add(s);
         }
         return out;
     }
 
-    protected long getOldestTimestamp() {
-        return (tmp.size() > 0) ? tmp.get(tmp.size() - 1).getTimestamp() : tmpFirstTimestampOfTheWindow;
-    }
-
-    protected boolean hasEnoughElementsForNextSlidingWindow() {
-        long oldestTimestamp = getOldestTimestamp();
-        boolean isCalculateNextWindow = false;
-        if (tmpLastTimestampOfTheWindow < oldestTimestamp) {
-            isCalculateNextWindow = true;
+    /**
+     * Check if windowEnd timestamp is valid and updates it if not.
+     */
+    protected void checkIfLastTimestampOfTheWindowIsValid() {
+        if (!history.isEmpty() && history.get(0).getTimestamp() > windowEnd) {
+            log.info("lastTimeStamp is not valid");
+            windowEnd = history.get(0).getTimestamp();
         }
-        log.info("old:" + oldestTimestamp + " max:" + tmpLastTimestampOfTheWindow + " enough:" + isCalculateNextWindow);
-        return isCalculateNextWindow;
     }
 
+    /**
+     * Calculate the new end of the sliding window
+     *
+     * @return the new end
+     */
+    protected long getNextWindowEnd() {
+        long next = windowEnd + (slidingWindow.getIntervalSize() - slidingWindow.getIntervalOverlapSize());
+
+        if (!history.isEmpty() && history.get(0).getTimestamp() > next)
+            next = history.get(0).getTimestamp();
+
+        return next;
+    }
+
+    /**
+     * Gets all of the elements which are within the sliding window.
+     *
+     * @param history   the score history
+     * @param windowend the end of the sliding window
+     * @return the scores within the sliding window
+     */
+    protected List<Score> getWindowElements(List<Score> history, long windowend) {
+        List<Score> out = new ArrayList<Score>();
+
+        // if we have seen the last element, return the whole history
+        if (lastElement(history.get(history.size() - 1)))
+            return history;
+
+        // add all scores which fall within the sliding window
+        for (Score s : history)
+            if (s.getTimestamp() < windowend)
+                out.add(s);
+
+        return out;
+    }
+
+    /**
+     * Get the oldest timestamp in the sliding window.
+     *
+     * @return the oldest timestamp
+     */
+    protected long getOldestTimestamp() {
+        if (history.isEmpty())
+            return windowStart;
+        else
+            return history.get(history.size() - 1).getTimestamp();
+    }
+
+    /**
+     * Determines if enough elements have come in to move the sliding window.
+     *
+     * @return true if the window can be slid
+     */
+    protected boolean hasEnoughElementsForNextSlidingWindow() {
+        long oldest = getOldestTimestamp();
+        log.fine(format("Oldest: %d, Window end: %d, Enough to slide? %b", oldest, windowEnd, windowEnd < oldest));
+        return windowEnd < oldest;
+    }
+
+    /**
+     * Gets the first time stamp of the sliding window.
+     * <p/>
+     * TODO :: Seems to be unused & illogical
+     *
+     * @return 0
+     */
     protected long getFirstTimestampOfTheWindow() {
         // check whether the next window will be empty, if so skip it
-        if (tmpFirstTimestampOfTheWindow + getSlidingWindow().getIntervalSize() < tmp.get(0).getTimestamp()) {
-            tmpFirstTimestampOfTheWindow = tmp.get(0).getTimestamp();
-            log.info("first timestamp of the windows and the window are smaller than timestamp of the first element in tmp" + tmpFirstTimestampOfTheWindow + getSlidingWindow().getIntervalSize()
-                     + tmp.get(0).getTimestamp());
+        if (windowStart + getSlidingWindow().getIntervalSize() < history.get(0).getTimestamp()) {
+            windowStart = history.get(0).getTimestamp();
+            log.info("first timestamp of the windows and the window are smaller than timestamp of the first element in history" + windowStart + getSlidingWindow().getIntervalSize()
+                     + history.get(0).getTimestamp());
         }
         return 0;
     }
 
+    /**
+     * Set the sliding window.
+     *
+     * @param slidingWindow the new sliding window
+     */
     public void setSlidingWindow(SlidingWindow slidingWindow) {
         this.slidingWindow = slidingWindow;
 
@@ -165,6 +249,11 @@ public class CalcMeanvalue extends AbstractAucomTranformNode<Score, Score> {
         reset();
     }
 
+    /**
+     * Get the sliding window.
+     *
+     * @return the sliding window
+     */
     public SlidingWindow getSlidingWindow() {
         return slidingWindow;
     }

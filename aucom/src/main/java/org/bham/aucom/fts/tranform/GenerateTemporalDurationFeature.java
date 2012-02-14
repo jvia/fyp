@@ -8,6 +8,8 @@ import java.util.logging.Logger;
 /**
  * This node transforms system events into its {@link TemporalDurationFeature}
  * representation.
+ * <p/>
+ * TODO :: Put a list which holds the history of elements
  *
  * @author Raphael Golombek <rgolombe@cor-lab.uni-bielefeld.de>
  * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk

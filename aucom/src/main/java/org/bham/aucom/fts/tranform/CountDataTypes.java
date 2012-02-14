@@ -13,6 +13,7 @@ import java.util.HashMap;
  */
 public class CountDataTypes extends AbstractAucomTranformNode<DataType, DataType> {
     private HashMap<Integer, Integer> counting;
+    private long total;
 
     /**
      * Create the counting node.
@@ -20,6 +21,7 @@ public class CountDataTypes extends AbstractAucomTranformNode<DataType, DataType
     public CountDataTypes() {
         super("CountDataTypes");
         setCounting(new HashMap<Integer, Integer>());
+        total = 0;
     }
 
 
@@ -39,6 +41,7 @@ public class CountDataTypes extends AbstractAucomTranformNode<DataType, DataType
 
         // Increment the count
         counting.put(input.getEventType(), counting.get(input.getEventType()) + 1);
+        ++total;
 
         return input;
     }
@@ -60,6 +63,10 @@ public class CountDataTypes extends AbstractAucomTranformNode<DataType, DataType
      */
     public HashMap<Integer, Integer> getCounting() {
         return counting;
+    }
+
+    public long getTotal() {
+        return total;
     }
 
 }

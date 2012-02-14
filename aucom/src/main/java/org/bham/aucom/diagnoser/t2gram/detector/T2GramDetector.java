@@ -33,12 +33,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author rgolombe
+ * A class which wraps the {@link DetectorGraph} and gives it a GUI.
+ *
+ * @author Raphael Golombek <rgolombe@cor-lab.uni-bielefeld.de>
+ * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk>
  */
 public class T2GramDetector extends AbstractDetector {
-    JPanel panel;
-    private DetectorGraph detectorGraph;
+    private JPanel panel;
+    private final DetectorGraph detectorGraph;
 
+    /**
+     * Create the T2GramDetector.
+     */
     public T2GramDetector() {
         detectorGraph = new DetectorGraph();
         detectorGraph.saveGraph();
@@ -59,6 +65,11 @@ public class T2GramDetector extends AbstractDetector {
         });
     }
 
+    /**
+     * Get the associated {@link JPanel} for this detector graph.
+     *
+     * @return the JPanel
+     */
     @Override
     public JPanel getPanel() {
         if (panel == null) {
@@ -69,23 +80,42 @@ public class T2GramDetector extends AbstractDetector {
         return panel;
     }
 
+    /**
+     * Pause the fault detector graph.
+     *
+     * @throws IllegalStateChange cannot move into this state from current
+     *                            state
+     */
     @Override
     public void pause() throws IllegalStateChange {
         detectorGraph.pause();
     }
 
+    /**
+     * Stop the detector graph.
+     */
     @Override
     public void stop() {
         detectorGraph.stop();
     }
 
+    /**
+     * Set the model for the detector graph.
+     *
+     * @param m the model to use
+     * @throws ClassCastException not a valid model class
+     */
     public void setModel(Model m) throws ClassCastException {
         detectorGraph.setModel((T2GramModelI) m);
     }
 
-    public void setClassificator(AnomalyClassificator classificatorToSet) {
-
-        detectorGraph.setClassificator(classificatorToSet);
+    /**
+     * Set the classifier for the detector graph.
+     *
+     * @param classifier the classifier
+     */
+    public void setClassificator(AnomalyClassificator classifier) {
+        detectorGraph.setClassificator(classifier);
     }
 
     public AnomalyClassificator getClassificator() {
@@ -133,5 +163,9 @@ public class T2GramDetector extends AbstractDetector {
         detectorGraph.reset();
         detectorGraph.setInput(inTimeSeries);
         detectorGraph.start();
+    }
+
+    public DetectorGraph getDetectorGraph() {
+        return detectorGraph;
     }
 }

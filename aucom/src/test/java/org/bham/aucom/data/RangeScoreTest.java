@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
@@ -75,7 +76,7 @@ public class RangeScoreTest {
         System.out.println("getScores");
         RangeScore instance = null;
         ArrayList expResult = null;
-        ArrayList result = instance.getScores();
+        List result = instance.getScores();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

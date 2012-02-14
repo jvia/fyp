@@ -24,16 +24,13 @@ public class TimeSeriesSource<T extends AbstractData> extends AucomSourceAdapter
         queue = new LinkedBlockingQueue<T>();
         setInput(input);
         setState(SourceStatus.CONNECTED);
-        copyDataFromTimeSeriesToSourceQueue(0, getInput().size() - 1);
+        if (input != null)
+            copyDataFromTimeSeriesToSourceQueue(0, getInput().size() - 1);
         log.config(format("Init: %s elements %d", noficifactionName, queue.size()));
     }
 
     public TimeSeriesSource(String noficifactionName) {
-        super("SequenceQueueSource");
-        queue = new LinkedBlockingQueue<T>();
-        setInput(null);
-        setState(SourceStatus.CONNECTED);
-        log.info(format("Initializing queue with notification name: %s and %d elements", noficifactionName, queue.size()));
+        this(null, noficifactionName);
     }
 
     @Override

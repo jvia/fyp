@@ -22,6 +22,7 @@ import static org.bham.aucom.util.Constants.TEST_SOURCE;
  * up the FTS nodes that perform all of the aspects of fault detection.
  *
  * @author Raphael Golombek <rgolombe@cor-lab.uni-bielefeld.de>
+ * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk>
  */
 public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatusListener {
     private static final long serialVersionUID = 1L;
@@ -31,17 +32,18 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     private T2GramModelI model;
 
     // transient fields
-    private transient TimeSeriesSource<Observation> observationTimeseriesSource;
+    private transient TimeSeriesSource<Observation> observationNode;
+    private transient EncodeData encoderNode;
+    private transient CropTimestampFromData<Observation> timestampShiftingNode;
+    private transient CountDataTypes countingNode;
+    private transient GenerateTemporalDurationFeature durationFeatureNode;
+    private transient GenerateTemporalProbabilityFeature probabilityFeatureNode;
+    private transient CalcEntropyAvgScore rawScoreCalculatorNode;
+    private transient CalcMeanvalue meanScoreCalculatorNode;
+    private transient Classificate classificationNode;
+
     private transient TimeSeriesSource<Score> scoreTimeseriesSource;
-    private transient CalcEntropyAvgScore calculateScore;
-    private transient EncodeData encodeData;
-    private transient CountDataTypes countDataTypes;
-    private transient GenerateTemporalDurationFeature generateDurationFeature;
-    private transient GenerateTemporalProbabilityFeature test;
     private transient TimeSeriesSink<Classification> sink;
-    private transient CalcMeanvalue mean;
-    private transient Classificate anomalyClassification;
-    private transient CropTimestampFromData<Observation> cropTimestampFromData;
 
     /**
      * Constructs the DetectorGraph.
@@ -50,33 +52,6 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
         super("detectorGraph");
         initGraph();
     }
-
-//    /**
-//     * @param model         detector model to use
-//     * @param classificator the classifier to use
-//     * @param slidingWindow the sliding window to use
-//     */
-//    private void setMonitorState(T2GramModelI model, AnomalyClassificator classificator, SlidingWindow slidingWindow) {
-//        if (getStatus().equals(GraphStatus.RUNNING)) {
-//            try {
-//                pause();
-//            } catch (IllegalStateChange e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        setModel(model);
-//        setClassificator(classificator);
-//        if (model == null) {
-//            return;
-//        } else {
-//            generateDurationFeature.setGenerator(new TemporalDurationFeatureGenerator(model.getDimensions()));
-//        }
-//        setSlidingWindow(slidingWindow);
-//        if (getStatus().equals(GraphStatus.PAUSED)) {
-//            resume();
-//        }
-//
-//    }
 
     /**
      * Sets the model used by this detector graph.
@@ -90,13 +65,13 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
         }
 
         model = inModel;
-        test.setModel(inModel);
-        calculateScore.setModel(inModel);
-        if (generateDurationFeature.getGenerator() != null) {
-            generateDurationFeature.getGenerator().clearInitialClasses();
-            generateDurationFeature.getGenerator().addInitalClasses(model.getDimensions());
+        probabilityFeatureNode.setModel(inModel);
+        rawScoreCalculatorNode.setModel(inModel);
+        if (durationFeatureNode.getGenerator() != null) {
+            durationFeatureNode.getGenerator().clearInitialClasses();
+            durationFeatureNode.getGenerator().addInitalClasses(model.getDimensions());
         } else {
-            generateDurationFeature.setGenerator(new TemporalDurationFeatureGenerator(inModel.getDimensions()));
+            durationFeatureNode.setGenerator(new TemporalDurationFeatureGenerator(inModel.getDimensions()));
         }
     }
 
@@ -106,39 +81,41 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     }
 
     public void setClassificator(AnomalyClassificator classificatorToSet) {
-        anomalyClassification.setClassificator(classificatorToSet);
+        classificationNode.setClassificator(classificatorToSet);
     }
 
     @Override
     protected void initGraph() {
-        observationTimeseriesSource = new TimeSeriesSource<Observation>(TEST_SOURCE);
-        observationTimeseriesSource.addSourceStatusListener(this);
-        cropTimestampFromData = new CropTimestampFromData<Observation>();
+        observationNode = new TimeSeriesSource<Observation>(TEST_SOURCE);
+        observationNode.addSourceStatusListener(this);
+        timestampShiftingNode = new CropTimestampFromData<Observation>();
         scoreTimeseriesSource = new TimeSeriesSource<Score>("scoreTimeseriesSource");
-        encodeData = new EncodeData();
-        countDataTypes = new CountDataTypes();
-        test = new GenerateTemporalProbabilityFeature();
-        generateDurationFeature = new GenerateTemporalDurationFeature();
-        calculateScore = new CalcEntropyAvgScore();
-        mean = new CalcMeanvalue();
-        mean.setSlidingWindow(new SlidingWindow(100, 50));
-        anomalyClassification = new Classificate();
+        encoderNode = new EncodeData();
+        countingNode = new CountDataTypes();
+        probabilityFeatureNode = new GenerateTemporalProbabilityFeature();
+        durationFeatureNode = new GenerateTemporalDurationFeature();
+        rawScoreCalculatorNode = new CalcEntropyAvgScore();
+
+        meanScoreCalculatorNode = new CalcMeanvalue();
+        meanScoreCalculatorNode.setSlidingWindow(new SlidingWindow(100, 50));
+
+        classificationNode = new Classificate();
         sink = new TimeSeriesSink<Classification>(new ClassificationTimeSeries());
         DataManager.getInstance().addTimeSeries(sink.getOutput());
         sink.getOutput().addTimeSeriesStatusListener(this);
 
-        graph.connect(observationTimeseriesSource, cropTimestampFromData);
-        graph.connect(cropTimestampFromData, encodeData);
-        graph.connect(encodeData, countDataTypes);
-        graph.connect(countDataTypes, generateDurationFeature);
-        graph.connect(generateDurationFeature, test);
-        graph.connect(test, calculateScore);
-        graph.connect(calculateScore, mean);
-        graph.connect(mean, anomalyClassification);
+        graph.connect(observationNode, timestampShiftingNode);
+        graph.connect(timestampShiftingNode, encoderNode);
+        graph.connect(encoderNode, countingNode);
+        graph.connect(countingNode, durationFeatureNode);
+        graph.connect(durationFeatureNode, probabilityFeatureNode);
+        graph.connect(probabilityFeatureNode, rawScoreCalculatorNode);
+        graph.connect(rawScoreCalculatorNode, meanScoreCalculatorNode);
+        graph.connect(meanScoreCalculatorNode, classificationNode);
 
-        graph.connect(scoreTimeseriesSource, anomalyClassification);
+        graph.connect(scoreTimeseriesSource, classificationNode);
 
-        graph.connect(anomalyClassification, sink);
+        graph.connect(classificationNode, sink);
     }
 
     public T2GramModelI getModel() {
@@ -146,12 +123,12 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     }
 
     public void reset() {
-        observationTimeseriesSource.reset();
+        observationNode.reset();
         scoreTimeseriesSource.reset();
         sink.getOutput().clear();
-        mean.reset();
-        generateDurationFeature.reset();
-        anomalyClassification.reset();
+        meanScoreCalculatorNode.reset();
+        durationFeatureNode.reset();
+        classificationNode.reset();
     }
 
     public String getName() {
@@ -159,15 +136,15 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     }
 
     public void setInput(TimeSeries<Observation> inTimeSeries) throws ActionFailedException {
-        observationTimeseriesSource.setInput(inTimeSeries);
+        observationNode.setInput(inTimeSeries);
     }
 
     public AnomalyClassificator getClassificator() {
-        return anomalyClassification.getClassificator();
+        return classificationNode.getClassificator();
     }
 
     public void setSlidingWindow(SlidingWindow slidingWindow) {
-        mean.setSlidingWindow(slidingWindow);
+        meanScoreCalculatorNode.setSlidingWindow(slidingWindow);
     }
 
     public void updateSlidingWindow(SlidingWindow slidingWindow) {
@@ -175,7 +152,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     }
 
     public SlidingWindow getSlidingWindow() {
-        return mean.getSlidingWindow();
+        return meanScoreCalculatorNode.getSlidingWindow();
     }
 
     public TimeSeries<Classification> getClassificationTimeSeries() {
@@ -228,7 +205,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
      * @return true if ready
      */
     private boolean inputIsPresent() {
-        return observationTimeseriesSource.getInput() != null;
+        return observationNode.getInput() != null;
     }
 
     /**
@@ -237,7 +214,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
      * @return true if ready
      */
     private boolean anomalyDetectorIsReady() {
-        return anomalyClassification.getClassificator() != null;
+        return classificationNode.getClassificator() != null;
     }
 
     /**
@@ -246,11 +223,11 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
      * @return true if ready
      */
     private boolean modelIsReady() {
-        return test.getModel() != null;
+        return probabilityFeatureNode.getModel() != null;
     }
 
     public TimeSeries<Score> getScoreTimeSeries() {
-        return calculateScore.getTimeSeries();
+        return rawScoreCalculatorNode.getTimeSeries();
     }
 
     @Override
@@ -265,6 +242,10 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
      * @return true if ready
      */
     private boolean featureGeneratorIsReady() {
-        return generateDurationFeature.getGenerator() != null;
+        return durationFeatureNode.getGenerator() != null;
+    }
+
+    public long getTotalElementsSeen() {
+        return countingNode.getTotal();
     }
 }

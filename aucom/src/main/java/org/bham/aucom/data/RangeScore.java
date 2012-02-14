@@ -2,18 +2,20 @@ package org.bham.aucom.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+/**
+* Represents a Score generated out of a sequence of consecutive scores. @see Score
+* Score value, abnormality and durations to precedessors are mean values of the scores
+* Timestamp and Precedessors are  elements of the first score in the represented sequence
+*
+*/
 public class RangeScore extends Score {
-    /*
-      * Represents a Score generated out of a sequence of consecutive scores. @see Score
-      * Score value, abnormality and durations to precedessors are mean values of the scores
-      * Timestamp and Precedessors are  elements of the first score in the represented sequence
-      *
-      */
-    private ArrayList<Score> scores;
+    private List<Score> scores;
 
-    public RangeScore(ArrayList<Score> scores) {
-        super(scores.get(0));// this is very dangerous, but I have no clue how to solve it
+    public RangeScore(List<Score> scores) {
+        // TODO :: this is very dangerous, but I have no clue how to solve it
+        super(scores.get(0));
         double meanValue = 0.0d;
         int eventCounter = 0;
         if (scores.size() > 0) {
@@ -37,7 +39,7 @@ public class RangeScore extends Score {
         return this.getScores().size();
     }
 
-    private double calculateVarianceValue(ArrayList<Score> sequence) {
+    private double calculateVarianceValue(List<Score> sequence) {
         double var = 0.0d;
         for (Score s : sequence) {
             var += Math.pow(this.getValue() - s.getValue(), 2);
@@ -49,11 +51,11 @@ public class RangeScore extends Score {
         return var;
     }
 
-    protected void setScores(ArrayList<Score> scores) {
+    protected void setScores(List<Score> scores) {
         this.scores = scores;
     }
 
-    public ArrayList<Score> getScores() {
+    public List<Score> getScores() {
         return this.scores;
     }
 

@@ -9,6 +9,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
@@ -38,8 +39,8 @@ public class CalcMeanvalueTest extends CalcMeanvalue {
 		CalcMeanvalueTest test = new CalcMeanvalueTest();
 		try {
 			long timestampOfInserstetElement = 1;
-			Assert.assertEquals(0, test.tmpFirstTimestampOfTheWindow);
-			Assert.assertEquals(1, test.tmpLastTimestampOfTheWindow);
+			Assert.assertEquals(0, test.windowStart);
+			Assert.assertEquals(1, test.windowEnd);
 			Assert.assertEquals(0, test.getOldestTimestamp());
 			ArrayList<DomainFeature> features = new ArrayList<DomainFeature>();
 			features.add(new DomainFeature("scope", "a"));
@@ -52,11 +53,11 @@ public class CalcMeanvalueTest extends CalcMeanvalue {
 			double value = 0.1;
 			Score s = new SingleScore(tpd, value);
 			Assert.assertNull(test.transform(s));
-			Assert.assertEquals(0, test.tmpFirstTimestampOfTheWindow);
+			Assert.assertEquals(0, test.windowStart);
 
 			// transform berechnet ein window und kalkuliert den naechsten
 			// timestamp, daher 2
-			Assert.assertEquals(1, test.tmpLastTimestampOfTheWindow);
+			Assert.assertEquals(1, test.windowEnd);
 
 			Assert.assertEquals(false, test.hasEnoughElementsForNextSlidingWindow());
 
@@ -64,8 +65,8 @@ public class CalcMeanvalueTest extends CalcMeanvalue {
 			test = new CalcMeanvalueTest();
 			timestampOfInserstetElement = 3;
 
-			Assert.assertEquals(0, test.tmpFirstTimestampOfTheWindow);
-			Assert.assertEquals(1, test.tmpLastTimestampOfTheWindow);
+			Assert.assertEquals(0, test.windowStart);
+			Assert.assertEquals(1, test.windowEnd);
 			Assert.assertEquals(0, test.getOldestTimestamp());
 
 			features.add(new DomainFeature("scope", "a"));
@@ -78,8 +79,8 @@ public class CalcMeanvalueTest extends CalcMeanvalue {
 			s = new SingleScore(tpd, value);
 
 			test.transform(s);
-			Assert.assertEquals(1, test.tmpFirstTimestampOfTheWindow);
-			Assert.assertEquals(2, test.tmpLastTimestampOfTheWindow);
+			Assert.assertEquals(1, test.windowStart);
+			Assert.assertEquals(2, test.windowEnd);
 			Assert.assertEquals(timestampOfInserstetElement, test.getOldestTimestamp());
 			Assert.assertEquals(false, test.hasEnoughElementsForNextSlidingWindow());
 		} catch (Exception exception) {
@@ -95,7 +96,7 @@ public class CalcMeanvalueTest extends CalcMeanvalue {
 		calcMeanValuetestObject.setSlidingWindow(new SlidingWindow(10, 1));
 		try {
 			Assert.assertEquals(0, calcMeanValuetestObject.getFirstTimestampOfTheWindow());
-			Assert.assertEquals(1, calcMeanValuetestObject.tmpLastTimestampOfTheWindow);
+			Assert.assertEquals(1, calcMeanValuetestObject.windowEnd);
 			Assert.assertEquals(0, calcMeanValuetestObject.getOldestTimestamp());
 			ArrayList<DomainFeature> features = new ArrayList<DomainFeature>();
 			features.add(new DomainFeature("scope", "a"));
@@ -108,7 +109,7 @@ public class CalcMeanvalueTest extends CalcMeanvalue {
 			Score s = new SingleScore(tpd, value);
 
 			calcMeanValuetestObject.store(s);
-			Assert.assertEquals(0, calcMeanValuetestObject.tmpFirstTimestampOfTheWindow);
+			Assert.assertEquals(0, calcMeanValuetestObject.windowStart);
 			Assert.assertEquals(2, calcMeanValuetestObject.getOldestTimestamp());
 			Assert.assertEquals(true, calcMeanValuetestObject.hasEnoughElementsForNextSlidingWindow());
 
@@ -159,15 +160,15 @@ public class CalcMeanvalueTest extends CalcMeanvalue {
     }
 
     /**
-     * Test of hasReceivedLastSequenceElement method, of class CalcMeanvalue.
+     * Test of lastElement method, of class CalcMeanvalue.
      */
     @Test
     public void testHasReceivedLastSequenceElement() {
-        System.out.println("hasReceivedLastSequenceElement");
+        System.out.println("lastElement");
         Score element = null;
         CalcMeanvalue instance = new CalcMeanvalue();
         boolean expResult = false;
-        boolean result = instance.hasReceivedLastSequenceElement(element);
+        boolean result = instance.lastElement(element);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -198,7 +199,7 @@ public class CalcMeanvalueTest extends CalcMeanvalue {
         long tmpLastTimestampOfTheWindow2 = 0L;
         CalcMeanvalue instance = new CalcMeanvalue();
         ArrayList expResult = null;
-        ArrayList result = instance.getElementsToRemove(tmp2, tmpLastTimestampOfTheWindow2);
+        List result = instance.getElementsToRemove(tmp2, tmpLastTimestampOfTheWindow2);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -217,14 +218,14 @@ public class CalcMeanvalueTest extends CalcMeanvalue {
     }
 
     /**
-     * Test of getNextLastTimestampOfTheWindow method, of class CalcMeanvalue.
+     * Test of getNextWindowEnd method, of class CalcMeanvalue.
      */
     @Test
     public void testGetNextLastTimestampOfTheWindow() {
-        System.out.println("getNextLastTimestampOfTheWindow");
+        System.out.println("getNextWindowEnd");
         CalcMeanvalue instance = new CalcMeanvalue();
         long expResult = 0L;
-        long result = instance.getNextLastTimestampOfTheWindow();
+        long result = instance.getNextWindowEnd();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -240,7 +241,7 @@ public class CalcMeanvalueTest extends CalcMeanvalue {
         long tmpLastTimestampOfTheWindow2 = 0L;
         CalcMeanvalue instance = new CalcMeanvalue();
         ArrayList expResult = null;
-        ArrayList result = instance.getWindowElements(tmp2, tmpLastTimestampOfTheWindow2);
+        List result = instance.getWindowElements(tmp2, tmpLastTimestampOfTheWindow2);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

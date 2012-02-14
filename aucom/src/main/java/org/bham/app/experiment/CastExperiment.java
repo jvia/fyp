@@ -161,13 +161,13 @@ public class CastExperiment implements Experiment {
             faultDetector.start(cast.getObservationTimeSeries());
             System.out.println("Sliding window: " + faultDetector.getSlidingWindow().getIntervalSize());
 
-
             // wait here until it is done
             while (faultDetector.getOutput().size() < size) {
-                //       int size = faultDetector.getOutput().size();
-                //if (size % 100 == 0)
-                //    System.out.printf("Fault detector contains %d elements\n", size);
+                long size = faultDetector.getDetectorGraph().getTotalElementsSeen();
+                System.out.printf("Detector: %d, Output: %d\n", size, faultDetector.getOutput().size());
+                Thread.sleep(500);
             }
+
             //            faultDetector.addStatusListener(new DetectorStatusChangedListener() {
 //                @Override
 //                public void handleDetectorStatusChangedEvent(DetectorStatusChangedEvent evt) {
@@ -177,12 +177,12 @@ public class CastExperiment implements Experiment {
 //            });
 
             // Guarded wait
-            while (faultDetector.getOutput().size() < size) {
-                try {
-                    wait();
-                } catch (InterruptedException ignored) {
-                }
-            }
+//            while (faultDetector.getOutput().size() < size) {
+//                try {
+//                    wait();
+//                } catch (InterruptedException ignored) {
+//                }
+//            }
 
             // stop fault detector and shutdown cast
             System.out.println("Quitting.");
@@ -191,6 +191,8 @@ public class CastExperiment implements Experiment {
         } catch (ActionFailedException e) {
             e.printStackTrace();
         } catch (ActionNotPermittedException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
