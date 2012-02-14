@@ -1,0 +1,121 @@
+HOST localhost
+
+# The chain is this pattern:
+#
+# 0  ->  1 ->  2 ->  3 ->  4 ->  5 ->  6 ->  7 ->  8 ->  9
+# 10 -> 11 -> 12 -> 13 -> 14 -> 15 -> 16 -> 17 -> 18 -> 19
+# 20 -> 21 -> 22 -> 23 -> 24 -> 25 -> 26 -> 27 -> 28 -> 29
+# 30 -> 31 -> 32 -> 33 -> 34 -> 35 -> 36 -> 37 -> 38 -> 39
+# 40 -> 41 -> 42 -> 43 -> 44 -> 45 -> 46 -> 47 -> 48 -> 49
+# 50 -> 51 -> 52 -> 53 -> 54 -> 55 -> 56 -> 57 -> 58 -> 59
+# 60 -> 61 -> 62 -> 63 -> 64 -> 65 -> 66 -> 67 -> 68 -> 69
+# 70 -> 71 -> 72 -> 73 -> 74 -> 75 -> 76 -> 77 -> 78 -> 79
+# 80 -> 81 -> 82 -> 83 -> 84 -> 85 -> 86 -> 87 -> 88 -> 89
+# 90 -> 91 -> 92 -> 93 -> 94 -> 95 -> 96 -> 97 -> 98 -> 99 
+SUBARCHITECTURE 10x10.sa
+JAVA WM cast.architecture.SubarchitectureWorkingMemory
+JAVA TM cast.architecture.AlwaysPositiveTaskManager
+JAVA MG node0 experiments.Node  --start             --delay "random 1000 1500"
+JAVA MG node1 experiments.Node  --follows "node0"   --delay "random 1000 1500" --fault "2000"
+JAVA MG node2 experiments.Node  --follows "node1"   --delay "random 1000 1500"
+JAVA MG node3 experiments.Node  --follows "node2"   --delay "random 1000 1500"
+JAVA MG node4 experiments.Node  --follows "node3"   --delay "random 1000 1500"
+JAVA MG node5 experiments.Node  --follows "node4"   --delay "random 1000 1500" 
+JAVA MG node6 experiments.Node  --follows "node5"   --delay "random 1000 1500"
+JAVA MG node7 experiments.Node  --follows "node6"   --delay "random 1000 1500"
+JAVA MG node8 experiments.Node  --follows "node7"   --delay "random 1000 1500"
+JAVA MG node9 experiments.Node  --follows "node8"   --delay "random 1000 1500" --end
+JAVA MG node10 experiments.Node --start             --delay "random 1000 1500"
+JAVA MG node11 experiments.Node --follows "node10"  --delay "random 1000 1500"
+JAVA MG node12 experiments.Node --follows "node11"  --delay "random 1000 1500"
+JAVA MG node13 experiments.Node --follows "node12"  --delay "random 1000 1500"
+JAVA MG node14 experiments.Node --follows "node13"  --delay "random 1000 1500"
+JAVA MG node15 experiments.Node --follows "node14"  --delay "random 1000 1500" 
+JAVA MG node16 experiments.Node --follows "node15"  --delay "random 1000 1500"
+JAVA MG node17 experiments.Node --follows "node16"  --delay "random 1000 1500"
+JAVA MG node18 experiments.Node --follows "node17"  --delay "random 1000 1500"
+JAVA MG node19 experiments.Node --follows "node18"  --delay "random 1000 1500" --end
+JAVA MG node20 experiments.Node --start             --delay "random 1000 1500"
+JAVA MG node21 experiments.Node --follows "node20"  --delay "random 1000 1500"
+JAVA MG node22 experiments.Node --follows "node21"  --delay "random 1000 1500"
+JAVA MG node23 experiments.Node --follows "node22"  --delay "random 1000 1500"
+JAVA MG node24 experiments.Node --follows "node23"  --delay "random 1000 1500"
+JAVA MG node25 experiments.Node --follows "node24"  --delay "random 1000 1500" 
+JAVA MG node26 experiments.Node --follows "node25"  --delay "random 1000 1500"
+JAVA MG node27 experiments.Node --follows "node26"  --delay "random 1000 1500"
+JAVA MG node28 experiments.Node --follows "node27"  --delay "random 1000 1500"
+JAVA MG node29 experiments.Node --follows "node28"  --delay "random 1000 1500" --end
+JAVA MG node30 experiments.Node --start             --delay "random 1000 1500"
+JAVA MG node31 experiments.Node --follows "node30"  --delay "random 1000 1500"
+JAVA MG node32 experiments.Node --follows "node31"  --delay "random 1000 1500"
+JAVA MG node33 experiments.Node --follows "node32"  --delay "random 1000 1500"
+JAVA MG node34 experiments.Node --follows "node33"  --delay "random 1000 1500"
+JAVA MG node35 experiments.Node --follows "node34"  --delay "random 1000 1500" 
+JAVA MG node36 experiments.Node --follows "node35"  --delay "random 1000 1500"
+JAVA MG node37 experiments.Node --follows "node36"  --delay "random 1000 1500"
+JAVA MG node38 experiments.Node --follows "node37"  --delay "random 1000 1500"
+JAVA MG node39 experiments.Node --follows "node38"  --delay "random 1000 1500" --end
+JAVA MG node40 experiments.Node --start             --delay "random 1000 1500"
+JAVA MG node41 experiments.Node --follows "node40"  --delay "random 1000 1500"
+JAVA MG node42 experiments.Node --follows "node41"  --delay "random 1000 1500"
+JAVA MG node43 experiments.Node --follows "node42"  --delay "random 1000 1500"
+JAVA MG node44 experiments.Node --follows "node43"  --delay "random 1000 1500"
+JAVA MG node45 experiments.Node --follows "node44"  --delay "random 1000 1500" 
+JAVA MG node46 experiments.Node --follows "node45"  --delay "random 1000 1500"
+JAVA MG node47 experiments.Node --follows "node46"  --delay "random 1000 1500"
+JAVA MG node48 experiments.Node --follows "node47"  --delay "random 1000 1500"
+JAVA MG node49 experiments.Node --follows "node48"  --delay "random 1000 1500" --end
+JAVA MG node50 experiments.Node --start             --delay "random 1000 1500"
+JAVA MG node51 experiments.Node --follows "node50"  --delay "random 1000 1500"
+JAVA MG node52 experiments.Node --follows "node51"  --delay "random 1000 1500"
+JAVA MG node53 experiments.Node --follows "node52"  --delay "random 1000 1500"
+JAVA MG node54 experiments.Node --follows "node53"  --delay "random 1000 1500"
+JAVA MG node55 experiments.Node --follows "node54"  --delay "random 1000 1500" 
+JAVA MG node56 experiments.Node --follows "node55"  --delay "random 1000 1500"
+JAVA MG node57 experiments.Node --follows "node56"  --delay "random 1000 1500"
+JAVA MG node58 experiments.Node --follows "node57"  --delay "random 1000 1500"
+JAVA MG node59 experiments.Node --follows "node58"  --delay "random 1000 1500" --end
+JAVA MG node60 experiments.Node --start             --delay "random 1000 1500"
+JAVA MG node61 experiments.Node --follows "node60"  --delay "random 1000 1500"
+JAVA MG node62 experiments.Node --follows "node61"  --delay "random 1000 1500"
+JAVA MG node63 experiments.Node --follows "node62"  --delay "random 1000 1500"
+JAVA MG node64 experiments.Node --follows "node63"  --delay "random 1000 1500"
+JAVA MG node65 experiments.Node --follows "node64"  --delay "random 1000 1500" 
+JAVA MG node66 experiments.Node --follows "node65"  --delay "random 1000 1500"
+JAVA MG node67 experiments.Node --follows "node66"  --delay "random 1000 1500"
+JAVA MG node68 experiments.Node --follows "node67"  --delay "random 1000 1500"
+JAVA MG node69 experiments.Node --follows "node68"  --delay "random 1000 1500" --end
+JAVA MG node70 experiments.Node --start             --delay "random 1000 1500"
+JAVA MG node71 experiments.Node --follows "node70"  --delay "random 1000 1500"
+JAVA MG node72 experiments.Node --follows "node71"  --delay "random 1000 1500"
+JAVA MG node73 experiments.Node --follows "node72"  --delay "random 1000 1500"
+JAVA MG node74 experiments.Node --follows "node73"  --delay "random 1000 1500"
+JAVA MG node75 experiments.Node --follows "node74"  --delay "random 1000 1500" 
+JAVA MG node76 experiments.Node --follows "node75"  --delay "random 1000 1500"
+JAVA MG node77 experiments.Node --follows "node76"  --delay "random 1000 1500"
+JAVA MG node78 experiments.Node --follows "node77"  --delay "random 1000 1500"
+JAVA MG node79 experiments.Node --follows "node78"  --delay "random 1000 1500" --end
+JAVA MG node80 experiments.Node --start             --delay "random 1000 1500"
+JAVA MG node81 experiments.Node --follows "node80"  --delay "random 1000 1500"
+JAVA MG node82 experiments.Node --follows "node81"  --delay "random 1000 1500"
+JAVA MG node83 experiments.Node --follows "node82"  --delay "random 1000 1500"
+JAVA MG node84 experiments.Node --follows "node83"  --delay "random 1000 1500"
+JAVA MG node85 experiments.Node --follows "node84"  --delay "random 1000 1500" 
+JAVA MG node86 experiments.Node --follows "node85"  --delay "random 1000 1500"
+JAVA MG node87 experiments.Node --follows "node86"  --delay "random 1000 1500"
+JAVA MG node88 experiments.Node --follows "node87"  --delay "random 1000 1500"
+JAVA MG node89 experiments.Node --follows "node88"  --delay "random 1000 1500" --end
+JAVA MG node90 experiments.Node --start             --delay "random 1000 1500"
+JAVA MG node91 experiments.Node --follows "node90"  --delay "random 1000 1500"
+JAVA MG node92 experiments.Node --follows "node91"  --delay "random 1000 1500"
+JAVA MG node93 experiments.Node --follows "node92"  --delay "random 1000 1500"
+JAVA MG node94 experiments.Node --follows "node93"  --delay "random 1000 1500"
+JAVA MG node95 experiments.Node --follows "node94"  --delay "random 1000 1500" 
+JAVA MG node96 experiments.Node --follows "node95"  --delay "random 1000 1500"
+JAVA MG node97 experiments.Node --follows "node96"  --delay "random 1000 1500"
+JAVA MG node98 experiments.Node --follows "node97"  --delay "random 1000 1500"
+JAVA MG node99 experiments.Node --follows "node98"  --delay "random 1000 1500" --end
+
+
+INCLUDE ../includes/aucom.cast
+INCLUDE ../includes/counter.cast

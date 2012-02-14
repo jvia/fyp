@@ -6,15 +6,11 @@
 #+infojs_opt: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+startup: hidestars indent
 
-Thanks for trying this! It is indeed hard.
-
-I will outline steps 7 to 8 and then you can see if you can do the
-rest.
-
-1. xxx
-   1. 
-2. 
-
+1. (λ mnfx . (n (m f)) x) (λ fx . f (f x)) (λ fx . f (f (f x)))
+2. λ mnfx . (n ((λ fx . f (f x)) f)) x) (λ fx . f (f (f x))
+3. λ mnfx . ((λ fx . f (f (f x))) ((λ fx . f (f x)) f)) x
+4. λ mnfx . ((λ fx . f (f (f x))) (λ x . f (f x))) x
+5. λ mnfx . ((λ fx . f (f (f x))) ) x
 
 * Project
 ** DONE Find class where calculation takes place
