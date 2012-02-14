@@ -32,7 +32,7 @@ public class EncodeData extends AbstractAucomTranformNode<Observation, DataType>
      * system.
      */
     public EncodeData() {
-        // TODO :: refactor this so that the encoder is constructor parametr
+        // TODO :: refactor this so that the encoder is constructor parameter
         super("EncodeData");
         setEncoder(Encoder.getInstance());
     }
@@ -65,7 +65,7 @@ public class EncodeData extends AbstractAucomTranformNode<Observation, DataType>
     /**
      * Set the encoder type.
      *
-     * @param encoder the encoer
+     * @param encoder the encoder
      */
     public void setEncoder(Encoder encoder) {
         this.encoder = encoder;
