@@ -8,7 +8,6 @@ import org.bham.aucom.util.Constants;
 import org.junit.Before;
 import org.junit.Test;
 
-import static junit.framework.Assert.fail;
 public class ClassificationTimeSeriesDescriptiveStatisticsTest {
     TimeSeries<Classification> clTsFalseAlarm;
     ClassificationTimeSeriesDescriptiveStatistics ctsds;
@@ -193,18 +192,5 @@ public class ClassificationTimeSeriesDescriptiveStatisticsTest {
         cl.setIsAbnormal();
         clTs.add(cl);
         return clTs;
-    }
-
-    /**
-     * Test of setTimeSeries method, of class ClassificationTimeSeriesDescriptiveStatistics.
-     */
-    @Test
-    public void testSetTimeSeries() {
-        System.out.println("setTimeSeries");
-        TimeSeries<Classification> classificationTimeSeries = null;
-        ClassificationTimeSeriesDescriptiveStatistics instance = new ClassificationTimeSeriesDescriptiveStatistics();
-        instance.setTimeSeries(classificationTimeSeries);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

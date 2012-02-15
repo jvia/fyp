@@ -167,25 +167,6 @@ public class CastExperiment implements Experiment {
                 System.out.printf("Detector: %d, Output: %d\n", size, faultDetector.getOutput().size());
                 Thread.sleep(500);
             }
-
-            //            faultDetector.addStatusListener(new DetectorStatusChangedListener() {
-//                @Override
-//                public void handleDetectorStatusChangedEvent(DetectorStatusChangedEvent evt) {
-//                    if (faultDetector.getOutput().size() >= size)
-//                        notifyAll();
-//                }
-//            });
-
-            // Guarded wait
-//            while (faultDetector.getOutput().size() < size) {
-//                try {
-//                    wait();
-//                } catch (InterruptedException ignored) {
-//                }
-//            }
-
-            // stop fault detector and shutdown cast
-            System.out.println("Quitting.");
             faultDetector.stop();
             cast.disconnect();
         } catch (ActionFailedException e) {

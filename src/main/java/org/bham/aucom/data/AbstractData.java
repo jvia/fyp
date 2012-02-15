@@ -203,7 +203,7 @@ public abstract class AbstractData implements AttributableObject {
     /**
      * Change the object's last element status.
      * 
-     * @param isFirstElement true if first; false otherwise
+     * @param isLastElement true if last; false otherwise
      */
     protected void setLastElement(boolean isLastElement)
     {

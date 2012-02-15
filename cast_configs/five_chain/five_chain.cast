@@ -15,7 +15,7 @@ JAVA MG node0 experiments.Node --start                  --delay "gaussian 100 10
 JAVA MG node1 experiments.Node --follows "node0"        --delay "gaussian 100 10"
 JAVA MG node2 experiments.Node --follows "node1"        --delay "gaussian 100 10"
 JAVA MG node3 experiments.Node --follows "node2"        --delay "gaussian 100 10"
-JAVA MG node4 experiments.Node --follows "node1"        --delay "gaussian 100 10" --fault "2000"
+JAVA MG node4 experiments.Node --follows "node1"        --delay "gaussian 100 10"
 JAVA MG node5 experiments.Node --follows "node4"        --delay "gaussian 100 10" 
 JAVA MG node6 experiments.Node --follows "node6"        --delay "gaussian 100 10"
 JAVA MG node7 experiments.Node --follows "node6 node5"  --delay "gaussian 100 10" --end

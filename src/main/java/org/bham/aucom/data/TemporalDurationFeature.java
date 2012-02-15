@@ -52,10 +52,9 @@ public class TemporalDurationFeature extends DataType {
         setPredecessorIdToDurationsMapping(new LinkedHashMap<DataType, Long>());
         if (durations != null) {
             for (Map.Entry<DataType, Long> duration : durations.entrySet()) {
-                //if (reducer.areConnected(duration.getKey().getEventType(), getEventType())) {
+                if (reducer.areConnected(duration.getKey().getEventType(), getEventType())) {
                     predecessorIdToDurationsMapping.put(duration.getKey(), duration.getValue());
-                //}
-//            predecessorIdToDurationsMapping.putAll(durations);
+                }
             }
         }
     }

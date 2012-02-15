@@ -71,10 +71,6 @@ public class AucomIOTest {
         fail("Not yet implemented");
     }
 
-    @Test
-    public void testGetCurrentWorkingDirectory() {
-        fail("Not yet implemented");
-    }
 
     @Test
     public void testGenerateFileNameFor() {
