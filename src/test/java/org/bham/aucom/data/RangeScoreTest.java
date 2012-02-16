@@ -21,8 +21,7 @@ public class RangeScoreTest {
         scores.add(new SingleScore(TemporalProbabilityFeature.createRandomTemporalProbabilityFeature(), 2.3));
         scores.add(new SingleScore(TemporalProbabilityFeature.createRandomTemporalProbabilityFeature(), 2.3));
         scores.add(new SingleScore(TemporalProbabilityFeature.createRandomTemporalProbabilityFeature(), 2.3));
-        RangeScore rangeScore = new RangeScore(scores);
-        Assert.assertEquals(0.0280, rangeScore.getVariance(), 0.00000001);
+        Assert.assertEquals(0.0, new RangeScore(scores).getVariance(), 0.00000001);
     }
 
     @Test
