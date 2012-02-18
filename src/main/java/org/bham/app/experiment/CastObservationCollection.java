@@ -1,9 +1,5 @@
 package org.bham.app.experiment;
 
-import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.bham.aucom.ActionNotPermittedException;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.io.AucomIO;
@@ -11,8 +7,12 @@ import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.system.SystemConnectionFailedException;
 import org.bham.aucom.xcfrecorder.Recorder;
-
 import org.bham.system.cast.CastSystemConnection;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Runs an experiment with the CAST middleware and saves the results.
@@ -22,14 +22,12 @@ import org.bham.system.cast.CastSystemConnection;
 public class CastObservationCollection implements Experiment {
 
     private int amount;
-    private String name;
     private Recorder recorder;
     private CastSystemConnection cast;
-    private String workingDirectory;
+    private File out;
 
-    CastObservationCollection(final String workingDirectory, final String name, final int amount) {
-        this.name = name;
-        this.workingDirectory = workingDirectory;
+    public CastObservationCollection(File out, final int amount) {
+        this.out = out;
         this.amount = amount;
 
         // quick error checking
@@ -38,7 +36,7 @@ public class CastObservationCollection implements Experiment {
             System.exit(1);
         }
 
-        System.out.printf("Collection %d observations and saving to %s/%s.obs\n", amount, workingDirectory, name);
+        System.out.printf("Collection %d observations and saving to %s\n", amount, out.getPath());
     }
 
     /**
@@ -106,10 +104,19 @@ public class CastObservationCollection implements Experiment {
         // get the time series and write results to disk
         printBlockMessage(70, "SAVING DATA");
         TimeSeries<Observation> timeSeries = recorder.getTimeSeries();
-        System.out.println("Writing to " + workingDirectory + "/" + name);
-        File output = new File(workingDirectory + "/" + name + ".obs");
-        System.out.println("TIMERSERIES SIZE " + timeSeries.size());
-        AucomIO.getInstance().writeTimeSeries(timeSeries, output);
+        System.out.println("Writing to " + out.getPath());
+        System.out.println("TIMER SERIES SIZE " + timeSeries.size());
+
+        try {
+            if (!out.createNewFile())     {
+                out.delete();
+                out.createNewFile();
+            }
+
+            AucomIO.getInstance().writeTimeSeries(timeSeries, out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

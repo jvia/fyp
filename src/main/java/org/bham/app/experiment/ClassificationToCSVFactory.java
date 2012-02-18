@@ -1,10 +1,10 @@
 package org.bham.app.experiment;
 
-import java.io.IOException;
-
 import nu.xom.Element;
 import nu.xom.ParsingException;
 import nu.xom.ValidityException;
+
+import java.io.IOException;
 
 /**
  * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk>
@@ -16,6 +16,6 @@ public class ClassificationToCSVFactory extends ExperimentFactory {
     public Experiment createExperiment(Element experimentDescription) throws ValidityException, ParsingException, IOException {
         String wd = getWorkingDirectoryFromElement(experimentDescription);
         String name = getExperimentNameFromElement(experimentDescription);
-        return new ClassificationToCSV(wd, name);
+        return null;//new ClassificationToCSV(wd, name);
     }
 }

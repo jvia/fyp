@@ -6,12 +6,6 @@
 #+infojs_opt: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+startup: hidestars indent
 
-1. (λ mnfx . (n (m f)) x) (λ fx . f (f x)) (λ fx . f (f (f x)))
-2. λ mnfx . (n ((λ fx . f (f x)) f)) x) (λ fx . f (f (f x))
-3. λ mnfx . ((λ fx . f (f (f x))) ((λ fx . f (f x)) f)) x
-4. λ mnfx . ((λ fx . f (f (f x))) (λ x . f (f x))) x
-5. λ mnfx . ((λ fx . f (f (f x))) ) x
-
 * Project
 ** DONE Find class where calculation takes place
 org.bham.aucom.fts.tranform.CalcEntropyAvgScore

@@ -1,11 +1,11 @@
 package org.bham.app.experiment;
 
-import java.io.IOException;
-
 import nu.xom.Element;
 import nu.xom.Nodes;
 import nu.xom.ParsingException;
 import nu.xom.ValidityException;
+
+import java.io.IOException;
 
 /**
  * A class to manage the creation of {@link CastObservationCollection} objects. 
@@ -40,8 +40,8 @@ public class CastObservationCollectionFactory extends ExperimentFactory {
         String wd = getWorkingDirectoryFromElement(element);
         int count = getObservationSize(element);
 
-        experiment = new CastObservationCollection(wd, name, count);
-        return experiment;
+        //experiment = new CastObservationCollection(wd, name, count);
+        return null;//experiment;
     }
 
     public int getObservationSize(Element element)

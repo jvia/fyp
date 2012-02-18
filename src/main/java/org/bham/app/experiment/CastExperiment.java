@@ -1,7 +1,6 @@
 package org.bham.app.experiment;
 
 import nu.xom.ParsingException;
-import nu.xom.ValidityException;
 import org.bham.aucom.ActionNotPermittedException;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.io.AucomIO;
@@ -22,7 +21,6 @@ import org.bham.aucom.util.Tupel;
 import org.bham.system.cast.CastSystemConnection;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,44 +37,30 @@ public class CastExperiment implements Experiment {
     private T2GramDetector faultDetector;
     private CastSystemConnection cast;
 
-    private String name;
-    private String wd;
-    private String ml;
-    private String obs;
     private int size;
+    private File observation;
+    private File classification;
 
     /**
      * Creates the CAST experiment.
      *
-     * @param name experiment name - will be used to name model and results
-     * @param wd   working directory - where all data will be read fro and
-     *             written to
-     * @param obs  observation file name
-     * @param ml   model file name
      * @param size number of samples to collect
      */
-    public CastExperiment(String name, String wd, String obs, String ml, int size) {
-        this.name = name;
-        this.wd = wd;
-        this.ml = ml;
-        this.obs = obs;
+    public CastExperiment(File observation, File classification, int size) {
+        this.observation = observation;
+        this.classification = classification;
         this.size = size;
 
         trainer = new T2GramModelTrainer();
 
         // error checking
-        if (obs.isEmpty() && ml.isEmpty()) {
+        if (!observation.exists()) {
             Logger.getLogger(CastExperiment.class.getName()).log(Level.SEVERE, "Must have an observation file or a model file...quitting.");
             System.exit(1);
         }
-        if (!obs.isEmpty() && !ml.isEmpty()) {
-            Logger.getLogger(CastExperiment.class.getName()).log(Level.SEVERE, "Given observation AND model file. Only using model file.");
-        }
 
-        Logger.getLogger(CastExperiment.class.getName()).log(Level.INFO,
-                                                             String.format("Working Directory: %s\nFile: %s\nModel: %s\nObservation: %s\nSize: %d",
-                                                                           wd, name, ml, obs, size));
         printBlockMessage(70, "STARTING EXPERIMENT");
+
     }
 
     /**
@@ -86,13 +70,9 @@ public class CastExperiment implements Experiment {
     public void preprocess() {
         // if there is no model, we have to learn one
         T2GramModelI model;
-        if (ml.isEmpty()) {
-            printBlockMessage(70, "LEARN MODEL");
-            model = trainModel(loadObservation(obs));
-            saveModel(wd, name, model);
-        } else {
-            model = loadModelFile(ml);
-        }
+        printBlockMessage(70, "LEARN MODEL");
+        model = trainModel(loadObservation(observation));
+        //saveModel(observation.getPath(), model);
 
         // load the fault detector
         faultDetector = createDetector(model);
@@ -135,14 +115,13 @@ public class CastExperiment implements Experiment {
     /**
      * Load the observation file from disk.
      *
-     * @param obs observation filename
+     * @param obs observation file
      * @return the observation time series
      */
-    private TimeSeries<Observation> loadObservation(String obs) {
-        File file = new File(wd + "/" + obs);
+    private TimeSeries<Observation> loadObservation(File obs) {
         TimeSeries<Observation> ts = null;
         try {
-            ts = (TimeSeries<Observation>) AucomIO.getInstance().readTimeSeries(file);
+            ts = (TimeSeries<Observation>) AucomIO.getInstance().readTimeSeries(obs);
         } catch (ParsingException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -183,8 +162,15 @@ public class CastExperiment implements Experiment {
      */
     @Override
     public void postprocess() {
-        File output = new File(wd + "/" + name + ".cl");
-        AucomIO.getInstance().writeTimeSeries(faultDetector.getOutput(), output);
+        try {
+            if (classification.createNewFile())
+                System.out.printf("Writing classification to %s\n", classification.getPath());
+            else
+                System.out.printf("Overwriting classification to %s\n", classification.getPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        AucomIO.getInstance().writeTimeSeries(faultDetector.getOutput(), classification);
     }
 
     /**
@@ -198,7 +184,6 @@ public class CastExperiment implements Experiment {
         preprocess();
         process();
         postprocess();
-        System.exit(0);
         return null;
     }
 
@@ -235,29 +220,6 @@ public class CastExperiment implements Experiment {
         }
         System.out.println("complete.");
         return (T2GramModelI) trainer.getModel();
-    }
-
-    /**
-     * Read and load a model from a file.
-     *
-     * @param ml the path to the model file
-     * @return a model
-     */
-    private T2GramModelI loadModelFile(String ml) {
-        T2GramModelI _model = null;
-        File modelFile = new File(wd + "/" + ml);
-        try {
-            _model = (T2GramModelI) AucomIO.getInstance().readFaultDetectionModel(modelFile);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(CastExperiment.class.getName()).log(Level.SEVERE, "Could not find file.", ex);
-        } catch (IOException ex) {
-            Logger.getLogger(CastExperiment.class.getName()).log(Level.SEVERE, "Error reading file.", ex);
-        } catch (ValidityException ex) {
-            Logger.getLogger(CastExperiment.class.getName()).log(Level.SEVERE, "Not valid.", ex);
-        } catch (ParsingException ex) {
-            Logger.getLogger(CastExperiment.class.getName()).log(Level.SEVERE, "Could not parse model file.", ex);
-        }
-        return _model;
     }
 
     /**

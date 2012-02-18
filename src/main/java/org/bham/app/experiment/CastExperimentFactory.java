@@ -20,7 +20,8 @@ public class CastExperimentFactory extends ExperimentFactory {
         String ml = getModelFileName(element);
         int size = getExperimentSize(element);
 
-        return new CastExperiment(name, wd, obs, ml, size);
+//        return new CastExperiment(name, wd, obs, ml, size);
+        return null;
     }
 
     private int getExperimentSize(Element element) {
