@@ -118,5 +118,7 @@ public class Aucom {
             System.err.println("Need to specify a major mode: Experiment, " +
                                "Collection, or Conversion.");
         }
+
+        System.exit(0);
     }
 }

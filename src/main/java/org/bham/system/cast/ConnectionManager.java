@@ -146,12 +146,12 @@ public class ConnectionManager {
     }
 
     private void printCastMessage(String[] cast) {
-        log.fine(format("%-8s %-10s %-11s %-20s [%s]",
-                        "<" + (++count) + ">",
-                        "[" + cast[0] + "]",
-                        "[" + cast[1] + "]",
-                        "[" + cast[2] + "]",
-                        cast[3]));
+        System.out.printf("%-8s %-10s %-11s %-20s [%s]%n",
+                          "<" + (++count) + ">",
+                          "[" + cast[0] + "]",
+                          "[" + cast[1] + "]",
+                          "[" + cast[2] + "]",
+                          cast[3]);
     }
 
     private void openSocket() {

@@ -16,6 +16,7 @@ public class CastSystemConnection extends SystemConnection {
 
     private CastNetworkGraph graph;
     private Logger log = Logger.getLogger(getClass().getName());
+//    private Observation
 
     public CastSystemConnection() {
         super("CastSystemConnection");
