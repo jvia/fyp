@@ -421,7 +421,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 	 */
 
 	List<Classification> getTail() {
-		if (getTimeSeries() == null | getTimeSeries().isEmpty()) {
+		if (getTimeSeries() == null || getTimeSeries().isEmpty()) {
 			return new ArrayList<Classification>();
 		}
 		List<Classification> tail = new ArrayList<Classification>();

@@ -209,4 +209,10 @@ public class Classification extends Score {
     public boolean equals(Object o) {
         return o.getClass() == Classification.class && getTimestamp() == ((Classification) o).getTimestamp();
     }
+
+    @Override
+    public int hashCode() {
+        assert false : "hashCode not designed";
+        return 42;
+    }
 }
