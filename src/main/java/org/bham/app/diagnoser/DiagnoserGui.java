@@ -209,7 +209,6 @@ public class DiagnoserGui extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        Logger.getLogger(DiagnoserGui.class.getName()).setLevel(Level.OFF);
         if (args.length == 1) {
             final String systemName = args[0];
             java.awt.EventQueue.invokeLater(new Runnable() {
