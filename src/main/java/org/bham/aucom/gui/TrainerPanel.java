@@ -33,7 +33,6 @@ import org.bham.aucom.diagnoser.ModelTrainerListener;
 import org.bham.aucom.diagnoser.StatusChangedEvent;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelTrainer;
 import org.bham.aucom.fts.source.ActionFailedException;
-import org.bham.aucom.util.ExampleFileFilter;
 import org.bham.aucom.xcfrecorder.RecorderPanel;
 
 /**

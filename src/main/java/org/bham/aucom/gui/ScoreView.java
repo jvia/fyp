@@ -17,7 +17,6 @@ import org.bham.aucom.data.Score;
 import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.data.util.DataManager;
-import org.bham.aucom.util.ExampleFileFilter;
 import org.bham.aucom.util.TimeSeriesNotFoundException;
 
 import javax.swing.*;

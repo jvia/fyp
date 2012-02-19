@@ -26,7 +26,6 @@ import javax.swing.JFileChooser;
 
 import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
-import org.bham.aucom.util.ExampleFileFilter;
 import org.bham.aucom.util.Tuple;
 
 /**

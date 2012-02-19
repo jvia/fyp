@@ -16,7 +16,6 @@ import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.fts.source.ActionFailedException;
-import org.bham.aucom.util.ExampleFileFilter;
 
 import javax.swing.*;
 import java.io.File;
