@@ -8,13 +8,8 @@ import org.bham.aucom.data.DomainFeature;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.util.Constants;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static org.bham.aucom.util.Constants.*;
@@ -35,15 +30,10 @@ public class SourceScopeTypeEncoder extends Encoder {
         id = UUID.randomUUID();
         classes = new ConcurrentHashMap<String, Integer>(new LinkedHashMap<String, Integer>());
 
-        // Find classes file
-        URL url = getClass().getResource(PATH);
-        log.config(String.format("Loading from %s", url.getFile()));
-
-
         // Read in file and add to data structure
         Scanner s = null;
         try {
-            s = new Scanner(new FileReader(new File(url.getFile())));
+            s = new Scanner(getClass().getResourceAsStream(PATH));
             while (s.hasNextLine()) {
                 String line = s.nextLine();
                 if (line.isEmpty() || line.startsWith("#")) continue;
@@ -51,8 +41,6 @@ public class SourceScopeTypeEncoder extends Encoder {
                 String[] result = line.split("\\s+");
                 classes.put(result[0].trim(), Integer.valueOf(result[1].trim()));
             }
-        } catch (FileNotFoundException e) {
-            log.log(Level.SEVERE, "Could not load class.txt", e);
         } finally {
             if (s != null) s.close();
         }

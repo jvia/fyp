@@ -170,7 +170,10 @@ public class CastExperiment implements Experiment {
      */
     @Override
     public void postprocess() {
-        System.out.printf("Error %d ms", faultDetector.getOutput().get(error).getTimestamp());
+
+        if (error != 0)
+            System.out.printf("Error >>%d<< ms\n", faultDetector.getOutput().get(error).getTimestamp());
+
         try {
             if (classification.createNewFile()) {
                 if (!quiet)
@@ -196,6 +199,7 @@ public class CastExperiment implements Experiment {
         preprocess();
         process();
         postprocess();
+        System.exit(0);
         return null;
     }
 

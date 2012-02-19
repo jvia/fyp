@@ -183,6 +183,7 @@ public final class Configuration {
      */
     private void loadFromExternFile() throws NumberFormatException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException
     {
+        System.out.println("Extern");
         BufferedReader br = new BufferedReader(new FileReader(new File(fileString)));
         loadFromBuffer(br);
         br.close();
@@ -199,6 +200,7 @@ public final class Configuration {
      */
     private void loadFromInternFile() throws NumberFormatException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException
     {
+        System.out.println("Intern");
         InputStream inStream = this.getClass().getResourceAsStream(resourcePath);
         loadFromBuffer(new BufferedReader(new InputStreamReader(inStream)));
     }

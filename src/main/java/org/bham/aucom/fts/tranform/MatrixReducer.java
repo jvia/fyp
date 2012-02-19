@@ -1,13 +1,9 @@
 package org.bham.aucom.fts.tranform;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static java.lang.String.format;
@@ -29,8 +25,8 @@ public class MatrixReducer {
 
         Scanner s = null;
         try {
-            log.config(format("Loading connectons file from %s", getClass().getResource(FILE_NAME).getPath()));
-            s = new Scanner(new BufferedReader(new FileReader(getClass().getResource(FILE_NAME).getFile())));
+            log.config(format("Loading connectons file from %s", getClass().getResourceAsStream(FILE_NAME)));
+            s = new Scanner(getClass().getResourceAsStream(FILE_NAME));
 
             while (s.hasNextLine()) {
                 // Get the next line, filtering comments & empty lines
@@ -51,8 +47,6 @@ public class MatrixReducer {
                     connections.get(from).add(to);
                 }
             }
-        } catch (FileNotFoundException e) {
-            log.log(Level.SEVERE, "Problem reading in connection file.", e);
         } finally {
             if (s != null) s.close();
         }

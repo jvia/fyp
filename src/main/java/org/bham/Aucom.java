@@ -108,13 +108,6 @@ public class Aucom {
             System.exit(1);
         }
 
-        System.out.println("Aucom configured with:");
-        System.out.println("  experiment: " + aucom.experiment);
-        System.out.println("  collection: " + aucom.collection);
-        System.out.println("  conversion: " + aucom.toDat);
-        System.out.println("       input: " + aucom.in);
-        System.out.println("      output: " + aucom.out);
-
         if (aucom.experiment) {
             aucom.runExperiment();
         } else if (aucom.collection) {

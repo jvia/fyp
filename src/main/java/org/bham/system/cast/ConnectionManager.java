@@ -7,15 +7,16 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.lang.String.format;
 
 /**
  * @author Jeremiah Via <jxv911@cs.bham.ac.uk>
  */
 public class ConnectionManager {
 
-    private final static Logger LOGGER = Logger.getLogger(ConnectionManager.class.getName());
+    private final static Logger log = Logger.getLogger(ConnectionManager.class.getName());
     private final BlockingQueue<String[]> queue;
     private String host;
     private int port;
@@ -60,7 +61,7 @@ public class ConnectionManager {
         try {
             elt = queue.take();
         } catch (InterruptedException ex) {
-            LOGGER.severe("queue.take() interrupted");
+            log.severe("queue.take() interrupted");
         }
 
         return elt;
@@ -90,12 +91,12 @@ public class ConnectionManager {
                     try {
                         queue.put(fromCast);
                     } catch (InterruptedException ex) {
-                        LOGGER.severe("queue.put() was interrupted");
+                        log.severe("queue.put() was interrupted");
                     }
 
                     // initiate shutdown if cast says bye
                     if (fromCast[0].equals(".")) {
-                        LOGGER.info("Received shutdown from CAST");
+                        log.info("Received shutdown from CAST");
                         writeToCast(new String[]{"."});
                         done = true;
                     } else {
@@ -106,7 +107,7 @@ public class ConnectionManager {
                 try {
                     cast.close();
                 } catch (IOException ex) {
-                    LOGGER.severe("IO exception closing CAST connection");
+                    log.severe("IO exception closing CAST connection");
                 }
             }
 
@@ -127,7 +128,7 @@ public class ConnectionManager {
             output.writeObject(toCast);
             output.flush();
         } catch (IOException ex) {
-            LOGGER.severe("Error writing message to CAST");
+            log.severe("Error writing message to CAST");
         }
     }
 
@@ -136,21 +137,21 @@ public class ConnectionManager {
         try {
             fromCast = (String[]) input.readObject();
         } catch (IOException ex) {
-            LOGGER.severe("Error reading from CAST");
+            log.severe("Error reading from CAST");
             return null;
         } catch (ClassNotFoundException ex) {
-            LOGGER.severe("Could not cast object to String[]");
+            log.severe("Could not cast object to String[]");
         }
         return fromCast;
     }
 
     private void printCastMessage(String[] cast) {
-        System.out.println(String.format("%-8s %-10s %-11s %-20s [%s]",
-                                         "<" + (++count) + ">",
-                                         "[" + cast[0] + "]",
-                                         "[" + cast[1] + "]",
-                                         "[" + cast[2] + "]",
-                                         cast[3]));
+        log.fine(format("%-8s %-10s %-11s %-20s [%s]",
+                        "<" + (++count) + ">",
+                        "[" + cast[0] + "]",
+                        "[" + cast[1] + "]",
+                        "[" + cast[2] + "]",
+                        cast[3]));
     }
 
     private void openSocket() {
@@ -159,16 +160,16 @@ public class ConnectionManager {
         do {
             attempt++;
             try {
-                LOGGER.info(String.format("Connecting on %s:%d", host, port));
+                log.info(format("Connecting on %s:%d", host, port));
                 cast = new Socket(host, port);
             } catch (UnknownHostException ex) {
-                LOGGER.severe("CAST host does not exist");
+                log.severe("CAST host does not exist");
             } catch (IOException ex) {
                 // be silent
             }
         } while (cast == null || !cast.isConnected());
 
-        LOGGER.log(Level.INFO, "Connected after {0} attempts", attempt);
+        log.info(format("Connected after %d attempts", attempt));
     }
 
     private void openStreams() {
@@ -177,14 +178,14 @@ public class ConnectionManager {
             output = new ObjectOutputStream(cast.getOutputStream());
             output.flush();
         } catch (IOException ex) {
-            LOGGER.severe("Could not open output stream to CAST");
+            log.severe("Could not open output stream to CAST");
         }
 
         // open input stream
         try {
             input = new ObjectInputStream(cast.getInputStream());
         } catch (IOException ex) {
-            LOGGER.severe("Could not open input stream to CAST");
+            log.severe("Could not open input stream to CAST");
         }
     }
 }
