@@ -13,7 +13,7 @@ package org.bham.aucom.gui.charts;
 
 import org.bham.aucom.data.Score;
 import org.bham.aucom.data.timeseries.TimeSeries;
-import org.bham.aucom.util.Tupel;
+import org.bham.aucom.util.Tuple;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -37,7 +37,7 @@ import java.util.logging.Logger;
 public class AucomChart extends javax.swing.JFrame {
 	private static final long serialVersionUID = 1L;
 	private XYSeriesCollection dataset = new XYSeriesCollection();
-	HashMap<TimeSeries<Score>, Tupel<XYSeries, Integer>> series;
+	HashMap<TimeSeries<Score>, Tuple<XYSeries, Integer>> series;
 	DefaultListModel sequencesListModel;
 	private JFreeChart chart;
 	private double thresholdValue;
@@ -60,7 +60,7 @@ public class AucomChart extends javax.swing.JFrame {
 			throw new IllegalArgumentException("Sequence allready registered");
 		}
 		XYSeries s = new XYSeries(this.getName());
-		this.series.put(sequence, new Tupel<XYSeries, Integer>(s, 0));
+		this.series.put(sequence, new Tuple<XYSeries, Integer>(s, 0));
 		// s.setNotify(false);
 		getDataset().addSeries(s);
 		this.sequencesListModel.addElement(sequence);
@@ -71,7 +71,7 @@ public class AucomChart extends javax.swing.JFrame {
 		if (!this.series.containsKey(sequence)) {
 			throw new IllegalArgumentException("Unknown sequence " + sequence);
 		}
-		Tupel<XYSeries, Integer> t = this.series.get(sequence);
+		Tuple<XYSeries, Integer> t = this.series.get(sequence);
 		getDataset().removeSeries(t.getFirstElement());
 		this.sequencesListModel.removeElement(sequence);
 	}
@@ -84,7 +84,7 @@ public class AucomChart extends javax.swing.JFrame {
 			public void run() {
 				try {
 					for (TimeSeries<Score> s : AucomChart.this.series.keySet()) {
-						Tupel<XYSeries, Integer> t = AucomChart.this.series.get(s);
+						Tuple<XYSeries, Integer> t = AucomChart.this.series.get(s);
 						int from = t.getSecondElement();
 						int to = (int) Math.min(s.get(s.size() - 1).getTimestamp(), from + 1000 / AucomChart.this.hrz);
 						updateDomainAxis();
@@ -237,7 +237,7 @@ public class AucomChart extends javax.swing.JFrame {
 		// sequencesList.addMouseListener(new PopupSequencesListListener(this,
 		// sequencesList));
 		setDataset(new XYSeriesCollection());
-		this.series = new HashMap<TimeSeries<Score>, Tupel<XYSeries, Integer>>();
+		this.series = new HashMap<TimeSeries<Score>, Tuple<XYSeries, Integer>>();
 		setChart(ChartFactory.createXYLineChart("", "Time (ms)", "Score value", getDataset(), PlotOrientation.VERTICAL, true, true, true));
 		XYPlot plot = (XYPlot) getChart().getPlot();
 		plot.setBackgroundPaint(Color.white);

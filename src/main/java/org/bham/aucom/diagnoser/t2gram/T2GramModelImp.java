@@ -4,7 +4,7 @@ import org.bham.aucom.data.DomainFeature;
 import org.bham.aucom.data.encoder.Encoder;
 import org.bham.aucom.fts.AbstractLinkableNode;
 import org.bham.aucom.util.HashMatrix;
-import org.bham.aucom.util.Tupel;
+import org.bham.aucom.util.Tuple;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -30,7 +30,7 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
     @Override
     public Collection<Integer> getDimensions() {
         Collection<Integer> dimensions = new HashSet<Integer>();
-        for (Tupel<Integer, Integer> key : this.transitionMatrix.keySet()) {
+        for (Tuple<Integer, Integer> key : this.transitionMatrix.keySet()) {
             log.info(key + "");
             dimensions.add(key.getFirstElement());
             dimensions.add(key.getSecondElement());
@@ -41,7 +41,7 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
     @Override
     public int getNumberDistirbutions() {
         int numberavailableDistributions = 0;
-        for (Tupel<Integer, Integer> key : this.transitionMatrix.keySet()) {
+        for (Tuple<Integer, Integer> key : this.transitionMatrix.keySet()) {
             if (this.transitionMatrix.get(key.getFirstElement(), key.getSecondElement()) != null)
                 numberavailableDistributions++;
         }

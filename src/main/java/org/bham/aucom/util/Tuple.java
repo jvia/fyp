@@ -7,7 +7,7 @@ package org.bham.aucom.util;
  * @param <T> type of the first element
  * @param <U> type of the second element
  */
-public class Tupel<T, U> {
+public class Tuple<T, U> {
 
     private T firstElement;
     private U secondElement;
@@ -18,7 +18,7 @@ public class Tupel<T, U> {
      * @param inFirstElement first element
      * @param inSecondElement second element
      */
-    public Tupel(T inFirstElement, U inSecondElement)
+    public Tuple(T inFirstElement, U inSecondElement)
     {
         this.firstElement = inFirstElement;
         this.secondElement = inSecondElement;

@@ -28,7 +28,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import org.bham.aucom.data.Score;
 import org.bham.aucom.data.timeseries.TimeSeries;
-import org.bham.aucom.util.Tupel;
+import org.bham.aucom.util.Tuple;
 
 /**
  * 
@@ -74,8 +74,8 @@ public class AnomalyBarChartFrame extends javax.swing.JFrame implements ListData
 		pack();
 	}
 
-	public ArrayList<Tupel> generateBarchartOutput(ArrayList<Score> list, int binSize) {
-		ArrayList<Tupel> out = new ArrayList<Tupel>();
+	public ArrayList<Tuple> generateBarchartOutput(ArrayList<Score> list, int binSize) {
+		ArrayList<Tuple> out = new ArrayList<Tuple>();
 		long firstBinNumber = list.get(0).getTimestamp() % binsize;
 		long lastBinNumber = list.get(list.size() - 1).getTimestamp() % binsize;
 		for (long i = firstBinNumber; i <= lastBinNumber; i++) {

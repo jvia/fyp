@@ -25,6 +25,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListDataEvent;
 
+import org.bham.aucom.util.Tuple;
 import org.jfree.chart.AucomChartPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -39,12 +40,11 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.bham.aucom.data.Score;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.gui.PopupSequencesListListener;
-import org.bham.aucom.util.Tupel;
 
 public class ProbabilityChartFrame extends javax.swing.JPanel{
 	private static final long serialVersionUID = 1L;
 	XYSeriesCollection dataset = new XYSeriesCollection();
-	HashMap<TimeSeries<Score>, Tupel<XYSeries, Integer>> series;
+	HashMap<TimeSeries<Score>, Tuple<XYSeries, Integer>> series;
 	DefaultListModel sequencesListModel;
 	private JFreeChart chart;
 	private double thresholdValue;
@@ -79,7 +79,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel{
 					+ " allready registered");
 		}
 		XYSeries s = new XYSeries(sequence.toString());
-		this.series.put(sequence, new Tupel<XYSeries, Integer>(s, 0));
+		this.series.put(sequence, new Tuple<XYSeries, Integer>(s, 0));
 		// s.setNotify(false);
 		this.dataset.addSeries(s);
 		this.sequencesListModel.addElement(sequence);
@@ -91,7 +91,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel{
 			throw new IllegalArgumentException("Unknown sequence "
 					+ sequence);
 		}
-		Tupel<XYSeries, Integer> t = this.series.get(sequence);
+		Tuple<XYSeries, Integer> t = this.series.get(sequence);
 		this.dataset.removeSeries(t.getFirstElement());
 		this.sequencesListModel.removeElement(sequence);
 	}
@@ -106,7 +106,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel{
 				for (TimeSeries<Score> s : ProbabilityChartFrame.this.series.keySet()) {
 					if(s.isEmpty())
 						return;
-					Tupel<XYSeries, Integer> t = ProbabilityChartFrame.this.series.get(s);
+					Tuple<XYSeries, Integer> t = ProbabilityChartFrame.this.series.get(s);
 					int from = t.getSecondElement();
 					int to = (int) Math.min(s.get(s.size()-1).getTimestamp(), from
 							+ 1000 / ProbabilityChartFrame.this.hrz);
@@ -263,7 +263,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel{
 		this.sequencesList.setModel(this.sequencesListModel);
 		this.sequencesList.addMouseListener(new PopupSequencesListListener(this, this.sequencesList));
 		this.dataset = new XYSeriesCollection();
-		this.series = new HashMap<TimeSeries<Score>, Tupel<XYSeries, Integer>>();
+		this.series = new HashMap<TimeSeries<Score>, Tuple<XYSeries, Integer>>();
 		setChart(ChartFactory.createXYLineChart("", "Time (ms)",
 				"Score value", this.dataset, PlotOrientation.VERTICAL, true, true, true));
 		XYPlot plot = (XYPlot)getChart().getPlot();

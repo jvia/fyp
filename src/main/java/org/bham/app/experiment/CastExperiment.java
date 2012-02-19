@@ -17,7 +17,7 @@ import org.bham.aucom.diagnoser.t2gram.detector.T2GramDetector;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.StatisticalAnomalyClassificator;
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.system.SystemConnectionFailedException;
-import org.bham.aucom.util.Tupel;
+import org.bham.aucom.util.Tuple;
 import org.bham.system.cast.CastSystemConnection;
 
 import java.io.File;
@@ -33,15 +33,16 @@ import java.util.logging.Logger;
  */
 public class CastExperiment implements Experiment {
 
-    private T2GramModelTrainer trainer;
+    private final T2GramModelTrainer trainer;
     private T2GramDetector faultDetector;
     private CastSystemConnection cast;
 
-    private int size;
-    private File observation;
-    private File classification;
-    private boolean quiet;
-    private int error;
+    private final int size;
+    private final File observation;
+    private final File classification;
+    private final boolean quiet;
+    private final int error;
+    private long errorTime;
 
     /**
      * Creates the CAST experiment.
@@ -63,7 +64,7 @@ public class CastExperiment implements Experiment {
             throw new RuntimeException();
         }
 
-        printBlockMessage(70, "STARTING EXPERIMENT");
+        printBlockMessage("STARTING EXPERIMENT");
 
     }
 
@@ -74,7 +75,7 @@ public class CastExperiment implements Experiment {
     public void preprocess() {
         // if there is no model, we have to learn one
         T2GramModelI model;
-        printBlockMessage(70, "LEARN MODEL");
+        printBlockMessage("LEARN MODEL");
         model = trainModel(loadObservation(observation));
         //saveModel(observation.getPath(), model);
 
@@ -82,7 +83,7 @@ public class CastExperiment implements Experiment {
         faultDetector = createDetector(model);
 
         // will block until connection is made
-        printBlockMessage(70, "START CAST");
+        printBlockMessage("START CAST");
         cast = new CastSystemConnection();
         try {
             if (!quiet) System.out.print("Waiting to connected...");
@@ -106,7 +107,7 @@ public class CastExperiment implements Experiment {
     private void saveModel(String wd, String name, T2GramModelI model) {
         if (!quiet)
             System.out.printf("%s with %d distributions%n", model.getName(), model.getNumberDistirbutions());
-        for (Tupel<Integer, Integer> indices : model.getTransitionMatrix().keySet()) {
+        for (Tuple<Integer, Integer> indices : model.getTransitionMatrix().keySet()) {
             System.out.printf("(%d, %d) = %s%n",
                               indices.getFirstElement(),
                               indices.getSecondElement(),
@@ -154,6 +155,8 @@ public class CastExperiment implements Experiment {
                     System.out.printf("Detector: %d, Output: %d%n", size, faultDetector.getOutput().size());
                 Thread.sleep(500);
             }
+
+            errorTime = cast.getObservationTimeSeries().get(error).getTimestamp();
             faultDetector.stop();
             cast.disconnect();
         } catch (ActionFailedException e) {
@@ -170,13 +173,8 @@ public class CastExperiment implements Experiment {
      */
     @Override
     public void postprocess() {
-        for (int i = 0; i < faultDetector.getOutput().size(); i++) {
-            System.out.printf("%d %d%n", i, faultDetector.getOutput().get(i).getTimestamp());
-        }
-
         if (error != 0)
-            System.out.printf("%n%n%n%n%n%dms%n%n%n%n%n%n",
-                              cast.getObservationTimeSeries().get(error).getTimestamp());
+            System.out.printf("%dms%n", errorTime);
 
         try {
             if (classification.createNewFile()) {
@@ -262,14 +260,14 @@ public class CastExperiment implements Experiment {
         return detector;
     }
 
-    private void printBlockMessage(int blockLen, String msg) {
+    private void printBlockMessage(String msg) {
         if (quiet) return;
 
         int pad = msg.length();
-        pad = (blockLen - pad) / 2;
+        pad = (70 - pad) / 2;
 
         StringBuilder border = new StringBuilder();
-        for (int i = 0; i < blockLen; i++)
+        for (int i = 0; i < 70; i++)
             border.append("=");
 
         StringBuilder padding = new StringBuilder();

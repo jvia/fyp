@@ -19,7 +19,7 @@ import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.diagnoser.t2gram.ProbabilityDistribution;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
 import org.bham.aucom.util.HashMatrix;
-import org.bham.aucom.util.Tupel;
+import org.bham.aucom.util.Tuple;
 
 public class ModelEntropyView extends JPanel {
 	private static final long serialVersionUID = 0L;
@@ -39,11 +39,11 @@ public class ModelEntropyView extends JPanel {
 		T2GramModelI model = (T2GramModelI)main;
 		HashMatrix<Integer, Integer, ProbabilityDistribution> distribution = model
 				.getTransitionMatrix();
-		for (Tupel<Integer, Integer> tupel : distribution.keySet()) {
-			out.addValue(distribution.get(tupel.getFirstElement(),
-					tupel.getSecondElement()).getEntropy(), "entropy", tupel
+		for (Tuple<Integer, Integer> tuple : distribution.keySet()) {
+			out.addValue(distribution.get(tuple.getFirstElement(),
+					tuple.getSecondElement()).getEntropy(), "entropy", tuple
 					.getFirstElement()
-					+ "_" + tupel.getSecondElement());
+					+ "_" + tuple.getSecondElement());
 		}
 		return out;
 	}

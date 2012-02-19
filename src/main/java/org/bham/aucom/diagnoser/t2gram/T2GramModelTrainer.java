@@ -14,7 +14,7 @@ import org.bham.aucom.main.GraphStateChangedEvent;
 import org.bham.aucom.main.GraphStatusListener;
 import org.bham.aucom.util.Constants;
 import org.bham.aucom.util.HashMatrix;
-import org.bham.aucom.util.Tupel;
+import org.bham.aucom.util.Tuple;
 
 import javax.swing.*;
 import java.awt.*;
@@ -86,7 +86,7 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
             HashMatrix<Integer, Integer, ArrayList<Double>> values = computeTrainingset(output);
             log.finer(format("Iterating through trainingset with %d elements", values.size()));
 
-            for (Tupel<Integer, Integer> t : values.keySet()) {
+            for (Tuple<Integer, Integer> t : values.keySet()) {
                 double[] durations = getDurationsAsDoubleArray(values, t);
                 updateModel(t.getFirstElement(), t.getSecondElement(), durations);
             }
@@ -112,7 +112,7 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
         }
     }
 
-    private double[] getDurationsAsDoubleArray(HashMatrix<Integer, Integer, ArrayList<Double>> values, Tupel<Integer, Integer> t) {
+    private double[] getDurationsAsDoubleArray(HashMatrix<Integer, Integer, ArrayList<Double>> values, Tuple<Integer, Integer> t) {
         double[] d = new double[values.get(t.getFirstElement(), t.getSecondElement()).size()];
         for (int j = 0; j < values.get(t.getFirstElement(), t.getSecondElement()).size(); j++) {
             d[j] = values.get(t.getFirstElement(), t.getSecondElement()).get(j);

@@ -10,7 +10,6 @@ import org.bham.aucom.xcfrecorder.Recorder;
 import org.bham.system.cast.CastSystemConnection;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,10 +20,10 @@ import java.util.logging.Logger;
  */
 public class CastObservationCollection implements Experiment {
 
-    private int amount;
+    private final int amount;
     private Recorder recorder;
     private CastSystemConnection cast;
-    private File out;
+    private final File out;
     private final boolean quiet;
 
     public CastObservationCollection(final File out, final int amount, final boolean quiet) {
@@ -51,7 +50,7 @@ public class CastObservationCollection implements Experiment {
      */
     @Override
     public void preprocess() {
-        printBlockMessage(70, "CONNECT TO CAST");
+        printBlockMessage("CONNECT TO CAST");
         // will block until connection is made
         cast = new CastSystemConnection();
         try {
@@ -73,7 +72,7 @@ public class CastObservationCollection implements Experiment {
     @Override
     public void process() {
         try {
-            printBlockMessage(70, "RECORDING DATA");
+            printBlockMessage("RECORDING DATA");
             recorder.record();
         } catch (ActionFailedException ex) {
             Logger.getLogger(CastObservationCollection.class.getName()).log(Level.SEVERE, null, ex);
@@ -82,7 +81,7 @@ public class CastObservationCollection implements Experiment {
         // wait until we have collected enough data
         while (recorder.getTimeSeries().size() < amount) {
             if (recorder.getTimeSeries().size() % 50 == 0)
-                printBlockMessage(70, recorder.getTimeSeries().size() + " OBSERVATIONS");
+                printBlockMessage(recorder.getTimeSeries().size() + " OBSERVATIONS");
             try {
                 Thread.sleep(50);
             } catch (InterruptedException ex) {
@@ -106,22 +105,13 @@ public class CastObservationCollection implements Experiment {
         }
 
         // get the time series and write results to disk
-        printBlockMessage(70, "SAVING DATA");
+        printBlockMessage("SAVING DATA");
         TimeSeries<Observation> timeSeries = recorder.getTimeSeries();
         if (!quiet) System.out.println("Writing to " + out.getPath());
         if (!quiet)
             System.out.println("TIMER SERIES SIZE " + timeSeries.size());
 
-        try {
-            if (!out.createNewFile()) {
-                out.delete();
-                out.createNewFile();
-            }
-
-            AucomIO.getInstance().writeTimeSeries(timeSeries, out);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        AucomIO.getInstance().writeTimeSeries(timeSeries, out);
     }
 
     /**
@@ -139,13 +129,13 @@ public class CastObservationCollection implements Experiment {
         return null;
     }
 
-    private void printBlockMessage(int blockLen, String msg) {
+    private void printBlockMessage(String msg) {
         if (quiet) return;
         int pad = msg.length();
-        pad = (blockLen - pad) / 2;
+        pad = (70 - pad) / 2;
 
         StringBuilder border = new StringBuilder();
-        for (int i = 0; i < blockLen; i++)
+        for (int i = 0; i < 70; i++)
             border.append("=");
 
         StringBuilder padding = new StringBuilder();

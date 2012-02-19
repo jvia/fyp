@@ -63,13 +63,13 @@ public class HashMatrix<T, U, V> implements Serializable {
         return contains;
     }
 
-    public ArrayList<Tupel<T, U>> keySet() {
-        ArrayList<Tupel<T, U>> keySet = new ArrayList<Tupel<T, U>>();
+    public ArrayList<Tuple<T, U>> keySet() {
+        ArrayList<Tuple<T, U>> keySet = new ArrayList<Tuple<T, U>>();
         Set<T> keysIndexOne = content.keySet();
         for (T key : keysIndexOne) {
             Set<U> keysIndexTwo = content.get(key).keySet();
             for (U key2 : keysIndexTwo) {
-                keySet.add(new Tupel<T, U>(key, key2));
+                keySet.add(new Tuple<T, U>(key, key2));
             }
         }
         return keySet;
