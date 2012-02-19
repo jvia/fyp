@@ -11,18 +11,6 @@
 
 package org.bham.aucom.diagnoser.t2gram.detector;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.concurrent.Executors;
-import java.util.logging.Logger;
-
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
 import nu.xom.ParsingException;
 import nu.xom.ValidityException;
 import org.bham.aucom.data.io.AucomIO;
@@ -33,6 +21,15 @@ import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.system.FactoryManagerInitalizationException;
 import org.bham.aucom.system.SystemConnection;
+import org.bham.aucom.util.ExampleFileFilter;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.logging.Logger;
 
 /**
  * 

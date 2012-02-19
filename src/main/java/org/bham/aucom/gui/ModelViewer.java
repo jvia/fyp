@@ -11,22 +11,16 @@
 
 package org.bham.aucom.gui;
 
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.EOFException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-
 import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
+import org.bham.aucom.util.ExampleFileFilter;
 import org.bham.aucom.util.Tuple;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
 
 /**
  * 

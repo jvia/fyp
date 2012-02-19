@@ -11,18 +11,6 @@
 
 package org.bham.aucom.gui;
 
-import java.awt.Color;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URL;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-
 import nu.xom.ParsingException;
 import nu.xom.ValidityException;
 import org.bham.aucom.data.Observation;
@@ -33,7 +21,17 @@ import org.bham.aucom.diagnoser.ModelTrainerListener;
 import org.bham.aucom.diagnoser.StatusChangedEvent;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelTrainer;
 import org.bham.aucom.fts.source.ActionFailedException;
+import org.bham.aucom.util.ExampleFileFilter;
 import org.bham.aucom.xcfrecorder.RecorderPanel;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * 
