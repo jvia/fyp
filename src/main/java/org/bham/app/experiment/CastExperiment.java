@@ -40,16 +40,20 @@ public class CastExperiment implements Experiment {
     private int size;
     private File observation;
     private File classification;
+    private boolean quiet;
+    private int error;
 
     /**
      * Creates the CAST experiment.
      *
      * @param size number of samples to collect
      */
-    public CastExperiment(File observation, File classification, int size) {
+    public CastExperiment(File observation, File classification, int size, boolean quiet, int error) {
         this.observation = observation;
         this.classification = classification;
         this.size = size;
+        this.quiet = quiet;
+        this.error = error;
 
         trainer = new T2GramModelTrainer();
 
@@ -81,9 +85,9 @@ public class CastExperiment implements Experiment {
         printBlockMessage(70, "START CAST");
         cast = new CastSystemConnection();
         try {
-            System.out.print("Waiting to connected...");
+            if (!quiet) System.out.print("Waiting to connected...");
             cast.connect();
-            System.out.println("connected.");
+            if (!quiet) System.out.println("connected.");
         } catch (SystemConnectionFailedException ex) {
             System.exit(1);
             Logger.getLogger(CastObservationCollection.class.getName()).log(Level.SEVERE, "Could not connect to CAST", ex);
@@ -100,7 +104,8 @@ public class CastExperiment implements Experiment {
      * @param model the model to save
      */
     private void saveModel(String wd, String name, T2GramModelI model) {
-        System.out.printf("%s with %d distributions\n", model.getName(), model.getNumberDistirbutions());
+        if (!quiet)
+            System.out.printf("%s with %d distributions\n", model.getName(), model.getNumberDistirbutions());
         for (Tupel<Integer, Integer> indices : model.getTransitionMatrix().keySet()) {
             System.out.printf("(%d, %d) = %s\n",
                               indices.getFirstElement(),
@@ -108,7 +113,8 @@ public class CastExperiment implements Experiment {
                               model.getTransitionMatrix().get(indices.getFirstElement()).get(indices.getSecondElement()));
         }
 
-        System.out.println("Saving model: " + wd + "/" + name + ".ml");
+        if (!quiet)
+            System.out.println("Saving model: " + wd + "/" + name + ".ml");
         AucomIO.getInstance().writeFaultDetectionModel(model, new File(wd + "/" + name + ".ml"));
     }
 
@@ -138,12 +144,14 @@ public class CastExperiment implements Experiment {
         try {
             // start fault detection
             faultDetector.start(cast.getObservationTimeSeries());
-            System.out.println("Sliding window: " + faultDetector.getSlidingWindow().getIntervalSize());
+            if (!quiet)
+                System.out.println("Sliding window: " + faultDetector.getSlidingWindow().getIntervalSize());
 
             // wait here until it is done
             while (faultDetector.getOutput().size() < size) {
                 long size = faultDetector.getDetectorGraph().getTotalElementsSeen();
-                System.out.printf("Detector: %d, Output: %d\n", size, faultDetector.getOutput().size());
+                if (!quiet)
+                    System.out.printf("Detector: %d, Output: %d\n", size, faultDetector.getOutput().size());
                 Thread.sleep(500);
             }
             faultDetector.stop();
@@ -162,11 +170,15 @@ public class CastExperiment implements Experiment {
      */
     @Override
     public void postprocess() {
+        System.out.printf("Error %d ms", faultDetector.getOutput().get(error).getTimestamp());
         try {
-            if (classification.createNewFile())
-                System.out.printf("Writing classification to %s\n", classification.getPath());
-            else
-                System.out.printf("Overwriting classification to %s\n", classification.getPath());
+            if (classification.createNewFile()) {
+                if (!quiet)
+                    System.out.printf("Writing classification to %s\n", classification.getPath());
+            } else {
+                if (!quiet)
+                    System.out.printf("Overwriting classification to %s\n", classification.getPath());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -194,7 +206,7 @@ public class CastExperiment implements Experiment {
      * @return the model
      */
     private T2GramModelI trainModel(TimeSeries<Observation> observation) {
-        System.out.print("Training model...");
+        if (!quiet) System.out.print("Training model...");
         // use this object to wait here until the training is done
         final Object obj = new Object();
         trainer.addModelTrainerListener(new ModelTrainerListener() {
@@ -218,7 +230,8 @@ public class CastExperiment implements Experiment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("complete.");
+
+        if (!quiet) System.out.println("complete.");
         return (T2GramModelI) trainer.getModel();
     }
 
@@ -243,6 +256,8 @@ public class CastExperiment implements Experiment {
     }
 
     private void printBlockMessage(int blockLen, String msg) {
+        if (quiet) return;
+
         int pad = msg.length();
         pad = (blockLen - pad) / 2;
 

@@ -58,8 +58,18 @@ public class Aucom {
             usage = "The number of observations to collect before terminating the program.")
     private int size = 4000;
 
+    @Option(name = "-q",
+            aliases = "--quiet",
+            usage = "Inhibit output, with the exception of the fault timestamp when running an experiment.")
+    private boolean quiet;
+
+    @Option(name = "-e",
+            aliases = "--error",
+            usage = "The observation when the error is to occur.")
+    private int error;
+
     private void runConversion() {
-        ClassificationToCSV conversion = new ClassificationToCSV(in, out);
+        ClassificationToCSV conversion = new ClassificationToCSV(in, out, quiet);
         try {
             conversion.call();
         } catch (Exception e) {
@@ -68,7 +78,7 @@ public class Aucom {
     }
 
     private void runCollection() {
-        CastObservationCollection collect = new CastObservationCollection(out, size);
+        CastObservationCollection collect = new CastObservationCollection(out, size, quiet);
         try {
             collect.call();
         } catch (Exception e) {
@@ -77,7 +87,7 @@ public class Aucom {
     }
 
     private void runExperiment() {
-        CastExperiment experiment = new CastExperiment(in, out, size);
+        CastExperiment experiment = new CastExperiment(in, out, size, quiet, error);
         try {
             experiment.call();
         } catch (Exception e) {

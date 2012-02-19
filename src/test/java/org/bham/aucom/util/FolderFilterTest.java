@@ -10,6 +10,7 @@ import org.junit.Test;
 import java.io.File;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -23,9 +24,25 @@ public class FolderFilterTest {
     @Test
     public void testAccept() {
         FolderFilter instance = new FolderFilter();
+
+        // null should fail
         File f = null;
-        assertThat(instance.accept(f), is(false));
+        assertThat("Null files should not pass.",
+                   instance.accept(f), is(false));
+
+        // directory should pass
         f = new File("/");
-         assertThat(instance.accept(f), is(true));
+        assertThat("A directory should pass the filter.",
+                   instance.accept(f), is(true));
+
+        // file should fail
+        f = new File("/etc/motd");
+        assertThat("Files should not be accepted in the directory filter.",
+                   instance.accept(f), is(false));
+    }
+
+    @Test
+    public void testGetDescription() {
+        assertThat(new FolderFilter().getDescription(), is(notNullValue()));
     }
 }

@@ -25,10 +25,12 @@ public class CastObservationCollection implements Experiment {
     private Recorder recorder;
     private CastSystemConnection cast;
     private File out;
+    private final boolean quiet;
 
-    public CastObservationCollection(File out, final int amount) {
+    public CastObservationCollection(final File out, final int amount, final boolean quiet) {
         this.out = out;
         this.amount = amount;
+        this.quiet = quiet;
 
         // quick error checking
         if (amount == 0) {
@@ -36,13 +38,15 @@ public class CastObservationCollection implements Experiment {
             System.exit(1);
         }
 
-        System.out.printf("Collection %d observations and saving to %s\n", amount, out.getPath());
+        if (!quiet)
+            System.out.printf("Collection %d observations and saving to %s\n", amount, out.getPath());
     }
 
     /**
      * Prepares the system for a test run.
      * <p/>
-     * In this case, it starts up the cast-server and cast-client processes with
+     * In this case, it starts up the cast-server and cast-client processes
+     * with
      * the parameters supplied in the experiment XML configuration.
      */
     @Override
@@ -51,9 +55,9 @@ public class CastObservationCollection implements Experiment {
         // will block until connection is made
         cast = new CastSystemConnection();
         try {
-            System.out.println("Waiting...");
+            if (!quiet) System.out.println("Waiting...");
             cast.connect();
-            System.out.println("done");
+            if (!quiet) System.out.println("done");
         } catch (SystemConnectionFailedException ex) {
             System.exit(1);
             Logger.getLogger(CastObservationCollection.class.getName()).log(Level.SEVERE, "Could not connect to CAST", ex);
@@ -104,11 +108,12 @@ public class CastObservationCollection implements Experiment {
         // get the time series and write results to disk
         printBlockMessage(70, "SAVING DATA");
         TimeSeries<Observation> timeSeries = recorder.getTimeSeries();
-        System.out.println("Writing to " + out.getPath());
-        System.out.println("TIMER SERIES SIZE " + timeSeries.size());
+        if (!quiet) System.out.println("Writing to " + out.getPath());
+        if (!quiet)
+            System.out.println("TIMER SERIES SIZE " + timeSeries.size());
 
         try {
-            if (!out.createNewFile())     {
+            if (!out.createNewFile()) {
                 out.delete();
                 out.createNewFile();
             }
@@ -135,6 +140,7 @@ public class CastObservationCollection implements Experiment {
     }
 
     private void printBlockMessage(int blockLen, String msg) {
+        if (quiet) return;
         int pad = msg.length();
         pad = (blockLen - pad) / 2;
 

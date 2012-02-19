@@ -22,18 +22,21 @@ public class ClassificationToCSV implements Experiment {
     private ArrayList<Classification> list;
     private File in;
     private File out;
+    private final boolean quiet;
 
-    public ClassificationToCSV(File in, File out) {
+    public ClassificationToCSV(final File in, final File out, final boolean quiet) {
         this.in = in;
         this.out = out;
+        this.quiet = quiet;
+
         printBlockMessage(70, "CONVERT TO CSV");
-        System.out.printf("Input: %s\nOutput: %s\n", in.getPath(), out.getPath());
+        if (!quiet) System.out.printf("Input: %s\nOutput: %s\n", in.getPath(), out.getPath());
     }
 
     @Override
     public void preprocess() {
         printBlockMessage(70, "GATHERING TIMER SERIES DATA");
-        System.out.print("Gathering...");
+        if (!quiet) System.out.print("Gathering...");
         try {
             classificationTimeSeries = (TimeSeries<Classification>) AucomIO.getInstance().readTimeSeries(in);
         } catch (ParsingException e) {
@@ -47,7 +50,7 @@ public class ClassificationToCSV implements Experiment {
     @Override
     public void process() {
         printBlockMessage(70, "PRUNING DATA");
-        System.out.print("Pruning...");
+        if (!quiet) System.out.print("Pruning...");
         list = new ArrayList<Classification>();
         for (Classification classification : classificationTimeSeries.getall()) {
             if (!list.contains(classification)) {
@@ -60,7 +63,7 @@ public class ClassificationToCSV implements Experiment {
     @Override
     public void postprocess() {
         printBlockMessage(70, "SAVING DATA");
-        System.out.print("Writing...");
+        if (!quiet) System.out.print("Writing...");
         try {
             csv = new FileWriter(out);
             csv.append("#    Timestamp     Score     Threshold     Status\n");
@@ -80,7 +83,7 @@ public class ClassificationToCSV implements Experiment {
                 e.printStackTrace();
             }
         }
-        System.out.println("done");
+        if (!quiet) System.out.println("done");
     }
 
     @Override
@@ -92,6 +95,8 @@ public class ClassificationToCSV implements Experiment {
     }
 
     private void printBlockMessage(int blockLen, String msg) {
+        if (quiet) return;
+
         int pad = msg.length();
         pad = (blockLen - pad) / 2;
 
