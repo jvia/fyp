@@ -108,15 +108,6 @@ public final class Configuration {
     }
 
     /**
-     * Removes all configuration information from the Singleton class.
-     */
-    public void resetConfiguration()
-    {
-        map.clear();
-        instance = null;
-    }
-
-    /**
      * Loads the configuration parameters into the map.
      * 
      * @param br buffer to read from

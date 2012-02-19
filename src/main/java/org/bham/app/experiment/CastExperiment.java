@@ -172,7 +172,7 @@ public class CastExperiment implements Experiment {
     public void postprocess() {
 
         if (error != 0)
-            System.out.printf("Error >>%d<< ms\n", faultDetector.getOutput().get(error).getTimestamp());
+            System.out.printf("%dms\n", faultDetector.getOutput().get(error).getTimestamp());
 
         try {
             if (classification.createNewFile()) {
