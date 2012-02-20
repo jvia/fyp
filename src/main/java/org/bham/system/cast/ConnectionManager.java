@@ -14,28 +14,30 @@ import static java.lang.String.format;
 /**
  * @author Jeremiah Via <jxv911@cs.bham.ac.uk>
  */
-public class ConnectionManager {
+class ConnectionManager {
 
     private final static Logger log = Logger.getLogger(ConnectionManager.class.getName());
     private final BlockingQueue<String[]> queue;
-    private String host;
-    private int port;
+    private final String host;
+    private final int port;
     private Socket cast;
     private ObjectInputStream input;
     private ObjectOutputStream output;
     private boolean done;
     private int count;
+    private static final String HOST = "localhost";
+    private static final int PORT = 5555;
 
-    public ConnectionManager(String host, int port, LinkedBlockingQueue<String[]> queue) {
+    public ConnectionManager(LinkedBlockingQueue<String[]> queue) {
         count = 0;
         this.queue = queue;
-        this.host = host;
-        this.port = port;
+        this.host = ConnectionManager.HOST;
+        this.port = ConnectionManager.PORT;
 
         openSocket();
         openStreams();
 
-        // add shutdon hook
+        // add shutdown hook
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 
             @Override
@@ -47,32 +49,21 @@ public class ConnectionManager {
         processUntilDone();
     }
 
-    /**
-     * Creates a connection with the default settings
-     *
-     * @param queue data strucure to store data in
-     */
-    public ConnectionManager(LinkedBlockingQueue<String[]> queue) {
-        this("localhost", 5555, queue);
-    }
-
-    public String[] read() {
-        String[] elt = null;
-        try {
-            elt = queue.take();
-        } catch (InterruptedException ex) {
-            log.severe("queue.take() interrupted");
-        }
-
-        return elt;
-    }
+// --Commented out by Inspection START (2/20/12 1:24 PM):
+//    public String[] read() {
+//        String[] elt = null;
+//        try {
+//            elt = queue.take();
+//        } catch (InterruptedException ex) {
+//            log.severe("queue.take() interrupted");
+//        }
+//
+//        return elt;
+//    }
+// --Commented out by Inspection STOP (2/20/12 1:24 PM)
 
     public void shutdown() {
         writeToCast(new String[]{"."});
-    }
-
-    public boolean isDone() {
-        return done;
     }
 
     private void processUntilDone() {

@@ -16,10 +16,10 @@ import static java.lang.String.format;
 /**
  * @author Jeremiah Via <jxv911@cs.bham.ac.uk>
  */
-public class CastObservationSource extends AucomSourceAdapter<Observation> {
+class CastObservationSource extends AucomSourceAdapter<Observation> {
 
     private ConnectionManager cast;
-    private LinkedBlockingQueue<String[]> queue;
+    private final LinkedBlockingQueue<String[]> queue;
     private long count;
     private final Logger log = Logger.getLogger(getClass().getName());
 
