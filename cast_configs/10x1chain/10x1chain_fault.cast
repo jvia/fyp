@@ -11,11 +11,11 @@ HOST localhost
 SUBARCHITECTURE 10x1.sa
 JAVA WM cast.architecture.SubarchitectureWorkingMemory
 JAVA TM cast.architecture.AlwaysPositiveTaskManager
-JAVA MG node0 experiments.Node --start --delay "gaussian 100 10"
+JAVA MG node0 experiments.Node --start --delay "gaussian 100 10" --fault "2500"
 JAVA MG node1 experiments.Node --start --delay "gaussian 100 10"
 JAVA MG node2 experiments.Node --start --delay "gaussian 100 10"
 JAVA MG node3 experiments.Node --start --delay "gaussian 100 10"
-JAVA MG node4 experiments.Node --start --delay "gaussian 100 10" --fault "2000"
+JAVA MG node4 experiments.Node --start --delay "gaussian 100 10"
 JAVA MG node5 experiments.Node --start --delay "gaussian 100 10"
 JAVA MG node6 experiments.Node --start --delay "gaussian 100 10"
 JAVA MG node7 experiments.Node --start --delay "gaussian 100 10"

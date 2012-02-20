@@ -1,0 +1,4 @@
+ADD:node0:three.sa    1
+ADD:node1:three.sa    2
+ADD:node2:three.sa    3
+DELETE:node3:three.sa 4

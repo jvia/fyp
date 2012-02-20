@@ -1,0 +1,183 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.bham</groupId>
+  <artifactId>aucom</artifactId>
+  <version>0.0.1</version>
+  <packaging>jar</packaging>
+
+  <name>org.bham.aucom</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <build>
+    <defaultGoal>test</defaultGoal>
+    <directory>${basedir}/target</directory>
+    <finalName>${artifactId}-${version}</finalName>
+    <plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+          <archive>
+            <manifest>
+              <mainClass>org.bham.Aucom</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- <plugin> -->
+      <!--   <groupId>org.apache.maven.plugins</groupId> -->
+      <!--   <artifactId>maven-jar-plugin</artifactId> -->
+      <!--   <configuration> -->
+      <!--     <archive> -->
+      <!--       <manifest> -->
+      <!--         <addClasspath>true</addClasspath> -->
+      <!--         <mainClass>org.bham.Aucom</mainClass> -->
+      <!--       </manifest> -->
+      <!--     </archive> -->
+      <!--   </configuration> -->
+      <!-- </plugin> -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+          <formats>
+            <format>xml</format>
+          </formats>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>cobertura</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- <plugin> -->
+      <!--   <groupId>org.codehaus.mojo</groupId> -->
+      <!--   <artifactId>findbugs-maven-plugin</artifactId> -->
+      <!--   <version>1.2</version> -->
+      <!--   <configuration> -->
+      <!--     <findbugsXmlOutput>true</findbugsXmlOutput> -->
+      <!--     <findbugsXmlWithMessages>true</findbugsXmlWithMessages> -->
+      <!--     <xmlOutput>true</xmlOutput> -->
+      <!--   </configuration> -->
+      <!--   <executions> -->
+      <!--     <execution> -->
+      <!--       <phase>package</phase> -->
+      <!--       <goals> -->
+      <!--         <goal>findbugs</goal> -->
+      <!--       </goals> -->
+      <!--     </execution> -->
+      <!--   </executions> -->
+      <!-- </plugin> -->
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.10</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>xom</groupId>
+      <artifactId>xom</artifactId>
+      <version>1.2.5</version>
+    </dependency>
+    <dependency>
+      <groupId>net.sf.jopt-simple</groupId>
+      <artifactId>jopt-simple</artifactId>
+      <version>4.3</version>
+    </dependency>
+    <dependency>
+      <groupId>jfree</groupId>
+      <artifactId>jfreechart</artifactId>
+      <version>1.0.13</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-math</artifactId>
+      <version>2.2</version>
+    </dependency>
+    <dependency>
+      <groupId>args4j</groupId>
+      <artifactId>args4j</artifactId>
+      <version>2.0.16</version>
+    </dependency>
+    <dependency>
+      <groupId>org.weka</groupId>
+      <artifactId>weka</artifactId>
+      <version>3.6.1</version>
+    </dependency>
+    <dependency>
+      <groupId>net.sf</groupId>
+      <artifactId>fts</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.aucom</groupId>
+      <artifactId>aucomjfreechart</artifactId>
+      <version>1.0.13</version>
+    </dependency>
+    <dependency>
+      <groupId>net.ice</groupId>
+      <artifactId>Ice</artifactId>
+      <version>1.0.13</version>
+    </dependency>
+    <dependency>
+      <groupId>net.ice</groupId>
+      <artifactId>ant-ice</artifactId>
+      <version>1.0.13</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bham</groupId>
+      <artifactId>cast</artifactId>
+      <version>2.1.15</version>
+    </dependency>
+  </dependencies>
+  <description>A probabilistic fault-detector for use in the CAST robotics middleware.</description>
+  <organization>
+    <name>University of Birmingham</name>
+    <url>http://www.cs.bham.ac.uk/research/groupings/robotics_and_cognitive_architectures/</url>
+  </organization>
+  <scm>
+    <url>http://github.com/jvia/fyp</url>
+    <connection>git</connection>
+  </scm>
+  <ciManagement>
+    <system>Jenkins</system>
+    <url>http://195.188.108.187:8080/</url>
+  </ciManagement>
+</project>
