@@ -21,65 +21,69 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.UUID;
+
 public class TransformClTimeSeriesToCsv {
-	Graph g;
-	private EngineThread engineThread;
-	public TransformClTimeSeriesToCsv() {
-	}
+    Graph g;
+    private EngineThread engineThread;
 
-	public TransformClTimeSeriesToCsv(File in_file, File out_file) {
-			UUID id;
-				try {
-					@SuppressWarnings("unchecked")
-					TimeSeries<Classification> cl = (TimeSeries<Classification>)AucomIO.getInstance().readTimeSeries(in_file);
-							this.g = new Graph().getConnector(new TimeSeriesSource<Classification>(cl, "cl_src")).
-							connect(new RawDataToCsvRow()).
-							connect(new PostofixToString("\n")).
-							connect(new StringToBufferOutputEvent()).
-							connect(new OutputStreamSinkStrip(new FileOutputStream(out_file))).
-							getGraph();
-						} catch (FileNotFoundException exception) {
-							exception.printStackTrace();
-						} catch (ValidityException exception) {
-							exception.printStackTrace();
-						} catch (ParsingException exception) {
-							exception.printStackTrace();
-						} catch (IOException exception) {
-							exception.printStackTrace();
-						}	}
-	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		OptionParser parser = new OptionParser();
-		OptionSpec<File> f = parser.accepts("f").withRequiredArg().ofType(
-				File.class);
-		OptionSpec<File> o = parser.accepts("o").withRequiredArg().ofType(
-				File.class);
+    public TransformClTimeSeriesToCsv() {
+    }
 
-		OptionSet option = parser.parse(args);
-		if (!option.has(f) || !option.has(o)) {
-			System.out.println("usage: -f classificationFile.cl -o outputfile.csv");
-			return;
-		}
-			File in = f.value(option);
-			File out = o.value(option);
-			if(!in.exists()){
-				System.out.println("input file "+in.getAbsolutePath()+"  not found ");
-				return ; 
-			}
-			TransformClTimeSeriesToCsv t = new TransformClTimeSeriesToCsv(in, out);
-			t.run();
-			try {
-				t.engineThread.join();
-			} catch (InterruptedException exception) {
-				// TODO Auto-generated catch block
-				exception.printStackTrace();
-			}
-	}
-	private void run() {
-		engineThread = new EngineThread(g);
-		engineThread.start();
-	}
+    public TransformClTimeSeriesToCsv(File in_file, File out_file) {
+        UUID id;
+        try {
+            @SuppressWarnings("unchecked")
+            TimeSeries<Classification> cl = (TimeSeries<Classification>) AucomIO.getInstance().readTimeSeries(in_file);
+            this.g = new Graph().getConnector(new TimeSeriesSource<Classification>(cl, "cl_src")).
+                    connect(new RawDataToCsvRow()).
+                    connect(new PostofixToString("\n")).
+                    connect(new StringToBufferOutputEvent()).
+                    connect(new OutputStreamSinkStrip(new FileOutputStream(out_file))).
+                    getGraph();
+        } catch (FileNotFoundException exception) {
+            exception.printStackTrace();
+        } catch (ValidityException exception) {
+            exception.printStackTrace();
+        } catch (ParsingException exception) {
+            exception.printStackTrace();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        OptionParser parser = new OptionParser();
+        OptionSpec<File> f = parser.accepts("f").withRequiredArg().ofType(
+                File.class);
+        OptionSpec<File> o = parser.accepts("o").withRequiredArg().ofType(
+                File.class);
+
+        OptionSet option = parser.parse(args);
+        if (!option.has(f) || !option.has(o)) {
+            System.out.println("usage: -f classificationFile.cl -o outputfile.csv");
+            return;
+        }
+        File in = f.value(option);
+        File out = o.value(option);
+        if (!in.exists()) {
+            System.out.println("input file " + in.getAbsolutePath() + "  not found ");
+            return;
+        }
+        TransformClTimeSeriesToCsv t = new TransformClTimeSeriesToCsv(in, out);
+        t.run();
+        try {
+            t.engineThread.join();
+        } catch (InterruptedException exception) {
+            // TODO Auto-generated catch block
+            exception.printStackTrace();
+        }
+    }
+
+    private void run() {
+        engineThread = new EngineThread(g);
+        engineThread.start();
+    }
 }

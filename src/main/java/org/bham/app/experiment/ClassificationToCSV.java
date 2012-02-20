@@ -30,7 +30,8 @@ public class ClassificationToCSV implements Experiment {
         this.quiet = quiet;
 
         printBlockMessage("CONVERT TO CSV");
-        if (!quiet) System.out.printf("Input: %s\nOutput: %s\n", in.getPath(), out.getPath());
+        if (!quiet)
+            System.out.printf("Input: %s\nOutput: %s\n", in.getPath(), out.getPath());
     }
 
     @Override

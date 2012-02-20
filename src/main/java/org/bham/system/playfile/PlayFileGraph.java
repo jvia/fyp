@@ -12,50 +12,42 @@ public class PlayFileGraph extends AbstractAucomGraph {
     TimeSeriesSink<Observation> sink;
     private static final long serialVersionUID = 1L;
 
-    public PlayFileGraph()
-    {
+    public PlayFileGraph() {
         super("XcfPlayGraph");
         initGraph();
     }
 
     @Override
-    protected void initGraph()
-    {
+    protected void initGraph() {
         source = new PlayTimeSeriesSource<Observation>();
         sink = new TimeSeriesSink<Observation>(new ObservationTimeSeries());
         graph.connect(source, sink);
     }
 
     @Override
-    public boolean preconditionsSatisfied()
-    {
+    public boolean preconditionsSatisfied() {
         return source.isReady();
     }
 
     @Override
-    protected void cleanUp()
-    {
+    protected void cleanUp() {
         // ignored
     }
 
-    public void setInput(TimeSeries<Observation> inTs)
-    {
+    public void setInput(TimeSeries<Observation> inTs) {
         source.setInput(inTs);
     }
 
-    public TimeSeries<Observation> getInput()
-    {
+    public TimeSeries<Observation> getInput() {
         return source.input;
     }
 
-    public TimeSeries<Observation> getObservationTimeSeries()
-    {
+    public TimeSeries<Observation> getObservationTimeSeries() {
         return sink.getOutput();
     }
 
     @Override
-    protected String getReason()
-    {
+    protected String getReason() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

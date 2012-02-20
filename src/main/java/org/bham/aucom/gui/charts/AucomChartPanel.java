@@ -164,41 +164,42 @@
 
 package org.bham.aucom.gui.charts;
 
-import java.awt.event.MouseEvent;
-
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 
+import java.awt.event.MouseEvent;
+
 /**
  * A Swing GUI component for displaying a {@link JFreeChart} object.
- * <P>
+ * <p/>
  * The panel registers with the chart to receive notification of changes to any
  * component of the chart.  The chart is redrawn automatically whenever this
  * notification is received.
  */
-public class AucomChartPanel extends ChartPanel{
+public class AucomChartPanel extends ChartPanel {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3465550822984811828L;
-	public AucomChartPanel(JFreeChart chart) {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 3465550822984811828L;
+
+    public AucomChartPanel(JFreeChart chart) {
 
         super(
-            chart,
-            DEFAULT_WIDTH,
-            DEFAULT_HEIGHT,
-            DEFAULT_MINIMUM_DRAW_WIDTH,
-            DEFAULT_MINIMUM_DRAW_HEIGHT,
-            DEFAULT_MAXIMUM_DRAW_WIDTH,
-            DEFAULT_MAXIMUM_DRAW_HEIGHT,
-            DEFAULT_BUFFER_USED,
-            true,  // properties
-            true,  // save
-            true,  // print
-            true,  // zoom
-            true   // tooltips
-        );
+                chart,
+                DEFAULT_WIDTH,
+                DEFAULT_HEIGHT,
+                DEFAULT_MINIMUM_DRAW_WIDTH,
+                DEFAULT_MINIMUM_DRAW_HEIGHT,
+                DEFAULT_MAXIMUM_DRAW_WIDTH,
+                DEFAULT_MAXIMUM_DRAW_HEIGHT,
+                DEFAULT_BUFFER_USED,
+                true,  // properties
+                true,  // save
+                true,  // print
+                true,  // zoom
+                true   // tooltips
+             );
 
     }
 
@@ -213,46 +214,47 @@ public class AucomChartPanel extends ChartPanel{
      * be drawn using XOR, and there is a SEVERE performance problem with that
      * on JRE6 on Windows.
      *
-     * @param chart  the chart.
-     * @param useBuffer  a flag controlling whether or not an off-screen buffer
-     *                   is used (read the warning above before setting this
-     *                   to <code>false</code>).
+     * @param chart     the chart.
+     * @param useBuffer a flag controlling whether or not an off-screen buffer
+     *                  is used (read the warning above before setting this
+     *                  to <code>false</code>).
      */
     public AucomChartPanel(JFreeChart chart, boolean useBuffer) {
 
         super(chart, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_MINIMUM_DRAW_WIDTH,
-                DEFAULT_MINIMUM_DRAW_HEIGHT, DEFAULT_MAXIMUM_DRAW_WIDTH,
-                DEFAULT_MAXIMUM_DRAW_HEIGHT, useBuffer,
-                true,  // properties
-                true,  // save
-                true,  // print
-                true,  // zoom
-                true   // tooltips
-                );
+              DEFAULT_MINIMUM_DRAW_HEIGHT, DEFAULT_MAXIMUM_DRAW_WIDTH,
+              DEFAULT_MAXIMUM_DRAW_HEIGHT, useBuffer,
+              true,  // properties
+              true,  // save
+              true,  // print
+              true,  // zoom
+              true   // tooltips
+             );
 
     }
 
     /**
      * Constructs a JFreeChart panel.
      *
-     * @param chart  the chart.
-     * @param properties  a flag indicating whether or not the chart property
-     *                    editor should be available via the popup menu.
-     * @param save  a flag indicating whether or not save options should be
-     *              available via the popup menu.
-     * @param print  a flag indicating whether or not the print option
-     *               should be available via the popup menu.
-     * @param zoom  a flag indicating whether or not zoom options should
-     *              be added to the popup menu.
-     * @param tooltips  a flag indicating whether or not tooltips should be
-     *                  enabled for the chart.
+     * @param chart      the chart.
+     * @param properties a flag indicating whether or not the chart property
+     *                   editor should be available via the popup menu.
+     * @param save       a flag indicating whether or not save options should
+     *                   be
+     *                   available via the popup menu.
+     * @param print      a flag indicating whether or not the print option
+     *                   should be available via the popup menu.
+     * @param zoom       a flag indicating whether or not zoom options should
+     *                   be added to the popup menu.
+     * @param tooltips   a flag indicating whether or not tooltips should be
+     *                   enabled for the chart.
      */
     public AucomChartPanel(JFreeChart chart,
-                      boolean properties,
-                      boolean save,
-                      boolean print,
-                      boolean zoom,
-                      boolean tooltips) {
+                           boolean properties,
+                           boolean save,
+                           boolean print,
+                           boolean zoom,
+                           boolean tooltips) {
 
         this(chart,
              DEFAULT_WIDTH,
@@ -267,57 +269,65 @@ public class AucomChartPanel extends ChartPanel{
              print,
              zoom,
              tooltips
-             );
+            );
 
     }
 
     /**
      * Constructs a JFreeChart panel.
      *
-     * @param chart  the chart.
-     * @param width  the preferred width of the panel.
-     * @param height  the preferred height of the panel.
+     * @param chart             the chart.
+     * @param width             the preferred width of the panel.
+     * @param height            the preferred height of the panel.
      * @param minimumDrawWidth  the minimum drawing width.
-     * @param minimumDrawHeight  the minimum drawing height.
+     * @param minimumDrawHeight the minimum drawing height.
      * @param maximumDrawWidth  the maximum drawing width.
-     * @param maximumDrawHeight  the maximum drawing height.
-     * @param useBuffer  a flag that indicates whether to use the off-screen
-     *                   buffer to improve performance (at the expense of
-     *                   memory).
-     * @param properties  a flag indicating whether or not the chart property
-     *                    editor should be available via the popup menu.
-     * @param save  a flag indicating whether or not save options should be
-     *              available via the popup menu.
-     * @param print  a flag indicating whether or not the print option
-     *               should be available via the popup menu.
-     * @param zoom  a flag indicating whether or not zoom options should be
-     *              added to the popup menu.
-     * @param tooltips  a flag indicating whether or not tooltips should be
-     *                  enabled for the chart.
+     * @param maximumDrawHeight the maximum drawing height.
+     * @param useBuffer         a flag that indicates whether to use the
+     *                          off-screen
+     *                          buffer to improve performance (at the expense
+     *                          of
+     *                          memory).
+     * @param properties        a flag indicating whether or not the chart
+     *                          property
+     *                          editor should be available via the popup menu.
+     * @param save              a flag indicating whether or not save options
+     *                          should be
+     *                          available via the popup menu.
+     * @param print             a flag indicating whether or not the print
+     *                          option
+     *                          should be available via the popup menu.
+     * @param zoom              a flag indicating whether or not zoom options
+     *                          should be
+     *                          added to the popup menu.
+     * @param tooltips          a flag indicating whether or not tooltips should
+     *                          be
+     *                          enabled for the chart.
      */
     public AucomChartPanel(JFreeChart chart, int width, int height,
-            int minimumDrawWidth, int minimumDrawHeight, int maximumDrawWidth,
-            int maximumDrawHeight, boolean useBuffer, boolean properties,
-            boolean save, boolean print, boolean zoom, boolean tooltips) {
+                           int minimumDrawWidth, int minimumDrawHeight, int maximumDrawWidth,
+                           int maximumDrawHeight, boolean useBuffer, boolean properties,
+                           boolean save, boolean print, boolean zoom, boolean tooltips) {
 
         this(chart, width, height, minimumDrawWidth, minimumDrawHeight,
-                maximumDrawWidth, maximumDrawHeight, useBuffer, properties,
-                true, save, print, zoom, tooltips);
+             maximumDrawWidth, maximumDrawHeight, useBuffer, properties,
+             true, save, print, zoom, tooltips);
     }
 
 
-	public AucomChartPanel(JFreeChart chart, int width, int height,
-	            int minimumDrawWidth, int minimumDrawHeight, int maximumDrawWidth,
-	            int maximumDrawHeight, boolean useBuffer, boolean properties,
-	            boolean copy, boolean save, boolean print, boolean zoom,
-	            boolean tooltips){
-		super(chart, width, height,
-	            minimumDrawWidth, minimumDrawHeight, maximumDrawWidth,
-	            maximumDrawHeight, useBuffer, properties,
-	            copy, save, print, zoom,
-	            tooltips);
-	}
-	@Override
+    public AucomChartPanel(JFreeChart chart, int width, int height,
+                           int minimumDrawWidth, int minimumDrawHeight, int maximumDrawWidth,
+                           int maximumDrawHeight, boolean useBuffer, boolean properties,
+                           boolean copy, boolean save, boolean print, boolean zoom,
+                           boolean tooltips) {
+        super(chart, width, height,
+              minimumDrawWidth, minimumDrawHeight, maximumDrawWidth,
+              maximumDrawHeight, useBuffer, properties,
+              copy, save, print, zoom,
+              tooltips);
+    }
+
+    @Override
     public void mouseReleased(MouseEvent e) {
 
         // if we've been panning, we need to reset now that the mouse is 

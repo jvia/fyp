@@ -1,16 +1,16 @@
 package org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class AnomalyConfiguratorPanel extends JPanel {
-	private static final long serialVersionUID = 0L;
-	private AnomalyConfigurator aCfg;
+    private static final long serialVersionUID = 0L;
+    private AnomalyConfigurator aCfg;
 
-	public AnomalyConfigurator getaCfg() {
-		return aCfg;
-	}
+    public AnomalyConfigurator getaCfg() {
+        return aCfg;
+    }
 
-	public void setAnomalyConfigurator(AnomalyConfigurator aCfg) {
-		this.aCfg = aCfg;
-	}
+    public void setAnomalyConfigurator(AnomalyConfigurator aCfg) {
+        this.aCfg = aCfg;
+    }
 }

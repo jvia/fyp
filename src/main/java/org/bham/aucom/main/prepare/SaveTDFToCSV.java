@@ -11,28 +11,29 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class SaveTDFToCSV {
-	public SaveTDFToCSV(File in, File out) {
-		try {
-			TimeSeries<?>  tsIn = AucomIO.getInstance().readTimeSeries(in, "xml");
-			AucomIO.getInstance().writeTimeSeries(tsIn, out, "csv");
-		} catch (FileNotFoundException exception) {
-			exception.printStackTrace();
-		} catch (ValidityException exception) {
-			exception.printStackTrace();
-		} catch (ParsingException exception) {
-			exception.printStackTrace();
-		} catch (IOException exception) {
-			exception.printStackTrace();
-		} catch (IllegalOutputType exception) {
-			exception.printStackTrace();
-		}
-		
-	}
-	public static void main(String[] args) {
-		if(args.length != 2){
-			System.out.println("usage: tdf2csv in.tdf out.csv");
-			System.exit(1);
-		}
-		new SaveTDFToCSV(new File(args[0]), new File(args[0]));
-	}
+    public SaveTDFToCSV(File in, File out) {
+        try {
+            TimeSeries<?> tsIn = AucomIO.getInstance().readTimeSeries(in, "xml");
+            AucomIO.getInstance().writeTimeSeries(tsIn, out, "csv");
+        } catch (FileNotFoundException exception) {
+            exception.printStackTrace();
+        } catch (ValidityException exception) {
+            exception.printStackTrace();
+        } catch (ParsingException exception) {
+            exception.printStackTrace();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        } catch (IllegalOutputType exception) {
+            exception.printStackTrace();
+        }
+
+    }
+
+    public static void main(String[] args) {
+        if (args.length != 2) {
+            System.out.println("usage: tdf2csv in.tdf out.csv");
+            System.exit(1);
+        }
+        new SaveTDFToCSV(new File(args[0]), new File(args[0]));
+    }
 }

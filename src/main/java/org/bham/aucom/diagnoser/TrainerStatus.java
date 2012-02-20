@@ -1,7 +1,7 @@
 package org.bham.aucom.diagnoser;
 
 public enum TrainerStatus {
-	NOTREADY,
-	READY,
-	RUNNING
+    NOTREADY,
+    READY,
+    RUNNING
 }

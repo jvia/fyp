@@ -2,8 +2,8 @@ package org.bham.aucom.main;
 
 
 public class CreateClassIdsFromData {
-	
-	public static void main(String[] args) {
+
+    public static void main(String[] args) {
 //		try {
 //			Parameter[] p = new Parameter[3];
 //			p[0] = new FlaggedOption("existingFile", JSAP.STRING_PARSER, "", JSAP.NOT_REQUIRED, 'f',JSAP.NO_LONGFLAG, "an existing file with class ids");
@@ -67,5 +67,5 @@ public class CreateClassIdsFromData {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-	}
+    }
 }

@@ -1,14 +1,14 @@
 package org.bham.aucom.data.timeseries;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
-
 import org.bham.aucom.data.AbstractData;
 import org.bham.aucom.data.LinkEnum;
 import org.bham.aucom.fts.AbstractLinkableNode;
 import org.bham.aucom.util.RingBuffer;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
 public abstract class TimeSeries<T extends AbstractData> extends AbstractLinkableNode {
     private static final long serialVersionUID = 1L;
@@ -75,56 +75,47 @@ public abstract class TimeSeries<T extends AbstractData> extends AbstractLinkabl
     /**
      * @param dataTypeTimeSeriesId
      */
-    public void setGeneratedFrom(UUID dataTypeTimeSeriesId)
-    {
+    public void setGeneratedFrom(UUID dataTypeTimeSeriesId) {
         addLink(LinkEnum.generatedFromId, dataTypeTimeSeriesId);
     }
 
     /**
      * @param generatoId
      */
-    public void setGenerator(UUID generatoId)
-    {
+    public void setGenerator(UUID generatoId) {
         addLink(LinkEnum.generatorId, generatoId);
     }
 
-    public UUID getGeneratorID()
-    {
+    public UUID getGeneratorID() {
         return getLinks(LinkEnum.generatorId).get(0);
     }
 
-    public UUID getGeneratedFromID()
-    {
+    public UUID getGeneratedFromID() {
         return getLinks(LinkEnum.generatedFromId).get(0);
     }
 
-    public boolean hasGenerator()
-    {
+    public boolean hasGenerator() {
         return containsLink(LinkEnum.generatorId);
     }
 
-    public boolean hasgeneratedFrom()
-    {
+    public boolean hasgeneratedFrom() {
         return containsLink(LinkEnum.generatedFromId);
     }
 
-    public synchronized T get(int index)
-    {
+    public synchronized T get(int index) {
         return this.list.get(index);
     }
 
     @SuppressWarnings("boxing")
-    public synchronized void add(T s)
-    {
+    public synchronized void add(T s) {
         this.list.add(s);
         // this.timestampToElement.put(s.getTimestamp(), s);
         fireTimeseriesStatusChangedEvent(new TimeseriesStatusEvent(this, TimeseriesStatus.ELEMENTSADDED, this.list.size() - 1, this.list.size() - 1));
         // trim();
     }
 
-    @SuppressWarnings( { "boxing", "unchecked" })
-    public synchronized void addAll(Collection<T> c)
-    {
+    @SuppressWarnings({"boxing", "unchecked"})
+    public synchronized void addAll(Collection<T> c) {
         try {
 
             if (c.size() == 0) {
@@ -139,33 +130,29 @@ public abstract class TimeSeries<T extends AbstractData> extends AbstractLinkabl
         }
     }
 
-    public synchronized void remove(int i)
-    {
+    public synchronized void remove(int i) {
         // TODO code this
     }
 
-    public synchronized void clear()
-    {
+    public synchronized void clear() {
         int lastIndex = this.list.size() - 1;
         this.list.clear();
         // this.timestampToElement.clear();
         fireTimeseriesStatusChangedEvent(new TimeseriesStatusEvent(this, TimeseriesStatus.ELEMENTSREMOVED, 0, lastIndex));
     }
 
-    public synchronized int size()
-    {
+    public synchronized int size() {
         return this.list.size();
     }
 
     @SuppressWarnings("unchecked")
-    public synchronized Collection<T> getall()
-    {
-        Object[] elements_tmp= this.list.toArray();
+    public synchronized Collection<T> getall() {
+        Object[] elements_tmp = this.list.toArray();
         Collection<T> out = new ArrayList<T>();
-        for(int i = 0; i< elements_tmp.length; i++){
-            out.add((T)elements_tmp[i]);
+        for (int i = 0; i < elements_tmp.length; i++) {
+            out.add((T) elements_tmp[i]);
         }
-        return out ;
+        return out;
     }
 
     /*
@@ -173,19 +160,16 @@ public abstract class TimeSeries<T extends AbstractData> extends AbstractLinkabl
      */
     protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
-    public void addTimeSeriesStatusListener(TimeSeriesStatusListener listener)
-    {
+    public void addTimeSeriesStatusListener(TimeSeriesStatusListener listener) {
         this.listenerList.add(TimeSeriesStatusListener.class, listener);
     }
 
-    public void removeTimeseriesStatusListener(TimeSeriesStatusListener listener)
-    {
+    public void removeTimeseriesStatusListener(TimeSeriesStatusListener listener) {
         this.listenerList.remove(TimeSeriesStatusListener.class, listener);
     }
 
     // This method is used to fire TrainingStatusChangedEvents
-    void fireTimeseriesStatusChangedEvent(TimeseriesStatusEvent evt)
-    {
+    void fireTimeseriesStatusChangedEvent(TimeseriesStatusEvent evt) {
         Object[] listeners = this.listenerList.getListenerList();
         // Each listener occupies two elements - the first is the listener class
         // and the second is the listener instance
@@ -200,14 +184,12 @@ public abstract class TimeSeries<T extends AbstractData> extends AbstractLinkabl
      * <---- event handling
      */
 
-    public synchronized boolean isEmpty()
-    {
+    public synchronized boolean isEmpty() {
         return this.list.isEmpty();
     }
 
     @Override
-    public boolean equals(Object arg0)
-    {
+    public boolean equals(Object arg0) {
         if (arg0.getClass().equals(this.getClass())) {
             TimeSeries s = (TimeSeries) arg0;
             return s.getId().equals(this.getId());
@@ -216,47 +198,43 @@ public abstract class TimeSeries<T extends AbstractData> extends AbstractLinkabl
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getId().toString() + " #" + size() + " |" + type + "";
     }
 
-    public boolean isOfType(Class<? extends AbstractData> classToCheck)
-    {
+    public boolean isOfType(Class<? extends AbstractData> classToCheck) {
         return this.list.size() != 0 && this.list.get(0).getClass().equals(classToCheck);
     }
 
-    protected void setType(TimeSeriesType type)
-    {
+    protected void setType(TimeSeriesType type) {
         this.type = type;
     }
 
-    public TimeSeriesType getType()
-    {
+    public TimeSeriesType getType() {
         return this.type;
     }
 
-	public List<T> getHead(long inTimestamp) {
-		Collection<T> all = getall();
-		List<T> head = new ArrayList<T>();
-		
-		for( T element : all){
-			if(element.getTimestamp()<inTimestamp){
-				head.add(element);
-			}
-        }
-		return head;
-	}
+    public List<T> getHead(long inTimestamp) {
+        Collection<T> all = getall();
+        List<T> head = new ArrayList<T>();
 
-	public List<T> getTail(long inTimestamp) {
-		Collection<T> all = getall();
-		List<T> tail = new ArrayList<T>();
-		
-		for( T element : all){
-			if(element.getTimestamp()>=inTimestamp){
-				tail.add(element);
-			}
-		}
-		return tail;
-	}
+        for (T element : all) {
+            if (element.getTimestamp() < inTimestamp) {
+                head.add(element);
+            }
+        }
+        return head;
+    }
+
+    public List<T> getTail(long inTimestamp) {
+        Collection<T> all = getall();
+        List<T> tail = new ArrayList<T>();
+
+        for (T element : all) {
+            if (element.getTimestamp() >= inTimestamp) {
+                tail.add(element);
+            }
+        }
+        return tail;
+    }
 }

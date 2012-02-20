@@ -9,11 +9,10 @@ public class ActionNotPermittedException extends Exception {
 
     /**
      * Create the exception.
-     * 
+     *
      * @param msg error message
      */
-    public ActionNotPermittedException(String msg)
-    {
+    public ActionNotPermittedException(String msg) {
         super(msg);
     }
 }

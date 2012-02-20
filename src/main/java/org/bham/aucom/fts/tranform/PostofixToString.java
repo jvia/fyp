@@ -3,21 +3,23 @@ package org.bham.aucom.fts.tranform;
 import net.sf.xcf.fts.nodes.transform.AbstractTransformNode;
 
 public class PostofixToString extends AbstractTransformNode<String, String> {
-	private String postfix;
-	public PostofixToString(String inPostfix) {
-		setPostfix(inPostfix);
-	}
-	@Override
-	protected String transform(String arg0) throws Exception {
-		return arg0.concat(getPostfix());
-	}
+    private String postfix;
 
-	public void setPostfix(String inNewPostfix) {
-		this.postfix = inNewPostfix;
-	}
+    public PostofixToString(String inPostfix) {
+        setPostfix(inPostfix);
+    }
 
-	public String getPostfix() {
-		return postfix;
-	}
+    @Override
+    protected String transform(String arg0) throws Exception {
+        return arg0.concat(getPostfix());
+    }
+
+    public void setPostfix(String inNewPostfix) {
+        this.postfix = inNewPostfix;
+    }
+
+    public String getPostfix() {
+        return postfix;
+    }
 
 }

@@ -4,36 +4,39 @@ import org.bham.aucom.util.BinCaluclator;
 
 public class LogarithmicBinCalculator implements BinCaluclator {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1231341324234L;
-	double basis;
-	public LogarithmicBinCalculator(double basis) {
-		this.basis = basis;
-	}
-	@Override
-	public int calculateBin(double value) {
-		if(value < 1.0d)
-			return 0;
-		return (int)Math.floor(log(value)) + 1;
-	} 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1231341324234L;
+    double basis;
 
-	@Override
-	public double getHighBoundary(double value) {
-		if(value < 1.0d)
-			return Math.pow(basis, 0);
-		return Math.pow(this.basis, Math.ceil(log(value)));
-	}
+    public LogarithmicBinCalculator(double basis) {
+        this.basis = basis;
+    }
 
-	@Override
-	public double getLowBoundary(double value) {
-		if(value < 1.0d)
-			return 0;
-		return Math.pow(this.basis, Math.floor(log(value)));
-	}
-	public double log(double value){
-		return Math.log(value)/Math.log(this.basis);
-	}
+    @Override
+    public int calculateBin(double value) {
+        if (value < 1.0d)
+            return 0;
+        return (int) Math.floor(log(value)) + 1;
+    }
+
+    @Override
+    public double getHighBoundary(double value) {
+        if (value < 1.0d)
+            return Math.pow(basis, 0);
+        return Math.pow(this.basis, Math.ceil(log(value)));
+    }
+
+    @Override
+    public double getLowBoundary(double value) {
+        if (value < 1.0d)
+            return 0;
+        return Math.pow(this.basis, Math.floor(log(value)));
+    }
+
+    public double log(double value) {
+        return Math.log(value) / Math.log(this.basis);
+    }
 
 }

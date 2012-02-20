@@ -5,15 +5,15 @@ import org.bham.aucom.gui.KernelDensityInputPanel;
 
 public class KernelDensityEstimateProbabilityFamilyFactory implements ProbabilityFamiliyFactory<KDEProbabilityFactory, Double> {
 
-	@Override
-	public KDEProbabilityFactory getFactory(Double...parameters) {
-		//Assert.assertEquals(1, parameters.length);
-		return new KDEProbabilityFactory(parameters[0]);
-	}
+    @Override
+    public KDEProbabilityFactory getFactory(Double... parameters) {
+        //Assert.assertEquals(1, parameters.length);
+        return new KDEProbabilityFactory(parameters[0]);
+    }
 
-	@Override
-	public ProbabilityInputPanel getInputPanel() {
-		return new KernelDensityInputPanel();
-	}
+    @Override
+    public ProbabilityInputPanel getInputPanel() {
+        return new KernelDensityInputPanel();
+    }
 
 }

@@ -5,11 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
-* Represents a Score generated out of a sequence of consecutive scores. @see Score
-* Score value, abnormality and durations to precedessors are mean values of the scores
-* Timestamp and Precedessors are  elements of the first score in the represented sequence
-*
-*/
+ * Represents a Score generated out of a sequence of consecutive scores. @see
+ * Score
+ * Score value, abnormality and durations to precedessors are mean values of
+ * the
+ * scores
+ * Timestamp and Precedessors are  elements of the first score in the
+ * represented sequence
+ */
 public class RangeScore extends Score {
     private List<Score> scores;
 
