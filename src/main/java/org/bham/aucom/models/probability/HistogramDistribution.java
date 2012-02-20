@@ -52,7 +52,7 @@ public class HistogramDistribution implements ProbabilityDistribution {
             double val = values.next();
             sum += val;
             numValues++;
-//			System.out.println("###################" + val);
+//   System.out.println("###################" + val);
         }
         boolean valid = sum >= 1.0d - LOWESTPROBABILITY & sum <= 1.0d + LOWESTPROBABILITY;
         if (!valid)
@@ -76,7 +76,7 @@ public class HistogramDistribution implements ProbabilityDistribution {
 
     private void put(double value) {
         this.content.put(value);
-//		validate();
+//  validate();
     }
 
     private double getProb(double value) {

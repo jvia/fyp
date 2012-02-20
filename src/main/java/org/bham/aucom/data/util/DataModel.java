@@ -151,23 +151,7 @@ public class DataModel implements TimeSeriesStatusListener {
     @SuppressWarnings("unchecked")
     @Override
     public void timeseriesStatusChanged(TimeseriesStatusEvent status) {
-//		TimeSeries<? extends AbstractData> s = (TimeSeries<? extends AbstractData>) (status.getSource());
-//		Logger.getLogger(this.getClass().getCanonicalName()).info("timeseries changed : " + s.getType() + " [" + status.getStartIndex() +  ";" + status.getEndIndex()+ "]");
     }
-//		int from = status.getStartIndex();
-//		int to = status.getStartIndex();
-//		for (int i = from; i <= to; i++) {
-//			switch (status.getStatus()) {
-//			case ELEMENTSADDED: {
-//				break;
-//			}
-//			case ELEMENTSREMOVED: {
-//				break;
-//			}
-//			}
-//			Logger.getLogger(this.getClass().getCanonicalName()).info("timeseries" + s.getType() + " changed");
-//		}
-//	}
 
     public boolean isReady() {
         return false;

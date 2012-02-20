@@ -55,50 +55,50 @@ public class DataSequenceStatistics {
      *
      */
     private void calcScopes() {
-//		for (DataType d : this.sequence.getall()) {
-//			if (!this.scopes.contains(d.getFeatures().getValueForFeatureWithName("scope")))
-//				this.scopes.add(d.getValueForFeatureWithName("scope"));
-//		}
+//for (DataType d : this.sequence.getall()) {
+//if (!this.scopes.contains(d.getFeatures().getValueForFeatureWithName("scope")))
+//this.scopes.add(d.getValueForFeatureWithName("scope"));
+//}
     }
 
     /**
      *
      */
     private void calcTypes() {
-//		for (AbstractData d : this.sequence.getall()) {
-//			if (d.containsFeatureWithName("scope")) {
-//				if (!this.types.contains(d.getValueForFeatureWithName("type")))
-//					this.types.add(d.getValueForFeatureWithName("type"));
-//			}
-//		}
+//for (AbstractData d : this.sequence.getall()) {
+//if (d.containsFeatureWithName("scope")) {
+//if (!this.types.contains(d.getValueForFeatureWithName("type")))
+//this.types.add(d.getValueForFeatureWithName("type"));
+//}
+//}
     }
 
     /**
      *
      */
     private void calcSources() {
-//		for (AbstractData d : this.sequence.getall()) {
-//			if (d.containsFeatureWithName("scope")) {
-//			if (!this.sources.containsKey(d.getValueForFeatureWithName("type"))) {
-//				this.sources.put(d.getValueForFeatureWithName("type"), Integer.valueOf(0));
-//			} else {
-//				int count = this.sources.get(d.getValueForFeatureWithName("type")).intValue();
-//				this.sources.put(d.getValueForFeatureWithName("type"), Integer.valueOf(count + 1));
-//			}
-//		}}
+//for (AbstractData d : this.sequence.getall()) {
+//if (d.containsFeatureWithName("scope")) {
+//if (!this.sources.containsKey(d.getValueForFeatureWithName("type"))) {
+//this.sources.put(d.getValueForFeatureWithName("type"), Integer.valueOf(0));
+//} else {
+//int count = this.sources.get(d.getValueForFeatureWithName("type")).intValue();
+//this.sources.put(d.getValueForFeatureWithName("type"), Integer.valueOf(count + 1));
+//}
+//}}
     }
 
     private void calcIds() {
-//		HashSet<Integer> hashSet = new HashSet<Integer>();
-//		for (AbstractData d : this.sequence.getall()) {
-//			if(d instanceof PointData){
-//				d.setEventTypeId(SourceScopeTypeEncoder.getInstance().convertEncoding((PointData)d));
-//			}
-//			hashSet.add(Integer.valueOf(d.getEventTypeId()));
-//		}
-//		for (Integer id : hashSet) {
-//			this.classIds.add(id);
-//		}
+//HashSet<Integer> hashSet = new HashSet<Integer>();
+//for (AbstractData d : this.sequence.getall()) {
+//if(d instanceof PointData){
+//d.setEventTypeId(SourceScopeTypeEncoder.getInstance().convertEncoding((PointData)d));
+//}
+//hashSet.add(Integer.valueOf(d.getEventTypeId()));
+//}
+//for (Integer id : hashSet) {
+//this.classIds.add(id);
+//}
     }
 
     public int getNumberClasses() {

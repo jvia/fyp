@@ -104,23 +104,23 @@ public class AucomChart extends javax.swing.JFrame {
     }
 
     public void addDataToseriesInTimespan(final TimeSeries<Score> sequence, final int from, final int to) {
-//		final ArrayList<Score> list = sequence.getElementsInRange(from, to);
+//  final ArrayList<Score> list = sequence.getElementsInRange(from, to);
         // if(list.size()>0){
         // System.out.print("from " + from + " first "
         // +list.get(0).getTimestamp());
         // System.out.println(" to " + to +" last "
         // +list.get(list.size()-1).getTimestamp());
         // }
-//		final XYSeries s = this.series.get(sequence).getFirstElement();
+//  final XYSeries s = this.series.get(sequence).getFirstElement();
 //
-//		SwingUtilities.invokeLater(new Runnable() {
-//			@Override
-//			public void run() {
-//				for (Score score : list) {
-//					s.addOrUpdate(score.getTimestamp(), score.getValue());
-//				}
-//			}
-//		});
+//  SwingUtilities.invokeLater(new Runnable() {
+//   @Override
+//   public void run() {
+//    for (Score score : list) {
+//     s.addOrUpdate(score.getTimestamp(), score.getValue());
+//    }
+//   }
+//  });
     }
 
     public void removeDataFromSeries(TimeSeries<Score> sequence, int from, int to) {
@@ -375,57 +375,57 @@ public class AucomChart extends javax.swing.JFrame {
         updateDomainAxis();
     }// GEN-LAST:event_visibleDataSliderStateChanged
 
-//	/**
-//	 * @param args
-//	 *            the command line arguments
-//	 */
-//	public static void main(String args[]) {
-//		try {
-//			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//		} catch (ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (InstantiationException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IllegalAccessException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (UnsupportedLookAndFeelException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+// /**
+//  * @param args
+//  *            the command line arguments
+//  */
+// public static void main(String args[]) {
+//  try {
+//   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//  } catch (ClassNotFoundException e) {
+//   // TODO Auto-generated catch block
+//   e.printStackTrace();
+//  } catch (InstantiationException e) {
+//   // TODO Auto-generated catch block
+//   e.printStackTrace();
+//  } catch (IllegalAccessException e) {
+//   // TODO Auto-generated catch block
+//   e.printStackTrace();
+//  } catch (UnsupportedLookAndFeelException e) {
+//   // TODO Auto-generated catch block
+//   e.printStackTrace();
+//  }
 //
-//		java.awt.EventQueue.invokeLater(new Runnable() {
-//			@Override
-//			public void run() {
-//				ArrayList<Score> s = new ArrayList<Score>();
-//				ArrayList<DomainFeature> features = new ArrayList<DomainFeature>();
-//				features.add(new DomainFeature("scope", "a"));
-//				features.add(new DomainFeature("type", "b"));
-//				features.add(new DomainFeature("source", "c"));
+//  java.awt.EventQueue.invokeLater(new Runnable() {
+//   @Override
+//   public void run() {
+//    ArrayList<Score> s = new ArrayList<Score>();
+//    ArrayList<DomainFeature> features = new ArrayList<DomainFeature>();
+//    features.add(new DomainFeature("scope", "a"));
+//    features.add(new DomainFeature("type", "b"));
+//    features.add(new DomainFeature("source", "c"));
 //
-//				s.add(new SingleScore(new TemporalProbabilityFeature(), 0.1));
-//				s.add(new SingleScore(new TemporalProbabilityFeature(), 0.2));
-//				s.add(new SingleScore(new TemporalProbabilityFeature(), 0.3));
-//				s.add(new SingleScore(new TemporalProbabilityFeature(), 0.4));
-//				s.add(new SingleScore(new TemporalProbabilityFeature(), 0.5));
-//				s.add(new SingleScore(new TemporalProbabilityFeature(), 0.6));
-//				s.add(new SingleScore(new TemporalProbabilityFeature(), 0.7));
-//				s.add(new SingleScore(new TemporalProbabilityFeature(), 0.8));
-//				s.add(new SingleScore(new TemporalProbabilityFeature(), 0.9));
-//				TimeSeries<Score> sequence = new ScoreTimeSeries();
-//				sequence.setId(UUID.randomUUID());
-//				sequence.setGeneratedFrom(UUID.randomUUID());
-//				sequence.setGenerator(UUID.randomUUID());
-//				AucomChart p = new AucomChart("test");
-//				p.registerData(sequence);
-//				p.setDefaultCloseOperation(EXIT_ON_CLOSE);
-//				p.setVisible(true);
+//    s.add(new SingleScore(new TemporalProbabilityFeature(), 0.1));
+//    s.add(new SingleScore(new TemporalProbabilityFeature(), 0.2));
+//    s.add(new SingleScore(new TemporalProbabilityFeature(), 0.3));
+//    s.add(new SingleScore(new TemporalProbabilityFeature(), 0.4));
+//    s.add(new SingleScore(new TemporalProbabilityFeature(), 0.5));
+//    s.add(new SingleScore(new TemporalProbabilityFeature(), 0.6));
+//    s.add(new SingleScore(new TemporalProbabilityFeature(), 0.7));
+//    s.add(new SingleScore(new TemporalProbabilityFeature(), 0.8));
+//    s.add(new SingleScore(new TemporalProbabilityFeature(), 0.9));
+//    TimeSeries<Score> sequence = new ScoreTimeSeries();
+//    sequence.setId(UUID.randomUUID());
+//    sequence.setGeneratedFrom(UUID.randomUUID());
+//    sequence.setGenerator(UUID.randomUUID());
+//    AucomChart p = new AucomChart("test");
+//    p.registerData(sequence);
+//    p.setDefaultCloseOperation(EXIT_ON_CLOSE);
+//    p.setVisible(true);
 //
-//			}
-//		});
-//	}
+//   }
+//  });
+// }
 
     public void setThresholdValue(double thresholdValue) {
         this.thresholdValue = thresholdValue;

@@ -56,10 +56,10 @@ public class HashMatrix<T, U, V> implements Serializable {
 
     public boolean containsKey(T indexOne, U indexTwo) {
         boolean contains = content.containsKey(indexOne);
-//		System.out.println("1: " +contains);
+//  System.out.println("1: " +contains);
         if (contains)
             contains = contains & content.get(indexOne).containsKey(indexTwo);
-//		System.out.println("2: " +contains);
+//  System.out.println("2: " +contains);
         return contains;
     }
 

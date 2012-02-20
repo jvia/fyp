@@ -35,18 +35,6 @@ public class TemporalProbabilityFeature extends TemporalDurationFeature {
         this(tpf, tpf.getDataTypeToProbabilityMapping());
     }
 
-
-//	public TemporalDurationFeature getGeneratedFromData() {
-//		if(this.generaDurationFeature == null)
-//			try {
-//				initializeGeneratedFrom();
-//			} catch (IdNotFoundException exception) {
-//				exception.printStackTrace();
-//				return null;
-//			}
-//		return this.generaDurationFeature;
-//	}
-
     public TemporalProbabilityFeature() {
         super();
     }
@@ -58,14 +46,6 @@ public class TemporalProbabilityFeature extends TemporalDurationFeature {
         }
         return out;
     }
-
-//	public void add(Integer eventType, Double inProbability) {
-//		if (isUnknownEventType(eventType)){
-//			System.out.println("Warning: unknown predecessor");
-//			return;
-//		}
-//		this.getDataTypeToProbabilityMapping().put(this.getEventTypeToIdMapping().get(eventType), inProbability);
-//	}
 
     public double getProbabilityFor(DataType eventType) {
         if (isUnknownEventType(eventType)) {

@@ -8,15 +8,6 @@ import org.bham.aucom.util.Constants;
 
 public class TemporalProbabilityFeatureTimeSeriesToXmlConverter extends TimeSeriesToXmlDocumentConverter<TemporalProbabilityFeature> {
 
-    //	<ts:temporalprobabilityfeature>
-//    <ts:predecessors>
-//    	<ts:element type="probability" eventType="1" value="0.1"></ts:element>
-//    	<ts:element type="probability" eventType="2" value="0.2"></ts:element>
-//    	<ts:element type="probability" eventType="3" value="0.3"></ts:element>
-//    	<ts:element type="probability" eventType="4" value="0.4"></ts:element>
-//  	</ts:predecessors>
-//  </ts:temporalprobabilityfeature>
-
     @Override
     public void appendElementContentAsXml(Element containerElement, TemporalProbabilityFeature data) {
         new TemporalDurationTimeSeriesFeatureToXmlConverter().appendElementContentAsXml(containerElement, data);

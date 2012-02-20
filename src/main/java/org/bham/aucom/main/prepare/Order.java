@@ -53,26 +53,26 @@ public class Order {
             sortedMap.put(currTimestamp, element);
 
         }
-//		while(!list.isEmpty()){
-//			Element min = null;
-//			int index = 0;
-//			for(int i=0;i<list.size();i++){
-//				Element val = list.get(i);
+//  while(!list.isEmpty()){
+//   Element min = null;
+//   int index = 0;
+//   for(int i=0;i<list.size();i++){
+//    Element val = list.get(i);
 //
-//				if(min == null ){
-//					min = (Element)val.copy();
-//					index = i;
-//					continue;
-//				}
-//				long minTimestamp = getTimestamp(min);
-//				if(minTimestamp > currTimestamp){
-//						min = (Element)val.copy();
-//						index = i;
-//					}
-//				}
-//			out.add(min);
-//			list.remove(index);
-//		}
+//    if(min == null ){
+//     min = (Element)val.copy();
+//     index = i;
+//     continue;
+//    }
+//    long minTimestamp = getTimestamp(min);
+//    if(minTimestamp > currTimestamp){
+//      min = (Element)val.copy();
+//      index = i;
+//     }
+//    }
+//   out.add(min);
+//   list.remove(index);
+//  }
         return sortedMap;
     }
 

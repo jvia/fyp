@@ -34,7 +34,7 @@ public class RangeScore extends Score {
         meanValue /= scores.size();
         setValue(meanValue);
         setVariance(calculateVarianceValue(scores));
-//		setAbnormal(SystemFaultStatus.UNKNOWN);
+//      setAbnormal(SystemFaultStatus.UNKNOWN);
         this.setScores(scores);
     }
 

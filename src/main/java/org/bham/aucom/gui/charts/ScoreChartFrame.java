@@ -181,51 +181,51 @@ public class ScoreChartFrame extends javax.swing.JFrame implements
 
     public void addValue(Score inScore) {
         // TODO FIX
-//		if (inScore != null) {
-//			XYDataItem item = inScore.asXYDataItem();
-//			Comparable seriesName = (String) inScore.getDataSet();
-//			XYSeries series;
-//			synchronized (dataset) {
-//				if (dataset.indexOf(seriesName) == -1) {
-//					series = new XYSeries(seriesName);
-//					System.out.println("new series : " + seriesName);
-//					dataset.addSeries(series);
-//				} else {
-//					if (dataset.getSeries(seriesName).indexOf(item.getX()) < 0) {
-//						// System.out.println("ADDING: "+ inScore);
-//						series = dataset.getSeries(seriesName);
-//						series.add(item);
-//					} else {
-//						int index = dataset.getSeries(seriesName).indexOf(
-//								item.getX());
-//						if (((Double) dataset.getSeries(seriesName).getX(index))
-//								.intValue() != item.getYValue()) {
-//							dataset.getSeries(seriesName).remove(index);
-//							dataset.getSeries(seriesName).add(item);
-//						}
-//					}
-//				}
-//			}
-//		} else {
-//			System.out.println("warning inScore is null");
-//		}
+//  if (inScore != null) {
+//   XYDataItem item = inScore.asXYDataItem();
+//   Comparable seriesName = (String) inScore.getDataSet();
+//   XYSeries series;
+//   synchronized (dataset) {
+//    if (dataset.indexOf(seriesName) == -1) {
+//     series = new XYSeries(seriesName);
+//     System.out.println("new series : " + seriesName);
+//     dataset.addSeries(series);
+//    } else {
+//     if (dataset.getSeries(seriesName).indexOf(item.getX()) < 0) {
+//      // System.out.println("ADDING: "+ inScore);
+//      series = dataset.getSeries(seriesName);
+//      series.add(item);
+//     } else {
+//      int index = dataset.getSeries(seriesName).indexOf(
+//        item.getX());
+//      if (((Double) dataset.getSeries(seriesName).getX(index))
+//        .intValue() != item.getYValue()) {
+//       dataset.getSeries(seriesName).remove(index);
+//       dataset.getSeries(seriesName).add(item);
+//      }
+//     }
+//    }
+//   }
+//  } else {
+//   System.out.println("warning inScore is null");
+//  }
     }
 
     public void removeValue(Score inScore) {
         // TODO FIX
-//		if (inScore != null) {
-//			int timestamp = ((Long) inScore.getTimestamp()).intValue();
-//			Comparable setType = (String) inScore.getDataSet();
-//			synchronized (dataset) {
-//				if (dataset.indexOf(setType) != -1) {
-//					if (dataset.getSeries(setType).indexOf(timestamp) >= 0) {
-//						// System.out.println("REMOVE: " + inScore);
-//						XYSeries series = dataset.getSeries(setType);
-//						series.remove(new Integer(timestamp));
-//					}
-//				}
-//			}
-//		}
+//  if (inScore != null) {
+//   int timestamp = ((Long) inScore.getTimestamp()).intValue();
+//   Comparable setType = (String) inScore.getDataSet();
+//   synchronized (dataset) {
+//    if (dataset.indexOf(setType) != -1) {
+//     if (dataset.getSeries(setType).indexOf(timestamp) >= 0) {
+//      // System.out.println("REMOVE: " + inScore);
+//      XYSeries series = dataset.getSeries(setType);
+//      series.remove(new Integer(timestamp));
+//     }
+//    }
+//   }
+//  }
     }
 
     public void addValues(List<Score> inScores) {

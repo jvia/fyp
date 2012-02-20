@@ -83,7 +83,7 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
         // s.setNotify(false);
         this.dataset.addSeries(s);
         this.sequencesListModel.addElement(sequence);
-//		addDataToSeries(sequence, 0, 50);
+//  addDataToSeries(sequence, 0, 50);
     }
 
     public void unregisterData(TimeSeries<Score> sequence) {
@@ -126,26 +126,26 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
 
     public void addDataToseriesInTimespan(final TimeSeries<Score> sequence,
                                           final int from, final int to) {
-//		final ArrayList<Score> list = sequence.getElementsInRange(from, to);
-//		if(list.size()>0){
-//		System.out.print("from " + from + " first " +list.get(0).getTimestamp());
-//		System.out.println(" to " +  to +" last " +list.get(list.size()-1).getTimestamp());
-//		}
-//		final XYSeries s = this.series.get(sequence).getFirstElement();
-//		
-//		SwingUtilities.invokeLater(new Runnable() {
-//			@Override
-//			public void run() {
-//				for (Score score : list) {
-//					s.addOrUpdate(score.getTimestamp(), score.getValue());
-//				}
-//			}
-//		});
+//  final ArrayList<Score> list = sequence.getElementsInRange(from, to);
+//  if(list.size()>0){
+//  System.out.print("from " + from + " first " +list.get(0).getTimestamp());
+//  System.out.println(" to " +  to +" last " +list.get(list.size()-1).getTimestamp());
+//  }
+//  final XYSeries s = this.series.get(sequence).getFirstElement();
+//
+//  SwingUtilities.invokeLater(new Runnable() {
+//   @Override
+//   public void run() {
+//    for (Score score : list) {
+//     s.addOrUpdate(score.getTimestamp(), score.getValue());
+//    }
+//   }
+//  });
     }
 
 
     public void removeDataFromSeries(TimeSeries<Score> sequence, int from, int to) {
-//		updateDomainAxis();
+//  updateDomainAxis();
         XYSeries s = this.series.get(sequence).getFirstElement();
         synchronized (sequence) {
 
@@ -271,10 +271,10 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
         plot.setBackgroundPaint(Color.white);
         plot.getRangeAxis().setTickLabelFont(new Font(Font.SANS_SERIF, Font.BOLD, 17));
         plot.getDomainAxis().setTickLabelFont(new Font(Font.SANS_SERIF, Font.BOLD, 17));
-//		plot.setRangeGridlinePaint(Color.black);
-//		((XYLineAndShapeRenderer)(plot).getRenderer()).setShapesVisible(true);
-//		((XYLineAndShapeRenderer)(plot).getRenderer()).setAutoPopulateSeriesPaint(false);
-//		((XYLineAndShapeRenderer)(plot).getRenderer()).setBasePaint(Color.black);
+//  plot.setRangeGridlinePaint(Color.black);
+//  ((XYLineAndShapeRenderer)(plot).getRenderer()).setShapesVisible(true);
+//  ((XYLineAndShapeRenderer)(plot).getRenderer()).setAutoPopulateSeriesPaint(false);
+//  ((XYLineAndShapeRenderer)(plot).getRenderer()).setBasePaint(Color.black);
         this.chartPanel.setLayout(new GridLayout(1, 1));
         ChartPanel tmp = new AucomChartPanel(this.chart);
         this.chartPanel.add(tmp);
@@ -404,12 +404,12 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
 
 
     private void rangeSliderStateChanged(javax.swing.event.ChangeEvent evt) {// GEN-FIRST:event_rangeSliderStateChanged
-//		updateSliderRanges();
+//  updateSliderRanges();
         updateDomainAxis();
     }// GEN-LAST:event_rangeSliderStateChanged
 
     private void visibleDataSliderStateChanged(javax.swing.event.ChangeEvent evt) {// GEN-FIRST:event_visibleDataSliderStateChanged
-//		updateSliderRanges();
+//  updateSliderRanges();
         updateDomainAxis();
     }// GEN-LAST:event_visibleDataSliderStateChanged
 
@@ -432,11 +432,11 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
 
     // End of variables declaration//GEN-END:variables
     public void contentsChanged(ListDataEvent e) {
-////		if (this.isVisible()) {
-////			addDataToseriesInTimespan((ScoreSequence) e.getSource(), e.getIndex0(), e
-////					.getIndex1());
-////			updateSliderRanges();
-//		}
+////  if (this.isVisible()) {
+////   addDataToseriesInTimespan((ScoreSequence) e.getSource(), e.getIndex0(), e
+////     .getIndex1());
+////   updateSliderRanges();
+//  }
     }
 
     public void info(String msg) {

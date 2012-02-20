@@ -85,11 +85,11 @@ public class PlayTimeSeriesSource<T extends AbstractData> extends AucomSourceAda
                 try {
                     queue.add(input.get(index));
                     if (index == input.size() - 1) {
-//						System.out.println("last index " + index);
+//      System.out.println("last index " + index);
                         return;
                     }
                     long diff = input.get(index + 1).getTimestamp() - input.get(index).getTimestamp();
-//					System.out.println(input.get(index + 1).getTimestamp() + " " + input.get(index).getTimestamp() + " " + index + " " + diff);
+//     System.out.println(input.get(index + 1).getTimestamp() + " " + input.get(index).getTimestamp() + " " + index + " " + diff);
                     index++;
                     service.schedule(this, diff, TimeUnit.MILLISECONDS);
                 } catch (Exception exception) {

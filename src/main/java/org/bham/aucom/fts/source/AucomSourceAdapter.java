@@ -129,13 +129,13 @@ public abstract class AucomSourceAdapter<T> extends SourceAdapter<T> implements 
         T nextItem = iNextItem();
         if (this.getStatus().equals(SourceStatus.PAUSED)) {
             System.out.println(this.getClass().getName() + "nextitem called but status is pause, waiting");
-//			try {
+//try {
             synchronized (this.waitObject) {
                 this.waitObject.wait();
             }
-//			} catch (Exception exception) {
-//				exception.printStackTrace();
-//			}
+//} catch (Exception exception) {
+//exception.printStackTrace();
+//}
         }
         if (this.getStatus().equals(SourceStatus.CONNECTED)) {
             this.setState(SourceStatus.RUNNING);

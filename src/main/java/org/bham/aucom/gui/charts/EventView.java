@@ -75,7 +75,7 @@ public class EventView {
         axis.setMinorTickMarksVisible(false);
         axis.setAxisLineVisible(false);
         double domainUpper = plot.getDomainAxis().getUpperBound();
-//		axis.setLowerBound(- intervalsize*0.2);
+//  axis.setLowerBound(- intervalsize*0.2);
         plot.getDomainAxis().setLowerBound(-intervalsize * 0.05);
         plot.getDomainAxis().setUpperBound(domainUpper);
         plot.getDomainAxis().setLabel("Events in a " + intervalsize + " millisecond interval");
@@ -86,7 +86,7 @@ public class EventView {
         for (Integer id : classids.keySet()) {
             String className = "noClassName";
             try {
-//				className = SourceScopeTypeEncoder.getInstance().decode(id);
+//    className = SourceScopeTypeEncoder.getInstance().decode(id);
                 className = "NoClassName";
             } catch (Exception e) {
             }
@@ -111,7 +111,7 @@ public class EventView {
         plot.setBackgroundPaint(Color.white);
         plot.setDomainGridlinesVisible(false);
         plot.setRangeGridlinePaint(Color.black);
-//		plot.setRangeGridlinesVisible(false);
+//  plot.setRangeGridlinesVisible(false);
         plot.getRangeAxis().setInverted(true);
         plot.setDomainAxisLocation(AxisLocation.getOpposite(plot.getDomainAxisLocation()));
         f = new JFrame();
@@ -149,9 +149,9 @@ public class EventView {
         colorLegend.add(abnormalColorsPanel, BorderLayout.CENTER);
         colorLegend.add(normalColorsPanel, BorderLayout.SOUTH);
         f.getContentPane().add(colorLegend, BorderLayout.SOUTH);
-//		JSlider slider = new JSlider(0,10);
-//		slider.setOrientation(SwingConstants.VERTICAL);
-//		f.getContentPane().add(slider, BorderLayout.LINE_END);
+//  JSlider slider = new JSlider(0,10);
+//  slider.setOrientation(SwingConstants.VERTICAL);
+//  f.getContentPane().add(slider, BorderLayout.LINE_END);
         f.validate();
         f.setVisible(true);
 
@@ -161,11 +161,11 @@ public class EventView {
      * @param args
      */
     public static void main(String[] args) {
-//		ArrayList<Score> data = new ArrayList<Score>();
-//		for(int i=0;i<100;i++){
-//			double value = Math.random();
-//			data.add(new SingleScore(new TemporalProbabilityFeature(),value) );
-//		}
-//		new EventView(data, 0.3);
+//  ArrayList<Score> data = new ArrayList<Score>();
+//  for(int i=0;i<100;i++){
+//   double value = Math.random();
+//   data.add(new SingleScore(new TemporalProbabilityFeature(),value) );
+//  }
+//  new EventView(data, 0.3);
     }
 }

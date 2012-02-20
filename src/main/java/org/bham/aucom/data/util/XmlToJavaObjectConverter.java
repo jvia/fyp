@@ -98,17 +98,6 @@ public class XmlToJavaObjectConverter {
         return null;
     }
 
-    //	protected Object[] getParameterValuesFromElement(Element xmlElement) throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-//		Nodes parameters = xmlElement.query("./ts:parameter", this.context);
-//		Object[] parameterValues = new Object[parameters.size()];
-//		for (int i = 0; i < parameters.size(); i++) {
-//			if(isPrimitiveParameter(xmlElement))
-//				parameterValues[i] = getPrimitiveObjectFromElement((Element) parameters.get(i));
-//			else
-//				parameterValues[i] = getComplexObjectFrom((Element) parameters.get(i));
-//		}
-//		return parameterValues;
-//	}
     public boolean isPrimitiveParameter(Element elementToTest) {
         return elementToTest.getQualifiedName().equals("ts:primitive");
     }

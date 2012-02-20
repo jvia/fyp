@@ -23,23 +23,23 @@ public class TestData {
     ScheduledExecutorService service;
 
     public TestData(File in, File mfile, File out) {
-//		try {
-//			running = false;
-//			model = T2GramModel.loadModel(mfile);
-//			list = new LinkedBlockingQueue<RawData>(DataExtractor.getInstance()
-//					.extract(in));
-//			graph = new Graph().getConnector(new ObservableQueueSource<RawData>(list, TEST_SOURCE)).
-//			connect(new ClassifyRawData(new BasicClassifier(new File("/home/rgolombe/classes2.txt")))).
-//			connect(new TestT2GramModel(model)).
-//			connect(new CalcEntropyAvgScore(model)).
-//			connect(new ScoreToString()).
-//			connect(new StringToBufferOutputEvent()).
-//			connect(new OutputStreamSinkStrip(new FileOutputStream(out))).getGraph();
+//  try {
+//   running = false;
+//   model = T2GramModel.loadModel(mfile);
+//   list = new LinkedBlockingQueue<RawData>(DataExtractor.getInstance()
+//     .extract(in));
+//   graph = new Graph().getConnector(new ObservableQueueSource<RawData>(list, TEST_SOURCE)).
+//   connect(new ClassifyRawData(new BasicClassifier(new File("/home/rgolombe/classes2.txt")))).
+//   connect(new TestT2GramModel(model)).
+//   connect(new CalcEntropyAvgScore(model)).
+//   connect(new ScoreToString()).
+//   connect(new StringToBufferOutputEvent()).
+//   connect(new OutputStreamSinkStrip(new FileOutputStream(out))).getGraph();
 //
-//			} catch (FileNotFoundException e) {
-//				e.printStackTrace();
-//				return;
-//			}		
+//   } catch (FileNotFoundException e) {
+//    e.printStackTrace();
+//    return;
+//   }
     }
 
     private void run() {

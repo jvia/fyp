@@ -76,7 +76,7 @@ public class HistogramDistributionWithGauss implements ProbabilityDistribution {
 
     private void put(double value) {
         this.content.put(value);
-//		validate();
+//  validate();
     }
 
     public Iterator<Double> getProbabilities() {

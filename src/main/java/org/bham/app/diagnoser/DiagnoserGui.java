@@ -65,16 +65,12 @@ public class DiagnoserGui extends javax.swing.JFrame {
         presentables.add(newPresentable);
         newPresentable.getPanel().setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), newPresentable.getPanel().getName()));
         presentablesTabbedPane.addTab(newPresentable.getPanel().getName(), newPresentable.getPanel());
-//		presentablesPanel.add(newPresentable.getPanel());
         presentablesTabbedPane.validate();
         validateTree();
     }
 
     public void deregisterPresentable(Presentable newPresentable) {
         presentables.remove(newPresentable);
-//		presentablesTabbedPane.removeTabAt()
-//		presentablesPanel.remove(newPresentable.getPanel());
-//		presentablesPanel.remove(presentablesPanel.getComponentCount()-1);
         validateTree();
     }
 
@@ -134,9 +130,6 @@ public class DiagnoserGui extends javax.swing.JFrame {
         this.numberRecordedEventsLabel.setPreferredSize(new Dimension(120, 20));
         this.numberRecordedEventsLabel.setForeground(Color.white);
         this.numberRecordedEventsLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
-
-//		addButtonsToRecorderToolBar();
-
         this.setResizable(false);
         this.validate();
     }
@@ -182,8 +175,6 @@ public class DiagnoserGui extends javax.swing.JFrame {
 
     private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_jButton1KeyPressed
         if (evt.getKeyCode() == 77) {
-//			this.getSystemConnection().addAttributeToNextEvent(new Attribute("comment", "fault_induced"));
-//			this.getSystemConnection().addAttributeToNextEvent(new Attribute("commentTimestamp", String.valueOf(System.currentTimeMillis())));
         }
     }// GEN-LAST:event_jButton1KeyPressed
 
@@ -201,8 +192,6 @@ public class DiagnoserGui extends javax.swing.JFrame {
     }// GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
-//		this.getSystemConnection().addAttributeToNextEvent(new Attribute("comment", "fault_induced"));
-//		this.getSystemConnection().addAttributeToNextEvent(new Attribute("commentTimestamp", String.valueOf(System.currentTimeMillis())));
     }// GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -224,7 +213,6 @@ public class DiagnoserGui extends javax.swing.JFrame {
                             Logger.getLogger(DiagnoserGui.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         DiagnoserGui gui = new DiagnoserGui(connection);
-//					gui.registerPresentable(DataManager.getInstance());
                         gui.registerPresentable(new Recorder(connection));
                         gui.registerPresentable(new T2GramModelTrainer(new T2GramModelImp(new KDEProbabilityFactory())));
                         T2GramDetector t2gdetector = new T2GramDetector();

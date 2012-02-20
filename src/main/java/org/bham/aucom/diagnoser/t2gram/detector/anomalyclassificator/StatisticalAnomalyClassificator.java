@@ -64,7 +64,7 @@ public class StatisticalAnomalyClassificator extends AbstractAnomalyClassificato
         }
         historyMean = calculateMeanOnHistoryElements(this.historyScoreValues);
         scoreVariance = calculateVarianceValue(this.historyScoreValues);
-//		 System.out.println(scoreToCheck.getClass().getSimpleName() + "mean "
+//       System.out.println(scoreToCheck.getClass().getSimpleName() + "mean "
         // + mean + "\nvar " + scoreVariance + "\nq " + quotient + "\n #" +
         // ((RangeScore)scoreToCheck).size() + "\nval " + (a * this.mean +
         // (1.0-a) * this.mean * quotient) + "\n result"

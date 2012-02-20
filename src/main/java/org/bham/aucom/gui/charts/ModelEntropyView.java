@@ -63,36 +63,36 @@ public class ModelEntropyView extends JPanel {
      */
     public static void main(String[] args) {
         // FIX
-//		if (args.length == 1) {
-//			UUID id;
-//			try {
-//				
-//				id = AucomIO.getInstance().read(new File(args[0]));
-//				T2GramFaultDetectionModel model = (T2GramFaultDetectionModel)DataManager.getInstance().getFaultDetectionModelById(id);
-//				ModelEntropyView view = new ModelEntropyView(model);
-//				JFrame frame = new JFrame();
-//				frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-//				frame.setLayout(new GridLayout(1, 1));
-//				frame.setSize(new Dimension(900, 600));
-//				frame.getContentPane().add(view);
-//				frame.setVisible(true);
-//			} catch (FileNotFoundException exception) {
-//				// TODO Auto-generated catch block
-//				exception.printStackTrace();
-//			} catch (ValidityException exception) {
-//				// TODO Auto-generated catch block
-//				exception.printStackTrace();
-//			} catch (DataAllreadyExistsException exception) {
-//				// TODO Auto-generated catch block
-//				exception.printStackTrace();
-//			} catch (ParsingException exception) {
-//				// TODO Auto-generated catch block
-//				exception.printStackTrace();
-//			} catch (IOException exception) {
-//				// TODO Auto-generated catch block
-//				exception.printStackTrace();
-//			}
-//		}
+//  if (args.length == 1) {
+//   UUID id;
+//   try {
+//
+//    id = AucomIO.getInstance().read(new File(args[0]));
+//    T2GramFaultDetectionModel model = (T2GramFaultDetectionModel)DataManager.getInstance().getFaultDetectionModelById(id);
+//    ModelEntropyView view = new ModelEntropyView(model);
+//    JFrame frame = new JFrame();
+//    frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+//    frame.setLayout(new GridLayout(1, 1));
+//    frame.setSize(new Dimension(900, 600));
+//    frame.getContentPane().add(view);
+//    frame.setVisible(true);
+//   } catch (FileNotFoundException exception) {
+//    // TODO Auto-generated catch block
+//    exception.printStackTrace();
+//   } catch (ValidityException exception) {
+//    // TODO Auto-generated catch block
+//    exception.printStackTrace();
+//   } catch (DataAllreadyExistsException exception) {
+//    // TODO Auto-generated catch block
+//    exception.printStackTrace();
+//   } catch (ParsingException exception) {
+//    // TODO Auto-generated catch block
+//    exception.printStackTrace();
+//   } catch (IOException exception) {
+//    // TODO Auto-generated catch block
+//    exception.printStackTrace();
+//   }
+//  }
     }
 
     public void setFrame(JFrame frame) {

@@ -50,14 +50,14 @@ public class XcfFacesOutBoostDetector {
         }
     }
 
-    //	private static ArrayList<Element> merge2(ArrayList<Element> merged) {
-//		ArrayList<Element> out = new ArrayList<Element>();
-//		for(Element e: merged){
-//			if(e.getAttribute(""))
-//		}
-//		return null;
-//		
-//	}
+    // private static ArrayList<Element> merge2(ArrayList<Element> merged) {
+//  ArrayList<Element> out = new ArrayList<Element>();
+//  for(Element e: merged){
+//   if(e.getAttribute(""))
+//  }
+//  return null;
+//
+// }
     private static ArrayList<Element> merge(ArrayList<Element> org,
                                             ArrayList<Element> xcfFacesOut, ArrayList<Element> boostDetector) {
         ArrayList<Element> out = new ArrayList<Element>();

@@ -88,13 +88,13 @@ public class AnomalyBarChartFrame extends javax.swing.JFrame implements ListData
     public void addValue(Score inScore) {
         this.logger.info("adding: " + inScore);
         if (inScore != null) {
-//			String status = "normal";
-//			if (inScore.getAbnormal() == SystemFaultStatus.ABNORMAL) {
-//				status = "abnormal";
-//			}
-//			String sequenceName = getSequenceName(inScore);
-//			increaseValueForSequence(status, sequenceName);
-//			this.logger.info("new val is: " + this.dataSet.getValue(sequenceName, status));
+//   String status = "normal";
+//   if (inScore.getAbnormal() == SystemFaultStatus.ABNORMAL) {
+//    status = "abnormal";
+//   }
+//   String sequenceName = getSequenceName(inScore);
+//   increaseValueForSequence(status, sequenceName);
+//   this.logger.info("new val is: " + this.dataSet.getValue(sequenceName, status));
         } else {
             this.logger.warning("warning inScore is null");
         }

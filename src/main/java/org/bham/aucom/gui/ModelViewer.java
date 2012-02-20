@@ -64,12 +64,12 @@ public class ModelViewer extends javax.swing.JFrame {
         String parts[] = label.split("->");
         int from = Integer.parseInt(parts[0]);
         int to = Integer.parseInt(parts[1]);
-//		new HistogramView(model.transitionMatrix.get(from, to)).setVisible(true);
+//  new HistogramView(model.transitionMatrix.get(from, to)).setVisible(true);
     }
 
     public void updateView() {
         distributionPanel.removeAll();
-//		System.out.println("updating");
+//  System.out.println("updating");
         int col = 10;
         int row = model.getTransitionMatrix().keySet().size() / col;
         distributionPanel.setLayout(new GridLayout(row, col));
