@@ -18,7 +18,7 @@ echo "Starting aucom"
 xterm -e bash -c \
     "java $VM -jar $AUCOM \
     --collection  \
-    -o /home/jxv911/Dropbox/aucom/3chain.obs" &
+    -o /home/jxv911/Dropbox/aucom/4x4chain.obs" &
 AUCOMPID="$!"
 PIDS="$PIDS $AUCOMPID"
 
@@ -27,7 +27,7 @@ xterm -e bash -c "cast-server" &
 PIDS="$PIDS $!"
 
 echo "Starting CAST client"
-xterm -e bash -c "cast-client ../cast_configs/three_chain/three_chain.cast" &
+xterm -e bash -c "cast-client ../cast_configs/4x4chain/4x4chain.cast" &
 PIDS="$PIDS $!"
 
 wait $AUCOMPID
@@ -41,14 +41,14 @@ PIDS=""
 xterm -e bash -c \
     "java $VM -jar $AUCOM \
     --experiment  \
-    -i /home/jxv911/Dropbox/aucom/3chain.obs \
-    -o /home/jxv911/Dropbox/aucom/3chain_normal.cl" &
+    -i /home/jxv911/Dropbox/aucom/4x4chain.obs \
+    -o /home/jxv911/Dropbox/aucom/4x4chain_normal.cl" &
 AUCOMPID="$!"
 PIDS="$PIDS $AUCOMPID"
-sleep 20
+sleep 60
 xterm -e bash -c "cast-server" &
 PIDS="$PIDS $!"
-xterm -e bash -c "cast-client ../cast_configs/three_chain/three_chain.cast" &
+xterm -e bash -c "cast-client ../cast_configs/4x4chain/4x4chain.cast" &
 PIDS="$PIDS $!"
 
 wait $AUCOMPID
@@ -63,14 +63,14 @@ PIDS=""
 xterm -e bash -c \
     "java $VM -jar $AUCOM \
     --experiment --error 2500 \
-    -i /home/jxv911/Dropbox/aucom/3chain.obs \
-    -o /home/jxv911/Dropbox/aucom/3chain_fault.cl | tee 3chain_error.txt" &
+    -i /home/jxv911/Dropbox/aucom/4x4chain.obs \
+    -o /home/jxv911/Dropbox/aucom/4x4chain_fault.cl | tee 4x4chain_error.txt" &
 AUCOMPID="$!"
 PIDS="$PIDS $AUCOMPID"
-sleep 20
+sleep 60
 xterm -e bash -c "cast-server" &
 PIDS="$PIDS $!"
-xterm -e bash -c "cast-client ../cast_configs/three_chain/three_chain_fault.cast" &
+xterm -e bash -c "cast-client ../cast_configs/4x4chain/4x4chain_fault.cast" &
 PIDS="$PIDS $!"
 
 wait $AUCOMPID
@@ -82,16 +82,16 @@ echo "#                       Capture error timestamp                      #"
 echo "#                                  &                                 #"
 echo "#                          converting to csv                         #"
 echo "######################################################################"
-ERROR=`grep ms 3chain_error.txt | sed 's/ms//'`
+ERROR=`grep ms 4x4chain_error.txt | sed 's/ms//'`
 
 java $VM -jar $AUCOM \
     --classification-to-dat \
-    -i /home/jxv911/Dropbox/aucom/3chain_normal.cl \
-    -o /home/jxv911/Dropbox/aucom/3chain_normal.csv
+    -i /home/jxv911/Dropbox/aucom/4x4chain_normal.cl \
+    -o /home/jxv911/Dropbox/aucom/4x4chain_normal.csv
 java $VM -jar $AUCOM \
     --classification-to-dat \
-    -i /home/jxv911/Dropbox/aucom/3chain_fault.cl \
-    -o /home/jxv911/Dropbox/aucom/3chain_fault.csv
+    -i /home/jxv911/Dropbox/aucom/4x4chain_fault.cl \
+    -o /home/jxv911/Dropbox/aucom/4x4chain_fault.csv
 
 echo "######################################################################"
 echo "#                              Create graphs                         #"
@@ -100,7 +100,7 @@ echo \
     "reset
      # Print to postscript
      set term postscript eps enhanced color
-     set output '3chain.eps'
+     set output '4x4chain.eps'
 
      set key below
      set xrange[0:200000]
@@ -120,9 +120,9 @@ echo \
      set origin 0.0, 0.5
      set xrange[0:100000]
      set title 'Reduced: Normal'
-     plot '3chain_normal.csv' using 1:2 with dots  ls 1          notitle, \\
-          '3chain_normal.csv' using 1:2 with lines smooth bezier title 'Score',\\
-          '3chain_normal.csv' using 1:3 with lines ls 2          title 'Threshold'
+     plot '4x4chain_normal.csv' using 1:2 with dots  ls 1          notitle, \\
+          '4x4chain_normal.csv' using 1:2 with lines smooth bezier title 'Score',\\
+          '4x4chain_normal.csv' using 1:3 with lines ls 2          title 'Threshold'
 
      # ### Reduced: fault
      reduce_fault=$ERROR
@@ -130,12 +130,12 @@ echo \
      set origin 0.0, 0.0
      set title 'Reduced: Fault'
      set xrange[0:100000]
-     plot '3chain_fault.csv' using 1:2 with dots  ls 1          notitle,\\
-          '3chain_fault.csv' using 1:2 with lines smooth bezier title 'Score', \\
-          '3chain_fault.csv' using 1:3 with lines ls 2          title 'Threshold',\\
-           reduce_fault, t lt 1 lw 2 title 'Fault'" > /home/jxv911/Dropbox/aucom/3chain.plt
+     plot '4x4chain_fault.csv' using 1:2 with dots  ls 1          notitle,\\
+          '4x4chain_fault.csv' using 1:2 with lines smooth bezier title 'Score', \\
+          '4x4chain_fault.csv' using 1:3 with lines ls 2          title 'Threshold',\\
+           reduce_fault, t lt 1 lw 2 title 'Fault'" > /home/jxv911/Dropbox/aucom/4x4chain.plt
 
-(cd /home/jxv911/Dropbox/aucom && gnuplot 3chain.plt)
+(cd /home/jxv911/Dropbox/aucom && gnuplot 4x4chain.plt)
 
 echo "######################################################################"
 echo "#                                 Cleanup                            #"
