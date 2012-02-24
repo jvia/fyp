@@ -156,7 +156,8 @@ public class CastExperiment implements Experiment {
                 Thread.sleep(500);
             }
 
-            errorTime = cast.getObservationTimeSeries().get(error).getTimestamp();
+
+            errorTime = cast.getObservation(error).getTimestamp();
             faultDetector.stop();
             cast.disconnect();
         } catch (ActionFailedException e) {

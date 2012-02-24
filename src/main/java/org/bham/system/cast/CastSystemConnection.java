@@ -49,4 +49,9 @@ public class CastSystemConnection extends SystemConnection {
     public TimeSeries<Observation> getObservationTimeSeries() {
         return graph.getObservationTimeSeries();
     }
+
+    public Observation getObservation(int index) {
+        return graph.getObservation(index);
+    }
+
 }
