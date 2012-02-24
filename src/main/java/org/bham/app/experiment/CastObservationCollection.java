@@ -25,6 +25,7 @@ public class CastObservationCollection implements Experiment {
     private CastSystemConnection cast;
     private final File out;
     private final boolean quiet;
+    private final Logger log = Logger.getLogger(getClass().getName());
 
     public CastObservationCollection(final File out, final int amount, final boolean quiet) {
         this.out = out;
@@ -33,8 +34,8 @@ public class CastObservationCollection implements Experiment {
 
         // quick error checking
         if (amount == 0) {
-            Logger.getLogger(CastObservationCollection.class.getName()).log(Level.SEVERE, "0 observations to be collected...quitting");
-            System.exit(1);
+            log.log(Level.SEVERE, "0 observations to be collected...quitting");
+            throw new RuntimeException();
         }
 
         if (!quiet)
@@ -58,10 +59,10 @@ public class CastObservationCollection implements Experiment {
             cast.connect();
             if (!quiet) System.out.println("done");
         } catch (SystemConnectionFailedException ex) {
-            System.exit(1);
-            Logger.getLogger(CastObservationCollection.class.getName()).log(Level.SEVERE, "Could not connect to CAST", ex);
+            log.log(Level.SEVERE, "Could not connect to CAST", ex);
+            throw new RuntimeException();
         } catch (ActionNotPermittedException ex) {
-            Logger.getLogger(CastObservationCollection.class.getName()).log(Level.SEVERE, "Illegal operation", ex);
+            log.log(Level.SEVERE, "Illegal operation", ex);
         }
         recorder = new Recorder(cast);
     }
@@ -75,17 +76,15 @@ public class CastObservationCollection implements Experiment {
             printBlockMessage("RECORDING DATA");
             recorder.record();
         } catch (ActionFailedException ex) {
-            Logger.getLogger(CastObservationCollection.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(Level.SEVERE, null, ex);
         }
 
         // wait until we have collected enough data
-        while (recorder.getTimeSeries().size() < amount) {
-            if (recorder.getTimeSeries().size() % 50 == 0)
-                printBlockMessage(recorder.getTimeSeries().size() + " OBSERVATIONS");
+        while (recorder.getNumberRecordedEvents() < amount) {
+            System.out.printf("%d events%n", recorder.getNumberRecordedEvents());
             try {
                 Thread.sleep(50);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(CastObservationCollection.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ignored) {
             }
         }
     }
@@ -101,7 +100,7 @@ public class CastObservationCollection implements Experiment {
             recorder.stop();
             cast.disconnect();
         } catch (ActionNotPermittedException ex) {
-            Logger.getLogger(CastObservationCollection.class.getName()).log(Level.SEVERE, "Error stopping recorder", ex);
+            log.log(Level.SEVERE, "Error stopping recorder", ex);
         }
 
         // get the time series and write results to disk
@@ -125,7 +124,6 @@ public class CastObservationCollection implements Experiment {
         preprocess();
         process();
         postprocess();
-        System.exit(0);
         return null;
     }
 
