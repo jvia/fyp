@@ -1,4 +1,9 @@
 ####################
+# Conductor
+####################
+ADD:conductor:conductor.sa 0
+
+####################
 # 3-chain
 ####################
 ADD:node0:three.sa    1
