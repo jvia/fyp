@@ -17,7 +17,6 @@ public class TemporalDurationFeature extends DataType {
      */
     protected LinkedHashMap<DataType, Long> predecessorIdToDurationsMapping;
     private transient Logger log = Logger.getLogger(getClass().getName());
-    private static transient MatrixReducer reducer = new MatrixReducer();
 
     /**
      * Creates a non-initialized TemporalDurationFeature
@@ -52,9 +51,7 @@ public class TemporalDurationFeature extends DataType {
         setPredecessorIdToDurationsMapping(new LinkedHashMap<DataType, Long>());
         if (durations != null) {
             for (Map.Entry<DataType, Long> duration : durations.entrySet()) {
-                if (reducer.areConnected(duration.getKey().getEventType(), getEventType())) {
-                    predecessorIdToDurationsMapping.put(duration.getKey(), duration.getValue());
-                }
+                predecessorIdToDurationsMapping.put(duration.getKey(), duration.getValue());
             }
         }
     }
