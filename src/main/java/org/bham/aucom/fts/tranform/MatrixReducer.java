@@ -1,9 +1,6 @@
 package org.bham.aucom.fts.tranform;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 import java.util.logging.Logger;
 
 import static java.lang.String.format;
@@ -19,13 +16,15 @@ public class MatrixReducer {
     private Map<Integer, ArrayList<Integer>> connections;
     private static final String FILE_NAME = "/connections.txt";
     private final Logger log = Logger.getLogger(getClass().getName());
+    private static final int METRONOME = 0;
 
     public MatrixReducer() {
         connections = new HashMap<Integer, ArrayList<Integer>>();
+        Set<Integer> all = new HashSet<Integer>();
 
         Scanner s = null;
         try {
-            log.config(format("Loading connectons file from %s", getClass().getResourceAsStream(FILE_NAME)));
+            log.config(format("Loading connections file from %s", getClass().getResourceAsStream(FILE_NAME)));
             s = new Scanner(getClass().getResourceAsStream(FILE_NAME));
 
             while (s.hasNextLine()) {
@@ -41,15 +40,16 @@ public class MatrixReducer {
                     int from = Integer.valueOf(result[i].trim());
                     int to = Integer.valueOf(result[i + 1].trim());
 
-                    // Add to data structure
-                    if (!connections.containsKey(from))
-                        connections.put(from, new ArrayList<Integer>());
-                    connections.get(from).add(to);
+                    // Add to set of all components
+                    all.add(from);
+                    all.add(to);
                 }
             }
         } finally {
             if (s != null) s.close();
         }
+
+        connections.put(METRONOME, new ArrayList<Integer>(all));
     }
 
     public boolean areConnected(int predecessor, int current) {
