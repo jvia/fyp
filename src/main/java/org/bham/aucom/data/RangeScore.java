@@ -28,8 +28,8 @@ public class RangeScore extends Score {
         for (Score s : scores) {
             meanValue += s.getValue();
             eventCounter++;
-            setFirstElement(isMarkedAsFirstElement() || s.isMarkedAsFirstElement());
-            setLastElement(isMarkedAsLastElement() || s.isMarkedAsLastElement());
+            setFirstElement(isFirstElement() || s.isFirstElement());
+            setLastElement(isLastElement() || s.isLastElement());
         }
         meanValue /= scores.size();
         setValue(meanValue);
@@ -102,8 +102,8 @@ public class RangeScore extends Score {
             scores_copy.add((Score) score.copy());
         }
         RangeScore rs_copy = new RangeScore(scores_copy);
-        rs_copy.setFirstElement(isMarkedAsFirstElement());
-        rs_copy.setLastElement(isMarkedAsLastElement());
+        rs_copy.setFirstElement(isFirstElement());
+        rs_copy.setLastElement(isLastElement());
         return rs_copy;
     }
     // delegate to score elements of this range score object

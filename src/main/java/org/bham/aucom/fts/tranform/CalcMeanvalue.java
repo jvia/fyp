@@ -114,7 +114,7 @@ public class CalcMeanvalue extends AbstractAucomTranformNode<Score, Score> {
      * @return true if last element
      */
     protected boolean lastElement(Score score) {
-        return score.isMarkedAsLastElement();
+        return score.isLastElement();
     }
 
     /**

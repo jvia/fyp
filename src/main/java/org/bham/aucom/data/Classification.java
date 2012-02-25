@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -135,7 +136,7 @@ public class Classification extends Score {
      *         Classification object.
      */
     @Override
-    public HashMap<String, String> getAttributes() {
+    public Map<String, String> getAttributes() {
         return score.getAttributes();
     }
 
@@ -232,44 +233,12 @@ public class Classification extends Score {
     }
 
     /**
-     * Marks score as first element.
-     */
-    @Override
-    public void markAsFirstElement() {
-        score.markAsFirstElement();
-    }
-
-    /**
-     * Un-marks score as first element.
-     */
-    @Override
-    public void unmarkAsFirstElement() {
-        score.unmarkAsFirstElement();
-    }
-
-    /**
-     * Un-marks score as last element.
-     */
-    @Override
-    public void unmarkAsLastElement() {
-        score.unmarkAsLastElement();
-    }
-
-    /**
-     * Marks score as last element.
-     */
-    @Override
-    public void markAsLastElement() {
-        score.markAsLastElement();
-    }
-
-    /**
      * Checks if score is the first element.
      *
      * @return true if first element
      */
     @Override
-    protected boolean isFirstElement() {
+    public boolean isFirstElement() {
         return score.isFirstElement();
     }
 
@@ -279,7 +248,7 @@ public class Classification extends Score {
      * @return true if last element
      */
     @Override
-    protected boolean isLastElement() {
+    public boolean isLastElement() {
         return score.isLastElement();
     }
 

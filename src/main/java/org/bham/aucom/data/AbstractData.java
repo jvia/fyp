@@ -1,18 +1,18 @@
 package org.bham.aucom.data;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * @author Raphael Golombek <rgolombe@cor-lab.uni-bielefeld.de>
+ * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk>
  */
 public abstract class AbstractData implements AttributableObject {
 
-    // TODO: make  type map
     /**
-     * The list of attributes about a piece of data.
+     * The map of attributes about a piece of data.
      */
-    protected HashMap<String, String> attributes;
+    protected Map<String, String> attributes;
     private boolean isFirstElement;
     private boolean isLastElement;
     private long timestamp;
@@ -31,7 +31,9 @@ public abstract class AbstractData implements AttributableObject {
      * @param isLastElement  is this the last element in the set
      * @param timestamp      the time associated with this object
      */
-    public AbstractData(boolean isFirstElement, boolean isLastElement, long timestamp) {
+    public AbstractData(final boolean isFirstElement,
+                        final boolean isLastElement,
+                        final long timestamp) {
         this.isFirstElement = isFirstElement;
         this.isLastElement = isLastElement;
         this.timestamp = timestamp;
@@ -39,12 +41,19 @@ public abstract class AbstractData implements AttributableObject {
     }
 
     /**
+     * Return a copy of this object.
+     *
+     * @return  a copy of the object
+     */
+    public abstract Object copy();
+
+    /**
      * Return the collection of attributes that describe an object.
      *
      * @return collection of attributes
      */
     @Override
-    public HashMap<String, String> getAttributes() {
+    public Map<String, String> getAttributes() {
         return this.attributes;
     }
 
@@ -55,8 +64,9 @@ public abstract class AbstractData implements AttributableObject {
      * @param propertyValue value of the attribute
      */
     @Override
-    public void addAttribute(String propertyName, String propertyValue) {
-        this.attributes.put(propertyName, propertyValue);
+    public void addAttribute(final String propertyName,
+                             final String propertyValue) {
+        attributes.put(propertyName, propertyValue);
     }
 
     /**
@@ -65,9 +75,10 @@ public abstract class AbstractData implements AttributableObject {
      * @param propertyName name of the attribute
      */
     @Override
-    public void deleteAttribute(String propertyName) {
-        if (this.containsAttribute(propertyName))
-            this.attributes.remove(propertyName);
+    public void deleteAttribute(final String propertyName) {
+        if (this.containsAttribute(propertyName)) {
+            attributes.remove(propertyName);
+        }
     }
 
     /**
@@ -77,9 +88,10 @@ public abstract class AbstractData implements AttributableObject {
      * @return the value of the attribute
      */
     @Override
-    public String getAttributeValue(String propertyName) {
-        if (!containsAttribute(propertyName))
+    public String getAttributeValue(final String propertyName) {
+        if (!containsAttribute(propertyName)) {
             return null;
+        }
         return this.attributes.get(propertyName);
     }
 
@@ -90,54 +102,8 @@ public abstract class AbstractData implements AttributableObject {
      * @return true if the attribute exists, false otherwise
      */
     @Override
-    public boolean containsAttribute(String propertyName) {
-        return this.attributes.containsKey(propertyName);
-    }
-
-    /**
-     * Set this object as th first element in the collection.
-     */
-    public void markAsFirstElement() {
-        this.setFirstElement(true);
-    }
-
-    /**
-     * Unset this object as the first element in the collection.
-     */
-    public void unmarkAsFirstElement() {
-        this.setFirstElement(false);
-    }
-
-    /**
-     * Determines if this object is set as the first object in the collection.
-     *
-     * @return true if set as first object; false otherwise
-     */
-    public boolean isMarkedAsFirstElement() {
-        return this.isFirstElement();
-    }
-
-    /**
-     * Set this object as th last element in the collection.
-     */
-    public void markAsLastElement() {
-        this.setLastElement(true);
-    }
-
-    /**
-     * Unset this object as the last element in the collection.
-     */
-    public void unmarkAsLastElement() {
-        this.setLastElement(false);
-    }
-
-    /**
-     * Determines if this object is set as the last object in the collection.
-     *
-     * @return true if set as last object; false otherwise
-     */
-    public boolean isMarkedAsLastElement() {
-        return this.isLastElement();
+    public boolean containsAttribute(final String propertyName) {
+        return attributes.containsKey(propertyName);
     }
 
     /**
@@ -146,7 +112,7 @@ public abstract class AbstractData implements AttributableObject {
      * @return the timestamp
      */
     public long getTimestamp() {
-        return this.timestamp;
+        return timestamp;
     }
 
     /**
@@ -154,23 +120,16 @@ public abstract class AbstractData implements AttributableObject {
      *
      * @param inTimestamp the timestamp in milliseconds
      */
-    public void setTimestamp(long inTimestamp) {
-        this.timestamp = inTimestamp;
+    public void setTimestamp(final long inTimestamp) {
+        timestamp = inTimestamp;
     }
-
-    /**
-     * Return a copy of this object.
-     *
-     * @return
-     */
-    public abstract Object copy();
 
     /**
      * Change the object's first element status.
      *
      * @param isFirstElement true if first; false otherwise
      */
-    protected void setFirstElement(boolean isFirstElement) {
+    public void setFirstElement(boolean isFirstElement) {
         this.isFirstElement = isFirstElement;
     }
 
@@ -179,7 +138,7 @@ public abstract class AbstractData implements AttributableObject {
      *
      * @return true if th object is the first element; false otherwise
      */
-    protected boolean isFirstElement() {
+    public boolean isFirstElement() {
         return isFirstElement;
     }
 
@@ -188,7 +147,7 @@ public abstract class AbstractData implements AttributableObject {
      *
      * @param isLastElement true if last; false otherwise
      */
-    protected void setLastElement(boolean isLastElement) {
+    public void setLastElement(final boolean isLastElement) {
         this.isLastElement = isLastElement;
     }
 
@@ -197,7 +156,7 @@ public abstract class AbstractData implements AttributableObject {
      *
      * @return true if th object is the last element; false otherwise
      */
-    protected boolean isLastElement() {
+    public boolean isLastElement() {
         return isLastElement;
     }
 }

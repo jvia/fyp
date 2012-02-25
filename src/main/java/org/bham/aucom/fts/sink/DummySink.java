@@ -13,10 +13,10 @@ public class DummySink<TIn extends AbstractData> extends AucomSinkAdapter<TIn> {
         /*
            * do nothing, except notifying about first and last element received
            */
-        if (e.isMarkedAsLastElement()) {
+        if (e.isLastElement()) {
             fireAucomSinkStatusChangedEvent(new AucomSinkStatusEvent(this, NodeStatus.RECEIVEDLASTELEMENT));
         }
-        if (e.isMarkedAsFirstElement()) {
+        if (e.isFirstElement()) {
             fireAucomSinkStatusChangedEvent(new AucomSinkStatusEvent(this, NodeStatus.RECEIVEDFIRSTELEMENT));
         }
 

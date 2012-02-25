@@ -48,7 +48,7 @@ public class AbstractDataTest {
     @Test
     public void testMarkAsFirstElement() {
         AbstractData instance = new AbstractDataImpl();
-        instance.markAsFirstElement();
+        instance.setFirstElement(true);
         assertThat(instance.isFirstElement(), is(true));
     }
 
@@ -58,7 +58,7 @@ public class AbstractDataTest {
     @Test
     public void testUnmarkAsFirstElement() {
         AbstractData instance = new AbstractDataImpl();
-        instance.unmarkAsLastElement();
+        instance.setLastElement(false);
         assertThat(instance.isFirstElement(), is(false));
     }
 
@@ -68,7 +68,7 @@ public class AbstractDataTest {
     @Test
     public void testMarkAsLastElement() {
         AbstractData instance = new AbstractDataImpl();
-        instance.markAsLastElement();
+        instance.setLastElement(true);
         assertThat(instance.isLastElement(), is(true));
     }
 
@@ -78,7 +78,7 @@ public class AbstractDataTest {
     @Test
     public void testUnmarkAsLastElement() {
         AbstractData instance = new AbstractDataImpl();
-        instance.unmarkAsLastElement();
+        instance.setLastElement(false);
         assertThat(instance.isLastElement(), is(false));
     }
 

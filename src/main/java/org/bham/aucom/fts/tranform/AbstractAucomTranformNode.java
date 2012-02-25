@@ -36,10 +36,10 @@ public abstract class AbstractAucomTranformNode<TIn extends AbstractData, TOut e
         }
 
         if (out == null) {
-            if (input.isMarkedAsFirstElement()) {
+            if (input.isFirstElement()) {
                 fireStatusChangedEvent(new TransformNodeEvent(this, NodeStatus.RECEIVEDFIRSTELEMENT));
                 System.out.println(this.toString() + " fires RECEIVEDFIRSTELEMENT");
-            } else if (input.isMarkedAsLastElement()) {
+            } else if (input.isLastElement()) {
                 fireStatusChangedEvent(new TransformNodeEvent(this, NodeStatus.RECEIVEDLASTELEMENT));
                 System.out.println(this.toString() + " fires RECEIVEDLASTELEMENT");
             }
@@ -68,12 +68,12 @@ public abstract class AbstractAucomTranformNode<TIn extends AbstractData, TOut e
      * @param out
      */
     private void copyMarkings(TIn input, TOut out) {
-        if (input.isMarkedAsFirstElement()) {
-            out.isMarkedAsFirstElement();
+        if (input.isFirstElement()) {
+            out.isFirstElement();
             Logger.getLogger(this.getClass().getCanonicalName()).info(this.getClass().getName() + " copying mark of first element");
         }
-        if (input.isMarkedAsLastElement()) {
-            out.markAsLastElement();
+        if (input.isLastElement()) {
+            out.setLastElement(true);
             Logger.getLogger(this.getClass().getCanonicalName()).info(this.getClass().getName() + " copying mark of last element");
         }
     }

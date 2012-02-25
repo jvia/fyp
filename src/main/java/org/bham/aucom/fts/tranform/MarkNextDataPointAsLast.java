@@ -14,7 +14,7 @@ public class MarkNextDataPointAsLast<TIn extends AbstractData> extends AbstractA
     @Override
     protected TIn iTransform(TIn input) throws Exception {
         if (isMarkerActive()) {
-            input.markAsLastElement();
+            input.setLastElement(true);
             deactivate();
         }
         return input;

@@ -39,7 +39,7 @@ public class TimeSeriesSource<T extends AbstractData> extends AucomSourceAdapter
         T element;
         element = getQueue().take();
 
-        if (element != null && element.isMarkedAsLastElement()) {
+        if (element != null && element.isLastElement()) {
             setsendLastElement();
         }
 

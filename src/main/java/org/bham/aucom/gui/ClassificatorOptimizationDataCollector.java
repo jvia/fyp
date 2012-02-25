@@ -45,7 +45,7 @@ public class ClassificatorOptimizationDataCollector implements TimeSeriesStatusL
         if (this.isOptimizing) {
             this.timseriesToCollectFrom.removeTimeseriesStatusListener(this);
             this.isOptimizing = false;
-            this.getCollectedData().get(getCollectedData().size() - 1).markAsLastElement();
+            this.getCollectedData().get(getCollectedData().size() - 1).setLastElement(true);
             fireStopping();
         } else {
             // ignore
