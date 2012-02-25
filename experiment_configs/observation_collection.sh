@@ -53,7 +53,7 @@ PIDS="$PIDS $AUCOMPID"
 sleep 1
 
 echo "Starting CAST client ($CAST_CONFIG)"
-xterm -e bash -c "cast-client $CAST_CONFIG | tee out.txt" &
+xterm -e bash -c "cast-client $CAST_CONFIG" &
 PIDS="$PIDS $!"
 
 wait $AUCOMPID
