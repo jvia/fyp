@@ -1,7 +1,5 @@
 package org.bham.aucom;
 
-import org.bham.aucom.system.SystemConnectionFactoryManager;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,10 +15,10 @@ import java.util.logging.Logger;
  */
 public final class Configuration {
 
-    private static String resourcePath = "/data/aucom.cfg";
-    private static String fileString = "data/aucom.cfg";
+    private static final String resourcePath = "/data/aucom.cfg";
+    private static final String fileString = "data/aucom.cfg";
     private static Configuration instance = null;
-    private HashMap<String, String> map;
+    private final HashMap<String, String> map;
 
     /**
      * Creates the private instance of the Configuration object.
@@ -32,11 +30,12 @@ public final class Configuration {
     /**
      * Returns the singleton of the Configuration object.
      *
-     * @return
+     * @return return the singleton instance
      */
     public static Configuration getInstance() {
-        if (instance == null)
+        if (instance == null) {
             instance = new Configuration();
+        }
 
         try {
             instance.load();
@@ -88,7 +87,18 @@ public final class Configuration {
      * @return true if the file exists
      */
     private boolean internFileExists() {
-        return SystemConnectionFactoryManager.class.getResourceAsStream(resourcePath) != null;
+        InputStream s = getClass().getResourceAsStream(resourcePath);
+        boolean exists = (s != null);
+
+        if (exists) {
+            try {
+                s.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return exists;
     }
 
     /**
@@ -138,7 +148,7 @@ public final class Configuration {
      */
     private ArrayList<String> getLinesToConsider(BufferedReader br) {
         ArrayList<String> lines = new ArrayList<String>();
-        String str = null;
+        String str;
         try {
             while ((str = br.readLine()) != null) {
                 str = str.trim();
@@ -162,7 +172,7 @@ public final class Configuration {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    private void loadFromExternFile() throws NumberFormatException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    private void loadFromExternFile() throws NumberFormatException, IOException {
         System.out.println("Extern");
         BufferedReader br = new BufferedReader(new FileReader(new File(fileString)));
         loadFromBuffer(br);
@@ -178,7 +188,7 @@ public final class Configuration {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    private void loadFromInternFile() throws NumberFormatException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    private void loadFromInternFile() throws NumberFormatException {
         System.out.println("Intern");
         InputStream inStream = this.getClass().getResourceAsStream(resourcePath);
         loadFromBuffer(new BufferedReader(new InputStreamReader(inStream)));
