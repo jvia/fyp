@@ -9,14 +9,23 @@ import org.bham.aucom.fts.sink.AucomSinkAdapter;
 import org.bham.aucom.fts.sink.AucomSinkStatusEvent;
 import org.bham.aucom.fts.sink.NodeStatus;
 import org.bham.aucom.fts.sink.SinkStatusListener;
-import org.bham.aucom.fts.source.*;
+import org.bham.aucom.fts.source.ActionFailedException;
+import org.bham.aucom.fts.source.AucomSourceAdapter;
+import org.bham.aucom.fts.source.IllegalStateChange;
+import org.bham.aucom.fts.source.SourceStatus;
+import org.bham.aucom.fts.source.SourceStatusEvent;
+import org.bham.aucom.fts.source.SourceStatusListener;
 import org.bham.aucom.fts.tranform.AbstractAucomTranformNode;
 import org.bham.aucom.fts.tranform.TransformNodeEvent;
 import org.bham.aucom.fts.tranform.TransformNodeEventListener;
 import org.bham.aucom.main.GraphStateChangedEvent;
 import org.bham.aucom.main.GraphStatusListener;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Serializable;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.Collection;
 import java.util.Iterator;
@@ -29,18 +38,19 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
     private GraphStatus previousStatus = currentStatus;
 
     private static final long serialVersionUID = 1L;
-    protected transient javax.swing.event.EventListenerList listenerList = null;
-    protected transient Graph graph;
+    private transient javax.swing.event.EventListenerList listenerList = null;
+    protected final transient Graph graph;
     private final String graphName;
-    protected transient EngineThread engineThread;
+    private transient EngineThread engineThread;
 
     /**
      * Defines possible states of an AucomGraph
      *
      * @author rgolombe
      */
+
     public enum GraphStatus {
-        NOTREADY, READY, RUNNING, STOPPED, PAUSED,
+        NOTREADY, READY, RUNNING, STOPPED, PAUSED;
     }
 
     /**
@@ -48,7 +58,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
      *
      * @param inGraphName the graph name
      */
-    public AbstractAucomGraph(String inGraphName) {
+    public AbstractAucomGraph(final String inGraphName) {
         graphName = inGraphName;
         graph = new Graph();
         currentStatus = GraphStatus.NOTREADY;
@@ -58,11 +68,46 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
     }
 
     /**
+     * FTS Graph construction function. It is expected that after calling this
+     * function the topology of the fts graph used by this implementation of
+     * the
+     * AbstractAucomGraph is established.
+     */
+    protected abstract void initGraph();
+
+    /**
+     * Method getReason returns the reason of this T2GramTrainerGraph object.
+     *
+     *
+     *
+     * @return the reason (type String) of this T2GramTrainerGraph object.
+     */
+    protected abstract String getReason();
+
+    /**
+     * Indicates whether the preconditions for the immediate execution of the
+     * graph are met.
+     * <p/>
+     * <b>Postcondition</b>: If this function returns true, then the
+     * status of the graph must not be {@link GraphStatus#NOTREADY}.
+     *
+     * @return true i.f.f. all graph preconditions are satistfied
+     */
+    public abstract boolean preconditionsSatisfied();
+
+    /**
+     * Interface offering a mean to clean up resources used by this graph
+     * before
+     * stopping this graph. Called by {@link #stop()}
+     */
+    protected abstract void cleanUp();
+
+    /**
      * Registers a listener for GraphStatusChangedEvents
      *
      * @param listener the listener to register
      */
-    public void addGraphListener(GraphStatusListener listener) {
+    public final void addGraphListener(final GraphStatusListener listener) {
         listenerList.add(GraphStatusListener.class, listener);
     }
 
@@ -71,32 +116,25 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
      *
      * @param listener to unregister
      */
-    public void removeMyEventListener(GraphStatusListener listener) {
+    public final void removeMyEventListener(
+            final GraphStatusListener listener) {
         listenerList.remove(GraphStatusListener.class, listener);
     }
 
     /**
      * Unregisters all GraphStatusListener from this object
      */
-    public void removeAllListeners() {
+    public final void removeAllListeners() {
         Object[] listeners = listenerList.getListenerList();
-        for (int i = 0; i < listeners.length; i += 2)
-            if (listeners[i] == GraphStatusListener.class)
+        for (int i = 0; i < listeners.length; i += 2) {
+            if (listeners[i] == GraphStatusListener.class) {
                 listenerList.remove(GraphStatusListener.class, (GraphStatusListener) listeners[i + 1]);
-
-
+            }
+        }
     }
 
-    /**
-     * fts Graph construction function. It is expected that after calling this
-     * function the topology of the fts graph used by this implementation of
-     * the
-     * AbstractAucomGraph is established.
-     */
-    protected abstract void initGraph();
-
-    @SuppressWarnings("cast")
-    protected void fireGraphStatusChangedEvent(GraphStateChangedEvent evt) {
+    public final void fireGraphStatusChangedEvent(final GraphStateChangedEvent
+                                                          evt) {
         log.info(getGraphName() + " fires " + evt + "to " + listenerList.getListenerCount() + " listeners");
         Object[] listeners = listenerList.getListenerList();
         for (int i = 0; i < listeners.length; i += 2) {
@@ -112,7 +150,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
      * nothing
      * in case the fts graph is not constructed yet.
      */
-    public void saveGraph() {
+    public final void saveGraph() {
         if (graph == null) {
             return;
         }
@@ -137,7 +175,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
      *
      * @return name of this graph
      */
-    public String getGraphName() {
+    public final String getGraphName() {
         return graphName;
     }
 
@@ -148,7 +186,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
      *
      * @return true iff graph is not yet ready
      */
-    public boolean isNotReadyStatus() {
+    public final boolean isNotReadyStatus() {
         return getStatus().equals(GraphStatus.NOTREADY);
     }
 
@@ -158,7 +196,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
      *
      * @return the current running status of the graph
      */
-    public boolean isRunningStatus() {
+    public final boolean isRunningStatus() {
         return getStatus().equals(GraphStatus.RUNNING);
     }
 
@@ -177,7 +215,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
      *
      * @throws ActionFailedException an error occurred
      */
-    public void start() throws ActionFailedException {
+    public final void start() throws ActionFailedException {
         if (currentStatus.equals(GraphStatus.STOPPED)) {
             throw new ActionFailedException(getGraphName() + "Status is STOPPED. Graph cannot be restarted after stopping it.");
         }
@@ -224,25 +262,12 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
         }
     }
 
-    protected abstract String getReason();
-
-    /**
-     * Indicates whether the preconditions for the immediate execution of the
-     * graph are met.
-     * <p/>
-     * <b>Postcondition</b>: If this function returns true, then the
-     * status of the graph must not be {@link GraphStatus#NOTREADY}.
-     *
-     * @return true i.f.f. all graph preconditions are satistfied
-     */
-    public abstract boolean preconditionsSatisfied();
-
     /**
      * Connects to all fts nodes of the fts graph and listens to status events
      *
      * @param nodes the nodes to listen to
      */
-    protected void listenToNodes(Iterator<Node<?, ?>> nodes) {
+    public final void listenToNodes(final Iterator<Node<?, ?>> nodes) {
         while (nodes.hasNext()) {
             Node<?, ?> node = nodes.next();
             // recurrence
@@ -270,10 +295,8 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
      * Pauses the graph execution by pausing the sources. The graph can be
      * always paused, except when its already paused. In this case we don't
      * pause again as we don't want to override the previous state.
-     *
-     * @throws IllegalStateChange could not transition to pause
      */
-    public void pause() throws IllegalStateChange {
+    public final void pause() {
         if (!currentStatus.equals(GraphStatus.PAUSED)) {
             setPausedState();
             pauseAllSources();
@@ -284,73 +307,16 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
     }
 
     /**
-     * Changes the graph state to {@link GraphStatus#PAUSED}
-     */
-    private void setPausedState() {
-        copyCurrentToPreviousStatus();
-        setStatus(GraphStatus.PAUSED);
-    }
-
-    /**
-     * Copies the value of {@link #currentStatus} to {@link #previousStatus}
-     */
-
-    private void copyCurrentToPreviousStatus() {
-        previousStatus = currentStatus;
-    }
-
-    /**
-     * calls pause() an all sources of the fts graph. By this means the fts
-     * graph
-     * is completely paused.
-     *
-     * @throws IllegalStateChange could not change the states
-     */
-    private void pauseAllSources() throws IllegalStateChange {
-        if (graph != null) {
-            Collection<Node<?, ?>> sources = graph.getSourceNodes();
-            for (Node<?, ?> node : sources) {
-                AucomSourceAdapter source = ((AucomSourceAdapter) node);
-                source.pause();
-            }
-        }
-    }
-
-    /**
      * Resumes graph execution by resuming the execution of all sources of the
      * fts
      * graph if the graph was previously paused. Otherwise the call to this
      * function has no effect.
      */
-    public void resume() {
+    public final void resume() {
         if (currentStatus.equals(GraphStatus.PAUSED)) {
             resumeAllSources();
             restoreCurrentFromPreviousStatus();
             log.fine("Resumed, state restored to " + currentStatus);
-        }
-    }
-
-    /**
-     * Helper function. Copies the value of {@link #previousStatus} to  {@link
-     * #currentStatus}
-     */
-    private void restoreCurrentFromPreviousStatus() {
-        currentStatus = previousStatus;
-    }
-
-    /**
-     * Calls resume on all available sources of the fts graph.
-     */
-    private void resumeAllSources() {
-        if (graph != null) {
-            Collection<Node<?, ?>> sources = graph.getSourceNodes();
-            for (Node<?, ?> node : sources) {
-                try {
-                    ((AucomSourceAdapter<?>) node).resume();
-                } catch (IllegalStateChange exception) {
-                    exception.printStackTrace();
-                }
-            }
         }
     }
 
@@ -362,7 +328,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
      * will be called which offers a customized way to neatly clean up any
      * resources used by this graph
      */
-    public void stop() {
+    public final void stop() {
         log.info(getClass().getName() + " stopping graph: " + graphName);
         if (!currentStatus.equals(GraphStatus.STOPPED)) {
             cleanUp();
@@ -382,13 +348,6 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
             log.info("stopped");
         }
     }
-
-    /**
-     * Interface offering a mean to clean up resources used by this graph
-     * before
-     * stopping this graph. Called by {@link #stop()}
-     */
-    protected abstract void cleanUp();
 
     /**
      * SourceEvent handling function. Changes {@link #currentStatus} to RUNNING
@@ -414,7 +373,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
      * is <tt>RUNNING</tt>
      */
     @Override
-    public void handleTransformNodeEvent(TransformNodeEvent event) {
+    public void handleTransformNodeEvent(final TransformNodeEvent event) {
         if (event.getStatus().equals(NodeStatus.RECEIVEDLASTELEMENT) && currentStatus.equals(GraphStatus.RUNNING)) {
             setStatus(GraphStatus.READY);
             log.info("processing finished in a transformation node");
@@ -429,11 +388,29 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
      * <tt>RUNNING</tt>.
      */
     @Override
-    public void sinkStatusChanged(AucomSinkStatusEvent event) {
+    public void sinkStatusChanged(final AucomSinkStatusEvent event) {
         if (event.getStatus().equals(NodeStatus.RECEIVEDLASTELEMENT) && currentStatus.equals(GraphStatus.RUNNING)) {
             log.info("processing finished in a sink");
             setStatus(GraphStatus.READY);
         }
+    }
+
+    /**
+     * returns the current graph status
+     *
+     * @return {@link #currentStatus} the current status of the graph
+     */
+    public final GraphStatus getStatus() {
+        return currentStatus;
+    }
+
+    /**
+     * returns the number of currently registered {@link GraphStatusListener}
+     *
+     * @return number of currently registered listeners
+     */
+    public final int getNumberGraphListeners() {
+        return listenerList.getListenerCount();
     }
 
     /**
@@ -443,7 +420,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
      *
      * @param newStatus the new graph status
      */
-    protected void setStatus(GraphStatus newStatus) {
+    protected final void setStatus(final GraphStatus newStatus) {
         log.log(Level.FINE, "setting new status " + newStatus);
         copyCurrentToPreviousStatus();
         currentStatus = newStatus;
@@ -452,20 +429,56 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
     }
 
     /**
-     * returns the current graph status
-     *
-     * @return {@link #currentStatus} the current status of the graph
+     * Changes the graph state to {@link GraphStatus#PAUSED}
      */
-    public GraphStatus getStatus() {
-        return currentStatus;
+    private void setPausedState() {
+        copyCurrentToPreviousStatus();
+        setStatus(GraphStatus.PAUSED);
     }
 
     /**
-     * returns the number of currently registered {@link GraphStatusListener}
-     *
-     * @return number of currently registered listeners
+     * Copies the value of {@link #currentStatus} to {@link #previousStatus}
      */
-    public int getNumberGraphListeners() {
-        return listenerList.getListenerCount();
+    private void copyCurrentToPreviousStatus() {
+        previousStatus = currentStatus;
+    }
+
+    /**
+     * calls pause() an all sources of the fts graph. By this means the fts
+     * graph
+     * is completely paused.
+     */
+    private void pauseAllSources() {
+        if (graph != null) {
+            Collection<Node<?, ?>> sources = graph.getSourceNodes();
+            for (Node<?, ?> node : sources) {
+                AucomSourceAdapter source = (AucomSourceAdapter) node;
+                source.pause();
+            }
+        }
+    }
+
+    /**
+     * Helper function. Copies the value of {@link #previousStatus} to  {@link
+     * #currentStatus}
+     */
+    private void restoreCurrentFromPreviousStatus() {
+        currentStatus = previousStatus;
+    }
+
+    /**
+     * Calls resume on all available sources of the fts graph.
+     */
+    private void resumeAllSources() {
+        if (graph != null) {
+            Collection<Node<?, ?>> sources = graph.getSourceNodes();
+            for (Node<?, ?> node : sources) {
+                try {
+                    ((AucomSourceAdapter<?>) node).resume();
+                } catch (IllegalStateChange exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
     }
 }

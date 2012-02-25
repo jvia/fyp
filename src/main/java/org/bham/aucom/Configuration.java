@@ -1,6 +1,11 @@
 package org.bham.aucom;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -17,8 +22,11 @@ public final class Configuration {
 
     private static final String resourcePath = "/data/aucom.cfg";
     private static final String fileString = "data/aucom.cfg";
-    private static Configuration instance = null;
+
+    private final Logger log = Logger.getLogger(getClass().getName());
     private final HashMap<String, String> map;
+
+    private static Configuration instance = null;
 
     /**
      * Creates the private instance of the Configuration object.
@@ -51,7 +59,7 @@ public final class Configuration {
      * @param inKey configuration name
      * @return configuration value
      */
-    public String getValue(String inKey) {
+    public String getValue(final String inKey) {
         return map.get(inKey);
     }
 
@@ -71,14 +79,14 @@ public final class Configuration {
      */
     private void load() throws Exception {
         if (externFileExists()) {
-            Logger.getLogger(this.getClass().getCanonicalName()).info("loading form extern file");
+            log.info("loading from extern file");
             loadFromExternFile();
         }
         if (internFileExists()) {
-            Logger.getLogger(this.getClass().getCanonicalName()).info("loading form intern file");
+            log.info("loading from intern file");
             loadFromInternFile();
         }
-        Logger.getLogger(this.getClass().getCanonicalName()).info("loading done");
+        log.info("loading done");
     }
 
     /**
@@ -93,7 +101,7 @@ public final class Configuration {
         if (exists) {
             try {
                 s.close();
-            } catch (IOException e) {
+            } catch (java.io.IOException e) {
                 e.printStackTrace();
             }
         }
@@ -115,7 +123,7 @@ public final class Configuration {
      *
      * @param br buffer to read from
      */
-    private void loadFromBuffer(BufferedReader br) {
+    private void loadFromBuffer(final BufferedReader br) {
         ArrayList<String> linesToLoad = getLinesToConsider(br);
         linesToLoad = getValidLines(linesToLoad);
         for (String line : linesToLoad) {
@@ -127,10 +135,11 @@ public final class Configuration {
     /**
      * Returns a list of all the valid lines.
      *
-     * @param linesToLoad
-     * @return
+     * @param linesToLoad list of all lines
+     * @return the list of valid lines
      */
-    private ArrayList<String> getValidLines(ArrayList<String> linesToLoad) {
+    private ArrayList<String> getValidLines(
+            final ArrayList<String> linesToLoad) {
         ArrayList<String> lines = new ArrayList<String>();
         for (String line : linesToLoad) {
             if (isValid(line)) {
@@ -146,7 +155,7 @@ public final class Configuration {
      * @param br the source to read from
      * @return a list of valid lines
      */
-    private ArrayList<String> getLinesToConsider(BufferedReader br) {
+    private ArrayList<String> getLinesToConsider(final BufferedReader br) {
         ArrayList<String> lines = new ArrayList<String>();
         String str;
         try {
@@ -158,7 +167,8 @@ public final class Configuration {
                 lines.add(str);
             }
         } catch (IOException exception) {
-            System.err.println("exception caught: " + exception.getLocalizedMessage());
+            System.err.println("exception caught: " +
+                               exception.getLocalizedMessage());
         }
         return lines;
     }
@@ -166,31 +176,22 @@ public final class Configuration {
     /**
      * Loads an external file.
      *
-     * @throws NumberFormatException
-     * @throws IOException
-     * @throws ClassNotFoundException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
+     * @throws java.io.IOException Error reading file
      */
-    private void loadFromExternFile() throws NumberFormatException, IOException {
+    private void loadFromExternFile() throws IOException {
         System.out.println("Extern");
-        BufferedReader br = new BufferedReader(new FileReader(new File(fileString)));
+        BufferedReader br = new BufferedReader(
+                new FileReader(new File(fileString)));
         loadFromBuffer(br);
         br.close();
     }
 
     /**
      * Loads an internal file.
-     *
-     * @throws NumberFormatException
-     * @throws IOException
-     * @throws ClassNotFoundException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
      */
-    private void loadFromInternFile() throws NumberFormatException {
+    private void loadFromInternFile() {
         System.out.println("Intern");
-        InputStream inStream = this.getClass().getResourceAsStream(resourcePath);
+        InputStream inStream = getClass().getResourceAsStream(resourcePath);
         loadFromBuffer(new BufferedReader(new InputStreamReader(inStream)));
     }
 
@@ -201,7 +202,7 @@ public final class Configuration {
      * @param str the line in question
      * @return true if the line is a comment
      */
-    private static boolean ignoreLine(String str) {
+    private static boolean ignoreLine(final String str) {
         return str.startsWith("#");
     }
 
@@ -214,7 +215,7 @@ public final class Configuration {
      * @param lineStr a line in the configuration file
      * @return true if valid, false otherwise
      */
-    private static boolean isValid(String lineStr) {
+    private static boolean isValid(final String lineStr) {
         String[] parts = lineStr.split(" ");
         return (parts.length == 2) && (!parts[0].isEmpty());
     }

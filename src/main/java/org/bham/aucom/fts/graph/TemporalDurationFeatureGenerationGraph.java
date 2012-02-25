@@ -5,7 +5,6 @@ import org.bham.aucom.data.TemporalDurationFeature;
 import org.bham.aucom.data.timeseries.TemporalDurationFeatureTimeSeries;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.fts.sink.TimeSeriesSink;
-import org.bham.aucom.fts.source.IllegalStateChange;
 import org.bham.aucom.fts.source.TimeSeriesSource;
 import org.bham.aucom.fts.tranform.EncodeData;
 import org.bham.aucom.fts.tranform.GenerateTemporalDurationFeature;
@@ -81,15 +80,11 @@ public class TemporalDurationFeatureGenerationGraph extends AbstractAucomGraph {
     }
 
     public void setInputAndResetGraph(TimeSeries<Observation> inObsTs) {
-        try {
-            pause();
-            sink.setOutput(new TemporalDurationFeatureTimeSeries());
-            generateDurationFeature.reset();
-            source.setInput(inObsTs);
-            resume();
-        } catch (IllegalStateChange e) {
-            e.printStackTrace();
-        }
+        pause();
+        sink.setOutput(new TemporalDurationFeatureTimeSeries());
+        generateDurationFeature.reset();
+        source.setInput(inObsTs);
+        resume();
     }
 
 }

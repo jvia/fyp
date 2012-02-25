@@ -75,11 +75,6 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
         }
     }
 
-    @Override
-    protected void setStatus(GraphStatus newStatus) {
-        super.setStatus(newStatus);
-    }
-
     public void setClassificator(AnomalyClassificator classificatorToSet) {
         classificationNode.setClassificator(classificatorToSet);
     }
