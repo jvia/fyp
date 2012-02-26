@@ -13,7 +13,7 @@ public class PlayFileGraph extends AbstractAucomGraph {
     private static final long serialVersionUID = 1L;
 
     public PlayFileGraph() {
-        super("XcfPlayGraph");
+        super("PlayGraph");
         initGraph();
     }
 

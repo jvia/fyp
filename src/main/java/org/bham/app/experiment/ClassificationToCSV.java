@@ -94,7 +94,7 @@ public class ClassificationToCSV implements Experiment {
         }
         try {
             csv = new FileWriter(out);
-            csv.append("#    Timestamp     Score     Threshold     Status%n");
+            csv.append("#    Timestamp     Score     Threshold     Status\n");
             for (Classification classification : list) {
                 csv.append(String.format("     %9d     %5.3f     %6.3f    %6.0f%n",
                                          classification.getTimestamp(),
