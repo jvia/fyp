@@ -17,7 +17,7 @@ import static java.lang.String.format;
  * @author Raphael Golombek <rgolombe@cor-lab.uni-bielefeld.de>
  * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk>
  */
-public class CalcMeanvalue extends AbstractAucomTranformNode<Score, Score> {
+public class CalcMeanValue extends AbstractAucomTranformNode<Score, Score> {
     private final List<Score> history;
     // TODO :: determine if slidingWindow can be removed from class
     private SlidingWindow slidingWindow;
@@ -28,7 +28,7 @@ public class CalcMeanvalue extends AbstractAucomTranformNode<Score, Score> {
     /**
      * Construct the node.
      */
-    public CalcMeanvalue() {
+    public CalcMeanValue() {
         super("CalcMeanValue");
         history = new ArrayList<Score>();
     }
@@ -139,8 +139,9 @@ public class CalcMeanvalue extends AbstractAucomTranformNode<Score, Score> {
     protected List<Score> getElementsToRemove(List<Score> scores, long windowEnd) {
         List<Score> out = new ArrayList<Score>();
         for (Score s : scores) {
-            if (s.getTimestamp() >= windowEnd - slidingWindow.getIntervalOverlapSize())
+            if (s.getTimestamp() >= windowEnd - slidingWindow.getIntervalOverlapSize()) {
                 break;
+            }
             out.add(s);
         }
         return out;
@@ -164,8 +165,9 @@ public class CalcMeanvalue extends AbstractAucomTranformNode<Score, Score> {
     protected long getNextWindowEnd() {
         long next = windowEnd + (slidingWindow.getIntervalSize() - slidingWindow.getIntervalOverlapSize());
 
-        if (!history.isEmpty() && history.get(0).getTimestamp() > next)
+        if (!history.isEmpty() && history.get(0).getTimestamp() > next) {
             next = history.get(0).getTimestamp();
+        }
 
         return next;
     }
@@ -181,13 +183,16 @@ public class CalcMeanvalue extends AbstractAucomTranformNode<Score, Score> {
         List<Score> out = new ArrayList<Score>();
 
         // if we have seen the last element, return the whole history
-        if (lastElement(history.get(history.size() - 1)))
+        if (lastElement(history.get(history.size() - 1))) {
             return history;
+        }
 
         // add all scores which fall within the sliding window
-        for (Score s : history)
-            if (s.getTimestamp() < windowend)
+        for (Score s : history) {
+            if (s.getTimestamp() < windowend) {
                 out.add(s);
+            }
+        }
 
         return out;
     }
@@ -198,10 +203,11 @@ public class CalcMeanvalue extends AbstractAucomTranformNode<Score, Score> {
      * @return the oldest timestamp
      */
     protected long getOldestTimestamp() {
-        if (history.isEmpty())
+        if (history.isEmpty()) {
             return windowStart;
-        else
+        } else {
             return history.get(history.size() - 1).getTimestamp();
+        }
     }
 
     /**

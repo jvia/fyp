@@ -7,15 +7,15 @@ import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClas
 
 import java.util.logging.Logger;
 
-public class Classificate extends AbstractAucomTranformNode<Score, Classification> {
+public class Classify extends AbstractAucomTranformNode<Score, Classification> {
     private AnomalyClassifier classifier = null;
 
-    public Classificate(AnomalyClassifier inThreshold) {
+    public Classify(AnomalyClassifier inThreshold) {
         super("ClassificateScore");
         setClassifier(inThreshold);
     }
 
-    public Classificate() {
+    public Classify() {
         super("ClassificateScore");
     }
 
