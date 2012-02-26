@@ -39,7 +39,11 @@ public class AbstractDataTest {
         String val = "val";
         AbstractData instance = new AbstractDataImpl();
         instance.addAttribute(key, val);
-        assertThat(instance.getAttributeValue(key), is(val));
+        assertThat("Key-value pair must now be an attribute",
+                   instance.getAttributeValue(key), is(val));
+        assertThat("Value-key pair is wrong",
+                   instance.getAttributeValue(val), is(nullValue()));
+
     }
 
     /**
@@ -89,8 +93,17 @@ public class AbstractDataTest {
     public void testIsFirstElement() {
         AbstractData instance = new AbstractDataImpl();
         assertThat(instance.isFirstElement(), is(false));
+
         instance.setFirstElement(true);
         assertThat(instance.isFirstElement(), is(true));
+
+        instance = new AbstractDataImpl(true, true, 0);
+        assertThat("Should be first element",
+                   instance.isFirstElement(), is(true));
+        instance = new AbstractDataImpl(false, true, 0);
+
+        assertThat("Should not be first element",
+                   instance.isFirstElement(), is(false));
     }
 
     /**
@@ -100,11 +113,28 @@ public class AbstractDataTest {
     public void testIsLastElement() {
         AbstractData instance = new AbstractDataImpl();
         assertThat(instance.isLastElement(), is(false));
+
         instance.setLastElement(true);
         assertThat(instance.isLastElement(), is(true));
+
+        instance = new AbstractDataImpl(true, true, 0);
+        assertThat("Should be last element as specified in constructor",
+                   instance.isLastElement(), is(true));
+
+        instance = new AbstractDataImpl(true, false, 0);
+        assertThat("Should be last element as specified in constructor",
+                   instance.isLastElement(), is(false));
     }
 
     public class AbstractDataImpl extends AbstractData {
+
+        public AbstractDataImpl(boolean b, boolean b1, int i) {
+            super(b, b1, i);
+        }
+
+        public AbstractDataImpl() {
+            super();
+        }
 
         public Object copy() {
             return new AbstractDataImpl();

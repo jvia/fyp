@@ -5,9 +5,13 @@ import org.bham.aucom.data.AbstractData;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.fts.sink.NodeStatus;
 
+import java.io.Serializable;
 import java.util.logging.Logger;
 
-public abstract class AbstractAucomTranformNode<TIn extends AbstractData, TOut extends AbstractData> extends AbstractTransformNode<TIn, TOut> {
+public abstract class AbstractAucomTranformNode<TIn extends AbstractData, TOut extends AbstractData>
+        extends AbstractTransformNode<TIn, TOut>
+        implements Serializable {
+
     protected TimeSeries<TOut> ts = null;
     long lastProcessingTime = 0l;
     long startTimestamp = 0l;
