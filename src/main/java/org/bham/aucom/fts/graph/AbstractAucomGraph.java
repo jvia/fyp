@@ -350,7 +350,7 @@ public abstract class AbstractAucomGraph implements SourceStatusListener, SinkSt
     }
 
     /**
-     * SourceEvent handling function. Changes {@link #currentStatus} to RUNNING
+     * SourceStatusEvent handling function. Changes {@link #currentStatus} to RUNNING
      * if
      * a source notifies about sending its first element ({@link
      * SourceStatus#FIRST_ELEMENT_SENT}) and if {@link #currentStatus} is not
