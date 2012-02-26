@@ -198,8 +198,6 @@ public class RecorderPanel extends JPanel implements RecorderStatusListener {
                     if (result == JFileChooser.APPROVE_OPTION) {
                         getRecorder().changeFolder(folderChooser.getSelectedFile());
                     }
-                } catch (ActionNotPermittedException e1) {
-                    logger.info("coudn't start recorder, reason: " + e1.getMessage());
                 } catch (Exception e2) {
                     logger.info("coudn't start recorder, reason: " + e2.getMessage());
                 }
