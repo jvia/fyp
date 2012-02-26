@@ -3,8 +3,8 @@ package org.bham.aucom.data.util;
 import org.bham.aucom.data.AbstractData;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.data.timeseries.TimeSeriesStatusListener;
-import org.bham.aucom.data.timeseries.TimeseriesStatus;
-import org.bham.aucom.data.timeseries.TimeseriesStatusEvent;
+import org.bham.aucom.data.timeseries.TimeSeriesStatus;
+import org.bham.aucom.data.timeseries.TimeSeriesStatusEvent;
 import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
 import org.bham.aucom.util.TimeSeriesNotFoundException;
@@ -53,7 +53,7 @@ public class DataModel implements TimeSeriesStatusListener {
      */
     private <T extends AbstractData> void synchronizeWithDataItemHashMap(TimeSeries<T> timeSeriesToAdd) {
         if (timeSeriesToAdd.size() > 0)
-            timeseriesStatusChanged(new TimeseriesStatusEvent(timeSeriesToAdd, TimeseriesStatus.ELEMENTSADDED, 0, timeSeriesToAdd.size() - 1));
+            timeseriesStatusChanged(new TimeSeriesStatusEvent(timeSeriesToAdd, TimeSeriesStatus.ELEMENTS_ADDED, 0, timeSeriesToAdd.size() - 1));
     }
 
     public UUID addModel(Model modelToAdd) {
@@ -150,7 +150,7 @@ public class DataModel implements TimeSeriesStatusListener {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void timeseriesStatusChanged(TimeseriesStatusEvent status) {
+    public void timeseriesStatusChanged(TimeSeriesStatusEvent status) {
     }
 
     public boolean isReady() {

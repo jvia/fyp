@@ -226,7 +226,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     }
 
     @Override
-    public void timeseriesStatusChanged(TimeseriesStatusEvent status) {
+    public void timeseriesStatusChanged(TimeSeriesStatusEvent status) {
 
     }
 

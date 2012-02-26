@@ -3,8 +3,8 @@ package org.bham.aucom.fts.source;
 import org.bham.aucom.data.AbstractData;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.data.timeseries.TimeSeriesStatusListener;
-import org.bham.aucom.data.timeseries.TimeseriesStatus;
-import org.bham.aucom.data.timeseries.TimeseriesStatusEvent;
+import org.bham.aucom.data.timeseries.TimeSeriesStatus;
+import org.bham.aucom.data.timeseries.TimeSeriesStatusEvent;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -69,8 +69,8 @@ public class TimeSeriesSource<T extends AbstractData> extends AucomSourceAdapter
     }
 
     @Override
-    public void timeseriesStatusChanged(TimeseriesStatusEvent status) {
-        if (status.getStatus().equals(TimeseriesStatus.ELEMENTSADDED))
+    public void timeseriesStatusChanged(TimeSeriesStatusEvent status) {
+        if (status.getStatus().equals(TimeSeriesStatus.ELEMENTS_ADDED))
             copyDataFromTimeSeriesToSourceQueue(status.getStartIndex(), status.getEndIndex());
     }
 

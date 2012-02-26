@@ -112,8 +112,8 @@ public class ClassificatorOptimizationDataCollector implements TimeSeriesStatusL
 
     @SuppressWarnings("unchecked")
     @Override
-    public void timeseriesStatusChanged(TimeseriesStatusEvent status) {
-        if (status.getStatus().equals(TimeseriesStatus.ELEMENTSADDED)) {
+    public void timeseriesStatusChanged(TimeSeriesStatusEvent status) {
+        if (status.getStatus().equals(TimeSeriesStatus.ELEMENTS_ADDED)) {
             for (int i = status.getStartIndex(); i <= status.getEndIndex(); i++) {
                 TimeSeries<? extends Score> ts = (TimeSeries<? extends Score>) status.getSource();
                 this.getCollectedData().add(ts.get(i));

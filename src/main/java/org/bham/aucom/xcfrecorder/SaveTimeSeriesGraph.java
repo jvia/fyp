@@ -97,8 +97,8 @@ public class SaveTimeSeriesGraph extends AbstractAucomGraph implements SinkStatu
     }
 
     @Override
-    public void timeseriesStatusChanged(TimeseriesStatusEvent status) {
-        if (status.getStatus().equals(TimeseriesStatus.ELEMENTSADDED)) {
+    public void timeseriesStatusChanged(TimeSeriesStatusEvent status) {
+        if (status.getStatus().equals(TimeSeriesStatus.ELEMENTS_ADDED)) {
             for (int i = status.getStartIndex(); i <= status.getEndIndex(); i++) {
                 this.source.getInput().add(this.getTimeSeriesToSave().get(i));
             }
