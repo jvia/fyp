@@ -4,7 +4,11 @@ import org.bham.aucom.data.AttributableObject;
 import org.bham.aucom.data.LinkEnum;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.UUID;
 
 public abstract class AbstractLinkableNode implements AttributableObject, Serializable {
     private UUID id;
@@ -31,14 +35,16 @@ public abstract class AbstractLinkableNode implements AttributableObject, Serial
 
     @Override
     public void deleteAttribute(String propertyName) {
-        if (this.containsAttribute(propertyName))
+        if (this.containsAttribute(propertyName)) {
             this.attributes.remove(propertyName);
+        }
     }
 
     @Override
     public String getAttributeValue(String propertyName) {
-        if (!containsAttribute(propertyName))
+        if (!containsAttribute(propertyName)) {
             return "";
+        }
         return this.attributes.get(propertyName);
     }
 
@@ -56,20 +62,23 @@ public abstract class AbstractLinkableNode implements AttributableObject, Serial
     }
 
     public void addLink(LinkEnum link, UUID uuid) {
-        if (!this.links.containsKey(link))
+        if (!this.links.containsKey(link)) {
             this.links.put(link, new ArrayList<UUID>());
+        }
         this.links.get(link).add(uuid);
     }
 
     public void addLink(LinkEnum link, List<UUID> uuids) {
-        if (!this.links.containsKey(link))
+        if (!this.links.containsKey(link)) {
             this.links.put(link, new ArrayList<UUID>());
+        }
         this.links.get(link).addAll(uuids);
     }
 
     public List<UUID> getLinks(LinkEnum link) {
-        if (this.links.containsKey(link))
+        if (this.links.containsKey(link)) {
             return this.links.get(link);
+        }
         return null;
     }
 

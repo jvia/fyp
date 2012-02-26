@@ -15,6 +15,7 @@ import java.util.logging.Logger;
  * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk
  */
 public class GenerateTemporalDurationFeature extends AbstractAucomTranformNode<DataType, TemporalDurationFeature> {
+    private static final long serialVersionUID = 3563291160956922501L;
     private final transient Logger log = Logger.getLogger(getClass().getName());
     private TemporalDurationFeatureGenerator generator;
 
@@ -22,7 +23,7 @@ public class GenerateTemporalDurationFeature extends AbstractAucomTranformNode<D
      * Create the transformation node.
      */
     public GenerateTemporalDurationFeature() {
-        // TODO :: see if gnerator can be passed in as constructor parameter
+        // TODO :: see if generator can be passed in as constructor parameter
         super("GenerateDurationFeature");
         generator = null;
     }
@@ -36,13 +37,15 @@ public class GenerateTemporalDurationFeature extends AbstractAucomTranformNode<D
      */
     @Override
     protected TemporalDurationFeature iTransform(DataType input) throws Exception {
-        if (generator == null) {
+        if (getGenerator() == null) {
             log.severe("Generator is missing. Cannot generate TemporalDurationFeature ");
             return null;
         }
 
         TemporalDurationFeature feature = getGenerator().generateFeature(input);
-        if (feature == null) log.severe("TemporalDurationFeature is null");
+        if (feature == null) {
+            log.severe("TemporalDurationFeature is null");
+        }
 
         log.fine("Returning TemporalDurationFeature ");
         return feature;
@@ -52,8 +55,9 @@ public class GenerateTemporalDurationFeature extends AbstractAucomTranformNode<D
      * Resets the {@link TemporalDurationFeatureGenerator}.
      */
     public void reset() {
-        if (getGenerator() != null)
+        if (getGenerator() != null) {
             getGenerator().initializeLastOccurances();
+        }
     }
 
     /**

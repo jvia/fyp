@@ -59,7 +59,7 @@ public abstract class AbstractAucomTranformNode<TIn extends AbstractData, TOut e
             Logger.getLogger(this.getClass().getCanonicalName()).info(this.name + " current timestamp " + newpt + " increase: " + (this.lastProcessingTime - newpt));
         }
         this.lastProcessingTime = newpt;
-        if (this.getClass().equals(Classificate.class)) {
+        if (this.getClass().equals(Classify.class)) {
             if (input.getAttributes().size() != out.getAttributes().size()) {
                 System.out.println("in " + input.getAttributes() + " out " + out.getAttributes());
             }

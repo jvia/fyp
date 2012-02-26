@@ -18,11 +18,14 @@ import static java.lang.String.format;
  * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk>
  */
 public class CalcMeanValue extends AbstractAucomTranformNode<Score, Score> {
-    private final List<Score> history;
-    // TODO :: determine if slidingWindow can be removed from class
+
+    private static final long serialVersionUID = -5720907688401203759L;
+
     private SlidingWindow slidingWindow;
-    protected long windowStart;
-    protected long windowEnd;
+    private long windowStart;
+    private long windowEnd;
+
+    private transient final List<Score> history;
     private transient final Logger log = Logger.getLogger(getClass().getName());
 
     /**
@@ -176,10 +179,10 @@ public class CalcMeanValue extends AbstractAucomTranformNode<Score, Score> {
      * Gets all of the elements which are within the sliding window.
      *
      * @param history   the score history
-     * @param windowend the end of the sliding window
+     * @param windowEnd the end of the sliding window
      * @return the scores within the sliding window
      */
-    protected List<Score> getWindowElements(List<Score> history, long windowend) {
+    protected List<Score> getWindowElements(List<Score> history, long windowEnd) {
         List<Score> out = new ArrayList<Score>();
 
         // if we have seen the last element, return the whole history
@@ -189,7 +192,7 @@ public class CalcMeanValue extends AbstractAucomTranformNode<Score, Score> {
 
         // add all scores which fall within the sliding window
         for (Score s : history) {
-            if (s.getTimestamp() < windowend) {
+            if (s.getTimestamp() < windowEnd) {
                 out.add(s);
             }
         }
@@ -247,7 +250,7 @@ public class CalcMeanValue extends AbstractAucomTranformNode<Score, Score> {
         this.slidingWindow = slidingWindow;
 
         if (!(slidingWindow.getIntervalSize() > slidingWindow.getIntervalOverlapSize())) {
-            log.severe(format("Interval size %d is smaller than overalp %d",
+            log.severe(format("Interval size %d is smaller than overlap %d",
                               slidingWindow.getIntervalSize(),
                               slidingWindow.getIntervalOverlapSize()));
         }

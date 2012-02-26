@@ -39,8 +39,8 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     private transient GenerateTemporalDurationFeature durationFeatureNode;
     private transient GenerateTemporalProbabilityFeature probabilityFeatureNode;
     private transient CalcEntropyAvgScore rawScoreCalculatorNode;
-    private transient CalcMeanvalue meanScoreCalculatorNode;
-    private transient Classificate classificationNode;
+    private transient CalcMeanValue meanScoreCalculatorNode;
+    private transient Classify classificationNode;
 
     private transient TimeSeriesSource<Score> scoreTimeseriesSource;
     private transient TimeSeriesSink<Classification> sink;
@@ -91,10 +91,10 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
         durationFeatureNode = new GenerateTemporalDurationFeature();
         rawScoreCalculatorNode = new CalcEntropyAvgScore();
 
-        meanScoreCalculatorNode = new CalcMeanvalue();
+        meanScoreCalculatorNode = new CalcMeanValue();
         meanScoreCalculatorNode.setSlidingWindow(new SlidingWindow(100, 50));
 
-        classificationNode = new Classificate();
+        classificationNode = new Classify();
         sink = new TimeSeriesSink<Classification>(new ClassificationTimeSeries());
         DataManager.getInstance().addTimeSeries(sink.getOutput());
         sink.getOutput().addTimeSeriesStatusListener(this);
@@ -204,7 +204,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     }
 
     /**
-     * Determines if the {@link Classificate} classificator is ready.
+     * Determines if the {@link org.bham.aucom.fts.tranform.Classify} classificator is ready.
      *
      * @return true if ready
      */
