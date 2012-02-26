@@ -22,21 +22,21 @@ import java.awt.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ClassificatorOptimizer implements Presentable, GraphStatusListener {
+public class ClassifierOptimizer implements Presentable, GraphStatusListener {
     OptimizerGraph optimizationGraph = null;
     ObservationToScoreGraph obsToScoreGraph = null;
     TimeSeries<Score> scoreTs = null;
     private T2GramDetector detector;
-    ClassificatorOptimizationMethod optimizationMethod;
+    ClassifierOptimizationMethod optimizationMethod;
 
-    public ClassificatorOptimizer(T2GramDetector inDetector) {
+    public ClassifierOptimizer(T2GramDetector inDetector) {
         setDetector(inDetector);
         obsToScoreGraph = new ObservationToScoreGraph();
         obsToScoreGraph.addGraphListener(this);
         optimizationGraph = new OptimizerGraph();
         optimizationGraph.addGraphListener(this);
-        optimizationMethod = new ClassificatorOptimizationMethod();
-        optimizationMethod.initializeClassificators();
+        optimizationMethod = new ClassifierOptimizationMethod();
+        optimizationMethod.initializeClassifiers();
         Logger.getLogger(this.getClass().getCanonicalName()).log(Level.CONFIG, "classificatorOptimizator initialized");
     }
 
@@ -268,7 +268,7 @@ public class ClassificatorOptimizer implements Presentable, GraphStatusListener 
     @Override
     public JPanel getPanel() {
         JPanel p = new OptimizerPanel(this);
-        p.setName("ClassificatorOptimizer");
+        p.setName("ClassifierOptimizer");
         p.setPreferredSize(new Dimension(Constants.DEFAULTPRESENTABEWIDTH, 100));
         return p;
     }

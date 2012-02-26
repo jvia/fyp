@@ -3,13 +3,13 @@ package org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.optimizer;
 import org.bham.aucom.data.ClassificationTimeSeriesDescriptiveStatistics;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassifier;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.StatisticalAnomalyClassifier;
-import org.bham.aucom.util.AnomalyClassificatorGenerator;
+import org.bham.aucom.util.AnomalyClassifierGenerator;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
-public class ClassificatorOptimizationMethod {
+public class ClassifierOptimizationMethod {
     private double allowedFalsePositiveRate;
     private StatisticalAnomalyClassifier bestClassifier;
     private StatisticalAnomalyClassifier currentClassifier;
@@ -19,7 +19,7 @@ public class ClassificatorOptimizationMethod {
     private LinkedList<AnomalyClassifier> classificatorsToTest;
     private HashMap<AnomalyClassifier, Double> testedClassificators;
 
-    public ClassificatorOptimizationMethod() {
+    public ClassifierOptimizationMethod() {
         this.allowedFalsePositiveRate = 0.069d;
         setClassificatorsToTest(new LinkedList<AnomalyClassifier>());
         setStatistic(new ClassificationTimeSeriesDescriptiveStatistics());
@@ -30,10 +30,8 @@ public class ClassificatorOptimizationMethod {
         setTestedClassificators(new LinkedHashMap<AnomalyClassifier, Double>());
     }
 
-    /**
-     * @param classificator
-     */
-    public void initializeClassificators() {
+
+    public void initializeClassifiers() {
         getTestedClassificators().clear();
         setBestClassifier(null);
         double initialThresholdValue = 0.55;
@@ -42,8 +40,8 @@ public class ClassificatorOptimizationMethod {
         double initialVarianceValue = 0.001;
         double maxVarianceValue = 0.015;
         double varianceValueStep = 0.001;
-        AnomalyClassificatorGenerator acg = new AnomalyClassificatorGenerator(initialThresholdValue, maxThresholdValue, thresholdValueStep, initialVarianceValue, maxVarianceValue, varianceValueStep);
-        getClassificatorsToTest().addAll(acg.generateClassificatorsToTest());
+        AnomalyClassifierGenerator acg = new AnomalyClassifierGenerator(initialThresholdValue, maxThresholdValue, thresholdValueStep, initialVarianceValue, maxVarianceValue, varianceValueStep);
+        getClassificatorsToTest().addAll(acg.generateClassifiersToTest());
     }
 
     public double getAllowedFalsePositiveRate() {

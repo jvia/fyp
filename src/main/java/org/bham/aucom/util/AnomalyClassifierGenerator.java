@@ -5,7 +5,8 @@ import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.Statistical
 
 import java.util.LinkedList;
 
-public class AnomalyClassificatorGenerator {
+public class AnomalyClassifierGenerator {
+
     private double initialThresholdValue;
     private double maxThresholdValue;
     private double thresholdValueStep;
@@ -13,8 +14,12 @@ public class AnomalyClassificatorGenerator {
     private double maxVarianceValue;
     private double varianceValueStep;
 
-    public AnomalyClassificatorGenerator(double initialThresholdValue, double maxThresholdValue, double thresholdValueStep, double initialVarianceValue, double maxVarianceValue,
-                                         double varianceValueStep) {
+    public AnomalyClassifierGenerator(final double initialThresholdValue,
+                                      final double maxThresholdValue,
+                                      final double thresholdValueStep,
+                                      final double initialVarianceValue,
+                                      final double maxVarianceValue,
+                                      final double varianceValueStep) {
         this.initialThresholdValue = initialThresholdValue;
         this.maxThresholdValue = maxThresholdValue;
         this.thresholdValueStep = thresholdValueStep;
@@ -71,7 +76,7 @@ public class AnomalyClassificatorGenerator {
         this.varianceValueStep = varianceValueStep;
     }
 
-    public LinkedList<AnomalyClassifier> generateClassificatorsToTest() {
+    public LinkedList<AnomalyClassifier> generateClassifiersToTest() {
         LinkedList<AnomalyClassifier> thresholds = new LinkedList<AnomalyClassifier>();
         double thresholdInterval = this.getMaxThresholdValue() - this.getInitialThresholdValue();
         int thresholdIterations = (int) (thresholdInterval / this.getThresholdValueStep());
