@@ -6,25 +6,25 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class MonitorableArrayList<E> extends ArrayList<E> implements Serializable {
+public class MonitorArrayList<E> extends ArrayList<E> implements Serializable {
     private static final long serialVersionUID = 1L;
-    transient ArrayList<ListDataListener> listeners = new ArrayList();
+    transient ArrayList<ListDataListener> listeners = new ArrayList<ListDataListener>();
     private ArrayList<E> backedList;
 
-    public MonitorableArrayList(ArrayList<E> inList) {
+    public MonitorArrayList(final ArrayList<E> inList) {
         backedList = inList;
     }
 
     @Override
-    public E get(int index) {
+    public E get(final int index) {
         return backedList.get(index);
     }
 
-    public void removeListDataListener(ListDataListener l) {
+    public void removeListDataListener(final ListDataListener l) {
         listeners.remove(l);
     }
 
-    public void addListDataListener(ListDataListener l) {
+    public void addListDataListener(final ListDataListener l) {
         listeners.add(l);
     }
 
@@ -33,34 +33,32 @@ public class MonitorableArrayList<E> extends ArrayList<E> implements Serializabl
         return backedList.size();
     }
 
-    void notifyListeners(int from, int to) {
+    void notifyListeners(final int from, final int to) {
         ListDataEvent le = new ListDataEvent(backedList,
                                              ListDataEvent.CONTENTS_CHANGED, from, to);
-        for (int i = 0; i < listeners.size(); i++) {
-            (listeners.get(i)).contentsChanged(le);
+        for (ListDataListener listener : listeners) {
+            listener.contentsChanged(le);
         }
     }
 
-    void notifyListenersRemove(int from, int to) {
+    void notifyListenersRemove(final int from, final int to) {
         ListDataEvent le = new ListDataEvent(backedList,
                                              ListDataEvent.INTERVAL_REMOVED, from, to);
-        for (int i = 0; i < listeners.size(); i++) {
-            (listeners.get(i)).intervalRemoved(le);
+        for (ListDataListener listener : listeners) {
+            listener.intervalRemoved(le);
         }
     }
 
-    void notifyListenersAdd(int from, int to) {
+    void notifyListenersAdd(final int from, final int to) {
         ListDataEvent le = new ListDataEvent(backedList,
                                              ListDataEvent.INTERVAL_ADDED, from, to);
-        for (int i = 0; i < listeners.size(); i++) {
-            (listeners.get(i)).intervalAdded(le);
+        for (ListDataListener listener : listeners) {
+            listener.intervalAdded(le);
         }
     }
 
-    // REMAINDER ARE OVERRIDES JUST TO CALL NOTIFYLISTENERS
-
     @Override
-    public boolean add(E o) {
+    public boolean add(final E o) {
         boolean b = backedList.add(o);
         int index = backedList.size() - 1;
         if (b) {
