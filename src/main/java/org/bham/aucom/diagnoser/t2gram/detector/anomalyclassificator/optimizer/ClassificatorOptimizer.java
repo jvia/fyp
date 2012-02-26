@@ -7,8 +7,8 @@ import org.bham.aucom.data.Score;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.diagnoser.t2gram.detector.T2GramDetector;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.StatisticalAnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassifier;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.StatisticalAnomalyClassifier;
 import org.bham.aucom.fts.graph.AbstractAucomGraph.GraphStatus;
 import org.bham.aucom.fts.graph.ObservationToScoreGraph;
 import org.bham.aucom.fts.graph.OptimizerGraph;
@@ -65,9 +65,9 @@ public class ClassificatorOptimizer implements Presentable, GraphStatusListener 
     public void stop() {
         this.optimizationGraph.stop();
         this.optimizationGraph = null;
-        if (this.optimizationMethod.getBestClassificator() != null) {
-            Logger.getLogger(this.getClass().getCanonicalName()).log(Level.FINE, "stopping optimiziation old: " + detector.getClassificator() + " new " + this.optimizationMethod.getBestClassificator());
-            detector.getClassificator().copy(this.optimizationMethod.getBestClassificator());
+        if (this.optimizationMethod.getBestClassifier() != null) {
+            Logger.getLogger(this.getClass().getCanonicalName()).log(Level.FINE, "stopping optimiziation old: " + detector.getClassificator() + " new " + this.optimizationMethod.getBestClassifier());
+            detector.getClassificator().copy(this.optimizationMethod.getBestClassifier());
         }
     }
 
@@ -87,8 +87,8 @@ public class ClassificatorOptimizer implements Presentable, GraphStatusListener 
         return isAcceptAble;
     }
 
-    public AnomalyClassificator getBestAnomalyClassificator() {
-        return this.optimizationMethod.getBestClassificator();
+    public AnomalyClassifier getBestAnomalyClassificator() {
+        return this.optimizationMethod.getBestClassifier();
     }
 
     public double getBestFalsPositveRate() {
@@ -111,8 +111,8 @@ public class ClassificatorOptimizer implements Presentable, GraphStatusListener 
                 obsToScoreGraph.stop();
                 scoreTs = obsToScoreGraph.getOutput();
                 optimizationGraph.setInput(scoreTs);
-                optimizationMethod.setCurrentClassificator((StatisticalAnomalyClassificator) optimizationMethod.getClassificatorsToTest().pop().duplicate());
-                optimizationGraph.setClassificator(optimizationMethod.getCurrentClassificator());
+                optimizationMethod.setCurrentClassifier((StatisticalAnomalyClassifier) optimizationMethod.getClassificatorsToTest().pop().duplicate());
+                optimizationGraph.setClassificator(optimizationMethod.getCurrentClassifier());
                 optimizationGraph.start();
                 Logger.getLogger(this.getClass().getCanonicalName()).info("optimization graph started");
             } catch (ActionFailedException exception) {
@@ -147,12 +147,12 @@ public class ClassificatorOptimizer implements Presentable, GraphStatusListener 
                         handleAnomalyClassificatorResults(currentPositiveQuadraticDistance);
                     }
                 }
-                ClassificatorOptimizerStatusEvent event = new ClassificatorOptimizerStatusEvent(this, this.optimizationMethod.getCurrentClassificator(), this.optimizationMethod.getBestClassificator(),
+                ClassificatorOptimizerStatusEvent event = new ClassificatorOptimizerStatusEvent(this, this.optimizationMethod.getCurrentClassifier(), this.optimizationMethod.getBestClassifier(),
                                                                                                 currentFalsePositive, currentPositiveQuadraticDistance, this.optimizationMethod.getTestedClassificators().size() + 1, this.optimizationMethod.getClassificatorsToTest().size()
                                                                                                                                                                                                                       + this.optimizationMethod.getTestedClassificators().size());
                 if (this.optimizationMethod.getClassificatorsToTest().isEmpty()) {
                     event.markAsFinished();
-                    co("\nFinished. best " + optimizationMethod.getBestClassificator() + "bfpr " + optimizationMethod.getBestFalsePositiveRate() + "/" + optimizationMethod.getBestPositiveQuadraticDistance() + "\n");
+                    co("\nFinished. best " + optimizationMethod.getBestClassifier() + "bfpr " + optimizationMethod.getBestFalsePositiveRate() + "/" + optimizationMethod.getBestPositiveQuadraticDistance() + "\n");
                     stop();
                     fireClassificatorOptimizerEvent(event);
                     return;
@@ -181,10 +181,10 @@ public class ClassificatorOptimizer implements Presentable, GraphStatusListener 
      *
      */
     private void prepareNextAnomalyClassificator() {
-        optimizationMethod.getTestedClassificators().put(this.optimizationMethod.getCurrentClassificator().duplicate(), optimizationMethod.getStatistic().getAnomalyValuePercent());
-        optimizationMethod.getCurrentClassificator().copy(optimizationMethod.getClassificatorsToTest().pop());
-        optimizationMethod.getCurrentClassificator().reset();
-        Logger.getLogger(this.getClass().getCanonicalName()).info("next classificator to test " + optimizationMethod.getCurrentClassificator());
+        optimizationMethod.getTestedClassificators().put(this.optimizationMethod.getCurrentClassifier().duplicate(), optimizationMethod.getStatistic().getAnomalyValuePercent());
+        optimizationMethod.getCurrentClassifier().copy(optimizationMethod.getClassificatorsToTest().pop());
+        optimizationMethod.getCurrentClassifier().reset();
+        Logger.getLogger(this.getClass().getCanonicalName()).info("next classificator to test " + optimizationMethod.getCurrentClassifier());
     }
 
     /**
@@ -192,7 +192,7 @@ public class ClassificatorOptimizer implements Presentable, GraphStatusListener 
      *
      */
     private void handleAnomalyClassificatorResults(double currentPositiveQuadraticDistance) {
-        this.optimizationMethod.getBestClassificator().copy(this.optimizationMethod.getCurrentClassificator());
+        this.optimizationMethod.getBestClassifier().copy(this.optimizationMethod.getCurrentClassifier());
         this.optimizationMethod.setBestFalsePositiveRate(optimizationMethod.getStatistic().getAnomalyValuePercent());
         optimizationMethod.setBestPositiveQuadraticDistance(currentPositiveQuadraticDistance);
     }
@@ -219,7 +219,7 @@ public class ClassificatorOptimizer implements Presentable, GraphStatusListener 
      */
     private void handleFirstAnomalyClassificatorResults(double currentFalsePositive, double currentPositiveQuadraticDistance) {
         this.optimizationMethod.setBestFalsePositiveRate(currentFalsePositive);
-        this.optimizationMethod.setBestClassificator((StatisticalAnomalyClassificator) optimizationMethod.getCurrentClassificator().duplicate());
+        this.optimizationMethod.setBestClassifier((StatisticalAnomalyClassifier) optimizationMethod.getCurrentClassifier().duplicate());
         this.optimizationMethod.setBestPositiveQuadraticDistance(currentPositiveQuadraticDistance);
     }
 
@@ -282,8 +282,8 @@ public class ClassificatorOptimizer implements Presentable, GraphStatusListener 
     }
 
     public void copyBestClassificatorToDetector() {
-        if (detector != null && optimizationMethod.getBestClassificator() != null) {
-            detector.setClassificator(optimizationMethod.getBestClassificator());
+        if (detector != null && optimizationMethod.getBestClassifier() != null) {
+            detector.setClassificator(optimizationMethod.getBestClassifier());
         }
     }
 

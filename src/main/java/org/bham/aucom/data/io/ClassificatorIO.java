@@ -1,10 +1,10 @@
 package org.bham.aucom.data.io;
 
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AbstractAnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AbstractAnomalyClassifier;
 
-public class ClassificatorIO extends BinaryIO<AbstractAnomalyClassificator> {
+public class ClassificatorIO extends BinaryIO<AbstractAnomalyClassifier> {
     public ClassificatorIO() {
-        super(AbstractAnomalyClassificator.class);
+        super(AbstractAnomalyClassifier.class);
     }
 
 }

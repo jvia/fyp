@@ -4,7 +4,7 @@ import nu.xom.ParsingException;
 import org.bham.aucom.data.Classification;
 import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.data.timeseries.TimeSeries;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.StatisticalAnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.StatisticalAnomalyClassifier;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -99,7 +99,7 @@ public class ClassificationToCSV implements Experiment {
                 csv.append(String.format("     %9d     %5.3f     %6.3f    %6.0f%n",
                                          classification.getTimestamp(),
                                          classification.getValue(),
-                                         Double.parseDouble(classification.getAttributeValue(StatisticalAnomalyClassificator.THRESHOLD_USED)),
+                                         Double.parseDouble(classification.getAttributeValue(StatisticalAnomalyClassifier.THRESHOLD_USED)),
                                          classification.getStatusAsDouble()));
             }
         } catch (IOException e) {

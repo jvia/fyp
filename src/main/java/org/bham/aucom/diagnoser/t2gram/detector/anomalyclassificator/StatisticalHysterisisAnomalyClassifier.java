@@ -2,15 +2,15 @@ package org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator;
 
 import org.bham.aucom.data.Score;
 
-public class StatisticalHysterisisAnomalyClassificator extends AbstractAnomalyClassificator {
+public class StatisticalHysterisisAnomalyClassifier extends AbstractAnomalyClassifier {
 
     private static final long serialVersionUID = 1L;
-    StatisticalAnomalyClassificator statistic;
-    HysteresisAnomalyClassificator hysteresis;
+    StatisticalAnomalyClassifier statistic;
+    HysteresisAnomalyClassifier hysteresis;
     double mean;
     double variance;
 
-    public StatisticalHysterisisAnomalyClassificator(Double mean, Double variance) {
+    public StatisticalHysterisisAnomalyClassifier(Double mean, Double variance) {
         super("StatisticalHysterisisThreshold");
         this.mean = mean;
         this.variance = variance;
@@ -28,18 +28,18 @@ public class StatisticalHysterisisAnomalyClassificator extends AbstractAnomalyCl
     }
 
     @Override
-    public void setClassificator(AnomalyClassificator threshold) throws ClassCastException {
-        StatisticalHysterisisAnomalyClassificator st = (StatisticalHysterisisAnomalyClassificator) threshold;
+    public void setClassifier(AnomalyClassifier threshold) throws ClassCastException {
+        StatisticalHysterisisAnomalyClassifier st = (StatisticalHysterisisAnomalyClassifier) threshold;
         // TODO finish this
     }
 
     @Override
-    public void copy(AnomalyClassificator classificator) {
+    public void copy(AnomalyClassifier classifier) {
 
     }
 
     @Override
-    public AnomalyClassificator duplicate() {
+    public AnomalyClassifier duplicate() {
         // TODO Auto-generated method stub
         return null;
     }

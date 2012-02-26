@@ -9,7 +9,7 @@ import org.bham.aucom.data.io.xml.out.XmlTimeSeriesOutput;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.data.util.SlidingWindow;
 import org.bham.aucom.diagnoser.Model;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AbstractAnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AbstractAnomalyClassifier;
 
 import java.io.File;
 import java.io.IOException;
@@ -136,11 +136,11 @@ public class AucomIO {
       * TimeSeries io
       */
 
-    public boolean writeClassificator(AbstractAnomalyClassificator classificator) {
+    public boolean writeClassificator(AbstractAnomalyClassifier classificator) {
         return this.classificatorIO.write(classificator, generateFileFor(classificator.getId(), "cl"));
     }
 
-    public AbstractAnomalyClassificator readClassificator(String file) throws ParsingException, IOException {
+    public AbstractAnomalyClassifier readClassificator(String file) throws ParsingException, IOException {
         return this.classificatorIO.read(new File(getCurrentWorkingDirectory(), file));
     }
 

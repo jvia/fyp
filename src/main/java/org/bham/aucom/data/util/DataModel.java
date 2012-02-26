@@ -6,7 +6,7 @@ import org.bham.aucom.data.timeseries.TimeSeriesStatusListener;
 import org.bham.aucom.data.timeseries.TimeSeriesStatus;
 import org.bham.aucom.data.timeseries.TimeSeriesStatusEvent;
 import org.bham.aucom.diagnoser.Model;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassifier;
 import org.bham.aucom.util.TimeSeriesNotFoundException;
 
 import java.util.*;
@@ -14,7 +14,7 @@ import java.util.*;
 public class DataModel implements TimeSeriesStatusListener {
     private LinkedHashMap<UUID, TimeSeries<? extends AbstractData>> timeseries;
     private LinkedHashMap<UUID, Model> models;
-    private LinkedHashMap<UUID, AnomalyClassificator> classificators;
+    private LinkedHashMap<UUID, AnomalyClassifier> classificators;
     private HashMap<UUID, Object> itemsById = new HashMap<UUID, Object>();
     private static DataModel instance = null;
     protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
@@ -32,7 +32,7 @@ public class DataModel implements TimeSeriesStatusListener {
     private DataModel() {
         this.setTimeseries(new LinkedHashMap<UUID, TimeSeries<?>>());
         this.models = new LinkedHashMap<UUID, Model>();
-        this.classificators = new LinkedHashMap<UUID, AnomalyClassificator>();
+        this.classificators = new LinkedHashMap<UUID, AnomalyClassifier>();
     }
 
     public <T extends AbstractData> UUID addTimeSeries(TimeSeries<T> timeSeriesToAdd) {
@@ -61,7 +61,7 @@ public class DataModel implements TimeSeriesStatusListener {
         return modelToAdd.getId();
     }
 
-    public UUID addAnomalyClassificator(AnomalyClassificator classificatiorToAdd) {
+    public UUID addAnomalyClassificator(AnomalyClassifier classificatiorToAdd) {
         this.classificators.put(classificatiorToAdd.getId(), classificatiorToAdd);
         return classificatiorToAdd.getId();
     }
@@ -75,11 +75,11 @@ public class DataModel implements TimeSeriesStatusListener {
         return this.models;
     }
 
-    public LinkedHashMap<UUID, AnomalyClassificator> getClassificators() {
+    public LinkedHashMap<UUID, AnomalyClassifier> getClassificators() {
         return this.classificators;
     }
 
-    protected void setClassificators(LinkedHashMap<UUID, AnomalyClassificator> classificators) {
+    protected void setClassificators(LinkedHashMap<UUID, AnomalyClassifier> classificators) {
         this.classificators = classificators;
     }
 

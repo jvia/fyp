@@ -11,8 +11,8 @@
 
 package org.bham.aucom.gui.threshold;
 
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.MeanAnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassifier;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.MeanAnomalyClassifier;
 
 
 /**
@@ -77,8 +77,8 @@ public class MeanThresholdPanel extends AbstractCreateAnomalyClassificatorPanel 
 
     // End of variables declaration//GEN-END:variables
     @Override
-    public AnomalyClassificator getAnomalyClassificator() throws Exception {
+    public AnomalyClassifier getAnomalyClassificator() throws Exception {
         Double mean = Double.valueOf(this.meanTextField.getText());
-        return new MeanAnomalyClassificator(mean);
+        return new MeanAnomalyClassifier(mean);
     }
 }

@@ -7,13 +7,13 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.UUID;
 
-public abstract class AbstractAnomalyClassificator implements AnomalyClassificator {
+public abstract class AbstractAnomalyClassifier implements AnomalyClassifier {
     LinkedHashMap<String, Number> parameters = new LinkedHashMap<String, Number>();
     LinkedHashMap<String, String> attributes = new LinkedHashMap<String, String>();
     private static final long serialVersionUID = 1L;
     UUID id;
 
-    public AbstractAnomalyClassificator(String name) {
+    public AbstractAnomalyClassifier(String name) {
         this.attributes.put("name", name);
         this.id = UUID.randomUUID();
     }

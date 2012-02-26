@@ -1,8 +1,8 @@
 package org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.optimizer;
 
 import org.bham.aucom.data.ClassificationTimeSeriesDescriptiveStatistics;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.StatisticalAnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassifier;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.StatisticalAnomalyClassifier;
 import org.bham.aucom.util.AnomalyClassificatorGenerator;
 
 import java.util.HashMap;
@@ -11,23 +11,23 @@ import java.util.LinkedList;
 
 public class ClassificatorOptimizationMethod {
     private double allowedFalsePositiveRate;
-    private StatisticalAnomalyClassificator bestClassificator;
-    private StatisticalAnomalyClassificator currentClassificator;
+    private StatisticalAnomalyClassifier bestClassifier;
+    private StatisticalAnomalyClassifier currentClassifier;
     private ClassificationTimeSeriesDescriptiveStatistics statistic;
     private double bestFalsePositiveRate;
     private double bestPositiveQuadraticDistance;
-    private LinkedList<AnomalyClassificator> classificatorsToTest;
-    private HashMap<AnomalyClassificator, Double> testedClassificators;
+    private LinkedList<AnomalyClassifier> classificatorsToTest;
+    private HashMap<AnomalyClassifier, Double> testedClassificators;
 
     public ClassificatorOptimizationMethod() {
         this.allowedFalsePositiveRate = 0.069d;
-        setClassificatorsToTest(new LinkedList<AnomalyClassificator>());
+        setClassificatorsToTest(new LinkedList<AnomalyClassifier>());
         setStatistic(new ClassificationTimeSeriesDescriptiveStatistics());
-        setCurrentClassificator(null);
-        setBestClassificator(null);
+        setCurrentClassifier(null);
+        setBestClassifier(null);
         setBestFalsePositiveRate(Double.MAX_VALUE);
         setBestPositiveQuadraticDistance(Double.MAX_VALUE);
-        setTestedClassificators(new LinkedHashMap<AnomalyClassificator, Double>());
+        setTestedClassificators(new LinkedHashMap<AnomalyClassifier, Double>());
     }
 
     /**
@@ -35,7 +35,7 @@ public class ClassificatorOptimizationMethod {
      */
     public void initializeClassificators() {
         getTestedClassificators().clear();
-        setBestClassificator(null);
+        setBestClassifier(null);
         double initialThresholdValue = 0.55;
         double maxThresholdValue = 0.6;
         double thresholdValueStep = 0.02;
@@ -54,20 +54,20 @@ public class ClassificatorOptimizationMethod {
         this.allowedFalsePositiveRate = allowedFalsePositiveRate;
     }
 
-    public StatisticalAnomalyClassificator getBestClassificator() {
-        return this.bestClassificator;
+    public StatisticalAnomalyClassifier getBestClassifier() {
+        return this.bestClassifier;
     }
 
-    public void setBestClassificator(StatisticalAnomalyClassificator bestClassificator) {
-        this.bestClassificator = bestClassificator;
+    public void setBestClassifier(StatisticalAnomalyClassifier bestClassifier) {
+        this.bestClassifier = bestClassifier;
     }
 
-    public StatisticalAnomalyClassificator getCurrentClassificator() {
-        return this.currentClassificator;
+    public StatisticalAnomalyClassifier getCurrentClassifier() {
+        return this.currentClassifier;
     }
 
-    public void setCurrentClassificator(StatisticalAnomalyClassificator currentClassificator) {
-        this.currentClassificator = currentClassificator;
+    public void setCurrentClassifier(StatisticalAnomalyClassifier currentClassifier) {
+        this.currentClassifier = currentClassifier;
     }
 
     public ClassificationTimeSeriesDescriptiveStatistics getStatistic() {
@@ -94,19 +94,19 @@ public class ClassificatorOptimizationMethod {
         this.bestPositiveQuadraticDistance = bestPositiveQuadraticDistance;
     }
 
-    public LinkedList<AnomalyClassificator> getClassificatorsToTest() {
+    public LinkedList<AnomalyClassifier> getClassificatorsToTest() {
         return this.classificatorsToTest;
     }
 
-    public void setClassificatorsToTest(LinkedList<AnomalyClassificator> classificatorsToTest) {
+    public void setClassificatorsToTest(LinkedList<AnomalyClassifier> classificatorsToTest) {
         this.classificatorsToTest = classificatorsToTest;
     }
 
-    public HashMap<AnomalyClassificator, Double> getTestedClassificators() {
+    public HashMap<AnomalyClassifier, Double> getTestedClassificators() {
         return this.testedClassificators;
     }
 
-    public void setTestedClassificators(HashMap<AnomalyClassificator, Double> testedClassificators) {
+    public void setTestedClassificators(HashMap<AnomalyClassifier, Double> testedClassificators) {
         this.testedClassificators = testedClassificators;
     }
 }

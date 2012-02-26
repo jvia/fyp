@@ -4,10 +4,10 @@ import org.bham.aucom.data.Score;
 
 import java.util.UUID;
 
-public class MeanAnomalyClassificator extends AbstractAnomalyClassificator {
+public class MeanAnomalyClassifier extends AbstractAnomalyClassifier {
     private static final long serialVersionUID = 1L;
 
-    public MeanAnomalyClassificator(Double meanValue) {
+    public MeanAnomalyClassifier(Double meanValue) {
         super("meanThreshold");
         this.parameters.put("mean", meanValue);
         this.id = UUID.randomUUID();
@@ -33,19 +33,19 @@ public class MeanAnomalyClassificator extends AbstractAnomalyClassificator {
     }
 
     @Override
-    public void setClassificator(AnomalyClassificator threshold) throws ClassCastException {
+    public void setClassifier(AnomalyClassifier threshold) throws ClassCastException {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void copy(AnomalyClassificator classificator) {
+    public void copy(AnomalyClassifier classifier) {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public AnomalyClassificator duplicate() {
+    public AnomalyClassifier duplicate() {
         // TODO Auto-generated method stub
         return null;
     }

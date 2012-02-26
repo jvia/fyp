@@ -5,14 +5,14 @@ import org.bham.aucom.data.timeseries.AnomalyClassificatorStatusEvent;
 
 import java.util.UUID;
 
-public class HysteresisAnomalyClassificator extends AbstractAnomalyClassificator {
+public class HysteresisAnomalyClassifier extends AbstractAnomalyClassifier {
     private static final long serialVersionUID = 1L;
     private Double lower = 0.0;
     private Double upper = 0.0;
     private boolean isLastElementSatisfies = true;
 
     // TODO unused? ass tests
-    public HysteresisAnomalyClassificator(Double lower, Double upper) {
+    public HysteresisAnomalyClassifier(Double lower, Double upper) {
         super("hysteresis");
         this.setLower(lower);
         this.setUpper(upper);
@@ -63,8 +63,8 @@ public class HysteresisAnomalyClassificator extends AbstractAnomalyClassificator
     }
 
     @Override
-    public void setClassificator(AnomalyClassificator threshold) throws ClassCastException {
-        HysteresisAnomalyClassificator ht = (HysteresisAnomalyClassificator) threshold;
+    public void setClassifier(AnomalyClassifier threshold) throws ClassCastException {
+        HysteresisAnomalyClassifier ht = (HysteresisAnomalyClassifier) threshold;
         this.setLower(ht.getLower());
         this.setUpper(ht.getUpper());
         this.setLastElementSatisfies(ht.isLastElementSatisfies());
@@ -84,22 +84,22 @@ public class HysteresisAnomalyClassificator extends AbstractAnomalyClassificator
 
     @Override
     public boolean equals(Object obj) {
-        HysteresisAnomalyClassificator inObj = (HysteresisAnomalyClassificator) obj;
+        HysteresisAnomalyClassifier inObj = (HysteresisAnomalyClassifier) obj;
         boolean equal = this.lower.equals(inObj.getLower()) && this.upper.equals(inObj.getUpper());
         return equal;
     }
 
     @Override
-    public void copy(AnomalyClassificator classificator) {
-        HysteresisAnomalyClassificator cl = (HysteresisAnomalyClassificator) classificator;
+    public void copy(AnomalyClassifier classifier) {
+        HysteresisAnomalyClassifier cl = (HysteresisAnomalyClassifier) classifier;
         this.setLastElementSatisfies(cl.isLastElementSatisfies());
         this.setLower(cl.getLower());
         this.setUpper(cl.getUpper());
     }
 
     @Override
-    public AnomalyClassificator duplicate() {
-        HysteresisAnomalyClassificator duplicat = new HysteresisAnomalyClassificator(this.getLower(), this.getUpper());
+    public AnomalyClassifier duplicate() {
+        HysteresisAnomalyClassifier duplicat = new HysteresisAnomalyClassifier(this.getLower(), this.getUpper());
         duplicat.setLastElementSatisfies(this.isLastElementSatisfies());
         return duplicat;
     }

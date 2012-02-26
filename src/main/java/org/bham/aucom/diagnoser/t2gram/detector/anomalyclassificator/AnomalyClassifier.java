@@ -13,8 +13,9 @@ import java.util.UUID;
  * interchangeably.
  *
  * @author Raphael Golombek <rgolombe@cor-lab.uni-bielefeld.de>
+ * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk>
  */
-public interface AnomalyClassificator extends AttributableObject, Serializable {
+public interface AnomalyClassifier extends AttributableObject, Serializable {
 
     /**
      * Return the unique ID of this object.
@@ -35,24 +36,24 @@ public interface AnomalyClassificator extends AttributableObject, Serializable {
     /**
      * Sets the type of classifier to be used.
      *
-     * @param classificator the classified to be used
+     * @param classifier the classified to be used
      * @throws ClassCastException invalid classifier type
      */
-    public void setClassificator(AnomalyClassificator classificator) throws ClassCastException;
+    public void setClassifier(AnomalyClassifier classifier) throws ClassCastException;
 
     /**
      * Makes this object a copy of the object passed in.
      *
-     * @param classificator the object to copy
+     * @param classifier the object to copy
      */
-    public void copy(AnomalyClassificator classificator);
+    public void copy(AnomalyClassifier classifier);
 
     /**
      * Get a copy of the classifier.
      *
      * @return a copy of this classifier
      */
-    public AnomalyClassificator duplicate();
+    public AnomalyClassifier duplicate();
 
     /**
      * Adds a listener object which can handle

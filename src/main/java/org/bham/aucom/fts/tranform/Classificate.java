@@ -3,16 +3,16 @@ package org.bham.aucom.fts.tranform;
 import org.bham.aucom.data.Classification;
 import org.bham.aucom.data.Score;
 import org.bham.aucom.data.SystemFaultStatus;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassifier;
 
 import java.util.logging.Logger;
 
 public class Classificate extends AbstractAucomTranformNode<Score, Classification> {
-    private AnomalyClassificator classificator = null;
+    private AnomalyClassifier classifier = null;
 
-    public Classificate(AnomalyClassificator inThreshold) {
+    public Classificate(AnomalyClassifier inThreshold) {
         super("ClassificateScore");
-        setClassificator(inThreshold);
+        setClassifier(inThreshold);
     }
 
     public Classificate() {
@@ -23,7 +23,7 @@ public class Classificate extends AbstractAucomTranformNode<Score, Classificatio
 
         Classification cl = null;
 
-        if (getClassificator().satisfies(in))
+        if (getClassifier().satisfies(in))
             cl = new Classification(in, SystemFaultStatus.NORMAL);
         else
             cl = new Classification(in, SystemFaultStatus.ABNORMAL);
@@ -43,17 +43,17 @@ public class Classificate extends AbstractAucomTranformNode<Score, Classificatio
         return null;
     }
 
-    public void setClassificator(AnomalyClassificator threshold) {
-        this.classificator = threshold;
+    public void setClassifier(AnomalyClassifier threshold) {
+        this.classifier = threshold;
     }
 
-    public AnomalyClassificator getClassificator() {
-        return this.classificator;
+    public AnomalyClassifier getClassifier() {
+        return this.classifier;
     }
 
     public void reset() {
-        if (classificator != null) {
-            classificator.reset();
+        if (classifier != null) {
+            classifier.reset();
         }
     }
 }

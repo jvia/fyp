@@ -1,7 +1,7 @@
 package org.bham.aucom.util;
 
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.StatisticalAnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassifier;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.StatisticalAnomalyClassifier;
 
 import java.util.LinkedList;
 
@@ -71,8 +71,8 @@ public class AnomalyClassificatorGenerator {
         this.varianceValueStep = varianceValueStep;
     }
 
-    public LinkedList<AnomalyClassificator> generateClassificatorsToTest() {
-        LinkedList<AnomalyClassificator> thresholds = new LinkedList<AnomalyClassificator>();
+    public LinkedList<AnomalyClassifier> generateClassificatorsToTest() {
+        LinkedList<AnomalyClassifier> thresholds = new LinkedList<AnomalyClassifier>();
         double thresholdInterval = this.getMaxThresholdValue() - this.getInitialThresholdValue();
         int thresholdIterations = (int) (thresholdInterval / this.getThresholdValueStep());
         double varianceInterval = this.getMaxVarianceValue() - this.getInitialVarianceValue();
@@ -81,7 +81,7 @@ public class AnomalyClassificatorGenerator {
             for (int j = 0; j < varianceIterations; j++) {
                 double mean = this.getInitialThresholdValue() + i * this.getThresholdValueStep();
                 double variance = this.getInitialVarianceValue() + j * this.getVarianceValueStep();
-                thresholds.add(new StatisticalAnomalyClassificator(mean, variance));
+                thresholds.add(new StatisticalAnomalyClassifier(mean, variance));
             }
         }
         System.out.println("generated " + thresholds.size() + " thresholds for testing");
