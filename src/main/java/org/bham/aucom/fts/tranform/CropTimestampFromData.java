@@ -5,14 +5,15 @@ import org.bham.aucom.data.AbstractData;
 import java.io.Serializable;
 
 /**
- * This node shifts the timestamps of all incoming data. Essetially, all input
+ * This node shifts the timestamps of all incoming data. Essentially, all input
  * is shifted the amount which makes the first input's timestamp 0.
  *
  * @param <T> a datum of type AbstractData
+ * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk>
  */
 public class CropTimestampFromData<T extends AbstractData> extends AbstractAucomTranformNode<T, T> implements Serializable {
 
-    // -1 is the placeholder for there beig no timestamp set
+    // -1 is the placeholder for there being no timestamp set
     private static final long NO_TIMESTAMP = -1;
     private static final long serialVersionUID = 1L;
 
@@ -28,7 +29,7 @@ public class CropTimestampFromData<T extends AbstractData> extends AbstractAucom
 
     /**
      * Shifts the timestamp of the incoming input by the timestamp of the first
-     * input. This has the effect of shifting the whole timeseries such that
+     * input. This has the effect of shifting the whole time series such that
      * the
      * first entry occurs at timestamp 0.
      *
@@ -38,8 +39,9 @@ public class CropTimestampFromData<T extends AbstractData> extends AbstractAucom
      */
     @Override
     protected T iTransform(T input) throws Exception {
-        if (getFirstTimestamp() == NO_TIMESTAMP)
+        if (getFirstTimestamp() == NO_TIMESTAMP) {
             setFirstTimestamp(input.getTimestamp());
+        }
         input.setTimestamp(input.getTimestamp() - getFirstTimestamp());
         return input;
     }

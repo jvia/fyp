@@ -3,7 +3,6 @@ package org.bham.aucom.models.probability;
 import org.bham.aucom.diagnoser.t2gram.ProbabilityDistribution;
 
 import java.util.Iterator;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static org.bham.aucom.util.Constants.LOWESTPROBABILITY;
@@ -13,7 +12,7 @@ public class HistogramDistribution implements ProbabilityDistribution {
     private String name;
     public HistogramData content;
 
-    class HistogramDistributionIterator implements Iterator<Double> {
+    static class HistogramDistributionIterator implements Iterator<Double> {
         HistogramDistribution dist;
         int index;
         int maxIndex;
@@ -28,13 +27,12 @@ public class HistogramDistribution implements ProbabilityDistribution {
 
         @Override
         public boolean hasNext() {
-            return this.it.hasNext();
+            return it.hasNext();
         }
 
         @Override
         public Double next() {
-            double d = this.dist.getProbByBinNumber(this.it.next().getBinNumber());
-            return d;
+            return dist.getProbByBinNumber(it.next().getBinNumber());
         }
 
         @Override
@@ -52,11 +50,11 @@ public class HistogramDistribution implements ProbabilityDistribution {
             double val = values.next();
             sum += val;
             numValues++;
-//   System.out.println("###################" + val);
         }
         boolean valid = sum >= 1.0d - LOWESTPROBABILITY & sum <= 1.0d + LOWESTPROBABILITY;
-        if (!valid)
+        if (!valid) {
             System.out.println("Warning histogram dist not valid. Is: " + sum + " with " + numValues + "bins but should be 1.0d ");
+        }
         return valid;
 
     }
@@ -69,14 +67,14 @@ public class HistogramDistribution implements ProbabilityDistribution {
     public HistogramDistribution(String inName, double inBinSize, double[] vals) {
         setName(inName);
         this.content = new HistogramData(inBinSize);
-        for (int i = 0; i < vals.length; i++) {
-            this.content.put(vals[i]);
+        for (double val : vals) {
+            this.content.put(val);
         }
     }
 
     private void put(double value) {
         this.content.put(value);
-//  validate();
+        //  validate();
     }
 
     private double getProb(double value) {
@@ -110,9 +108,7 @@ public class HistogramDistribution implements ProbabilityDistribution {
 
     @Override
     public String toString() {
-        String out = "";
-        out = this.content.toString();
-        return out;
+        return content.toString();
     }
 
     /**
@@ -176,9 +172,7 @@ public class HistogramDistribution implements ProbabilityDistribution {
     @Override
     public double getProbability(double val) {
         int binNumber = this.content.getBinNumberForValue(val);
-        double prob = getProbByBinNumber(binNumber);
-        //info("calulacting probability for " + val + " bin is " + binNumber +  " probability is " + prob);
-        return prob;
+        return getProbByBinNumber(binNumber);
     }
 
     @Override
@@ -188,8 +182,8 @@ public class HistogramDistribution implements ProbabilityDistribution {
 
     @Override
     public void update(double[] val) {
-        for (int i = 0; i < val.length; i++) {
-            put(val[i]);
+        for (double aVal : val) {
+            put(aVal);
         }
     }
 
@@ -201,25 +195,6 @@ public class HistogramDistribution implements ProbabilityDistribution {
         Logger.getLogger(this.getClass().getCanonicalName()).info(info);
     }
 
-    public void setDebugLevel(Level level) {
-        Logger.getLogger(this.getClass().getCanonicalName()).setLevel(level);
-    }
-
-    public Level getDebugLevel() {
-        return Logger.getLogger(this.getClass().getCanonicalName()).getLevel();
-    }
-
-    public void setInfoDebugLevel() {
-        setDebugLevel(Level.INFO);
-    }
-
-    public void setSevereDebugLevel() {
-        setDebugLevel(Level.SEVERE);
-    }
-
-    public void setAllDebugLevel() {
-        setDebugLevel(Level.ALL);
-    }
 
     @Override
     public int getCount() {

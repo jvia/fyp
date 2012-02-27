@@ -11,8 +11,8 @@
 
 package org.bham.aucom.gui.threshold;
 
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.StatisticalAnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassifier;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.StatisticalAnomalyClassifier;
 
 
 /**
@@ -76,11 +76,11 @@ public class StatisticalAnomalyClassificatorCreatePanel extends AbstractCreateAn
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public AnomalyClassificator getAnomalyClassificator() throws Exception {
+    public AnomalyClassifier getAnomalyClassificator() throws Exception {
         Double mean = Double.valueOf(this.meanTextField.getText());
         Double variance = Double.valueOf(this.varianceTextField.getText());
         Integer windowSize = Integer.valueOf(this.windowSizeTextField.getText());
-        return new StatisticalAnomalyClassificator(mean, variance);
+        return new StatisticalAnomalyClassifier(mean, variance);
     }
 
 }

@@ -110,7 +110,7 @@ public abstract class TimeSeries<T extends AbstractData> extends AbstractLinkabl
     public synchronized void add(T s) {
         this.list.add(s);
         // this.timestampToElement.put(s.getTimestamp(), s);
-        fireTimeseriesStatusChangedEvent(new TimeseriesStatusEvent(this, TimeseriesStatus.ELEMENTSADDED, this.list.size() - 1, this.list.size() - 1));
+        fireTimeseriesStatusChangedEvent(new TimeSeriesStatusEvent(this, TimeSeriesStatus.ELEMENTS_ADDED, this.list.size() - 1, this.list.size() - 1));
         // trim();
     }
 
@@ -124,7 +124,7 @@ public abstract class TimeSeries<T extends AbstractData> extends AbstractLinkabl
 
             int startIndex = Math.min(this.list.size(), list.getCapacity() - 1);
             this.list.addAll(c.toArray());
-            fireTimeseriesStatusChangedEvent(new TimeseriesStatusEvent(this, TimeseriesStatus.ELEMENTSADDED, startIndex, this.list.size() - 1));
+            fireTimeseriesStatusChangedEvent(new TimeSeriesStatusEvent(this, TimeSeriesStatus.ELEMENTS_ADDED, startIndex, this.list.size() - 1));
         } catch (Exception exception) {
             exception.printStackTrace();
         }
@@ -138,7 +138,7 @@ public abstract class TimeSeries<T extends AbstractData> extends AbstractLinkabl
         int lastIndex = this.list.size() - 1;
         this.list.clear();
         // this.timestampToElement.clear();
-        fireTimeseriesStatusChangedEvent(new TimeseriesStatusEvent(this, TimeseriesStatus.ELEMENTSREMOVED, 0, lastIndex));
+        fireTimeseriesStatusChangedEvent(new TimeSeriesStatusEvent(this, TimeSeriesStatus.ELEMENTS_REMOVED, 0, lastIndex));
     }
 
     public synchronized int size() {
@@ -169,7 +169,7 @@ public abstract class TimeSeries<T extends AbstractData> extends AbstractLinkabl
     }
 
     // This method is used to fire TrainingStatusChangedEvents
-    void fireTimeseriesStatusChangedEvent(TimeseriesStatusEvent evt) {
+    void fireTimeseriesStatusChangedEvent(TimeSeriesStatusEvent evt) {
         Object[] listeners = this.listenerList.getListenerList();
         // Each listener occupies two elements - the first is the listener class
         // and the second is the listener instance

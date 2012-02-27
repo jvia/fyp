@@ -27,12 +27,12 @@ import java.util.concurrent.Executors;
  * @author rgolombe
  */
 public class OptimizerPanel extends javax.swing.JPanel implements ClassificatorOptimizerStatusListener {
-    ClassificatorOptimizer optimizer;
+    ClassifierOptimizer optimizer;
 
     /**
      * Creates new form OptimizerPanel
      */
-    public OptimizerPanel(ClassificatorOptimizer inOptimizer) {
+    public OptimizerPanel(ClassifierOptimizer inOptimizer) {
         initComponents();
         optimizer = inOptimizer;
         optimizer.addStatusListener(this);

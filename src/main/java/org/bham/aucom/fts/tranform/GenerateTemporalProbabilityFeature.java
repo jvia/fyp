@@ -19,6 +19,7 @@ import static java.lang.String.format;
  * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk
  */
 public class GenerateTemporalProbabilityFeature extends AbstractAucomTranformNode<TemporalDurationFeature, TemporalProbabilityFeature> {
+    private static final long serialVersionUID = 3658564740012943868L;
     private T2GramModelI model;
     private transient final Logger log = Logger.getLogger(getClass().getName());
 

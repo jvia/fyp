@@ -11,8 +11,8 @@
 
 package org.bham.aucom.gui.threshold;
 
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.HysteresisAnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassifier;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.HysteresisAnomalyClassifier;
 
 /**
  * @author rgolombe
@@ -29,10 +29,10 @@ public class HysteresisThresholdPanel extends AbstractCreateAnomalyClassificator
     }
 
     @Override
-    public AnomalyClassificator getAnomalyClassificator() throws Exception {
+    public AnomalyClassifier getAnomalyClassificator() throws Exception {
         Double lower = Double.valueOf(this.lowertextField.getText());
         Double upper = Double.valueOf(this.upperTextField.getText());
-        return new HysteresisAnomalyClassificator(lower, upper);
+        return new HysteresisAnomalyClassifier(lower, upper);
     }
 
     /**

@@ -15,24 +15,24 @@ public class RangeScoreTest {
     @Test
     public void testMarking() {
         RangeScore rs = (RangeScore) RangeScore.createRandomRangeScore();
-        Assert.assertEquals(false, rs.isMarkedAsFirstElement());
-        Assert.assertEquals(false, rs.isMarkedAsLastElement());
-        rs.markAsFirstElement();
-        rs.markAsLastElement();
-        Assert.assertEquals(true, rs.isMarkedAsFirstElement());
-        Assert.assertEquals(true, rs.isMarkedAsLastElement());
+        Assert.assertEquals(false, rs.isFirstElement());
+        Assert.assertEquals(false, rs.isLastElement());
+        rs.setFirstElement(true);
+        rs.setLastElement(true);
+        Assert.assertEquals(true, rs.isFirstElement());
+        Assert.assertEquals(true, rs.isLastElement());
     }
 
     @Test
     public void testCopy() {
         RangeScore rs = (RangeScore) RangeScore.createRandomRangeScore();
-        rs.markAsFirstElement();
-        rs.markAsLastElement();
-        Assert.assertEquals(true, rs.isMarkedAsFirstElement());
-        Assert.assertEquals(true, rs.isMarkedAsLastElement());
+        rs.setFirstElement(true);
+        rs.setLastElement(true);
+        Assert.assertEquals(true, rs.isFirstElement());
+        Assert.assertEquals(true, rs.isLastElement());
         RangeScore rs_copy = (RangeScore) rs.copy();
-        Assert.assertEquals(true, rs_copy.isMarkedAsFirstElement());
-        Assert.assertEquals(true, rs_copy.isMarkedAsLastElement());
+        Assert.assertEquals(true, rs_copy.isFirstElement());
+        Assert.assertEquals(true, rs_copy.isLastElement());
 
     }
 
