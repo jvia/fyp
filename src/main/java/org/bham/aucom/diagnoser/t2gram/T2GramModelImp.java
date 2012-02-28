@@ -42,8 +42,9 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
     public int getNumberDistirbutions() {
         int numberavailableDistributions = 0;
         for (Tuple<Integer, Integer> key : this.transitionMatrix.keySet()) {
-            if (this.transitionMatrix.get(key.getFirstElement(), key.getSecondElement()) != null)
+            if (this.transitionMatrix.get(key.getFirstElement(), key.getSecondElement()) != null) {
                 numberavailableDistributions++;
+            }
         }
         return numberavailableDistributions;
     }
@@ -64,13 +65,13 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
         if (distribution != null) {
             return distribution.getEntropy();
         }
-        String decodedIndexOne = "";
+        StringBuilder decodedIndexOne = new StringBuilder();
         for (DomainFeature f : Encoder.getInstance().decode(indexOne)) {
-            decodedIndexOne += f.toString() + " ";
+            decodedIndexOne.append(f).append(" ");
         }
-        String decodedIndexTwo = "";
+        StringBuilder decodedIndexTwo = new StringBuilder();
         for (DomainFeature f : Encoder.getInstance().decode(indexTwo)) {
-            decodedIndexTwo += f.toString() + " ";
+            decodedIndexTwo.append(f).append(" ");
         }
         log.severe(String.format("CALC_ENTROPY: H(%d,%d) = H(%s,%s) = Ø",
                                  indexOne, indexTwo, decodedIndexOne, decodedIndexTwo));
@@ -80,8 +81,9 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
     @Override
     public double getMaxProbabilityFor(int from, int to) {
         ProbabilityDistribution distribution = getDistributionFor(from, to);
-        if (distribution != null)
+        if (distribution != null) {
             return distribution.getMaxProbability();
+        }
         log.warning(String.format("Probability Distribution for [%d --> %d] is missing.", from, to));
         return LOWESTPROBABILITY;
     }
