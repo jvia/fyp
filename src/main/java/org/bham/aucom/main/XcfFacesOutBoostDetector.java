@@ -16,10 +16,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class XcfFacesOutBoostDetector {
-    ArrayList<Document> recordedDocumentsList;
+//    ArrayList<Document> recordedDocumentsList;
 
     public XcfFacesOutBoostDetector(File f) {
-        recordedDocumentsList = new ArrayList<Document>();
+//        recordedDocumentsList = new ArrayList<Document>();
     }
 
     /**

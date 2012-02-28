@@ -41,7 +41,7 @@ public class AucomIO {
     private final ModelIO faultDetectionModelIO = new ModelIO();
     private final SlindingWindowIO slidingWindowIO = new SlindingWindowIO();
     private final ClassificatorIO classificatorIO = new ClassificatorIO();
-    private EncoderIO encoderIO = new EncoderIO();
+    //private EncoderIO encoderIO = new EncoderIO();
 
     // private XmlFileWriter xmlFileWriter = new XmlFileWriter();
 
