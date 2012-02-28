@@ -17,13 +17,23 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+/**
+ * This class defines an interface for managing persistence in the
+ * aucom project. For each structure we want to read/write we need an IOClass.
+ * Currently known structures to save:
+ * <ul>
+ * <li>TimeSeries</li>
+ * <li>FaultDetectionModel</li>
+ * <li>Encoder</li>
+ * <li>SlidingWindow</li>
+ * <li>Classifier</li>
+ * </ul>
+ * <p/>
+ *
+ * @author Raphael Golombek <rgolombe@cor-lab.uni-bielefeld.de>
+ * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk>
+ */
 public class AucomIO {
-    /*
-      * This class defines an interface for managing persistency in the org.bham.aucom
-      * project. For each structure we want to read/write we need an IOClass.
-      * Currently known structures to save: Timeseries, FaultDetectionModel,
-      * SlidingWindow, Classificator, Encoder
-      */
     private File workingDirectory = new File(System.getProperty("user.dir"));
 
     private final HashMap<String, TimeSeriesIO> tsIo = new HashMap<String, TimeSeriesIO>();
@@ -35,10 +45,9 @@ public class AucomIO {
 
     // private XmlFileWriter xmlFileWriter = new XmlFileWriter();
 
-    /*
-      * singleton
-      */
-
+    /**
+     * Singleton object.
+     */
     private AucomIO() {
         tsIo.put("xml", new TimeSeriesIO(new XmlTimeSeriesInput(), new XmlTimeSeriesOutput()));
         tsIo.put("csv", new TimeSeriesIO(new CSVTimeSeriesInput(), new CSVTimeSeriesOutput()));
@@ -153,8 +162,9 @@ public class AucomIO {
     }
 
     public void changeCurrentWorkingDirectory(File dir) throws IllegalArgumentException {
-        if (!dir.isDirectory())
+        if (!dir.isDirectory()) {
             throw new IllegalArgumentException(dir.getAbsolutePath() + " is not a folder");
+        }
         this.workingDirectory = dir;
         Logger.getLogger(this.getClass().getCanonicalName()).info("working directory changed to " + this.workingDirectory);
     }
