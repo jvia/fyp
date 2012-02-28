@@ -30,10 +30,10 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
     public ClassificationTimeSeriesDescriptiveStatistics(TimeSeries<Classification> scoreTimeSeries) {
         setTimeSeries(scoreTimeSeries);
         if (classificationTimeSeries.isEmpty()) {
-            Logger.getLogger(this.getClass().getCanonicalName()).severe(this.getClass() + " warning timeseries has length 0");
+            Logger.getLogger(this.getClass().getCanonicalName()).severe(this.getClass() + " warning time series has length 0");
         }
         if (!hasInducedFaultTimestamp()) {
-            Logger.getLogger(this.getClass().getCanonicalName()).severe(this.getClass() + " timeseries has no fault induces timestamp attribute");
+            Logger.getLogger(this.getClass().getCanonicalName()).severe(this.getClass() + " time series has no fault induces timestamp attribute");
         }
     }
 
@@ -365,7 +365,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
     /**
      * Sets the time-series which will be examined.
      *
-     * @param classificationTimeSeries
+     * @param classificationTimeSeries the time series to be examined
      */
     public void setTimeSeries(TimeSeries<Classification> classificationTimeSeries) {
         this.classificationTimeSeries = classificationTimeSeries;
