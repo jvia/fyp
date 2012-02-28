@@ -13,8 +13,8 @@ import java.util.logging.Logger;
  * be computed for three different parts of the time-series: a) the whole
  * time-series, b) the part before the first fault was induced (called head) c)
  * the part after the first fault was induced (called tail) The information
- * about a fault need to be provided as an attribute {@linkplain Constants.} in
- * the time-series object given to this class.
+ * about a fault need to be provided as an attribute {@linkplain
+ * Constants#FAULT_INDUCED} in the time-series object given to this class.
  *
  * @author rgolombe <rgolombe@cor-lab.uni-bielefeld.de>
  */
@@ -22,14 +22,14 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
     private TimeSeries<Classification> classificationTimeSeries;
 
     /**
-     * Creates a ready to go ClassficationTimeSeriesStatistics object
+     * Creates a ready to go ClassificationTimeSeriesStatistics object
      *
-     * @input scoretimeSeries the time-series for which statistics will be
-     * generated. null is not permitted
+     * @param scoreTimeSeries the time-series for which statistics will be
+     *                        generated. null is not permitted
      */
     public ClassificationTimeSeriesDescriptiveStatistics(TimeSeries<Classification> scoreTimeSeries) {
         setTimeSeries(scoreTimeSeries);
-        if (classificationTimeSeries.size() == 0) {
+        if (classificationTimeSeries.isEmpty()) {
             Logger.getLogger(this.getClass().getCanonicalName()).severe(this.getClass() + " warning timeseries has length 0");
         }
         if (!hasInducedFaultTimestamp()) {
@@ -40,15 +40,13 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
     /**
      * Default constructor
      */
-    public ClassificationTimeSeriesDescriptiveStatistics() {
-        // empty
-    }
+    public ClassificationTimeSeriesDescriptiveStatistics() { }
 
     /**
      * Returns the duration of the time-series i.e., the difference between the
      * first time-stamp and last time-stamp of this time-series
      *
-     * @return
+     * @return duration of time series
      */
     public long getDuration() {
         long lastTimestamp = this.classificationTimeSeries.get(this.classificationTimeSeries.size() - 1).getTimestamp();
@@ -60,11 +58,12 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
     /**
      * Returns the duration of the head of the time-series i.e., the difference
      * between the first time-stamp of the time-series and last time-stamp
-     * before the fault induced time-stamp given by {@link #getFaultTimestamp()}
-     * If {@link #hasInducedFaultTimestamp()} returns false this function returns
-     * the same value as {@link #getDuration()}.
+     * before the fault induced time-stamp given by {@link
+     * this#getFaultTimestamp()}. If {@link this#hasInducedFaultTimestamp()}
+     * returns false this function returns the same value as {@link
+     * #getDuration()}.
      *
-     * @return
+     * @return duration of the head of the time series
      */
     public long getHeadDuration() {
         long lastHeadTimestamp = getLastTimestampBeforeFault();
@@ -78,7 +77,8 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
      * false this function returns the time-stamp of the last element in this
      * time-series.
      *
-     * @return time-stamp of the last element of the time-series before fault in
+     * @return time-stamp of the last element of the time-series before fault
+     *         in
      *         milliseconds
      */
     private long getLastTimestampBeforeFault() {
@@ -88,8 +88,10 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 
     /**
      * Returns the duration of the tail of the time-series i.e., the difference
-     * between the first time-stamp of the tail as returned by {@link #getTail()}
-     * and last time-stamp of the time-series. If {@link #hasInducedFaultTimestamp()}
+     * between the first time-stamp of the tail as returned by {@link
+     * #getTail()}
+     * and last time-stamp of the time-series. If {@link
+     * #hasInducedFaultTimestamp()}
      * returns false this function returns 0.
      *
      * @return tail duration in milliseconds
@@ -105,16 +107,15 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 
     /**
      * Returns the time-stamp of the first element in the time-series after the
-     * fault induced time-stamp as returned by {@link getFaultTimestamp()}. In
-     * case {@link #hasInducedFaultTimestamp()} returns false this function returns
-     * long.MAX_VALUE.
+     * fault induced time-stamp as returned by {@link this#getFaultTimestamp()}.
+     * In case {@link this#hasInducedFaultTimestamp()} returns false this
+     * function returns long.MAX_VALUE.
      *
-     * @return
+     * @return timestamp of first element in time series post-fault
      */
     private long getFirstTimestampAfterFault() {
         List<Classification> tail = getTail();
         if (tail.size() == 0) {
-
             return Long.MAX_VALUE;
         }
         return tail.get(0).getTimestamp();
@@ -129,21 +130,18 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
     public int getAnomalyValueCount() {
         TimeSeries<Classification> list = getTimeSeries();
         int numberFaults = 0;
-        synchronized (list) {
-            for (int i = 0; i < list.size(); i++) {
-                Classification s = list.get(i);
-                numberFaults += s.getStatusAsDouble();
-
-            }
+        for (int i = 0; i < list.size(); i++) {
+            Classification s = list.get(i);
+            numberFaults += s.getStatusAsDouble();
         }
         return numberFaults;
     }
 
     /**
      * Returns the total number of elements of the head part of the current
-     * time-series which were marked as faulty. If
-     * {@link timestamp_faultInduced} is Long.MAX_VALUE then this function is
-     * identical to {@link getAnomalyValueCount()}
+     * time-series which were marked as faulty. If {@link
+     * Constants#FAULT_INDUCED} is Long.MAX_VALUE then this function is
+     * identical to {@link this#getAnomalyValueCount()}
      *
      * @return total number of faults in the time-series.
      */
@@ -161,8 +159,8 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
      * Returns the total number of elements of the tail part of the current
      * time-series which were marked as faulty.
      *
-     * @return total number of faults in the time-series. 0 if tail is of length
-     *         zero
+     * @return total number of faults in the time-series. 0 if tail is of
+     *         length zero
      */
     public int getTailAnomalyValueCount() {
         int numberFaults = 0;
@@ -222,7 +220,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
      * @return true if the time-series has a time-stamp for an induced fault
      */
     public boolean hasInducedFaultTimestamp() {
-        return getFautlTimestamp() != Long.MAX_VALUE;
+        return getFaultTimestamp() != Long.MAX_VALUE;
     }
 
     /**
@@ -331,13 +329,13 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
     }
 
     /**
-     * Computes the positive quadratic distance for the time-series. This means for
-     * each element of the classification time-series the difference between the
-     * score of the
-     * element and the threshold used to classify this element into faulty or
-     * normal is calculated.
-     * In case  score<threshold (i.e., element classified as faulty) the difference
-     * would be negative and is therefore discarded.
+     * Computes the positive quadratic distance for the time-series. This means
+     * for each element of the classification time-series the difference
+     * between
+     * the score of the element and the threshold used to classify this element
+     * into faulty or normal is calculated. In case  score<threshold (i.e.,
+     * element classified as faulty) the difference would be negative and is
+     * therefore discarded.
      *
      * @return the positive quadratic distance between the scores of this
      *         time-series and the corresponding classifications thresholds
@@ -375,31 +373,31 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
 
     /**
      * Checks whether the current time-series is not null and has an attribute
-     * called {@linkplain Constants.FAULT_INDUCED} and if so returns its value.
-     * Otherwise returns {@link Long.MAX_VALUE}.
+     * called {@linkplain Constants#FAULT_INDUCED} and if so returns its value.
+     * Otherwise returns {@link Long#MAX_VALUE}.
+     *
+     * @return the timestamp of the induce fault
      */
-    public long getFautlTimestamp() {
-        if (getTimeSeries() != null) {
-            if (getTimeSeries().containsAttribute(Constants.FAULT_INDUCED)) {
-                return Long.parseLong(getTimeSeries().getAttributeValue(Constants.FAULT_INDUCED));
-            }
+    public long getFaultTimestamp() {
+        if (getTimeSeries() != null && getTimeSeries().containsAttribute(Constants.FAULT_INDUCED)) {
+            return Long.parseLong(getTimeSeries().getAttributeValue(Constants.FAULT_INDUCED));
         }
         return Long.MAX_VALUE;
     }
 
     /**
-     * Returns the head of the current time-series based on the fault time-stamp
-     * attribute of the time-series. If time-series is null or empty an empty
-     * list is returned. Head consists of all elements with a time-stamp smaller
-     * than the value of the fault time-stamp attribute. If no such attribute is
-     * present a list is returned which contains all elements of the time-series
-     * at current point in time.
+     * Returns the head of the current time-series based on the fault
+     * time-stamp attribute of the time-series. If time-series is null or empty
+     * an empty list is returned. Head consists of all elements with a
+     * timestamp smaller than the value of the fault time-stamp attribute. If
+     * no such attribute is present a list is returned which contains all
+     * elements of the time-series at current point in time.
      *
      * @return The head of the current time-series or all elements of the
      *         time-series if no fault time-stamp is present
      */
     List<Classification> getHead() {
-        if (getTimeSeries() == null | getTimeSeries().isEmpty()) {
+        if (getTimeSeries() == null || getTimeSeries().isEmpty()) {
             return new ArrayList<Classification>();
         }
         List<Classification> head = new ArrayList<Classification>();
@@ -407,7 +405,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
             head.addAll(getTimeSeries().getall());
             return head;
         }
-        long faultTimeStamp = getFautlTimestamp();
+        long faultTimeStamp = getFaultTimestamp();
         for (Classification cl : getTimeSeries().getall()) {
             if (cl.getTimestamp() < faultTimeStamp) {
                 head.add(cl);
@@ -419,11 +417,11 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
     }
 
     /**
-     * Returns the tail of the current time-series based on the fault time-stamp
-     * attribute of the time-series. If time-series is null or empty an empty
-     * list is returned. Tail consists of all elements with a time-stamp equal
-     * or bigger than the value of the fault time-stamp attribute. If no such
-     * attribute is present an empty list is returned.
+     * Returns the tail of the current time-series based on the fault
+     * time-stamp attribute of the time-series. If time-series is null or empty
+     * an empty list is returned. Tail consists of all elements with a
+     * time-stamp equal or bigger than the value of the fault time-stamp
+     * attribute. If no such attribute is present an empty list is returned.
      *
      * @return The tail of the current time-series or an empty list
      */
@@ -436,7 +434,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
         if (!hasInducedFaultTimestamp()) {
             return tail;
         }
-        long faultTimeStamp = getFautlTimestamp();
+        long faultTimeStamp = getFaultTimestamp();
         for (Classification cl : getTimeSeries().getall()) {
             if (cl.getTimestamp() >= faultTimeStamp) {
                 tail.add(cl);
