@@ -49,7 +49,7 @@ public class PopupSequencesListListener extends MouseAdapter {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                XYSeries series = getFrame().getScoreXYSeries((TimeSeries<Score>) getSequenceList().getSelectedValue());
+//                XYSeries series = getFrame().getScoreXYSeries((TimeSeries<Score>) getSequenceList().getSelectedValue());
 //    getFrame().removeline();
 //    getFrame().setThresholdValue(((ScoreSequence)getSequenceList().getSelectedValue()).getThreshold().getMeanValue());
             }
