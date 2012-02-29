@@ -17,482 +17,481 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * 
  * @author rgolombe
  */
 public class AnalyzerGui extends javax.swing.JFrame implements Observer, WindowListener {
-	private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 0L;
 
-	@Override
-	public void windowActivated(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void windowActivated(WindowEvent arg0) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void windowClosed(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void windowClosing(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void windowClosed(WindowEvent arg0) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void windowDeactivated(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void windowDeiconified(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void windowClosing(WindowEvent arg0) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void windowIconified(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void windowOpened(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void windowDeactivated(WindowEvent arg0) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
-		
-	}
-//	private static final long serialVersionUID = 1L;
-//	private FaultDetectionModel currentModel;
-//	private ScoreFrameListModel scorePlots;
-//	ExampleFileFilter testFileFilter = new ExampleFileFilter();
-//	ExampleFileFilter modelFilter = new ExampleFileFilter();
-//	ExampleFileFilter thresholdFilter = new ExampleFileFilter();
-//	ExampleFileFilter testedDataFilter = new ExampleFileFilter();
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent arg0) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent arg0) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void windowOpened(WindowEvent arg0) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void update(Observable arg0, Object arg1) {
+        // TODO Auto-generated method stub
+
+    }
+// private static final long serialVersionUID = 1L;
+// private FaultDetectionModel currentModel;
+// private ScoreFrameListModel scorePlots;
+// ExampleFileFilter testFileFilter = new ExampleFileFilter();
+// ExampleFileFilter modelFilter = new ExampleFileFilter();
+// ExampleFileFilter thresholdFilter = new ExampleFileFilter();
+// ExampleFileFilter testedDataFilter = new ExampleFileFilter();
 //
-//	/** Creates new form MainFrame */
-//	public AnalyzerGui() {
-//		initComponents();
-//		initFrameListModel();
-//		initDatasetListModel();
-//		initDatasetPopupMenu();
-//		initScoreListModel();
-//		initScorePopupMenu();
-//		initModelListModel();
-//		initModelPopupMenu();
-//		initFilter();
-//		validate();
-//	}
+// /** Creates new form MainFrame */
+// public AnalyzerGui() {
+//  initComponents();
+//  initFrameListModel();
+//  initDatasetListModel();
+//  initDatasetPopupMenu();
+//  initScoreListModel();
+//  initScorePopupMenu();
+//  initModelListModel();
+//  initModelPopupMenu();
+//  initFilter();
+//  validate();
+// }
 //
-//	public void initFilter() {
-//		this.testFileFilter.addExtension("dat");
-//		this.testFileFilter.setDescription("Experiment data");
-//		this.testFileFilter.addExtension("csv");
-//		this.testFileFilter.setDescription("Experiment data");
-//		this.modelFilter.addExtension("md");
-//		this.modelFilter.setDescription("Trained Model");
-//		this.thresholdFilter.addExtension("th");
-//		this.thresholdFilter.setDescription("Tresholds");
-//		this.testedDataFilter.addExtension("tdat");
-//		this.testedDataFilter.setDescription("Tested .dat data");
-//	}
+// public void initFilter() {
+//  this.testFileFilter.addExtension("dat");
+//  this.testFileFilter.setDescription("Experiment data");
+//  this.testFileFilter.addExtension("csv");
+//  this.testFileFilter.setDescription("Experiment data");
+//  this.modelFilter.addExtension("md");
+//  this.modelFilter.setDescription("Trained Model");
+//  this.thresholdFilter.addExtension("th");
+//  this.thresholdFilter.setDescription("Tresholds");
+//  this.testedDataFilter.addExtension("tdat");
+//  this.testedDataFilter.setDescription("Tested .dat data");
+// }
 //
-//	public void initModelListModel() {
-//		this.getModelList().setModel(new AucomListModelAdapter(FaultDetectionModel.class));
-//		this.getDataSetJList().setCellRenderer(new DatasetListCellRenderer());
-//		this.getModelList().setCellRenderer(new ModelListCellRenderer());
-//	}
+// public void initModelListModel() {
+//  this.getModelList().setModel(new AucomListModelAdapter(FaultDetectionModel.class));
+//  this.getDataSetJList().setCellRenderer(new DatasetListCellRenderer());
+//  this.getModelList().setCellRenderer(new ModelListCellRenderer());
+// }
 //
-//	private void initFrameListModel() {
-//		this.setScorePlots(new ScoreFrameListModel());
-//	}
+// private void initFrameListModel() {
+//  this.setScorePlots(new ScoreFrameListModel());
+// }
 //
-//	private void initScoreListModel() {
-////		this.getResultsList().setModel(Data
-////				new Aucom ListModelAdapter().getInstance().getScoreSequencesAsListModel());
-//		this.getResultsList().setCellRenderer(new ScoreListCellRenderer());
-//		this.getResultsList().addMouseListener(new MouseListener() {
+// private void initScoreListModel() {
+////  this.getResultsList().setModel(Data
+////    new Aucom ListModelAdapter().getInstance().getScoreSequencesAsListModel());
+//  this.getResultsList().setCellRenderer(new ScoreListCellRenderer());
+//  this.getResultsList().addMouseListener(new MouseListener() {
 //
-//			@Override
-//			public void mouseReleased(MouseEvent e) {
-//				// TODO Auto-generated method stub
+//   @Override
+//   public void mouseReleased(MouseEvent e) {
+//    // TODO Auto-generated method stub
 //
-//			}
+//   }
 //
-//			@Override
-//			public void mousePressed(MouseEvent e) {
-//				// TODO Auto-generated method stub
+//   @Override
+//   public void mousePressed(MouseEvent e) {
+//    // TODO Auto-generated method stub
 //
-//			}
+//   }
 //
-//			@Override
-//			public void mouseExited(MouseEvent e) {
-//				// TODO Auto-generated method stub
+//   @Override
+//   public void mouseExited(MouseEvent e) {
+//    // TODO Auto-generated method stub
 //
-//			}
+//   }
 //
-//			@Override
-//			public void mouseEntered(MouseEvent e) {
-//				// TODO Auto-generated method stub
+//   @Override
+//   public void mouseEntered(MouseEvent e) {
+//    // TODO Auto-generated method stub
 //
-//			}
+//   }
 //
-//			@Override
-//			public void mouseClicked(MouseEvent arg0) {
-//				if (arg0.getClickCount() == 2 && !arg0.isPopupTrigger()) {
-//					JList l = (JList) arg0.getSource();
-//					TimeSeries<Score> sequence = (TimeSeries<Score>) l.getSelectedValue();
-//					setResultsInfo(sequence);
-//				}
+//   @Override
+//   public void mouseClicked(MouseEvent arg0) {
+//    if (arg0.getClickCount() == 2 && !arg0.isPopupTrigger()) {
+//     JList l = (JList) arg0.getSource();
+//     TimeSeries<Score> sequence = (TimeSeries<Score>) l.getSelectedValue();
+//     setResultsInfo(sequence);
+//    }
 //
-//			}
-//		});
-//	}
+//   }
+//  });
+// }
 //
-//	private void initDatasetListModel() {
+// private void initDatasetListModel() {
 //
-//		this.getDataSetJList().setModel(new AucomListModelAdapter(DataType.class));
-//		this.getDataSetJList().getModel().addListDataListener(new ListDataListener() {
-//			@Override
-//			public void intervalRemoved(ListDataEvent arg0) {
-//				updateTestSubmenuItems(arg0);
-//				updateThresholdSubmenuItems(arg0);
-//				updateTrainSubmenuItems(arg0);
-//			}
+//  this.getDataSetJList().setModel(new AucomListModelAdapter(DataType.class));
+//  this.getDataSetJList().getModel().addListDataListener(new ListDataListener() {
+//   @Override
+//   public void intervalRemoved(ListDataEvent arg0) {
+//    updateTestSubmenuItems(arg0);
+//    updateThresholdSubmenuItems(arg0);
+//    updateTrainSubmenuItems(arg0);
+//   }
 //
-//			@Override
-//			public void intervalAdded(ListDataEvent arg0) {
-//				updateTestSubmenuItems(arg0);
-//				updateThresholdSubmenuItems(arg0);
-//				updateTrainSubmenuItems(arg0);
-//			}
+//   @Override
+//   public void intervalAdded(ListDataEvent arg0) {
+//    updateTestSubmenuItems(arg0);
+//    updateThresholdSubmenuItems(arg0);
+//    updateTrainSubmenuItems(arg0);
+//   }
 //
-//			@Override
-//			public void contentsChanged(ListDataEvent arg0) {
-//				updateTestSubmenuItems(arg0);
-//				updateThresholdSubmenuItems(arg0);
-//				updateTrainSubmenuItems(arg0);
-//			}
-//		});
-//	}
+//   @Override
+//   public void contentsChanged(ListDataEvent arg0) {
+//    updateTestSubmenuItems(arg0);
+//    updateThresholdSubmenuItems(arg0);
+//    updateTrainSubmenuItems(arg0);
+//   }
+//  });
+// }
 //
-//	void updateThresholdSubmenuItems(ListDataEvent arg0) {
-//		System.out.println("updateThresholdSubmenuItems");
-//		this.getSubMenuTresholdSelectedIndexmodelPopup().removeAll();
-//		List<TimeSeries<Observation>> list = DataManager.getInstance().getDataSequencesAsList();
-//		for (final TimeSeries<Observation> sequence: list) {
-//			final String name = sequence.getName();
-//			JMenuItem menuitem = new JMenuItem(name);
+// void updateThresholdSubmenuItems(ListDataEvent arg0) {
+//  System.out.println("updateThresholdSubmenuItems");
+//  this.getSubMenuTresholdSelectedIndexmodelPopup().removeAll();
+//  List<TimeSeries<Observation>> list = DataManager.getInstance().getDataSequencesAsList();
+//  for (final TimeSeries<Observation> sequence: list) {
+//   final String name = sequence.getName();
+//   JMenuItem menuitem = new JMenuItem(name);
 //
-//			menuitem.addActionListener(new ActionListener() {
+//   menuitem.addActionListener(new ActionListener() {
 //
-//				@Override
-//				public void actionPerformed(ActionEvent arg0) {
-//					calculateThresholdOnActiveModel(sequence);
-//				}
-//			});
-//			this.getSubMenuTresholdSelectedIndexmodelPopup().add(menuitem);
-//		}
+//    @Override
+//    public void actionPerformed(ActionEvent arg0) {
+//     calculateThresholdOnActiveModel(sequence);
+//    }
+//   });
+//   this.getSubMenuTresholdSelectedIndexmodelPopup().add(menuitem);
+//  }
 //
-//	}
+// }
 //
-//	void updateTestSubmenuItems(ListDataEvent arg0) {
-//		this.getSubMenuTestSelectedIndexmodelPopup().removeAll();
-//		List<DataSequence> list = DataManager.getInstance().getDataSequencesAsList();
-//		for (final DataSequence sequence: list) {
-//			final String name = sequence.getName();
-//			JMenuItem menuitem = new JMenuItem(name);
-//			menuitem.addActionListener(new ActionListener() {
-//				public void actionPerformed(ActionEvent arg0) {
-//					info("displaying score sequence name dialog");
-//					String result = JOptionPane.showInputDialog(AnalyzerGui.this, "type name of the result", sequence.getName());
-//					if ((result != null) && (result.length() > 0)) {
-//						testDataSequenceOnActiveModel(sequence, result);
-//					} else {
-//						severe("coudn't test " + sequence.getName() + " name form dialog is " + result);
-//					}
-//				}
-//			});
-//			getSubMenuTestSelectedIndexmodelPopup().add(menuitem);
-//		}
+// void updateTestSubmenuItems(ListDataEvent arg0) {
+//  this.getSubMenuTestSelectedIndexmodelPopup().removeAll();
+//  List<DataSequence> list = DataManager.getInstance().getDataSequencesAsList();
+//  for (final DataSequence sequence: list) {
+//   final String name = sequence.getName();
+//   JMenuItem menuitem = new JMenuItem(name);
+//   menuitem.addActionListener(new ActionListener() {
+//    public void actionPerformed(ActionEvent arg0) {
+//     info("displaying score sequence name dialog");
+//     String result = JOptionPane.showInputDialog(AnalyzerGui.this, "type name of the result", sequence.getName());
+//     if ((result != null) && (result.length() > 0)) {
+//      testDataSequenceOnActiveModel(sequence, result);
+//     } else {
+//      severe("coudn't test " + sequence.getName() + " name form dialog is " + result);
+//     }
+//    }
+//   });
+//   getSubMenuTestSelectedIndexmodelPopup().add(menuitem);
+//  }
 //
-//	}
+// }
 //
-//	void updateTrainSubmenuItems(ListDataEvent arg0) {
-//		getSubMenuTrainSelectedIndexModelPopup().removeAll();
-//		List<DataSequence> list = DataManager.getInstance().getDataSequencesAsList();
-//		for (final DataSequence sequence: list) {
-//			final String name = sequence.getName();
-//			JMenuItem menuitem = new JMenuItem(name);
-//			menuitem.addActionListener(new ActionListener() {
-//				public void actionPerformed(ActionEvent arg0) {
-//					trainModel(sequence);
-//				}
-//			});
-//			getSubMenuTrainSelectedIndexModelPopup().add(menuitem);
-//		}
+// void updateTrainSubmenuItems(ListDataEvent arg0) {
+//  getSubMenuTrainSelectedIndexModelPopup().removeAll();
+//  List<DataSequence> list = DataManager.getInstance().getDataSequencesAsList();
+//  for (final DataSequence sequence: list) {
+//   final String name = sequence.getName();
+//   JMenuItem menuitem = new JMenuItem(name);
+//   menuitem.addActionListener(new ActionListener() {
+//    public void actionPerformed(ActionEvent arg0) {
+//     trainModel(sequence);
+//    }
+//   });
+//   getSubMenuTrainSelectedIndexModelPopup().add(menuitem);
+//  }
 //
-//	}
+// }
 //
-//	public void calculateThresholdOnActiveModel(DataSequence sequence) {
-//		if (getActiveModel() == null) {
-//			System.out.println("Error: active Model missing");
-//			return;
-//		}
-//		try {
-//			// TODO: change the way the sequence is named
-//			getActiveModel().calculateThreshold(sequence);
-//		} catch (IllegalStateException e) {
-//			System.out.println(e.getMessage());
-//		}
-//		if (!getActiveModel().isTrained())
-//			System.out.println("Warning: Model not trained");
-//	}
+// public void calculateThresholdOnActiveModel(DataSequence sequence) {
+//  if (getActiveModel() == null) {
+//   System.out.println("Error: active Model missing");
+//   return;
+//  }
+//  try {
+//   // TODO: change the way the sequence is named
+//   getActiveModel().calculateThreshold(sequence);
+//  } catch (IllegalStateException e) {
+//   System.out.println(e.getMessage());
+//  }
+//  if (!getActiveModel().isTrained())
+//   System.out.println("Warning: Model not trained");
+// }
 //
-//	public void testDataSequenceOnActiveModel(DataSequence sequence, String resultName) {
-//		info("testDataSequenceOnActiveModel called");
-//		if (getActiveModel() == null) {
-//			severe("Active model is null");
-//			return;
-//		}
-//		try {
-////			ScoreSequence scoreSequence = DataManager.getInstance().newScoreSequence(resultName, sequence, getActiveModel());
-////			if(sequence.getType().equals(DataSequence.DYNAMIC_SOURCE)){
-////				getActiveModel().setStopOnLastItem(false);
-////			}else{
-////				getActiveModel().setStopOnLastItem(true);
-////			}
-//			ScoreSequence scoreSequence = getActiveModel().startMonitor(sequence);
-//			DataManager.getInstance().addScoreSequence(scoreSequence);
-//			Logger.getLogger(this.getClass().getCanonicalName()).info("testing " + sequence.getName() + " on model " + getActiveModel()+ " output sequence is " + scoreSequence.getName());
-//		} catch (IllegalStateException e) {
-//			System.out.println(e.getMessage());
-//		}
-//		if (!getActiveModel().isTrained())
-//			System.out.println("Warning: Model not trained");
-//	}
+// public void testDataSequenceOnActiveModel(DataSequence sequence, String resultName) {
+//  info("testDataSequenceOnActiveModel called");
+//  if (getActiveModel() == null) {
+//   severe("Active model is null");
+//   return;
+//  }
+//  try {
+////   ScoreSequence scoreSequence = DataManager.getInstance().newScoreSequence(resultName, sequence, getActiveModel());
+////   if(sequence.getType().equals(DataSequence.DYNAMIC_SOURCE)){
+////    getActiveModel().setStopOnLastItem(false);
+////   }else{
+////    getActiveModel().setStopOnLastItem(true);
+////   }
+//   ScoreSequence scoreSequence = getActiveModel().startMonitor(sequence);
+//   DataManager.getInstance().addScoreSequence(scoreSequence);
+//   Logger.getLogger(this.getClass().getCanonicalName()).info("testing " + sequence.getName() + " on model " + getActiveModel()+ " output sequence is " + scoreSequence.getName());
+//  } catch (IllegalStateException e) {
+//   System.out.println(e.getMessage());
+//  }
+//  if (!getActiveModel().isTrained())
+//   System.out.println("Warning: Model not trained");
+// }
 //
-//	public void initScorePopupMenu() {
-//		getResultsList().addMouseListener(new PopupScoreListListener(getResultsList(), getScorePlots(), this));
-//	}
+// public void initScorePopupMenu() {
+//  getResultsList().addMouseListener(new PopupScoreListListener(getResultsList(), getScorePlots(), this));
+// }
 //
-//	public void severe(String msg) {
-//		Logger.getLogger(this.getClass().getName()).severe(msg);
-//	}
+// public void severe(String msg) {
+//  Logger.getLogger(this.getClass().getName()).severe(msg);
+// }
 //
-//	public void info(String info) {
-//		Logger.getLogger(this.getClass().getName()).info(info);
-//	}
+// public void info(String info) {
+//  Logger.getLogger(this.getClass().getName()).info(info);
+// }
 //
-//	/*
-//	 * Build the popup menu for models consisting of the following items: - test
-//	 * - train - calculcate threshold - rename model - save model - reset model
-//	 * - delete model - cancel action/specific action (dynamic)
-//	 */
-//	public String generateInforStringForDataSet(DataSequence sequence){
-//		String out = "-------------------\n"; 
-//		out += "name: "  + sequence.getName() + "\n";
-//		out += "number events: "  + sequence.size() + "\n";
-//		AbstractData[] dataArray = new AbstractData[sequence.size()];
-//		String numTypes = "unknown";
-//		if(sequence.containsAttribute(NUM_TYPES)){
-//			numTypes = sequence.getAttributeValue(NUM_TYPES);
-//		}
-//		out += "data types: "  + numTypes + "\n";
-//		out += "duration: " + (sequence.get(sequence.size()-1).getTimestamp() + sequence.get(0).getTimestamp())/1000 + " seconds\n";
-//		out += 		 "-------------------"; 
-//		return out;
-//	}
-//	public String generateInfoStringForModel(T2GramSytemModel model){
-//		String out = "";
-//		out += 		 "-------------------\n"; 
-//		out += "is trained: " + model.isTrained() +  "\n";
-//		out += "number trained Distributions: " + model.getModel().getNumberAvailableDistirbutions() +  "\n";
-//		out += "number possible Distributions: " + model.getModel().getNumberPossibleDistirbutions() +  "\n";
-//		out += 		 "-------------------"; 
-//		return out;
-//	}
-//	public void initDatasetPopupMenu() {
-//		JPopupMenu seletectedDatasetPopup = new JPopupMenu();
-//		JMenuItem menuItem;
-//		menuItem = new JMenuItem("info");
-//		menuItem.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent arg0) {
-//				DataSequence selectedValue = (DataSequence)AnalyzerGui.this.getDataSetJList().getSelectedValue();
-//				final String infoString = generateInforStringForDataSet(selectedValue);
-//				java.awt.EventQueue.invokeLater(new Runnable() {
-//					public void run() {
-//						InfoPanel infoPanel = new InfoPanel(infoString);
-//						Point locationMainFrame = AnalyzerGui.this.getLocation();
-//						Dimension dimensionMainFrame = AnalyzerGui.this.getSize();
-//						Point infoPanelLocation = new Point((int)(locationMainFrame.getX() + dimensionMainFrame.getWidth()), (int)(locationMainFrame.getY()-dimensionMainFrame.getHeight()));
-//						infoPanel.setLocation(infoPanelLocation);
-//						infoPanel.setVisible(true);
-//					}
-//				});
-//				
-//			}
-//		});
-//		seletectedDatasetPopup.add(menuItem);
-//		menuItem = new JMenuItem("unload");
-//		menuItem.addActionListener(new ActionListener() {
+// /*
+//  * Build the popup menu for models consisting of the following items: - test
+//  * - train - calculcate threshold - rename model - save model - reset model
+//  * - delete model - cancel action/specific action (dynamic)
+//  */
+// public String generateInforStringForDataSet(DataSequence sequence){
+//  String out = "-------------------\n"; 
+//  out += "name: "  + sequence.getName() + "\n";
+//  out += "number events: "  + sequence.size() + "\n";
+//  AbstractData[] dataArray = new AbstractData[sequence.size()];
+//  String numTypes = "unknown";
+//  if(sequence.containsAttribute(NUM_TYPES)){
+//   numTypes = sequence.getAttributeValue(NUM_TYPES);
+//  }
+//  out += "data types: "  + numTypes + "\n";
+//  out += "duration: " + (sequence.get(sequence.size()-1).getTimestamp() + sequence.get(0).getTimestamp())/1000 + " seconds\n";
+//  out +=    "-------------------"; 
+//  return out;
+// }
+// public String generateInfoStringForModel(T2GramSytemModel model){
+//  String out = "";
+//  out +=    "-------------------\n"; 
+//  out += "is trained: " + model.isTrained() +  "\n";
+//  out += "number trained Distributions: " + model.getModel().getNumberAvailableDistirbutions() +  "\n";
+//  out += "number possible Distributions: " + model.getModel().getNumberPossibleDistirbutions() +  "\n";
+//  out +=    "-------------------"; 
+//  return out;
+// }
+// public void initDatasetPopupMenu() {
+//  JPopupMenu seletectedDatasetPopup = new JPopupMenu();
+//  JMenuItem menuItem;
+//  menuItem = new JMenuItem("info");
+//  menuItem.addActionListener(new ActionListener() {
+//   public void actionPerformed(ActionEvent arg0) {
+//    DataSequence selectedValue = (DataSequence)AnalyzerGui.this.getDataSetJList().getSelectedValue();
+//    final String infoString = generateInforStringForDataSet(selectedValue);
+//    java.awt.EventQueue.invokeLater(new Runnable() {
+//     public void run() {
+//      InfoPanel infoPanel = new InfoPanel(infoString);
+//      Point locationMainFrame = AnalyzerGui.this.getLocation();
+//      Dimension dimensionMainFrame = AnalyzerGui.this.getSize();
+//      Point infoPanelLocation = new Point((int)(locationMainFrame.getX() + dimensionMainFrame.getWidth()), (int)(locationMainFrame.getY()-dimensionMainFrame.getHeight()));
+//      infoPanel.setLocation(infoPanelLocation);
+//      infoPanel.setVisible(true);
+//     }
+//    });
+//    
+//   }
+//  });
+//  seletectedDatasetPopup.add(menuItem);
+//  menuItem = new JMenuItem("unload");
+//  menuItem.addActionListener(new ActionListener() {
 //
-//			public void actionPerformed(ActionEvent arg0) {
-//				// delete dataset.
-//			}
-//		});
-//		seletectedDatasetPopup.add(menuItem);
+//   public void actionPerformed(ActionEvent arg0) {
+//    // delete dataset.
+//   }
+//  });
+//  seletectedDatasetPopup.add(menuItem);
 //
-//		JPopupMenu datasetPopup = new JPopupMenu();
-//		menuItem = new JMenuItem("load");
-//		menuItem.addActionListener(new ActionListener() {
+//  JPopupMenu datasetPopup = new JPopupMenu();
+//  menuItem = new JMenuItem("load");
+//  menuItem.addActionListener(new ActionListener() {
 //
-//			public void actionPerformed(ActionEvent arg0) {
-//				displayDatasetFileDialog(arg0);
-//			}
-//		});
-//		datasetPopup.add(menuItem);
-//		getDataSetJList().addMouseListener(new PopupDatasetListener(getDataSetJList(), seletectedDatasetPopup, datasetPopup));
-//	}
+//   public void actionPerformed(ActionEvent arg0) {
+//    displayDatasetFileDialog(arg0);
+//   }
+//  });
+//  datasetPopup.add(menuItem);
+//  getDataSetJList().addMouseListener(new PopupDatasetListener(getDataSetJList(), seletectedDatasetPopup, datasetPopup));
+// }
 //
-//	public void initModelPopupMenu() {
-//		JMenuItem menuItem;
-//		setSelectedIndexModelPopup(new JPopupMenu());
-//		menuItem = new JMenuItem("info");
-//		menuItem.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent arg0) {
-//				T2GramSytemModel selectedModel = (T2GramSytemModel)AnalyzerGui.this.getModelList().getSelectedValue();
-//				final String infoString = generateInfoStringForModel(selectedModel);
-//				java.awt.EventQueue.invokeLater(new Runnable() {
-//					public void run() {
-//						InfoPanel infoPanel = new InfoPanel(infoString);
-//						Point locationMainFrame = AnalyzerGui.this.getLocation();
-//						Dimension dimensionMainFrame = AnalyzerGui.this.getSize();
-//						Point infoPanelLocation = new Point((int)(locationMainFrame.getX() + dimensionMainFrame.getWidth()), (int)(locationMainFrame.getY()-dimensionMainFrame.getHeight()));
-//						infoPanel.setLocation(infoPanelLocation);
-//						infoPanel.setVisible(true);
-//					}
-//				});
-//				
-//			}
-//		});
-//		getSelectedIndexModelPopup().add(menuItem);
-//		setSubMenuTestSelectedIndexmodelPopup(new JMenu("test"));
-//		getSelectedIndexModelPopup().add(getSubMenuTestSelectedIndexmodelPopup());
+// public void initModelPopupMenu() {
+//  JMenuItem menuItem;
+//  setSelectedIndexModelPopup(new JPopupMenu());
+//  menuItem = new JMenuItem("info");
+//  menuItem.addActionListener(new ActionListener() {
+//   public void actionPerformed(ActionEvent arg0) {
+//    T2GramSytemModel selectedModel = (T2GramSytemModel)AnalyzerGui.this.getModelList().getSelectedValue();
+//    final String infoString = generateInfoStringForModel(selectedModel);
+//    java.awt.EventQueue.invokeLater(new Runnable() {
+//     public void run() {
+//      InfoPanel infoPanel = new InfoPanel(infoString);
+//      Point locationMainFrame = AnalyzerGui.this.getLocation();
+//      Dimension dimensionMainFrame = AnalyzerGui.this.getSize();
+//      Point infoPanelLocation = new Point((int)(locationMainFrame.getX() + dimensionMainFrame.getWidth()), (int)(locationMainFrame.getY()-dimensionMainFrame.getHeight()));
+//      infoPanel.setLocation(infoPanelLocation);
+//      infoPanel.setVisible(true);
+//     }
+//    });
+//    
+//   }
+//  });
+//  getSelectedIndexModelPopup().add(menuItem);
+//  setSubMenuTestSelectedIndexmodelPopup(new JMenu("test"));
+//  getSelectedIndexModelPopup().add(getSubMenuTestSelectedIndexmodelPopup());
 //
-//		setSubMenuTrainSelectedIndexModelPopup(new JMenu("train"));
-//		getSelectedIndexModelPopup().add(getSubMenuTrainSelectedIndexModelPopup());
+//  setSubMenuTrainSelectedIndexModelPopup(new JMenu("train"));
+//  getSelectedIndexModelPopup().add(getSubMenuTrainSelectedIndexModelPopup());
 //
-//		setSubMenuTresholdSelectedIndexmodelPopup(new JMenu("calc threshold"));
-//		getSelectedIndexModelPopup().add(getSubMenuTresholdSelectedIndexmodelPopup());
+//  setSubMenuTresholdSelectedIndexmodelPopup(new JMenu("calc threshold"));
+//  getSelectedIndexModelPopup().add(getSubMenuTresholdSelectedIndexmodelPopup());
 //
-//		menuItem = new JMenuItem("roc");
-//		menuItem.addActionListener(new ActionListener() {
+//  menuItem = new JMenuItem("roc");
+//  menuItem.addActionListener(new ActionListener() {
 //
-//			public void actionPerformed(ActionEvent arg0) {
-//				// TODO remove
-//			}
-//		});
-//		getSelectedIndexModelPopup().add(menuItem);
+//   public void actionPerformed(ActionEvent arg0) {
+//    // TODO remove
+//   }
+//  });
+//  getSelectedIndexModelPopup().add(menuItem);
 //
-//		menuItem = new JMenuItem("rename");
-//		// menuItem.addActionListener(this);
-//		getSelectedIndexModelPopup().add(menuItem);
+//  menuItem = new JMenuItem("rename");
+//  // menuItem.addActionListener(this);
+//  getSelectedIndexModelPopup().add(menuItem);
 //
-//		menuItem = new JMenuItem("save");
-//		menuItem.addActionListener(new ActionListener() {
+//  menuItem = new JMenuItem("save");
+//  menuItem.addActionListener(new ActionListener() {
 //
-//			public void actionPerformed(ActionEvent e) {
-//				DataManager.getInstance().saveModel(AnalyzerGui.this.getActiveModel());
-//			}
+//   public void actionPerformed(ActionEvent e) {
+//    DataManager.getInstance().saveModel(AnalyzerGui.this.getActiveModel());
+//   }
 //
-//		});
-//		// menuItem.addActionListener(this);
-//		getSelectedIndexModelPopup().add(menuItem);
+//  });
+//  // menuItem.addActionListener(this);
+//  getSelectedIndexModelPopup().add(menuItem);
 //
-//		menuItem = new JMenuItem("reset");
-//		// menuItem.addActionListener(this);
-//		getSelectedIndexModelPopup().add(menuItem);
+//  menuItem = new JMenuItem("reset");
+//  // menuItem.addActionListener(this);
+//  getSelectedIndexModelPopup().add(menuItem);
 //
-//		getSelectedIndexModelPopup().add(new JSeparator());
-//		getSelectedIndexModelPopup().add(new JSeparator());
+//  getSelectedIndexModelPopup().add(new JSeparator());
+//  getSelectedIndexModelPopup().add(new JSeparator());
 //
-//		menuItem = new JMenuItem("unload");
-//		// menuItem.addActionListener(this);
-//		getSelectedIndexModelPopup().add(menuItem);
+//  menuItem = new JMenuItem("unload");
+//  // menuItem.addActionListener(this);
+//  getSelectedIndexModelPopup().add(menuItem);
 //
-//		menuItem = new JMenuItem("distributions");
-//		menuItem.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent arg0) {
-//				Logger.getLogger(AnalyzerGui.this.getClass().getCanonicalName()).info("going to display distributions of " + getActiveModel());
-//				if (getActiveModel().getModel().getTransitionMatrix().values().size() != 0
-//						) {
-//					
-//				}
-//			}
-//		});
-//		getSelectedIndexModelPopup().add(menuItem);
-//		menuItem = new JMenuItem("entropy");
-//		menuItem.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				ModelEntropyView view = new ModelEntropyView(AnalyzerGui.this.currentModel);
-//				JFrame frame = new JFrame();
-//				frame.setLayout(new GridLayout(1, 1));
-//				frame.setSize(new Dimension(900, 600));
-//				frame.getContentPane().add(view);
-//				frame.setVisible(true);
-//			}
-//		});
-//		getSelectedIndexModelPopup().add(menuItem);
+//  menuItem = new JMenuItem("distributions");
+//  menuItem.addActionListener(new ActionListener() {
+//   public void actionPerformed(ActionEvent arg0) {
+//    Logger.getLogger(AnalyzerGui.this.getClass().getCanonicalName()).info("going to display distributions of " + getActiveModel());
+//    if (getActiveModel().getModel().getTransitionMatrix().values().size() != 0
+//      ) {
+//     
+//    }
+//   }
+//  });
+//  getSelectedIndexModelPopup().add(menuItem);
+//  menuItem = new JMenuItem("entropy");
+//  menuItem.addActionListener(new ActionListener() {
+//   public void actionPerformed(ActionEvent e) {
+//    ModelEntropyView view = new ModelEntropyView(AnalyzerGui.this.currentModel);
+//    JFrame frame = new JFrame();
+//    frame.setLayout(new GridLayout(1, 1));
+//    frame.setSize(new Dimension(900, 600));
+//    frame.getContentPane().add(view);
+//    frame.setVisible(true);
+//   }
+//  });
+//  getSelectedIndexModelPopup().add(menuItem);
 //
-//		JPopupMenu modelPopup = new JPopupMenu();
-//		menuItem = new JMenuItem("load");
-//		menuItem.addActionListener(new ActionListener() {
+//  JPopupMenu modelPopup = new JPopupMenu();
+//  menuItem = new JMenuItem("load");
+//  menuItem.addActionListener(new ActionListener() {
 //
-//			public void actionPerformed(ActionEvent arg0) {
-//				displayModelloadFileDialog(arg0);
-//			}
-//		});
-//		modelPopup.add(menuItem);
+//   public void actionPerformed(ActionEvent arg0) {
+//    displayModelloadFileDialog(arg0);
+//   }
+//  });
+//  modelPopup.add(menuItem);
 //
-//		menuItem = new JMenuItem("new");
-//		menuItem.addActionListener(new ActionListener() {
+//  menuItem = new JMenuItem("new");
+//  menuItem.addActionListener(new ActionListener() {
 //
-//			public void actionPerformed(ActionEvent arg0) {
-//				Logger.getLogger(AnalyzerGui.this.getClass().getCanonicalName()).info("new model requested");
-//				T2GramFaultDetectionModel newModel = createNewAucomModel();
-//				if(newModel!= null)
-//					DataManager.getInstance().addModel(newModel);
-//			}
-//		});
-//		modelPopup.add(menuItem);
-//		getModelList().addMouseListener(new ModelPopupListener(getModelList(), getSelectedIndexModelPopup(), modelPopup));
-//	}
-//	T2GramSytemModel createNewAucomModel() {
-//		CreateModelDialog modelDialog = new CreateModelDialog(this);
-//		modelDialog.setVisible(true);
-//		
-//		return modelDialog.getModel();
-//	}
-//	/**
-//	 * This method is called from within the constructor to initialize the form.
-//	 * WARNING: Do NOT modify this code. The content of this method is always
-//	 * regenerated by the Form Editor.
-//	 */
-//	@SuppressWarnings("unchecked")
-//	// <editor-fold defaultstate="collapsed"
-//	// <editor-fold defaultstate="collapsed"
-//	// <editor-fold defaultstate="collapsed"
-//	// <editor-fold defaultstate="collapsed"
-//	// <editor-fold defaultstate="collapsed"
+//   public void actionPerformed(ActionEvent arg0) {
+//    Logger.getLogger(AnalyzerGui.this.getClass().getCanonicalName()).info("new model requested");
+//    T2GramFaultDetectionModel newModel = createNewAucomModel();
+//    if(newModel!= null)
+//     DataManager.getInstance().addModel(newModel);
+//   }
+//  });
+//  modelPopup.add(menuItem);
+//  getModelList().addMouseListener(new ModelPopupListener(getModelList(), getSelectedIndexModelPopup(), modelPopup));
+// }
+// T2GramSytemModel createNewAucomModel() {
+//  CreateModelDialog modelDialog = new CreateModelDialog(this);
+//  modelDialog.setVisible(true);
+//  
+//  return modelDialog.getModel();
+// }
+// /**
+//  * This method is called from within the constructor to initialize the form.
+//  * WARNING: Do NOT modify this code. The content of this method is always
+//  * regenerated by the Form Editor.
+//  */
+// @SuppressWarnings("unchecked")
+// // <editor-fold defaultstate="collapsed"
+// // <editor-fold defaultstate="collapsed"
+// // <editor-fold defaultstate="collapsed"
+// // <editor-fold defaultstate="collapsed"
+// // <editor-fold defaultstate="collapsed"
 //    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
 //    private void initComponents() {
 //
@@ -623,180 +622,180 @@ public class AnalyzerGui extends javax.swing.JFrame implements Observer, WindowL
 //        pack();
 //    }// </editor-fold>//GEN-END:initComponents
 //
-//	private void tresholdTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tresholdTextFieldActionPerformed
-//		//TODO fix the setting of new thresholds
-////		if (getActiveModel() != null) {
-////			try {
-////				double val = Double.valueOf(((JTextField) evt.getSource()).getText());
-////				getActiveModel().getThreshold().setMeanValue(val);
-////			} catch (NumberFormatException e) {
-////				e.printStackTrace();
-////			}
-////		}
-//	}// GEN-LAST:event_tresholdTextFieldActionPerformed
+// private void tresholdTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tresholdTextFieldActionPerformed
+//  //TODO fix the setting of new thresholds
+////  if (getActiveModel() != null) {
+////   try {
+////    double val = Double.valueOf(((JTextField) evt.getSource()).getText());
+////    getActiveModel().getThreshold().setMeanValue(val);
+////   } catch (NumberFormatException e) {
+////    e.printStackTrace();
+////   }
+////  }
+// }// GEN-LAST:event_tresholdTextFieldActionPerformed
 //
-//	private void resultsListValueChanged(javax.swing.event.ListSelectionEvent evt) {// GEN-FIRST:event_resultsListValueChanged
-//		TimeSeries<Score> seq = (TimeSeries<Score>) ((JList)evt.getSource()).getSelectedValue();
-//		setResultsInfo(seq);
-//	}// GEN-LAST:event_resultsListValueChanged
+// private void resultsListValueChanged(javax.swing.event.ListSelectionEvent evt) {// GEN-FIRST:event_resultsListValueChanged
+//  TimeSeries<Score> seq = (TimeSeries<Score>) ((JList)evt.getSource()).getSelectedValue();
+//  setResultsInfo(seq);
+// }// GEN-LAST:event_resultsListValueChanged
 //
-//	public void setResultsInfo(TimeSeries<Score> scoreSequence) {
-//		long first = 0;
-//		long last = 0;
-//		if (scoreSequence.size() > 0) {
-//			first = ((Score) scoreSequence.get(0)).getTimestamp();
-//			last = ((Score) scoreSequence.get(scoreSequence.size() - 1)).getTimestamp();
-//		}
-//		long diff = last - first;
-//		this.resultNameLabel.setText("generator: " + scoreSequence.getGeneratorID());
-//		this.lengthLabel.setText(diff / 1000 + " seconds");
-//		this.numEventsLabel.setText(scoreSequence.size() + " events");
-//		ScoreTimeSeriesStatistics statistics = new ScoreTimeSeriesStatistics(scoreSequence);
-//		this.anomalyLabel.setText("% anomaly: " + statistics.getAnomalyValue());
-//	}
+// public void setResultsInfo(TimeSeries<Score> scoreSequence) {
+//  long first = 0;
+//  long last = 0;
+//  if (scoreSequence.size() > 0) {
+//   first = ((Score) scoreSequence.get(0)).getTimestamp();
+//   last = ((Score) scoreSequence.get(scoreSequence.size() - 1)).getTimestamp();
+//  }
+//  long diff = last - first;
+//  this.resultNameLabel.setText("generator: " + scoreSequence.getGeneratorID());
+//  this.lengthLabel.setText(diff / 1000 + " seconds");
+//  this.numEventsLabel.setText(scoreSequence.size() + " events");
+//  ScoreTimeSeriesStatistics statistics = new ScoreTimeSeriesStatistics(scoreSequence);
+//  this.anomalyLabel.setText("% anomaly: " + statistics.getAnomalyValue());
+// }
 //
 //
 //
-//	void displayModelloadFileDialog(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_loadModelActionPerformed
-//		JFileChooser fc = new JFileChooser();
-//		fc.setFileFilter(this.modelFilter);
-//		int result = fc.showOpenDialog(this);
-//		if (result == JFileChooser.APPROVE_OPTION) {
-//			File f = fc.getSelectedFile();
-//			try {
-//				DataLoader.getInstance().load(f);
-//			} catch (FileNotFoundException exception) {
-//				// TODO Auto-generated catch block
-//				exception.printStackTrace();
-//			} catch (ValidityException exception) {
-//				// TODO Auto-generated catch block
-//				exception.printStackTrace();
-//			} catch (DataAllreadyExistsException exception) {
-//				// TODO Auto-generated catch block
-//				exception.printStackTrace();
-//			} catch (ParsingException exception) {
-//				// TODO Auto-generated catch block
-//				exception.printStackTrace();
-//			} catch (IOException exception) {
-//				// TODO Auto-generated catch block
-//				exception.printStackTrace();
-//			}
-//		}
-//	}// GEN-LAST:event_loadModelActionPerformed
+// void displayModelloadFileDialog(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_loadModelActionPerformed
+//  JFileChooser fc = new JFileChooser();
+//  fc.setFileFilter(this.modelFilter);
+//  int result = fc.showOpenDialog(this);
+//  if (result == JFileChooser.APPROVE_OPTION) {
+//   File f = fc.getSelectedFile();
+//   try {
+//    DataLoader.getInstance().load(f);
+//   } catch (FileNotFoundException exception) {
+//    // TODO Auto-generated catch block
+//    exception.printStackTrace();
+//   } catch (ValidityException exception) {
+//    // TODO Auto-generated catch block
+//    exception.printStackTrace();
+//   } catch (DataAllreadyExistsException exception) {
+//    // TODO Auto-generated catch block
+//    exception.printStackTrace();
+//   } catch (ParsingException exception) {
+//    // TODO Auto-generated catch block
+//    exception.printStackTrace();
+//   } catch (IOException exception) {
+//    // TODO Auto-generated catch block
+//    exception.printStackTrace();
+//   }
+//  }
+// }// GEN-LAST:event_loadModelActionPerformed
 //
-//	public void recalculateAnomaly(TimeSeries<Score> sequence) {
-//		if (getActiveModel() != null) {
-//			info("recalculateAnomaly called on " + sequence);
-//			try {
-//				// TODO build a graph which recalculates the score on the timeseries 
-//				//getActiveModel().startMonitor(sequence);
-//			} catch (Throwable e) {
-//				e.printStackTrace();
-//			}
-//		} else {
-//			severe("not active model present");
-//		}
-//	}
+// public void recalculateAnomaly(TimeSeries<Score> sequence) {
+//  if (getActiveModel() != null) {
+//   info("recalculateAnomaly called on " + sequence);
+//   try {
+//    // TODO build a graph which recalculates the score on the timeseries 
+//    //getActiveModel().startMonitor(sequence);
+//   } catch (Throwable e) {
+//    e.printStackTrace();
+//   }
+//  } else {
+//   severe("not active model present");
+//  }
+// }
 //
-//	
+// 
 //
-//	private void recordButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_recordButtonActionPerformed
-//		JFileChooser fileChooser = new JFileChooser(DataManager.getInstance().getCurrentWorkingDirectoryPath() + "/dat");
-//		fileChooser.setFileFilter(this.testFileFilter);
-//		int result = fileChooser.showOpenDialog(this);
-//		if (result == JFileChooser.APPROVE_OPTION) {
-//			File f = fileChooser.getSelectedFile();
+// private void recordButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_recordButtonActionPerformed
+//  JFileChooser fileChooser = new JFileChooser(DataManager.getInstance().getCurrentWorkingDirectoryPath() + "/dat");
+//  fileChooser.setFileFilter(this.testFileFilter);
+//  int result = fileChooser.showOpenDialog(this);
+//  if (result == JFileChooser.APPROVE_OPTION) {
+//   File f = fileChooser.getSelectedFile();
 //
-//			try {
-//				if (!f.exists()) {
-//					f.createNewFile();
-//					;
-//					if (!f.canWrite())
-//						throw new IOException("cannot write to file " + f.getName());
-//				}
+//   try {
+//    if (!f.exists()) {
+//     f.createNewFile();
+//     ;
+//     if (!f.canWrite())
+//      throw new IOException("cannot write to file " + f.getName());
+//    }
 //
-//			} catch (FileNotFoundException e) {
-//				JOptionPane.showMessageDialog(this, "File: " + e.getMessage() + " does not exist");
-//				e.printStackTrace();
-//			} catch (IOException e) {
-//				JOptionPane.showMessageDialog(this, e.getMessage());
-//				e.printStackTrace();
-//			}
-//		}
-//	}// GEN-LAST:event_recordButtonActionPerformed
+//   } catch (FileNotFoundException e) {
+//    JOptionPane.showMessageDialog(this, "File: " + e.getMessage() + " does not exist");
+//    e.printStackTrace();
+//   } catch (IOException e) {
+//    JOptionPane.showMessageDialog(this, e.getMessage());
+//    e.printStackTrace();
+//   }
+//  }
+// }// GEN-LAST:event_recordButtonActionPerformed
 //
-//	private void modelListValueChanged(javax.swing.event.ListSelectionEvent evt) {// GEN-FIRST:event_modelListValueChanged
-//		T2GramSytemModel model = (T2GramSytemModel) getModelList().getSelectedValue();
-//		System.out.println("setting active model to " + model);
-//		setActiveModel(model);
-//		setInfoModelPanel(model);
+// private void modelListValueChanged(javax.swing.event.ListSelectionEvent evt) {// GEN-FIRST:event_modelListValueChanged
+//  T2GramSytemModel model = (T2GramSytemModel) getModelList().getSelectedValue();
+//  System.out.println("setting active model to " + model);
+//  setActiveModel(model);
+//  setInfoModelPanel(model);
 //
-//	}// GEN-LAST:event_modelListValueChanged
+// }// GEN-LAST:event_modelListValueChanged
 //
-//	public void setInfoModelPanel(T2GramSytemModel model) {
-//		// TODO fix the info model panel 
-//		this.modelInfo.setBorder(new TitledBorder("model info: " + model));
-//		this.tresholdTextField.setText(String.valueOf(model.getAnomalyClassificator().toString()));
-//		this.modelTrainedLabel.setText("Is trained: " + model.isTrained());
-//		this.statusLabel.setText("Is acting: " + model.isActing());
-//	}
+// public void setInfoModelPanel(T2GramSytemModel model) {
+//  // TODO fix the info model panel 
+//  this.modelInfo.setBorder(new TitledBorder("model info: " + model));
+//  this.tresholdTextField.setText(String.valueOf(model.getAnomalyClassificator().toString()));
+//  this.modelTrainedLabel.setText("Is trained: " + model.isTrained());
+//  this.statusLabel.setText("Is acting: " + model.isActing());
+// }
 //
-//	private void modelListMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_modelListMouseClicked
-//		if (evt.getClickCount() == 2) {
-//			setInfoModelPanel(getActiveModel());
-//		}
-//	}// GEN-LAST:event_modelListMouseClicked
+// private void modelListMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_modelListMouseClicked
+//  if (evt.getClickCount() == 2) {
+//   setInfoModelPanel(getActiveModel());
+//  }
+// }// GEN-LAST:event_modelListMouseClicked
 //
-//	void trainModel(TimeSeries<Observation> sequence) {// GEN-FIRST:event_jMenuItem1ActionPerformed
-//		getActiveModel().startTrain(sequence);
-//	}// GEN-LAST:event_jMenuItem1ActionPerformed
+// void trainModel(TimeSeries<Observation> sequence) {// GEN-FIRST:event_jMenuItem1ActionPerformed
+//  getActiveModel().startTrain(sequence);
+// }// GEN-LAST:event_jMenuItem1ActionPerformed
 //
-//	public void addDataSet(TimeSeries<Observation> data){
-//		DataManager.getInstance().addDataSequence(data);
-//	}
-//	void displayDatasetFileDialog(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem2ActionPerformed
-//		/*
-//		 * Check whether the active model is trained. If not display a warning.
-//		 * Check whether the active model is currently in action. If so, reject.
-//		 * Else show file selection, extract data, encapsulate it in a
-//		 * DataSequence object and save it in the dataset hashmap
-//		 */
-//		JFileChooser fileChooser = new JFileChooser(DataManager.getInstance().getCurrentWorkingDirectory().getAbsolutePath() + "/csv");
-//		fileChooser.setFileFilter(this.testFileFilter);
-//		int result = fileChooser.showOpenDialog(this);
-//		if (result == JFileChooser.APPROVE_OPTION) {
-//			File f = fileChooser.getSelectedFile();
-//			DataManager.getInstance().loadDatasetFromFile(f);
-//		}
-//	}// GEN-LAST:event_jMenuItem2ActionPerformed
+// public void addDataSet(TimeSeries<Observation> data){
+//  DataManager.getInstance().addDataSequence(data);
+// }
+// void displayDatasetFileDialog(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem2ActionPerformed
+//  /*
+//   * Check whether the active model is trained. If not display a warning.
+//   * Check whether the active model is currently in action. If so, reject.
+//   * Else show file selection, extract data, encapsulate it in a
+//   * DataSequence object and save it in the dataset hashmap
+//   */
+//  JFileChooser fileChooser = new JFileChooser(DataManager.getInstance().getCurrentWorkingDirectory().getAbsolutePath() + "/csv");
+//  fileChooser.setFileFilter(this.testFileFilter);
+//  int result = fileChooser.showOpenDialog(this);
+//  if (result == JFileChooser.APPROVE_OPTION) {
+//   File f = fileChooser.getSelectedFile();
+//   DataManager.getInstance().loadDatasetFromFile(f);
+//  }
+// }// GEN-LAST:event_jMenuItem2ActionPerformed
 //
-//	/**
-//	 * @param args
-//	 *            the command line arguments
-//	 */
-//	public static void main(String args[]) {
-//		try {
-//			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//		} catch (ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (InstantiationException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IllegalAccessException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (UnsupportedLookAndFeelException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		java.awt.EventQueue.invokeLater(new Runnable() {
-//			@Override
-//			public void run() {
-//				new AnalyzerGui().setVisible(true);
-//			}
-//		});
-//	}
+// /**
+//  * @param args
+//  *            the command line arguments
+//  */
+// public static void main(String args[]) {
+//  try {
+//   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//  } catch (ClassNotFoundException e) {
+//   // TODO Auto-generated catch block
+//   e.printStackTrace();
+//  } catch (InstantiationException e) {
+//   // TODO Auto-generated catch block
+//   e.printStackTrace();
+//  } catch (IllegalAccessException e) {
+//   // TODO Auto-generated catch block
+//   e.printStackTrace();
+//  } catch (UnsupportedLookAndFeelException e) {
+//   // TODO Auto-generated catch block
+//   e.printStackTrace();
+//  }
+//  java.awt.EventQueue.invokeLater(new Runnable() {
+//   @Override
+//   public void run() {
+//    new AnalyzerGui().setVisible(true);
+//   }
+//  });
+// }
 //
 //    // Variables declaration - do not modify//GEN-BEGIN:variables
 //    private javax.swing.JLabel anomalyLabel;
@@ -824,129 +823,129 @@ public class AnalyzerGui extends javax.swing.JFrame implements Observer, WindowL
 //    private javax.swing.JLabel statusLabel;
 //    private javax.swing.JTextField tresholdTextField;
 //    // End of variables declaration//GEN-END:variables
-//	private JPopupMenu selectedIndexModelPopup;
-//	private JMenu subMenuTestSelectedIndexmodelPopup;
-//	private JMenu subMenuTresholdSelectedIndexmodelPopup;
-//	private JMenu subMenuTrainSelectedIndexModelPopup;
+// private JPopupMenu selectedIndexModelPopup;
+// private JMenu subMenuTestSelectedIndexmodelPopup;
+// private JMenu subMenuTresholdSelectedIndexmodelPopup;
+// private JMenu subMenuTrainSelectedIndexModelPopup;
 //
-//	public void update(Observable o, Object arg) {
-//		System.out.println(arg);
-//	}
+// public void update(Observable o, Object arg) {
+//  System.out.println(arg);
+// }
 //
-//	public String[] displayCreateModelFrame() {
-//		CreateModelFrame f = new CreateModelFrame();
-//		f.setModalityType(ModalityType.APPLICATION_MODAL);
-//		f.setVisible(true);
-//		String[] out = { "#", "#" };
-//		out[0] = f.getModelName();
-//		out[1] = f.getBinSizeAsString();
-//		System.out.println(out[1]);
-//		return out;
+// public String[] displayCreateModelFrame() {
+//  CreateModelFrame f = new CreateModelFrame();
+//  f.setModalityType(ModalityType.APPLICATION_MODAL);
+//  f.setVisible(true);
+//  String[] out = { "#", "#" };
+//  out[0] = f.getModelName();
+//  out[1] = f.getBinSizeAsString();
+//  System.out.println(out[1]);
+//  return out;
 //
-//	}
+// }
 //
-//	public void windowActivated(WindowEvent arg0) {
-//		// TODO Auto-generated method stub
+// public void windowActivated(WindowEvent arg0) {
+//  // TODO Auto-generated method stub
 //
-//	}
+// }
 //
-//	public void windowClosed(WindowEvent arg0) {
-//		// TODO Auto-generated method stub
+// public void windowClosed(WindowEvent arg0) {
+//  // TODO Auto-generated method stub
 //
-//	}
+// }
 //
-//	public void windowClosing(WindowEvent arg0) {
-//	}
+// public void windowClosing(WindowEvent arg0) {
+// }
 //
-//	public void windowDeactivated(WindowEvent arg0) {
-//		// TODO Auto-generated method stub
+// public void windowDeactivated(WindowEvent arg0) {
+//  // TODO Auto-generated method stub
 //
-//	}
+// }
 //
-//	public void windowDeiconified(WindowEvent arg0) {
-//		// TODO Auto-generated method stub
+// public void windowDeiconified(WindowEvent arg0) {
+//  // TODO Auto-generated method stub
 //
-//	}
+// }
 //
-//	public void windowIconified(WindowEvent arg0) {
-//		// TODO Auto-generated method stub
+// public void windowIconified(WindowEvent arg0) {
+//  // TODO Auto-generated method stub
 //
-//	}
+// }
 //
-//	public void windowOpened(WindowEvent arg0) {
-//		// TODO Auto-generated method stub
+// public void windowOpened(WindowEvent arg0) {
+//  // TODO Auto-generated method stub
 //
-//	}
+// }
 //
-//	private void setSubMenuTestSelectedIndexmodelPopup(JMenu subMenuTestSelectedIndexmodelPopup) {
-//		this.subMenuTestSelectedIndexmodelPopup = subMenuTestSelectedIndexmodelPopup;
-//	}
+// private void setSubMenuTestSelectedIndexmodelPopup(JMenu subMenuTestSelectedIndexmodelPopup) {
+//  this.subMenuTestSelectedIndexmodelPopup = subMenuTestSelectedIndexmodelPopup;
+// }
 //
-//	private JMenu getSubMenuTestSelectedIndexmodelPopup() {
-//		return this.subMenuTestSelectedIndexmodelPopup;
-//	}
+// private JMenu getSubMenuTestSelectedIndexmodelPopup() {
+//  return this.subMenuTestSelectedIndexmodelPopup;
+// }
 //
-//	public void setSubMenuTrainSelectedIndexModelPopup(JMenu subMenuTrainSelectedIndexModelPopup) {
-//		this.subMenuTrainSelectedIndexModelPopup = subMenuTrainSelectedIndexModelPopup;
-//	}
+// public void setSubMenuTrainSelectedIndexModelPopup(JMenu subMenuTrainSelectedIndexModelPopup) {
+//  this.subMenuTrainSelectedIndexModelPopup = subMenuTrainSelectedIndexModelPopup;
+// }
 //
-//	public JMenu getSubMenuTrainSelectedIndexModelPopup() {
-//		return this.subMenuTrainSelectedIndexModelPopup;
-//	}
+// public JMenu getSubMenuTrainSelectedIndexModelPopup() {
+//  return this.subMenuTrainSelectedIndexModelPopup;
+// }
 //
-//	public void setActiveModel(FaultDetectionModel activeModel) {
-//		this.currentModel = activeModel;
-//	}
+// public void setActiveModel(FaultDetectionModel activeModel) {
+//  this.currentModel = activeModel;
+// }
 //
-//	public FaultDetectionModel getActiveModel() {
-//		return this.currentModel;
-//	}
+// public FaultDetectionModel getActiveModel() {
+//  return this.currentModel;
+// }
 //
-//	public void setResultsList(javax.swing.JList resultsList) {
-//		this.resultsList = resultsList;
-//	}
+// public void setResultsList(javax.swing.JList resultsList) {
+//  this.resultsList = resultsList;
+// }
 //
-//	public javax.swing.JList getResultsList() {
-//		return this.resultsList;
-//	}
+// public javax.swing.JList getResultsList() {
+//  return this.resultsList;
+// }
 //
-//	public void setScorePlots(ScoreFrameListModel scorePlots) {
-//		this.scorePlots = scorePlots;
-//	}
+// public void setScorePlots(ScoreFrameListModel scorePlots) {
+//  this.scorePlots = scorePlots;
+// }
 //
-//	public ScoreFrameListModel getScorePlots() {
-//		return this.scorePlots;
-//	}
+// public ScoreFrameListModel getScorePlots() {
+//  return this.scorePlots;
+// }
 //
-//	public void setDataSetJList(javax.swing.JList dataSetJList) {
-//		this.dataSetJList = dataSetJList;
-//	}
+// public void setDataSetJList(javax.swing.JList dataSetJList) {
+//  this.dataSetJList = dataSetJList;
+// }
 //
-//	public javax.swing.JList getDataSetJList() {
-//		return this.dataSetJList;
-//	}
+// public javax.swing.JList getDataSetJList() {
+//  return this.dataSetJList;
+// }
 //
-//	public void setSelectedIndexModelPopup(JPopupMenu selectedIndexModelPopup) {
-//		this.selectedIndexModelPopup = selectedIndexModelPopup;
-//	}
+// public void setSelectedIndexModelPopup(JPopupMenu selectedIndexModelPopup) {
+//  this.selectedIndexModelPopup = selectedIndexModelPopup;
+// }
 //
-//	public JPopupMenu getSelectedIndexModelPopup() {
-//		return this.selectedIndexModelPopup;
-//	}
+// public JPopupMenu getSelectedIndexModelPopup() {
+//  return this.selectedIndexModelPopup;
+// }
 //
-//	public void setSubMenuTresholdSelectedIndexmodelPopup(JMenu subMenuTresholdSelectedIndexmodelPopup) {
-//		this.subMenuTresholdSelectedIndexmodelPopup = subMenuTresholdSelectedIndexmodelPopup;
-//	}
+// public void setSubMenuTresholdSelectedIndexmodelPopup(JMenu subMenuTresholdSelectedIndexmodelPopup) {
+//  this.subMenuTresholdSelectedIndexmodelPopup = subMenuTresholdSelectedIndexmodelPopup;
+// }
 //
-//	public JMenu getSubMenuTresholdSelectedIndexmodelPopup() {
-//		return this.subMenuTresholdSelectedIndexmodelPopup;
-//	}
+// public JMenu getSubMenuTresholdSelectedIndexmodelPopup() {
+//  return this.subMenuTresholdSelectedIndexmodelPopup;
+// }
 //
-//	public void setModelList(javax.swing.JList modelList) {
-//		this.modelList = modelList;
-//	}
+// public void setModelList(javax.swing.JList modelList) {
+//  this.modelList = modelList;
+// }
 //
-//	public javax.swing.JList getModelList() {
-//		return this.modelList;
-//	}
+// public javax.swing.JList getModelList() {
+//  return this.modelList;
+// }
 }

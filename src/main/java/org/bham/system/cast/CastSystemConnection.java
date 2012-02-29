@@ -15,9 +15,11 @@ import java.util.logging.Logger;
 public class CastSystemConnection extends SystemConnection {
 
     private CastNetworkGraph graph;
-    private Logger log = Logger.getLogger(getClass().getName());
-//    private Observation
+    private final Logger log = Logger.getLogger(getClass().getName());
 
+    /**
+     * Create the Cast connection graph.
+     */
     public CastSystemConnection() {
         super("CastSystemConnection");
     }
@@ -47,4 +49,9 @@ public class CastSystemConnection extends SystemConnection {
     public TimeSeries<Observation> getObservationTimeSeries() {
         return graph.getObservationTimeSeries();
     }
+
+    public Observation getObservation(int index) {
+        return graph.getObservation(index);
+    }
+
 }

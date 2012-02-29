@@ -1,0 +1,6 @@
+HOST localhost
+
+SUBARCHITECTURE conductor.sa
+JAVA WM cast.architecture.SubarchitectureWorkingMemory
+JAVA TM cast.architecture.AlwaysPositiveTaskManager
+JAVA MG conductor experiments.Node --start --delay "constant 200"

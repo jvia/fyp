@@ -23,6 +23,7 @@ import java.util.logging.Logger;
  * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk>
  */
 public class EncodeData extends AbstractAucomTranformNode<Observation, DataType> {
+    private static final long serialVersionUID = 4565588743167615696L;
     private Encoder encoder;
     private final transient Logger log = Logger.getLogger(getClass().getName());
 
@@ -47,7 +48,7 @@ public class EncodeData extends AbstractAucomTranformNode<Observation, DataType>
      * @throws Exception something went wrong
      */
     @Override
-    public DataType iTransform(Observation input) throws Exception {
+    public DataType iTransform(final Observation input) throws Exception {
         log.info("Encoding " + input.toString());
 
         try {
@@ -67,7 +68,7 @@ public class EncodeData extends AbstractAucomTranformNode<Observation, DataType>
      *
      * @param encoder the encoder
      */
-    public void setEncoder(Encoder encoder) {
+    public void setEncoder(final Encoder encoder) {
         this.encoder = encoder;
     }
 
@@ -77,6 +78,6 @@ public class EncodeData extends AbstractAucomTranformNode<Observation, DataType>
      * @return the encoder
      */
     public Encoder getEncoder() {
-        return this.encoder;
+        return encoder;
     }
 }

@@ -5,24 +5,24 @@ import org.bham.aucom.data.timeseries.TimeSeries;
 
 public class DummySystemConnection extends SystemConnection {
 
-	public DummySystemConnection() {
-		super("DummySystemConnection");
-	}
+    public DummySystemConnection() {
+        super("DummySystemConnection");
+    }
 
-	@Override
-	public void iConnect() throws SystemConnectionFailedException {
-		// dummy function
-	}
+    @Override
+    public void iConnect() throws SystemConnectionFailedException {
+        // dummy function
+    }
 
-	@Override
-	public void iDisconnect() {
-		// dummy function
-	}
+    @Override
+    public void iDisconnect() {
+        // dummy function
+    }
 
-	@Override
-	public TimeSeries<Observation> getObservationTimeSeries() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public TimeSeries<Observation> getObservationTimeSeries() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

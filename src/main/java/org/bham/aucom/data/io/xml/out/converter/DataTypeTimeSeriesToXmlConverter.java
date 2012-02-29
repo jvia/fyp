@@ -8,33 +8,33 @@ import org.bham.aucom.util.Constants;
 
 public class DataTypeTimeSeriesToXmlConverter extends TimeSeriesToXmlDocumentConverter<DataType> {
 
-	/*
-	 *  <ts:datatype>
-        <ts:parameter type="domainfeature" name="source" value="ac"/>
-        <ts:parameter type="domainfeature" name="type" value="insert"/>
-        <ts:parameter type="domainfeature" name="scope" value="shorttermemory"/>
-        <ts:parameter type="eventTypeId">2</ts:parameter>
-        </ts:datatype>
-	 * 
-	 */
-	@Override
-	public void appendElementContentAsXml(Element containerElement, DataType data) {
-		new ObservationTimeSeriesToXmlConverter().appendElementContentAsXml(containerElement, data);
-		 Element dataTypeElement = new Element("ts:datatype", Constants.URI);
-		 containerElement.appendChild(dataTypeElement);
+    /*
+      *  <ts:datatype>
+         <ts:parameter type="domainfeature" name="source" value="ac"/>
+         <ts:parameter type="domainfeature" name="type" value="insert"/>
+         <ts:parameter type="domainfeature" name="scope" value="shorttermemory"/>
+         <ts:parameter type="eventTypeId">2</ts:parameter>
+         </ts:datatype>
+      *
+      */
+    @Override
+    public void appendElementContentAsXml(Element containerElement, DataType data) {
+        new ObservationTimeSeriesToXmlConverter().appendElementContentAsXml(containerElement, data);
+        Element dataTypeElement = new Element("ts:datatype", Constants.URI);
+        containerElement.appendChild(dataTypeElement);
 
-		 for(DomainFeature  feature : data.getFeatures()){
-			 Element featureElement = new Element("ts:parameter", Constants.URI);
-			 dataTypeElement.appendChild(featureElement);
-			 
-			 featureElement.addAttribute(new Attribute("type", "domainfeature"));
-			 featureElement.addAttribute(new Attribute("name", feature.getFeatureName()));
-			 featureElement.addAttribute(new Attribute("value", feature.getFeatureValue()));
-		 }
-		 Element idElement = new Element("ts:parameter", Constants.URI);
-		 idElement.addAttribute(new Attribute("type", "eventTypeId"));
-		 idElement.appendChild(data.getEventTypeIdAsString());
-		 dataTypeElement.appendChild(idElement);
-	}
+        for (DomainFeature feature : data.getFeatures()) {
+            Element featureElement = new Element("ts:parameter", Constants.URI);
+            dataTypeElement.appendChild(featureElement);
+
+            featureElement.addAttribute(new Attribute("type", "domainfeature"));
+            featureElement.addAttribute(new Attribute("name", feature.getFeatureName()));
+            featureElement.addAttribute(new Attribute("value", feature.getFeatureValue()));
+        }
+        Element idElement = new Element("ts:parameter", Constants.URI);
+        idElement.addAttribute(new Attribute("type", "eventTypeId"));
+        idElement.appendChild(data.getEventTypeIdAsString());
+        dataTypeElement.appendChild(idElement);
+    }
 
 }

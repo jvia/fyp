@@ -9,10 +9,10 @@ import org.bham.aucom.fts.sink.TimeSeriesSink;
 /**
  * @author Jeremiah Via <jxv911@cs.bham.ac.uk>
  */
-public class CastNetworkGraph extends AbstractAucomGraph {
+class CastNetworkGraph extends AbstractAucomGraph {
 
-    CastObservationSource source;
-    TimeSeriesSink<Observation> sink;
+    private TimeSeriesSink<Observation> sink;
+    private CastObservationSource source;
 
     public CastNetworkGraph() {
         super("CastNetworkGraph");
@@ -44,5 +44,9 @@ public class CastNetworkGraph extends AbstractAucomGraph {
 
     TimeSeries<Observation> getObservationTimeSeries() {
         return sink.getOutput();
+    }
+
+    public Observation getObservation(int index) {
+        return source.getObservation(index);
     }
 }

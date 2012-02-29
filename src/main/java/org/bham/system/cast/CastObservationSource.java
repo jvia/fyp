@@ -7,6 +7,7 @@ import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.fts.source.AucomSourceAdapter;
 import org.bham.aucom.fts.source.SourceStatus;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Logger;
@@ -16,17 +17,20 @@ import static java.lang.String.format;
 /**
  * @author Jeremiah Via <jxv911@cs.bham.ac.uk>
  */
-public class CastObservationSource extends AucomSourceAdapter<Observation> {
+class CastObservationSource extends AucomSourceAdapter<Observation> {
 
-    private ConnectionManager cast;
-    private LinkedBlockingQueue<String[]> queue;
+    private transient ConnectionManager cast;
+    private transient Logger log = Logger.getLogger(getClass().getName());
+    private transient final ArrayList<Observation> history;
+
+    private final LinkedBlockingQueue<String[]> queue;
     private long count;
-    private final Logger log = Logger.getLogger(getClass().getName());
 
     public CastObservationSource() {
         super("CastObservationSource");
         queue = new LinkedBlockingQueue<String[]>();
         count = 0;
+        history = new ArrayList<Observation>();
     }
 
     @Override
@@ -38,8 +42,9 @@ public class CastObservationSource extends AucomSourceAdapter<Observation> {
 
     @Override
     protected void iConnect() throws ActionFailedException {
-        if (getStatus().equals(SourceStatus.CONNECTED))
+        if (getStatus().equals(SourceStatus.CONNECTED)) {
             return;
+        }
         cast = new ConnectionManager(queue);
         setState(SourceStatus.CONNECTED);
         log.info("Connected");
@@ -62,7 +67,13 @@ public class CastObservationSource extends AucomSourceAdapter<Observation> {
             element.addAttribute(new Attribute("generatorType", msg[2]));
             element.addAttribute(new Attribute("memoryType", msg[3]));
             obs = new Observation(element, Long.parseLong(msg[0]));
+            history.add(obs);
         }
         return obs;
     }
+
+    public Observation getObservation(int index) {
+        return history.get(index);
+    }
+
 }

@@ -1,10 +1,5 @@
 package org.bham.system.playfile;
 
-import java.awt.Dimension;
-import java.io.File;
-
-import javax.swing.JPanel;
-
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.data.timeseries.TimeSeries;
@@ -12,6 +7,10 @@ import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.system.SystemConnection;
 import org.bham.aucom.system.SystemConnectionFailedException;
 import org.bham.aucom.util.Constants;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
 
 public class PlayFileSystemConnection extends SystemConnection {
     private File file;

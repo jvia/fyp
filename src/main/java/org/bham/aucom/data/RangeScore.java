@@ -5,11 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
-* Represents a Score generated out of a sequence of consecutive scores. @see Score
-* Score value, abnormality and durations to precedessors are mean values of the scores
-* Timestamp and Precedessors are  elements of the first score in the represented sequence
-*
-*/
+ * Represents a Score generated out of a sequence of consecutive scores. @see
+ * Score
+ * Score value, abnormality and durations to precedessors are mean values of
+ * the
+ * scores
+ * Timestamp and Precedessors are  elements of the first score in the
+ * represented sequence
+ */
 public class RangeScore extends Score {
     private List<Score> scores;
 
@@ -25,13 +28,13 @@ public class RangeScore extends Score {
         for (Score s : scores) {
             meanValue += s.getValue();
             eventCounter++;
-            setFirstElement(isMarkedAsFirstElement() || s.isMarkedAsFirstElement());
-            setLastElement(isMarkedAsLastElement() || s.isMarkedAsLastElement());
+            setFirstElement(isFirstElement() || s.isFirstElement());
+            setLastElement(isLastElement() || s.isLastElement());
         }
         meanValue /= scores.size();
         setValue(meanValue);
         setVariance(calculateVarianceValue(scores));
-//		setAbnormal(SystemFaultStatus.UNKNOWN);
+//      setAbnormal(SystemFaultStatus.UNKNOWN);
         this.setScores(scores);
     }
 
@@ -99,8 +102,8 @@ public class RangeScore extends Score {
             scores_copy.add((Score) score.copy());
         }
         RangeScore rs_copy = new RangeScore(scores_copy);
-        rs_copy.setFirstElement(isMarkedAsFirstElement());
-        rs_copy.setLastElement(isMarkedAsLastElement());
+        rs_copy.setFirstElement(isFirstElement());
+        rs_copy.setLastElement(isLastElement());
         return rs_copy;
     }
     // delegate to score elements of this range score object

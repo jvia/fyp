@@ -4,5 +4,5 @@ import java.util.EventListener;
 
 
 public interface SystemConnectionStatusListener extends EventListener {
-	public void handleSystemConnectionEvent(SystemConnectionStatusChangedEvent event);
+    public void handleSystemConnectionEvent(SystemConnectionStatusChangedEvent event);
 }

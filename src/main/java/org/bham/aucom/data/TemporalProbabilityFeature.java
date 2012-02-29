@@ -24,8 +24,9 @@ public class TemporalProbabilityFeature extends TemporalDurationFeature {
      */
     public TemporalProbabilityFeature(TemporalDurationFeature tdf, LinkedHashMap<Integer, Double> probabilities) {
         super(tdf);
-        if (this.getDataTypeToProbabilityMapping() == null)
+        if (this.getDataTypeToProbabilityMapping() == null) {
             this.setDataTypeToProbabilityMapping(new LinkedHashMap<DataType, Double>());
+        }
         for (DataType predecessor : this.getPredecessors()) {
             this.getDataTypeToProbabilityMapping().put(predecessor, probabilities.get(Integer.valueOf(predecessor.getEventType())));
         }
@@ -34,18 +35,6 @@ public class TemporalProbabilityFeature extends TemporalDurationFeature {
     public TemporalProbabilityFeature(TemporalProbabilityFeature tpf) {
         this(tpf, tpf.getDataTypeToProbabilityMapping());
     }
-
-
-//	public TemporalDurationFeature getGeneratedFromData() {
-//		if(this.generaDurationFeature == null)
-//			try {
-//				initializeGeneratedFrom();
-//			} catch (IdNotFoundException exception) {
-//				exception.printStackTrace();
-//				return null;
-//			}
-//		return this.generaDurationFeature;
-//	}
 
     public TemporalProbabilityFeature() {
         super();
@@ -58,14 +47,6 @@ public class TemporalProbabilityFeature extends TemporalDurationFeature {
         }
         return out;
     }
-
-//	public void add(Integer eventType, Double inProbability) {
-//		if (isUnknownEventType(eventType)){
-//			System.out.println("Warning: unknown predecessor");
-//			return;
-//		}
-//		this.getDataTypeToProbabilityMapping().put(this.getEventTypeToIdMapping().get(eventType), inProbability);
-//	}
 
     public double getProbabilityFor(DataType eventType) {
         if (isUnknownEventType(eventType)) {
@@ -120,9 +101,11 @@ public class TemporalProbabilityFeature extends TemporalDurationFeature {
 
     @Override
     public String toString() {
-        String s = "";
+        StringBuilder s = new StringBuilder();
         for (DataType dtp : getDataTypeToProbabilityMapping().keySet()) {
-            s += "p:" + dtp.getEventType() + ";pr:" + getDataTypeToProbabilityMapping().get(dtp) + " ";
+            s.append(String.format("p: %d; pr: %s",
+                                   dtp.getEventType(),
+                                   getDataTypeToProbabilityMapping().get(dtp)));
         }
         return super.toString() + s;
     }

@@ -7,7 +7,7 @@ import org.bham.aucom.data.timeseries.*;
 import org.bham.aucom.data.util.DataManager;
 import org.bham.aucom.data.util.SlidingWindow;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassifier;
 import org.bham.aucom.fts.sink.TimeSeriesSink;
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.fts.source.TimeSeriesSource;
@@ -39,8 +39,8 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     private transient GenerateTemporalDurationFeature durationFeatureNode;
     private transient GenerateTemporalProbabilityFeature probabilityFeatureNode;
     private transient CalcEntropyAvgScore rawScoreCalculatorNode;
-    private transient CalcMeanvalue meanScoreCalculatorNode;
-    private transient Classificate classificationNode;
+    private transient CalcMeanValue meanScoreCalculatorNode;
+    private transient Classify classificationNode;
 
     private transient TimeSeriesSource<Score> scoreTimeseriesSource;
     private transient TimeSeriesSink<Classification> sink;
@@ -75,13 +75,8 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
         }
     }
 
-    @Override
-    protected void setStatus(GraphStatus newStatus) {
-        super.setStatus(newStatus);
-    }
-
-    public void setClassificator(AnomalyClassificator classificatorToSet) {
-        classificationNode.setClassificator(classificatorToSet);
+    public void setClassificator(AnomalyClassifier classifierToSet) {
+        classificationNode.setClassifier(classifierToSet);
     }
 
     @Override
@@ -96,10 +91,10 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
         durationFeatureNode = new GenerateTemporalDurationFeature();
         rawScoreCalculatorNode = new CalcEntropyAvgScore();
 
-        meanScoreCalculatorNode = new CalcMeanvalue();
+        meanScoreCalculatorNode = new CalcMeanValue();
         meanScoreCalculatorNode.setSlidingWindow(new SlidingWindow(100, 50));
 
-        classificationNode = new Classificate();
+        classificationNode = new Classify();
         sink = new TimeSeriesSink<Classification>(new ClassificationTimeSeries());
         DataManager.getInstance().addTimeSeries(sink.getOutput());
         sink.getOutput().addTimeSeriesStatusListener(this);
@@ -139,8 +134,8 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
         observationNode.setInput(inTimeSeries);
     }
 
-    public AnomalyClassificator getClassificator() {
-        return classificationNode.getClassificator();
+    public AnomalyClassifier getClassificator() {
+        return classificationNode.getClassifier();
     }
 
     public void setSlidingWindow(SlidingWindow slidingWindow) {
@@ -209,12 +204,12 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     }
 
     /**
-     * Determines if the {@link Classificate} classificator is ready.
+     * Determines if the {@link org.bham.aucom.fts.tranform.Classify} classificator is ready.
      *
      * @return true if ready
      */
     private boolean anomalyDetectorIsReady() {
-        return classificationNode.getClassificator() != null;
+        return classificationNode.getClassifier() != null;
     }
 
     /**
@@ -231,7 +226,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     }
 
     @Override
-    public void timeseriesStatusChanged(TimeseriesStatusEvent status) {
+    public void timeseriesStatusChanged(TimeSeriesStatusEvent status) {
 
     }
 

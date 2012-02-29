@@ -6,17 +6,17 @@ import org.bham.aucom.data.Classification;
 import org.bham.aucom.data.SystemFaultStatus;
 
 public class ExtractTimestampScoreClassification extends AbstractTransformNode<Classification, Triple<Long, Double, SystemFaultStatus>> {
-	long firstTs;
+    long firstTs;
 
-	public ExtractTimestampScoreClassification() {
-		firstTs = -1L;
-	}
+    public ExtractTimestampScoreClassification() {
+        firstTs = -1L;
+    }
 
-	@Override
-	protected Triple<Long, Double, SystemFaultStatus> transform(Classification input) throws Exception {
-		if(firstTs == -1L){
-			firstTs = input.getTimestamp();
-		}
-		return new Triple<Long, Double, SystemFaultStatus>(input.getTimestamp() - firstTs, input.getValue(), input.getStatus());
-	}
+    @Override
+    protected Triple<Long, Double, SystemFaultStatus> transform(Classification input) throws Exception {
+        if (firstTs == -1L) {
+            firstTs = input.getTimestamp();
+        }
+        return new Triple<Long, Double, SystemFaultStatus>(input.getTimestamp() - firstTs, input.getValue(), input.getStatus());
+    }
 }
