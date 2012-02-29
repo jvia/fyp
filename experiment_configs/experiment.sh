@@ -58,7 +58,7 @@ else
 fi
 AUCOMPID="$!"
 PIDS="$PIDS $AUCOMPID"
-sleep 60
+sleep 100
 
 # Start cast-server
 xterm -e bash -c "cast-server" &
