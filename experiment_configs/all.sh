@@ -4,11 +4,11 @@
 ORIGINAL=../target/original.jar
 REDUCED=../target/reduced.jar
 METRONOME=../target/metronome.jar
-DIR=5chain
+DIR=4x4chain
 ITERS=10
 # Cast configs
-NORMAL=../cast_configs/five_chain/five_chain.cast
-FAULTY=../cast_configs/five_chain/five_chain_fault.cast
+NORMAL=../cast_configs/4x4chain/4x4chain.cast
+FAULTY=../cast_configs/4x4chain/4x4chain_fault.cast
 
 mkdir $DIR ; mkdir $DIR/orig ; mkdir $DIR/reduced ; mkdir $DIR/metronome
 ./observation_collection.sh -a $ORIGINAL -o obs -c $NORMAL

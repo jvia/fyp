@@ -199,7 +199,7 @@ public class DiagnoserGui extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         if (args.length == 1) {
-            final String systemName = args[0];
+            //            final String systemName = args[0];
             java.awt.EventQueue.invokeLater(new Runnable() {
 
                 @Override

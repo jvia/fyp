@@ -111,7 +111,7 @@ public class ClassificationTimeSeriesDescriptiveStatisticsTest {
 
     @Test
     public void testGetFautlTimestamp() {
-        Assert.assertEquals(9, ctsds.getFautlTimestamp());
+        Assert.assertEquals(9, ctsds.getFaultTimestamp());
     }
 
     @Test

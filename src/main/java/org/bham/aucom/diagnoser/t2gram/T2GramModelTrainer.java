@@ -19,6 +19,7 @@ import org.bham.aucom.util.Tuple;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -98,7 +99,7 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
     private void updateModel(int firstElement, int secondElement, double[] durations) {
         createDistributionInModelIfMissing(model, firstElement, secondElement);
         ProbabilityDistribution distribution = model.getDistributionFor(firstElement, secondElement);
-        log.finer(format("Adding to distribution [%d --> %d] durations %s", firstElement, secondElement, durations));
+        log.finer(format("Adding to distribution [%d --> %d] durations %s", firstElement, secondElement, Arrays.toString(durations)));
         distribution.update(durations);
 //        model.getDistributionFor(firstElement, secondElement).update(durations);
     }

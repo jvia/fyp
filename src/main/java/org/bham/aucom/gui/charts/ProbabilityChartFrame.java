@@ -55,7 +55,6 @@ public class ProbabilityChartFrame extends javax.swing.JPanel {
      * Creates new form ProbabilityChartFrame
      */
     public ProbabilityChartFrame(String type) {
-        Logger.getLogger(this.getClass().getName()).setLevel(Level.SEVERE);
         this.type = type;
         initComponents();
         initChart();

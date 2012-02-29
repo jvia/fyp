@@ -8,7 +8,12 @@ import org.bham.aucom.data.DomainFeature;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.util.Constants;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.TreeSet;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
@@ -36,13 +41,17 @@ public class SourceScopeTypeEncoder extends Encoder {
             s = new Scanner(getClass().getResourceAsStream(PATH));
             while (s.hasNextLine()) {
                 String line = s.nextLine();
-                if (line.isEmpty() || line.startsWith("#")) continue;
+                if (line.isEmpty() || line.startsWith("#")) {
+                    continue;
+                }
 
                 String[] result = line.split("\\s+");
                 classes.put(result[0].trim(), Integer.valueOf(result[1].trim()));
             }
         } finally {
-            if (s != null) s.close();
+            if (s != null) {
+                s.close();
+            }
         }
     }
 
@@ -116,9 +125,9 @@ public class SourceScopeTypeEncoder extends Encoder {
     }
 
     public String createFeatureString(List<DomainFeature> features) {
-        String classAsString = "";
+        StringBuilder classAsString = new StringBuilder();
         for (DomainFeature f : features) {
-            classAsString += f.getFeatureValue() + EncoderSeperator;
+            classAsString.append(f.getFeatureValue()).append(EncoderSeperator);
         }
         return classAsString.substring(0, classAsString.lastIndexOf(EncoderSeperator));
     }
@@ -149,8 +158,9 @@ public class SourceScopeTypeEncoder extends Encoder {
 
     private String decodeToString(int inId) {
         for (String key : this.classes.keySet()) {
-            if (inId == this.classes.get(key))
+            if (inId == this.classes.get(key)) {
                 return key;
+            }
         }
         return "";
     }

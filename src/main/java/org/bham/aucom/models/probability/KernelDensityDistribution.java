@@ -30,7 +30,8 @@ public class KernelDensityDistribution implements ProbabilityDistribution {
 
     @Override
     public double getEntropy() {
-        if (entropy == Double.MIN_VALUE) {
+        // double equality check
+        if (Math.abs(entropy - Double.MIN_VALUE) < 0.0000001) {
             double[] means = estimator.getMeans();
             for (int i = 0; i < estimator.getNumKernels(); i++) {
                 if (Double.isNaN(getProbability(means[i]) * log(getProbability(means[i]), 2))) {
@@ -43,8 +44,9 @@ public class KernelDensityDistribution implements ProbabilityDistribution {
                 // log.info("prob for "
                 // +means[i]+ " is " + estimator.getProbability(means[i]));
             }
-            if (Double.isNaN(entropy))
+            if (Double.isNaN(entropy)) {
                 log.info("num kernels " + estimator.getNumKernels() + " entropy " + (-entropy));
+            }
             entropy = -entropy;
         }
         return entropy;
@@ -72,8 +74,9 @@ public class KernelDensityDistribution implements ProbabilityDistribution {
     public void update(double[] val) {
         queriedValues.clear();
         double weight = 1.0;
-        for (double aVal : val)
+        for (double aVal : val) {
             estimator.addValue(aVal, weight);
+        }
 
         Arrays.sort(val);
         setMaxSeenValue(val[val.length - 1]);

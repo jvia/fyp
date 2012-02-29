@@ -49,7 +49,6 @@ public class AucomChart extends javax.swing.JFrame {
      * Creates new form ProbabilityChartFrame
      */
     public AucomChart(String type) {
-        Logger.getLogger(this.getClass().getName()).setLevel(Level.SEVERE);
         this.type = type;
         initComponents();
         initChart();

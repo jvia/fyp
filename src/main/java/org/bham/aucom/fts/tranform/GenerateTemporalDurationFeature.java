@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 public class GenerateTemporalDurationFeature extends AbstractAucomTranformNode<DataType, TemporalDurationFeature> {
     private static final long serialVersionUID = 3563291160956922501L;
     private final transient Logger log = Logger.getLogger(getClass().getName());
-    private TemporalDurationFeatureGenerator generator;
+    private transient TemporalDurationFeatureGenerator generator;
 
     /**
      * Create the transformation node.

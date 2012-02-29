@@ -28,8 +28,9 @@ public class HysteresisAnomalyClassifier extends AbstractAnomalyClassifier {
     }
 
     private Double getCurrentThreshold() {
-        if (this.isLastElementSatisfies())
+        if (this.isLastElementSatisfies()) {
             return this.getLower();
+        }
         return this.getUpper();
     }
 
@@ -107,5 +108,10 @@ public class HysteresisAnomalyClassifier extends AbstractAnomalyClassifier {
     @Override
     public void reset() {
         isLastElementSatisfies = true;
+    }
+
+    public int hashCode() {
+        assert false : "hashCode not designed";
+        return 42; // any arbitrary constant will do
     }
 }

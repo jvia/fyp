@@ -9,37 +9,16 @@ import static org.bham.aucom.util.Constants.LOWESTPROBABILITY;
 
 public class HistogramDistribution implements ProbabilityDistribution {
     private static final long serialVersionUID = 1L;
+
     private String name;
     public HistogramData content;
 
-    static class HistogramDistributionIterator implements Iterator<Double> {
-        HistogramDistribution dist;
-        int index;
-        int maxIndex;
-        Iterator<HistogramBin> it;
-
-        public HistogramDistributionIterator(HistogramDistribution inDist) {
-            this.dist = inDist;
-            this.maxIndex = inDist.content.getNumBins() - 1;
-            this.index = 0;
-            this.it = this.dist.content.getBins().values().iterator();
+    public HistogramDistribution(String inName, double inBinSize, double[] vals) {
+        setName(inName);
+        this.content = new HistogramData(inBinSize);
+        for (double val : vals) {
+            this.content.put(val);
         }
-
-        @Override
-        public boolean hasNext() {
-            return it.hasNext();
-        }
-
-        @Override
-        public Double next() {
-            return dist.getProbByBinNumber(it.next().getBinNumber());
-        }
-
-        @Override
-        public void remove() {
-            //TODO: remove einbauen
-        }
-
     }
 
     public boolean validate() {
@@ -62,14 +41,6 @@ public class HistogramDistribution implements ProbabilityDistribution {
     public HistogramDistribution(String inName, double inBinSize) {
         setName(inName);
         this.content = new HistogramData(inBinSize);
-    }
-
-    public HistogramDistribution(String inName, double inBinSize, double[] vals) {
-        setName(inName);
-        this.content = new HistogramData(inBinSize);
-        for (double val : vals) {
-            this.content.put(val);
-        }
     }
 
     private void put(double value) {
@@ -159,6 +130,10 @@ public class HistogramDistribution implements ProbabilityDistribution {
         return this.content.getBinSize();
     }
 
+    public HistogramData getContent() {
+        return content;
+    }
+
     @Override
     public double getEntropy() {
         double entropy = 0.0f;
@@ -195,12 +170,12 @@ public class HistogramDistribution implements ProbabilityDistribution {
         Logger.getLogger(this.getClass().getCanonicalName()).info(info);
     }
 
-
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
         return 0;
     }
+
 
     @Override
     public double expectedValue() {
@@ -230,5 +205,36 @@ public class HistogramDistribution implements ProbabilityDistribution {
     public double getMaxProbability() {
         // TODO Auto-generated method stub
         return 0;
+    }
+
+    static class HistogramDistributionIterator implements Iterator<Double> {
+        HistogramDistribution dist;
+        int index;
+        int maxIndex;
+
+        Iterator<HistogramBin> it;
+
+        public HistogramDistributionIterator(HistogramDistribution inDist) {
+            this.dist = inDist;
+            this.maxIndex = inDist.content.getNumBins() - 1;
+            this.index = 0;
+            this.it = this.dist.content.getBins().values().iterator();
+        }
+
+        @Override
+        public boolean hasNext() {
+            return it.hasNext();
+        }
+
+        @Override
+        public Double next() {
+            return dist.getProbByBinNumber(it.next().getBinNumber());
+        }
+
+        @Override
+        public void remove() {
+            //TODO: remove einbauen
+        }
+
     }
 }
