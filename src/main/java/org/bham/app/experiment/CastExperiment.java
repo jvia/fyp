@@ -256,7 +256,7 @@ public class CastExperiment implements Experiment {
     private T2GramDetector createDetector(T2GramModelI model) {
         T2GramDetector detector = new T2GramDetector();
         detector.setModel(model);
-        detector.setClassificator(new StatisticalAnomalyClassifier(0.1, 0.001));
+        detector.setClassificator(new StatisticalAnomalyClassifier(0.5, 0.001));
         detector.setSlidingWindow(new SlidingWindow(100, 50));
         return detector;
     }

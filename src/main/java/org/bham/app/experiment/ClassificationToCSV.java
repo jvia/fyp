@@ -96,12 +96,12 @@ public class ClassificationToCSV implements Experiment {
             csv = new FileWriter(out);
             csv.append("#    Timestamp     Score     Threshold     Status\n");
             for (Classification classification : list) {
-                csv.append(String.format("     %9d     %5.3f     %6.3f    %6.0f   %s%n",
+                csv.append(String.format("     %9d     %5.3f     %6.3f    %6.0f   %d%n",
                                          classification.getTimestamp(),
                                          classification.getValue(),
                                          Double.parseDouble(classification.getAttributeValue(StatisticalAnomalyClassifier.THRESHOLD_USED)),
                                          classification.getStatusAsDouble(),
-                                         classification.getName()));
+                                         classification.getEventType()));
             }
         } catch (IOException e) {
             e.printStackTrace();
