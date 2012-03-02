@@ -3,7 +3,11 @@ package org.bham.aucom.fts.graph;
 import org.bham.aucom.data.Classification;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.Score;
-import org.bham.aucom.data.timeseries.*;
+import org.bham.aucom.data.timeseries.ClassificationTimeSeries;
+import org.bham.aucom.data.timeseries.ScoreTimeSeries;
+import org.bham.aucom.data.timeseries.TimeSeries;
+import org.bham.aucom.data.timeseries.TimeSeriesStatusEvent;
+import org.bham.aucom.data.timeseries.TimeSeriesStatusListener;
 import org.bham.aucom.data.util.DataManager;
 import org.bham.aucom.data.util.SlidingWindow;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
@@ -11,7 +15,15 @@ import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClas
 import org.bham.aucom.fts.sink.TimeSeriesSink;
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.fts.source.TimeSeriesSource;
-import org.bham.aucom.fts.tranform.*;
+import org.bham.aucom.fts.tranform.CalcEntropyAvgScore;
+import org.bham.aucom.fts.tranform.CalcMeanValue;
+import org.bham.aucom.fts.tranform.Classify;
+import org.bham.aucom.fts.tranform.CountDataTypes;
+import org.bham.aucom.fts.tranform.CropTimestampFromData;
+import org.bham.aucom.fts.tranform.EncodeData;
+import org.bham.aucom.fts.tranform.GenerateTemporalDurationFeature;
+import org.bham.aucom.fts.tranform.GenerateTemporalProbabilityFeature;
+import org.bham.aucom.fts.tranform.TemporalDurationFeatureGenerator;
 
 import java.util.logging.Logger;
 
@@ -170,7 +182,10 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
      */
     @Override
     public boolean preconditionsSatisfied() {
-        return inputIsPresent() && featureGeneratorIsReady() && modelIsReady() && anomalyDetectorIsReady();
+        return inputIsPresent() &&
+               featureGeneratorIsReady() &&
+               modelIsReady() &&
+               anomalyDetectorIsReady();
     }
 
     /**
@@ -180,18 +195,22 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
      */
     @Override
     protected String getReason() {
-        String reason = "\n";
+        StringBuilder reason = new StringBuilder("\n");
 
-        if (!inputIsPresent())
-            reason += "- input is missing, connect to a system first\n";
-        if (!featureGeneratorIsReady())
-            reason += "- feature generator not ready\n";
-        if (!modelIsReady())
-            reason += "- model is not ready\n";
-        if (!anomalyDetectorIsReady())
-            reason += "- anomaly detector is not ready\n";
+        if (!inputIsPresent()) {
+            reason.append("- input is missing, connect to a system first\n");
+        }
+        if (!featureGeneratorIsReady()) {
+            reason.append("- feature generator not ready\n");
+        }
+        if (!modelIsReady()) {
+            reason.append("- model is not ready\n");
+        }
+        if (!anomalyDetectorIsReady()) {
+            reason.append("- anomaly detector is not ready\n");
+        }
 
-        return reason;
+        return reason.toString();
     }
 
     /**
@@ -204,7 +223,8 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     }
 
     /**
-     * Determines if the {@link org.bham.aucom.fts.tranform.Classify} classificator is ready.
+     * Determines if the {@link org.bham.aucom.fts.tranform.Classify}
+     * classificator is ready.
      *
      * @return true if ready
      */

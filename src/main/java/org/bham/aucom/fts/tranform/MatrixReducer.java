@@ -22,7 +22,7 @@ public class MatrixReducer {
 
     private Map<Integer, List<Integer>> connections;
     private static final String FILE_NAME = "/connections.txt";
-    private final Logger log = Logger.  getLogger(getClass().getName());
+    private final Logger log = Logger.getLogger(getClass().getName());
     private static final int METRONOME = 0;
 
     public MatrixReducer() {
@@ -31,7 +31,7 @@ public class MatrixReducer {
 
         Scanner s = null;
         try {
-            log.config(format("Loading connectons file from %s", getClass().getResourceAsStream(FILE_NAME)));
+            log.config(format("Loading connections file from %s", getClass().getResourceAsStream(FILE_NAME)));
             s = new Scanner(getClass().getResourceAsStream(FILE_NAME));
 
             while (s.hasNextLine()) {
@@ -47,24 +47,31 @@ public class MatrixReducer {
                     continue;
                 }
 
-                for (int i = 0; i < result.length - 1; i++) {
-                    int from = Integer.valueOf(result[i].trim());
-                    int to = Integer.valueOf(result[i + 1].trim());
-
-                    // Add to set of all components
-                    all.add(from);
-                    all.add(to);
+                if (result.length == 1) {
+                    all.add(Integer.valueOf(result[0].trim()));
+                } else {
+                    for (int i = 0; i < result.length - 1; i++) {
+                        // Add to set of all components
+                        all.add(Integer.valueOf(result[i].trim()));
+                        all.add(Integer.valueOf(result[i + 1].trim()));
+                    }
                 }
             }
         } finally {
-            if (s != null) s.close();
+            if (s != null) {
+                s.close();
+            }
         }
 
         // Add data to connections
         connections.put(METRONOME, new ArrayList<Integer>(all));
         connections.get(METRONOME).add(METRONOME);
         for (int i : all) {
-            connections.put(i, Arrays.asList(METRONOME));
+            if (connections.containsKey(i)) {
+                connections.get(i).add(METRONOME);
+            } else {
+                connections.put(i, Arrays.asList(METRONOME));
+            }
         }
     }
 
