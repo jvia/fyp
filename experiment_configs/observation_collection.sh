@@ -21,7 +21,7 @@ help_obs()
 }
 
 # Make arguments all exists
-if [ $# -lt 4 ]; then
+if [ $# -lt 3 ]; then
     help_obs
 fi
 while getopts a:c:o:x opt
@@ -38,11 +38,6 @@ done
 PIDS=""
 VM="-Djava.util.logging.config.file=data/logging.properties -Xmx2g"
 
-echo "Starting CAST server"
-xterm -e bash -c "cast-server" &
-PIDS="$PIDS $!"
-sleep 1
-
 echo "Starting aucom ($AUCOM)"
 xterm -e bash -c \
     "java $VM -jar $AUCOM \
@@ -52,9 +47,18 @@ AUCOMPID="$!"
 PIDS="$PIDS $AUCOMPID"
 sleep 1
 
-echo "Starting CAST client ($CAST_CONFIG)"
-xterm -e bash -c "cast-client $CAST_CONFIG" &
-PIDS="$PIDS $!"
+if [ -z $CAST_CONFIG ]; then
+    echo "Using outside CAST config"
+else
+    echo "Starting CAST server"
+    xterm -e bash -c "cast-server-start" &
+    PIDS="$PIDS $!"
+    sleep 1
+
+    echo "Starting CAST client ($CAST_CONFIG)"
+    xterm -e bash -c "cast-client-start $CAST_CONFIG" &
+    PIDS="$PIDS $!"
+fi
 
 wait $AUCOMPID
 kill $PIDS >/dev/null 2>&1

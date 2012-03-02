@@ -51,17 +51,13 @@ public class MatrixReducer {
                     int from = Integer.valueOf(result[i].trim());
                     int to = Integer.valueOf(result[i + 1].trim());
 
-                    // Add to data structure
-                    if (!connections.containsKey(from)) {
-                        connections.put(from, new ArrayList<Integer>());
-                    }
-                    connections.get(from).add(to);
+                    // Add to set of all components
+                    all.add(from);
+                    all.add(to);
                 }
             }
         } finally {
-            if (s != null) {
-                s.close();
-            }
+            if (s != null) s.close();
         }
 
         // Add data to connections
