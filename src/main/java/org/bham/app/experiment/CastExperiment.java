@@ -125,6 +125,7 @@ public class CastExperiment implements Experiment {
      * @param obs observation file
      * @return the observation time series
      */
+    @SuppressWarnings({"unchecked"})
     private TimeSeries<Observation> loadObservation(File obs) {
         TimeSeries<Observation> ts = null;
         try {
