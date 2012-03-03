@@ -30,13 +30,13 @@ import java.io.IOException;
  */
 public class Replay implements Experiment {
 
-    private ModelTrainer trainer;
+    private final ModelTrainer trainer;
     private Detector detector;
     private PlayFileSystemConnection replay;
 
-    private File observation;
-    private File trainingObservation;
-    private File classification;
+    private final File observation;
+    private final File trainingObservation;
+    private final File classification;
 
     public Replay(File trainingObservation, File observation, File classification) {
         this.trainingObservation = trainingObservation;
