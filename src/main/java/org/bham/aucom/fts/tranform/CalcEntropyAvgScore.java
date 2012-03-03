@@ -94,10 +94,14 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
 
         // Warn if values are illegal
         if (Double.isNaN(probability)) {
-            log.warning(String.format("Probability is NaN: [%d --> %d]", predecessor.getEventType(), current.getEventType()));
+            log.warning(String.format("Probability is NaN: [%d --> %d]",
+                                      predecessor.getEventType(),
+                                      current.getEventType()));
         }
         if (Double.isNaN(entropy)) {
-            log.warning(String.format("Entropy is NaN: [%d --> %d]", predecessor.getEventType(), current.getEventType()));
+            log.warning(String.format("Entropy is NaN: [%d --> %d]",
+                                      predecessor.getEventType(),
+                                      current.getEventType()));
         }
 
         // Calculate output
