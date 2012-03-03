@@ -52,6 +52,9 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
         if (getModel().isEmpty()) {
             log.severe("Model not trained");
         }
+        if (current.getEventType() != 0) {
+            return null;
+        }
 
         double sum_entropy = calculateSumEntropy(current);
         // If entropy is too small, ensure minimal denominator
