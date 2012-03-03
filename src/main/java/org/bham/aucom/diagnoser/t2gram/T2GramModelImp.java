@@ -132,7 +132,7 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
 
     @Override
     public String toString() {
-        return String.format("Name: %s; Trained: %b", this.getName(), isTrained());
+        return String.format("Name: %s; Trained: %b, Dimensions: %s", this.getName(), isTrained(), getDimensions());
     }
 
     protected void setName(String name) {

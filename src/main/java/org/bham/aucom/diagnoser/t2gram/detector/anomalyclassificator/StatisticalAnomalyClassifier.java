@@ -31,15 +31,13 @@ public class StatisticalAnomalyClassifier extends AbstractAnomalyClassifier {
     private double classifierMean;
     private double classifierVariance;
     private final double a;
-
     private transient List<Score> scoreHistory = Collections.synchronizedList(new ArrayList<Score>());
-
     private int historySize = 50;
 
 
     public StatisticalAnomalyClassifier(final Double mean,
                                         final Double variance) {
-        super("statistical");
+        super("StatisticalAnomalyClassifier");
         setMean(mean);
         setVariance(variance);
         a = 0.95;

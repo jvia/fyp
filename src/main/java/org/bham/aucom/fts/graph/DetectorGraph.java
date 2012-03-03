@@ -139,7 +139,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     }
 
     public String getName() {
-        return "testgraph";
+        return "DetectorGraph";
     }
 
     public void setInput(TimeSeries<Observation> inTimeSeries) throws ActionFailedException {

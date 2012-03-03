@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 public class Classify extends AbstractAucomTranformNode<Score, Classification> {
     private AnomalyClassifier classifier = null;
+    private final transient Logger log = Logger.getLogger(getClass().getName());
 
     public Classify(AnomalyClassifier inThreshold) {
         super("ClassifyScore");
@@ -29,14 +30,14 @@ public class Classify extends AbstractAucomTranformNode<Score, Classification> {
             cl = new Classification(in, SystemFaultStatus.ABNORMAL);
         }
 
-        Logger.getLogger(this.getClass().getCanonicalName()).info(in.toString() + " classified as " + cl.getStatus());
+        log.info(in.toString() + " classified as " + cl.getStatus());
         return cl;
     }
 
     @Override
     protected Classification iTransform(Score arg0) throws Exception {
         try {
-            Logger.getLogger(this.getClass().getCanonicalName()).info("classifying score " + arg0);
+            log.info("classifying score " + arg0);
             return decide(arg0);
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -45,11 +46,11 @@ public class Classify extends AbstractAucomTranformNode<Score, Classification> {
     }
 
     public void setClassifier(AnomalyClassifier threshold) {
-        this.classifier = threshold;
+        classifier = threshold;
     }
 
     public AnomalyClassifier getClassifier() {
-        return this.classifier;
+        return classifier;
     }
 
     public void reset() {

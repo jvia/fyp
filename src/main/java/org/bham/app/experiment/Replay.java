@@ -166,8 +166,13 @@ public class Replay implements Experiment {
     private T2GramDetector createDetector(final Model model) {
         T2GramDetector detector = new T2GramDetector();
         detector.setModel(model);
-        detector.setClassificator(new StatisticalAnomalyClassifier(0.3, 0.1));
-        detector.setSlidingWindow(new SlidingWindow(100, 10));
+        detector.setClassificator(new StatisticalAnomalyClassifier(0.7, 0.001));
+        detector.setSlidingWindow(new SlidingWindow(1, 0));
+
+        System.out.printf("Classifier:     %s%n", detector.getClassificator().getAttributes());
+        System.out.printf("Sliding Window: %s%n", detector.getSlidingWindow());
+        System.out.printf("Class. Model:   %s%n", detector.getDetectorGraph().getModel());
+
         return detector;
     }
 }
