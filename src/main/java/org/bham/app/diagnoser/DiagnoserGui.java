@@ -92,7 +92,7 @@ public class DiagnoserGui extends javax.swing.JFrame {
             button.setIcon(new ImageIcon(imageURL, altText));
         } else { // no image found
             button.setText(altText);
-            System.err.println("Resource not found: " + imgLocation);
+            //System.err.println("Resource not found: " + imgLocation);
         }
 
         return button;
