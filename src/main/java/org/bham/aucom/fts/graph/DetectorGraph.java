@@ -117,9 +117,9 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
         graph.connect(countingNode, durationFeatureNode);
         graph.connect(durationFeatureNode, probabilityFeatureNode);
         graph.connect(probabilityFeatureNode, rawScoreCalculatorNode);
-        //graph.connect(rawScoreCalculatorNode, meanScoreCalculatorNode);
-        //graph.connect(meanScoreCalculatorNode, classificationNode);
-        graph.connect(rawScoreCalculatorNode, classificationNode);
+        graph.connect(rawScoreCalculatorNode, meanScoreCalculatorNode);
+        graph.connect(meanScoreCalculatorNode, classificationNode);
+        //graph.connect(rawScoreCalculatorNode, classificationNode);
         graph.connect(scoreTimeseriesSource, classificationNode);
 
         graph.connect(classificationNode, sink);
