@@ -43,7 +43,7 @@ public class TemporalDurationFeature extends DataType {
      * durations. See {@see predecessorIdToDurationsMapping} for an explanation
      * of durations.
      *
-     * @param dtt       the datatype
+     * @param dtt       the data type
      * @param durations the list of durations
      */
     public TemporalDurationFeature(DataType dtt, LinkedHashMap<DataType, Long> durations) {

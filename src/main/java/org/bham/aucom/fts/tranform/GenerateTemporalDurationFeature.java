@@ -23,7 +23,6 @@ public class GenerateTemporalDurationFeature extends AbstractAucomTranformNode<D
      * Create the transformation node.
      */
     public GenerateTemporalDurationFeature() {
-        // TODO :: see if generator can be passed in as constructor parameter
         super("GenerateDurationFeature");
         generator = null;
     }
