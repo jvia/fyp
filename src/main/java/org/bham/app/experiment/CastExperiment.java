@@ -14,7 +14,7 @@ import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelImp;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelTrainer;
 import org.bham.aucom.diagnoser.t2gram.detector.T2GramDetector;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.StatisticalAnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.StatisticalAnomalyClassifier;
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.system.SystemConnectionFailedException;
 import org.bham.aucom.util.Tuple;
@@ -256,7 +256,7 @@ public class CastExperiment implements Experiment {
     private T2GramDetector createDetector(T2GramModelI model) {
         T2GramDetector detector = new T2GramDetector();
         detector.setModel(model);
-        detector.setClassificator(new StatisticalAnomalyClassificator(0.1, 0.001));
+        detector.setClassificator(new StatisticalAnomalyClassifier(0.1, 0.001));
         detector.setSlidingWindow(new SlidingWindow(100, 50));
         return detector;
     }
