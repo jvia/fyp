@@ -28,9 +28,9 @@ public abstract class AbstractAucomTranformNode<TIn extends AbstractData, TOut e
         TOut out = null;
 
         try {
-            Logger.getLogger(this.getClass().getCanonicalName()).info("input is " + input);
+//            Logger.getLogger(this.getClass().getCanonicalName()).info("input is " + input);
             out = iTransform(input);
-            Logger.getLogger(this.getClass().getCanonicalName()).info(" output is " + out);
+//            Logger.getLogger(this.getClass().getCanonicalName()).info(" output is " + out);
         } catch (Exception exception) {
             exception.printStackTrace();
         }
@@ -52,7 +52,7 @@ public abstract class AbstractAucomTranformNode<TIn extends AbstractData, TOut e
         this.stopTimestamp = System.currentTimeMillis();
         long newpt = (this.stopTimestamp - this.startTimestamp);
         if (this.isShowProcessingTime && (Math.abs(this.lastProcessingTime - newpt)) > 10) {
-            Logger.getLogger(this.getClass().getCanonicalName()).info(this.name + " current timestamp " + newpt + " increase: " + (this.lastProcessingTime - newpt));
+//            Logger.getLogger(this.getClass().getCanonicalName()).info(this.name + " current timestamp " + newpt + " increase: " + (this.lastProcessingTime - newpt));
         }
         this.lastProcessingTime = newpt;
         if (this.getClass().equals(Classificate.class)) {
