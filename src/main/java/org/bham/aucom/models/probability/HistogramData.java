@@ -1,25 +1,26 @@
 package org.bham.aucom.models.probability;
 
-import org.bham.aucom.util.BinCaluclator;
+import org.bham.aucom.util.BinCalculator;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class HistogramData implements Serializable {
     private static final long serialVersionUID = 0L;
     private double binSize;
-    private LinkedHashMap<Integer, HistogramBin> content;
-    BinCaluclator calculator;
-    boolean isDirty;
-    int sumValues;
+    private Map<Integer, HistogramBin> content;
+    private final BinCalculator calculator;
+    private boolean isDirty;
+    private int sumValues;
 
     public HistogramData(double inBinSize) {
         this(new LinkedHashMap<Integer, HistogramBin>(), inBinSize);
     }
 
-    public HistogramData(LinkedHashMap<Integer, HistogramBin> in, double inBinSize) {
+    private HistogramData(final Map<Integer, HistogramBin> in, double inBinSize) {
         setBins(in);
         this.calculator = new LinearBinCalculator(inBinSize);
         //calculator = new LogarithmicBinCalculator(inBinSize);
@@ -54,18 +55,20 @@ public class HistogramData implements Serializable {
             lowerBin--;
             lowerBinFound = containsBinWithNumber(binNumber);
         }
-        if (lowerBinFound)
+        if (lowerBinFound) {
             info("lowerBin is " + lowerBin);
-        else
+        } else {
             info("no lower bin found");
+        }
         while (!higherBinFound && higherBin < getNumBins() - 1) {
             higherBin++;
             higherBinFound = containsBinWithNumber(binNumber);
         }
-        if (higherBinFound)
+        if (higherBinFound) {
             info("lowerBin is " + higherBin);
-        else
+        } else {
             info("no lower bin found");
+        }
         if (Math.abs(binNumber - lowerBin) == Math.abs(binNumber - higherBin)) {
             double splitValue = this.binSize / 2.0d;
             double modulo = value % this.binSize;
@@ -127,8 +130,9 @@ public class HistogramData implements Serializable {
     }
 
     public double getValueOfBinWithNumber(int binNumber) {
-        if (!getBins().containsKey(binNumber))
+        if (!getBins().containsKey(binNumber)) {
             return -1.0f;
+        }
         return getBins().get(binNumber).getValue();
     }
 
@@ -140,24 +144,24 @@ public class HistogramData implements Serializable {
         return getBins().get(binNumber);
     }
 
-    /*
-      * Increases the number of occurrences for the bin with the identification
-      * number defined by id
-      *
-      * @input the identification number of the bin which value has to be
-      * increased
-      */
+    /**
+     * Increases the number of occurrences for the bin with the identification
+     * number defined by id
+     *
+     * @param id the identification number of the bin which value has to be
+     *           increased
+     */
     private void increase(int id) {
         getBinWithBinNumber(id).increase();
     }
 
-    /*
-      * Sets the value of number of occurrences of the bin with the
-      * identification number defined by id
-      *
-      * @input the identification number of the bin which value has to be set to
-      * 0
-      */
+    /**
+     * Sets the value of number of occurrences of the bin with the
+     * identification number defined by id
+     *
+     * @param id the identification number of the bin which value has to be set
+     *           to 0
+     */
     public void reset(int id) {
         getBinWithBinNumber(id).reset();
         this.isDirty = true;
@@ -187,8 +191,9 @@ public class HistogramData implements Serializable {
     public double getMaxValue() {
         double max = Integer.MIN_VALUE;
         for (HistogramBin bin : getBins().values()) {
-            if (max < bin.getValue())
+            if (max < bin.getValue()) {
                 max = bin.getValue();
+            }
 
         }
         return max;
@@ -198,8 +203,9 @@ public class HistogramData implements Serializable {
         double max = Integer.MIN_VALUE;
         int binNumber = -1;
         for (HistogramBin bin : getBins().values()) {
-            if (max < bin.getValue())
+            if (max < bin.getValue()) {
                 max = bin.getValue();
+            }
             binNumber = bin.getBinNumber();
 
         }
@@ -207,8 +213,9 @@ public class HistogramData implements Serializable {
     }
 
     public int getSumValues() {
-        if (!this.isDirty)
+        if (!this.isDirty) {
             return this.sumValues;
+        }
         int sum = 0;
         for (HistogramBin bin : getBins().values()) {
             sum += bin.getValue();
@@ -220,19 +227,20 @@ public class HistogramData implements Serializable {
 
     @Override
     public String toString() {
-        if (getBins().size() == 0)
+        if (getBins().size() == 0) {
             return "[nobins]";
-        String out = "";
-        for (HistogramBin bin : getBins().values()) {
-            out += bin + "\n";
         }
-        return out;
+        StringBuilder out = new StringBuilder();
+        for (HistogramBin bin : getBins().values()) {
+            out.append(bin).append("%n");
+        }
+        return out.toString();
     }
 
     /**
      * @param content the content to set
      */
-    private void setBins(LinkedHashMap<Integer, HistogramBin> content) {
+    private void setBins(Map<Integer, HistogramBin> content) {
         this.content = content;
         this.isDirty = true;
     }
@@ -240,7 +248,7 @@ public class HistogramData implements Serializable {
     /**
      * @return the content
      */
-    public LinkedHashMap<Integer, HistogramBin> getBins() {
+    public Map<Integer, HistogramBin> getBins() {
         return this.content;
     }
 
@@ -249,6 +257,6 @@ public class HistogramData implements Serializable {
     }
 
     public double getBinSize() {
-        return this.binSize;
+        return binSize;
     }
 }

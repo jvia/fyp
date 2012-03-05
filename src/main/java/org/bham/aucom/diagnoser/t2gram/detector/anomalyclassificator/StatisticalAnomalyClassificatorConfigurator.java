@@ -7,9 +7,9 @@ public class StatisticalAnomalyClassificatorConfigurator implements AnomalyConfi
     private double variance = Double.NaN;
 
     @Override
-    public void configure(AnomalyClassificator in) throws ConfigurationFailedException {
+    public void configure(AnomalyClassifier in) throws ConfigurationFailedException {
         try {
-            StatisticalAnomalyClassificator sAcl = (StatisticalAnomalyClassificator) in;
+            StatisticalAnomalyClassifier sAcl = (StatisticalAnomalyClassifier) in;
             if (Double.isNaN(mean) || Double.isNaN(variance)) {
                 throw new ConfigurationFailedException();
             }

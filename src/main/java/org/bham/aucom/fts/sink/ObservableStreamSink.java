@@ -46,7 +46,7 @@ public class ObservableStreamSink<TIn extends AbstractData> extends AucomSinkAda
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (evt.isMarkedAsLastElement()) {
+        if (evt.isLastElement()) {
             fireAucomSinkStatusChangedEvent(new AucomSinkStatusEvent(this, NodeStatus.RECEIVEDLASTELEMENT));
             System.out.println("pushing last item " + evt);
         }

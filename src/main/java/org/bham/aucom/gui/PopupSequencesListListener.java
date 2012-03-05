@@ -49,7 +49,7 @@ public class PopupSequencesListListener extends MouseAdapter {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                XYSeries series = getFrame().getScoreXYSeries((TimeSeries<Score>) getSequenceList().getSelectedValue());
+//                XYSeries series = getFrame().getScoreXYSeries((TimeSeries<Score>) getSequenceList().getSelectedValue());
 //    getFrame().removeline();
 //    getFrame().setThresholdValue(((ScoreSequence)getSequenceList().getSelectedValue()).getThreshold().getMeanValue());
             }
@@ -60,17 +60,6 @@ public class PopupSequencesListListener extends MouseAdapter {
     }
 
     private void showNodeGraph(XYSeries s) {
-//  Range r = getFrame().getVisibleIntervalDomainAxis();
-//  int from = (int) r.getLowerBound();
-//  int to = (int) r.getUpperBound();
-//  TimeSeries<Score> sequence = getFrame().getScoreSequence(s);
-//  ArrayList<Score> vals = sequence.getElementsInRange(from, to);
-////  new EventView(vals, sequence.getThreshold().getMeanValue());
-//  // NodeGraph g = new NodeGraph(vals);
-//  // g.setTitle("score: " + sequence.getName() + " || model:" +
-//  // sequence.getGeneratorName());
-//  // g.setVisible(true);
-//  // TODO nodegraph ScoreSequenceGeben
     }
 
     private void showEventHistogram(XYSeries s) {

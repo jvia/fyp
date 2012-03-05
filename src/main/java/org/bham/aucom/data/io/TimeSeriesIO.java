@@ -27,8 +27,8 @@ public class TimeSeriesIO implements IOInterface<TimeSeries<?>> {
         if (ts.size() == 0) {
             throw new IOException("couldn't load empty timeseries");
         }
-        ts.get(0).markAsFirstElement();
-        ts.get(ts.size() - 1).markAsLastElement();
+        ts.get(0).setFirstElement(true);
+        ts.get(ts.size() - 1).setLastElement(true);
         DataModel.getInstance().addTimeSeries(ts);
         Logger.getLogger(this.getClass().getCanonicalName()).info("loaded timeseries with " + ts.size() + " elements");
         return ts;

@@ -7,12 +7,19 @@ import org.bham.aucom.ActionNotPermittedException;
 import org.bham.aucom.Presentable;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.io.AucomIO;
-import org.bham.aucom.data.timeseries.*;
+import org.bham.aucom.data.timeseries.ObservationTimeSeries;
+import org.bham.aucom.data.timeseries.TimeSeries;
+import org.bham.aucom.data.timeseries.TimeSeriesStatusListener;
+import org.bham.aucom.data.timeseries.TimeSeriesStatus;
+import org.bham.aucom.data.timeseries.TimeSeriesStatusEvent;
 import org.bham.aucom.fts.graph.AbstractAucomGraph.GraphStatus;
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.main.GraphStateChangedEvent;
 import org.bham.aucom.main.GraphStatusListener;
-import org.bham.aucom.system.*;
+import org.bham.aucom.system.SystemConnection;
+import org.bham.aucom.system.SystemConnectionStatus;
+import org.bham.aucom.system.SystemConnectionStatusChangedEvent;
+import org.bham.aucom.system.SystemConnectionStatusListener;
 import org.bham.aucom.util.Constants;
 import org.bham.aucom.util.FileOperator;
 
@@ -20,25 +27,33 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.text.DecimalFormat;
-import java.util.logging.*;
+import java.text.ParseException;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Formatter;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
-public class Recorder implements Presentable, SystemConnectionStatusListener, TimeSeriesStatusListener, GraphStatusListener {
+public class Recorder implements Presentable,
+                                 SystemConnectionStatusListener,
+                                 TimeSeriesStatusListener,
+                                 GraphStatusListener {
 
     private File folder;
     private SaveTimeSeriesGraph saveTimeSeriesGraph;
     private TimeSeries<Observation> bufferObservationTimeSeries;
-    Logger logger;
-    RecorderPanel panel;
+    private final Logger logger;
+    private RecorderPanel panel;
     private File fileName;
     private RecorderState currentState;
     private RecorderState oldState;
     private SystemConnection systemConnection;
 
-    public Recorder(SystemConnection inSystemConnection) {
+    public Recorder(final SystemConnection inSystemConnection) {
         this(AucomIO.getInstance().getCurrentWorkingDirectory(), inSystemConnection);
     }
 
-    public Recorder(File folder, SystemConnection inSystemConnection) {
+    private Recorder(File folder, SystemConnection inSystemConnection) {
         bufferObservationTimeSeries = new ObservationTimeSeries();
         setState(RecorderState.NOTREADY);
         oldState = RecorderState.NOTREADY;
@@ -58,10 +73,10 @@ public class Recorder implements Presentable, SystemConnectionStatusListener, Ti
     }
 
     public boolean isVisible() {
-        return this.panel.isVisible();
+        return panel.isVisible();
     }
 
-    public String getNextFileName() {
+    String getNextFileName() {
         return "/record_" + new DecimalFormat("000").format(getNextFileNumber(this.getFolder())) + ".obs";
     }
 
@@ -70,7 +85,7 @@ public class Recorder implements Presentable, SystemConnectionStatusListener, Ti
      */
     public void record() throws ActionFailedException {
         bufferObservationTimeSeries.clear();
-        this.setFileName(new File(this.getFolder().getAbsolutePath() + getNextFileName()));
+        setFileName(new File(this.getFolder().getAbsolutePath() + getNextFileName()));
         systemConnection.getObservationTimeSeries().addTimeSeriesStatusListener(this);
         saveTimeSeriesGraph = new SaveTimeSeriesGraph(bufferObservationTimeSeries, getFileName());
         saveTimeSeriesGraph.addGraphListener(this);
@@ -83,7 +98,7 @@ public class Recorder implements Presentable, SystemConnectionStatusListener, Ti
     }
 
     public void stop() throws ActionNotPermittedException {
-        System.out.println("stoping recorder buffer size " + bufferObservationTimeSeries.size());
+        System.out.println("stopping recorder buffer size " + bufferObservationTimeSeries.size());
         if (currentState.equals(RecorderState.RECORDING)) {
             Logger.getLogger(this.getClass().getCanonicalName()).info("stopping current recorder");
             if (systemConnection != null) {
@@ -130,28 +145,26 @@ public class Recorder implements Presentable, SystemConnectionStatusListener, Ti
      */
     private static void reconfigureLoggerHandler(ConsoleHandler handler) {
         Handler[] h = Logger.getLogger("").getHandlers();
-        for (int i = 0; i < h.length; i++) {
-            Logger.getLogger("").removeHandler(h[i]);
+        for (Handler aH : h) {
+            Logger.getLogger("").removeHandler(aH);
         }
         Logger.getLogger("").addHandler(handler);
     }
 
-    public int getNextFileNumber(File folder) {
+    int getNextFileNumber(File folder) {
         int number = 0;
         File[] files = folder.listFiles();
 
-        for (int i = 0; i < files.length; i++) {
-            if (files[i].isFile()) {
-                if (FileOperator.getExtension(files[i]).equals("obs")) {
-                    String name_noExt = FileOperator.getName(files[i]);
-                    String[] name_Number_parts = name_noExt.split("\\_");
-                    if (name_Number_parts.length == 2) {
-                        String name_number = name_noExt.split("\\_")[1];
-                        try {
-                            number = Math.max(number, new DecimalFormat("000").parse(name_number).intValue());
-                        } catch (java.text.ParseException exception) {
-                            exception.printStackTrace();
-                        }
+        for (File file : files) {
+            if (file.isFile() && FileOperator.getExtension(file).equals("obs")) {
+                String name_noExt = FileOperator.getName(file);
+                String[] name_Number_parts = name_noExt.split("\\_");
+                if (name_Number_parts.length == 2) {
+                    String name_number = name_noExt.split("\\_")[1];
+                    try {
+                        number = Math.max(number, new DecimalFormat("000").parse(name_number).intValue());
+                    } catch (ParseException exception) {
+                        exception.printStackTrace();
                     }
                 }
             }
@@ -162,7 +175,7 @@ public class Recorder implements Presentable, SystemConnectionStatusListener, Ti
     /**
      * @param fileName the fileName to set
      */
-    public void setFileName(File fileName) {
+    void setFileName(File fileName) {
         this.fileName = fileName;
     }
 
@@ -178,7 +191,7 @@ public class Recorder implements Presentable, SystemConnectionStatusListener, Ti
         record();
     }
 
-    public void changeFolder(File newFolder) throws ActionNotPermittedException {
+    public void changeFolder(File newFolder) {
         this.setFolder(newFolder);
     }
 
@@ -221,7 +234,7 @@ public class Recorder implements Presentable, SystemConnectionStatusListener, Ti
         return panel;
     }
 
-    public void setSystemConnection(SystemConnection inSystemConnection) {
+    void setSystemConnection(SystemConnection inSystemConnection) {
         if (inSystemConnection != null) {
             if (systemConnection != null) {
                 if (currentState.equals(RecorderState.RECORDING)) {
@@ -250,14 +263,14 @@ public class Recorder implements Presentable, SystemConnectionStatusListener, Ti
       * event handling ---->
       */
 
-    protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
+    private final javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
     public void addRecorderStatusListener(RecorderStatusListener listener) {
-        this.listenerList.add(RecorderStatusListener.class, listener);
+        listenerList.add(RecorderStatusListener.class, listener);
     }
 
     public void removeRecorderStatusListener(RecorderStatusListener listener) {
-        this.listenerList.remove(RecorderStatusListener.class, listener);
+        listenerList.remove(RecorderStatusListener.class, listener);
     }
 
     // This method is used to fire TrainingStatusChangedEvents
@@ -272,14 +285,6 @@ public class Recorder implements Presentable, SystemConnectionStatusListener, Ti
         }
     }
 
-    /*
-      * <---- event handling
-      */
-
-    public SystemConnectionInfo getInfo() {
-        return null;
-    }
-
     private void setState(RecorderState inState) {
         oldState = currentState;
         currentState = inState;
@@ -287,12 +292,8 @@ public class Recorder implements Presentable, SystemConnectionStatusListener, Ti
 
     }
 
-    public RecorderState getState() {
+    RecorderState getState() {
         return currentState;
-    }
-
-    public RecorderState getOldState() {
-        return oldState;
     }
 
     @Override
@@ -308,7 +309,7 @@ public class Recorder implements Presentable, SystemConnectionStatusListener, Ti
                 try {
                     stop();
                 } catch (ActionNotPermittedException e) {
-                    logger.finest("coudn't stop recorder although the state was running. This indicates a bug");
+                    logger.finest("Couldn't stop recorder although the state was running. This indicates a bug");
                 }
             }
             setState(RecorderState.NOTREADY);
@@ -334,8 +335,8 @@ public class Recorder implements Presentable, SystemConnectionStatusListener, Ti
     }
 
     @Override
-    public void timeseriesStatusChanged(TimeseriesStatusEvent status) {
-        if (status.getStatus().equals(TimeseriesStatus.ELEMENTSADDED)) {
+    public void timeseriesStatusChanged(TimeSeriesStatusEvent status) {
+        if (status.getStatus().equals(TimeSeriesStatus.ELEMENTS_ADDED)) {
             for (int i = status.getStartIndex(); i <= status.getEndIndex(); i++) {
                 bufferObservationTimeSeries.add(systemConnection.getObservationTimeSeries().get(i));
             }

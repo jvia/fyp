@@ -1,6 +1,13 @@
 package org.bham.aucom.fts.tranform;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import static java.lang.String.format;
@@ -13,13 +20,12 @@ import static java.lang.String.format;
  */
 public class MatrixReducer {
 
-    private Map<Integer, ArrayList<Integer>> connections;
+    private Map<Integer, List<Integer>> connections;
     private static final String FILE_NAME = "/connections.txt";
     private final Logger log = Logger.getLogger(getClass().getName());
-    private static final int METRONOME = 0;
 
     public MatrixReducer() {
-        connections = new HashMap<Integer, ArrayList<Integer>>();
+        connections = new HashMap<Integer, List<Integer>>();
         Set<Integer> all = new HashSet<Integer>();
 
         Scanner s = null;
@@ -30,11 +36,15 @@ public class MatrixReducer {
             while (s.hasNextLine()) {
                 // Get the next line, filtering comments & empty lines
                 String line = s.nextLine();
-                if (line.startsWith("#") || line.isEmpty()) continue;
+                if (line.startsWith("#") || line.isEmpty()) {
+                    continue;
+                }
 
                 // Parse the structure
                 String[] result = line.split(" -> ");
-                if (result.length == 0) continue;
+                if (result.length == 0) {
+                    continue;
+                }
 
                 for (int i = 0; i < result.length - 1; i++) {
                     int from = Integer.valueOf(result[i].trim());
@@ -44,17 +54,13 @@ public class MatrixReducer {
                     if (!connections.containsKey(from))
                         connections.put(from, new ArrayList<Integer>());
                     connections.get(from).add(to);
-
-                    // Add to set of all components
-                    all.add(from);
-                    all.add(to);
                 }
             }
         } finally {
-            if (s != null) s.close();
+            if (s != null) {
+                s.close();
+            }
         }
-
-        connections.put(METRONOME, new ArrayList<Integer>(all));
     }
 
     public boolean areConnected(int predecessor, int current) {

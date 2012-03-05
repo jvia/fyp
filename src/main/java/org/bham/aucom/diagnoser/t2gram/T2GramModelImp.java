@@ -42,8 +42,9 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
     public int getNumberDistirbutions() {
         int numberavailableDistributions = 0;
         for (Tuple<Integer, Integer> key : this.transitionMatrix.keySet()) {
-            if (this.transitionMatrix.get(key.getFirstElement(), key.getSecondElement()) != null)
+            if (this.transitionMatrix.get(key.getFirstElement(), key.getSecondElement()) != null) {
                 numberavailableDistributions++;
+            }
         }
         return numberavailableDistributions;
     }
@@ -64,13 +65,13 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
         if (distribution != null) {
             return distribution.getEntropy();
         }
-        String decodedIndexOne = "";
+        StringBuilder decodedIndexOne = new StringBuilder();
         for (DomainFeature f : Encoder.getInstance().decode(indexOne)) {
-            decodedIndexOne += f.toString() + " ";
+            decodedIndexOne.append(f).append(" ");
         }
-        String decodedIndexTwo = "";
+        StringBuilder decodedIndexTwo = new StringBuilder();
         for (DomainFeature f : Encoder.getInstance().decode(indexTwo)) {
-            decodedIndexTwo += f.toString() + " ";
+            decodedIndexTwo.append(f).append(" ");
         }
         log.severe(String.format("CALC_ENTROPY: H(%d,%d) = H(%s,%s) = Ø",
                                  indexOne, indexTwo, decodedIndexOne, decodedIndexTwo));
@@ -80,26 +81,26 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
     @Override
     public double getMaxProbabilityFor(int from, int to) {
         ProbabilityDistribution distribution = getDistributionFor(from, to);
-        if (distribution != null)
+        if (distribution != null) {
             return distribution.getMaxProbability();
+        }
         log.warning(String.format("Probability Distribution for [%d --> %d] is missing.", from, to));
         return LOWESTPROBABILITY;
     }
 
     @Override
     public double getProbability(int from, int to, long timespan) {
-        // TODO :: Perhaps matrix reducer can go here
         double probability;
-        log.info(String.format("Calculating P(timespan|to,from) => P(%d|%d,%d)", timespan, to, from));
 
         if (hasDistributionFor(from, to)) {
             ProbabilityDistribution distribution = getDistributionFor(from, to);
             probability = distribution.getProbability(timespan);
-            log.fine(String.format("P(%d|%d,%d) = %f", timespan, to, from, probability));
         } else {
             probability = LOWESTPROBABILITY;
             log.warning(String.format("P(%d|%d,%d) = Ø. Using %f instead", timespan, to, from, probability));
         }
+        log.fine(String.format("P(timespan|to,from) => P(%d ms|%d,%d) = %.5f",
+                               timespan, to, from, probability));
         return probability;
     }
 

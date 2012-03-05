@@ -6,7 +6,10 @@ import org.bham.aucom.data.SingleScore;
 import org.bham.aucom.data.TemporalProbabilityFeature;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.lang.String.format;
 
 /**
  * Calculates the score for the system. The score is calculated from a {@link
@@ -18,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProbabilityFeature, Score> {
 
-    private final Logger log = Logger.getLogger(getClass().getName());
+    private final transient Logger log = Logger.getLogger(getClass().getName());
     private T2GramModelI model;
 
     /**
@@ -26,8 +29,8 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
      *
      * @param model the model used for the score calculation
      */
-    public CalcEntropyAvgScore(T2GramModelI model) {
-        super("CalcEnropyAvgScore");
+    public CalcEntropyAvgScore(final T2GramModelI model) {
+        super("CalcEntropyAvgScore");
         this.model = model;
     }
 
@@ -35,7 +38,8 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
      * Create the node with no model.
      */
     public CalcEntropyAvgScore() {
-        super("CalcEnropyAvgScore");
+        super("CalcEntropyAvgScore");
+        log.setLevel(Level.ALL);
     }
 
     /**
@@ -48,10 +52,15 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
      * @throws Exception an error happened
      */
     @Override
-    protected Score iTransform(TemporalProbabilityFeature current) throws Exception {
-        if (getModel().isEmpty())
+    protected Score iTransform(final TemporalProbabilityFeature current)
+            throws Exception {
+        if (getModel().isEmpty()) {
             log.severe("Model not trained");
-
+            throw new RuntimeException("Model not trained");
+        }
+        if (current.getEventType() != 0) {
+            return null;
+        }
         double sum_entropy = calculateSumEntropy(current);
         // If entropy is too small, ensure minimal denominator
         double denominator = Math.max(Math.pow(sum_entropy, 2), 0.00001);
@@ -62,17 +71,26 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
         return new SingleScore(current, scoreValue);
     }
 
-    protected double calculateAbsoluteScoreValue(TemporalProbabilityFeature current, double denominator) {
-        double scoreValue = 0.0;
+    protected double calculateAbsoluteScoreValue(
+            final TemporalProbabilityFeature current,
+            final double denominator) {
+        double val = 0.0;
 
         for (DataType predecessor : current.getPredecessors()) {
-            if (getModel().getDistributionFor(predecessor.getEventType(), current.getEventType()) == null)
-                log.warning(String.format("No probability distribution for [%d ---> %d]",
-                                          predecessor.getEventType(), current.getEventType()));
-            scoreValue += calculateSingleScoreValue(predecessor, current, denominator);
+            int p = predecessor.getEventType();
+            int c = current.getEventType();
+            if (getModel().getDistributionFor(p, c) == null) {
+                log.warning(
+                        format("No probability distribution for [%d ---> %d]",
+                               predecessor.getEventType(),
+                               current.getEventType()));
+            }
+
+            val += singleScoreValue(predecessor, current, denominator);
         }
 
-        return scoreValue;
+        log.fine(format("Raw score: %.5f", val));
+        return val;
     }
 
     /**
@@ -83,37 +101,52 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
      * @param current     the current system event
      * @param denominator the entropy of the distribution (normalized not to
      *                    divide by 0)
-     * @return
+     * @return the score
      */
-    protected double calculateSingleScoreValue(DataType predecessor, TemporalProbabilityFeature current, double denominator) {
+    protected double singleScoreValue(final DataType predecessor,
+                                      final TemporalProbabilityFeature current,
+                                      final double denominator) {
         double probability = current.getProbabilityFor(predecessor);
-        double entropy = calculateSingleEntropy(current, predecessor);
+        double entropy = singleEntropy(current, predecessor);
         double output;
 
         // Warn if values are illegal
-        if (Double.isNaN(probability))
-            log.warning(String.format("Probability is NaN: [%d --> %d]", predecessor.getEventType(), current.getEventType()));
-        if (Double.isNaN(entropy))
-            log.warning(String.format("Entropy is NaN: [%d --> %d]", predecessor.getEventType(), current.getEventType()));
+        if (Double.isNaN(probability)) {
+            log.warning(String.format("Probability is NaN: [%d --> %d]",
+                                      predecessor.getEventType(),
+                                      current.getEventType()));
+        }
+        if (Double.isNaN(entropy)) {
+            log.warning(String.format("Entropy is NaN: [%d --> %d]",
+                                      predecessor.getEventType(),
+                                      current.getEventType()));
+        }
 
         // Calculate output
         output = probability * (1 - Math.pow(entropy, 2) / denominator);
-        log.fine(String.format("[%d ---> %d] => %.2f\n", predecessor.getEventType(), current.getEventType(), output));
-
+        log.fine(format("[%d ---> %d] => %.2f",
+                        predecessor.getEventType(),
+                        current.getEventType(),
+                        output));
         return output;
     }
 
     /**
      * Normalizes the score.
      *
-     * @param current  the current feture
+     * @param current  the current feature
      * @param rawScore the raw score
      * @return the normalized score
      */
-    protected double normalize(TemporalProbabilityFeature current, double rawScore) {
+    protected double normalize(final TemporalProbabilityFeature current,
+                               final double rawScore) {
         double normalizedScore = rawScore;
-        if (!current.getPredecessors().isEmpty())
+        if (!current.getPredecessors().isEmpty()) {
             normalizedScore = rawScore / current.getPredecessors().size();
+        }
+        log.fine(format("Normalized score (raw / predecessor): " +
+                        "%.2f / %d = %.5f", rawScore,
+                        current.getPredecessors().size(), normalizedScore));
         return normalizedScore;
     }
 
@@ -123,22 +156,27 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
      * @param current current event
      * @return total entropy
      */
-    protected double calculateSumEntropy(TemporalProbabilityFeature current) {
+    protected double calculateSumEntropy(
+            final TemporalProbabilityFeature current) {
         double sum = 0.0;
-        for (int i = 0; i < current.getPredecessors().size(); i++)
-            sum += calculateSingleEntropy(current, current.getPredecessors().get(i));
+        for (int i = 0; i < current.getPredecessors().size(); i++) {
+            sum += singleEntropy(current, current.getPredecessors().get(i));
+        }
         return sum;
     }
 
     /**
      * Gets the entropy of the distribution.
      *
-     * @param current     the current event type
-     * @param predecessor the previous event type
+     * @param c the current event type
+     * @param p the previous event type
      * @return the entropy of the relevant distribution
      */
-    private double calculateSingleEntropy(TemporalProbabilityFeature current, DataType predecessor) {
-        return getModel().getEntropyOfDistribution(predecessor.getEventType(), current.getEventType());
+    private double singleEntropy(final TemporalProbabilityFeature c,
+                                 final DataType p) {
+        return getModel().getEntropyOfDistribution(
+                p.getEventType(),
+                c.getEventType());
     }
 
 
@@ -147,7 +185,7 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
      *
      * @param model the model
      */
-    public void setModel(T2GramModelI model) {
+    public void setModel(final T2GramModelI model) {
         this.model = model;
     }
 

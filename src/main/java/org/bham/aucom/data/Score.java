@@ -44,7 +44,7 @@ public abstract class Score extends TemporalProbabilityFeature {
     }
 
     public static Score createRandomRangeScore() {
-        TemporalProbabilityFeature tpf = Score.createRandomTemporalProbabilityFeature();
+//        TemporalProbabilityFeature tpf = Score.createRandomTemporalProbabilityFeature();
         int numberSubScores = 1 + (int) (Math.random() * 10);
         ArrayList<Score> subScores = new ArrayList<Score>();
         for (int i = 0; i < numberSubScores; i++) {

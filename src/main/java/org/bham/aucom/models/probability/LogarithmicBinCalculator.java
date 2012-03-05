@@ -1,8 +1,8 @@
 package org.bham.aucom.models.probability;
 
-import org.bham.aucom.util.BinCaluclator;
+import org.bham.aucom.util.BinCalculator;
 
-public class LogarithmicBinCalculator implements BinCaluclator {
+public class LogarithmicBinCalculator implements BinCalculator {
 
     /**
      *

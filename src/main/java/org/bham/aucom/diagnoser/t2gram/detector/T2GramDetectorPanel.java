@@ -16,7 +16,7 @@ import nu.xom.ValidityException;
 import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.data.management.DataAlreadyExistsException;
 import org.bham.aucom.data.timeseries.TimeSeriesStatusListener;
-import org.bham.aucom.data.timeseries.TimeseriesStatusEvent;
+import org.bham.aucom.data.timeseries.TimeSeriesStatusEvent;
 import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.system.FactoryManagerInitalizationException;
@@ -282,7 +282,7 @@ public class T2GramDetectorPanel extends javax.swing.JPanel implements TimeSerie
     }
 
     @Override
-    public void timeseriesStatusChanged(TimeseriesStatusEvent status) {
+    public void timeseriesStatusChanged(TimeSeriesStatusEvent status) {
         numberEvaluatedElements.setText("# " + status.getEndIndex() + 1);
     }
 

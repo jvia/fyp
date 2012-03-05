@@ -23,7 +23,9 @@ import java.util.logging.Logger;
  * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk>
  */
 public class EncodeData extends AbstractAucomTranformNode<Observation, DataType> {
+    private static final long serialVersionUID = 4565588743167615696L;
     private Encoder encoder;
+    private long count;
     private final transient Logger log = Logger.getLogger(getClass().getName());
 
     /**
@@ -35,6 +37,7 @@ public class EncodeData extends AbstractAucomTranformNode<Observation, DataType>
         // TODO :: refactor this so that the encoder is constructor parameter
         super("EncodeData");
         setEncoder(Encoder.getInstance());
+        count = 0;
     }
 
     /**
@@ -47,13 +50,15 @@ public class EncodeData extends AbstractAucomTranformNode<Observation, DataType>
      * @throws Exception something went wrong
      */
     @Override
-    public DataType iTransform(Observation input) throws Exception {
+    public DataType iTransform(final Observation input) throws Exception {
         log.info("Encoding " + input.toString());
 
         try {
             int dataType = getEncoder().encode(input);
             List<DomainFeature> features = getEncoder().getFeatures(input);
-            return new DataType(features, dataType, input);
+            DataType d = new DataType(features, dataType, input);
+            d.addAttribute("count", String.valueOf(count++));
+            return d;
         } catch (Exception exception) {
             log.log(Level.SEVERE, "Features are null. Cannot return proper DataType.", exception);
             exception.printStackTrace();
@@ -67,7 +72,7 @@ public class EncodeData extends AbstractAucomTranformNode<Observation, DataType>
      *
      * @param encoder the encoder
      */
-    public void setEncoder(Encoder encoder) {
+    public void setEncoder(final Encoder encoder) {
         this.encoder = encoder;
     }
 
@@ -77,6 +82,6 @@ public class EncodeData extends AbstractAucomTranformNode<Observation, DataType>
      * @return the encoder
      */
     public Encoder getEncoder() {
-        return this.encoder;
+        return encoder;
     }
 }

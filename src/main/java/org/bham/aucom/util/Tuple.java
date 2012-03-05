@@ -18,7 +18,7 @@ public class Tuple<T, U> {
      * @param inFirstElement  first element
      * @param inSecondElement second element
      */
-    public Tuple(T inFirstElement, U inSecondElement) {
+    public Tuple(final T inFirstElement, final U inSecondElement) {
         this.firstElement = inFirstElement;
         this.secondElement = inSecondElement;
     }
@@ -37,7 +37,7 @@ public class Tuple<T, U> {
      *
      * @param secondElement the new element
      */
-    public void setSecondElement(U secondElement) {
+    public void setSecondElement(final U secondElement) {
         this.secondElement = secondElement;
     }
 

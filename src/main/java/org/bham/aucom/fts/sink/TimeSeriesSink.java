@@ -21,12 +21,12 @@ public class TimeSeriesSink<TIn extends AbstractData> extends AucomSinkAdapter<T
     @Override
     protected void pushItem(TIn arg) throws Exception {
         getOutput().add(arg);
-        if (arg.isMarkedAsFirstElement()) {
+        if (arg.isFirstElement()) {
             fireAucomSinkStatusChangedEvent(new AucomSinkStatusEvent(this, NodeStatus.RECEIVEDFIRSTELEMENT));
             Logger.getLogger(this.getClass().getCanonicalName()).info("pushing first item " + arg);
         }
 
-        if (arg.isMarkedAsLastElement()) {
+        if (arg.isLastElement()) {
             fireAucomSinkStatusChangedEvent(new AucomSinkStatusEvent(this, NodeStatus.RECEIVEDLASTELEMENT));
             Logger.getLogger(this.getClass().getCanonicalName()).info("pushing last item " + arg);
         }

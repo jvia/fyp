@@ -1,11 +1,12 @@
 package org.bham.aucom.data;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Allows an object to have attributes associated with it.
  *
  * @author Raphael Golombek <rgolombe@cor-lab.uni-bielefeld.de>
+ * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk>
  */
 public interface AttributableObject {
 
@@ -14,7 +15,7 @@ public interface AttributableObject {
      *
      * @return collection of attributes
      */
-    public HashMap<String, String> getAttributes();
+    public Map<String, String> getAttributes();
 
     /**
      * Add an attribute about the object.

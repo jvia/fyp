@@ -62,7 +62,6 @@ public class VisualizerScoreChart extends javax.swing.JPanel {
      * Creates new form Monitor score chart
      */
     public VisualizerScoreChart() {
-        Logger.getLogger(this.getClass().getName()).setLevel(Level.SEVERE);
         initComponents();
         initChart();
         visibleRange = 1000;

@@ -35,7 +35,7 @@ public class ClassificatorSelectionPanel extends javax.swing.JPanel implements A
         initComponents();
         model = inModel;
         acFactory = new AnomalyClassificatorFactory();
-        acFactory.add("statistical", StatisticalAnomalyClassificator.class, StatisticalAnomalyClassificatorConfigurator.class, StatisticalAnomalyClassificatorConfiguratorPanel.class);
+        acFactory.add("statistical", StatisticalAnomalyClassifier.class, StatisticalAnomalyClassificatorConfigurator.class, StatisticalAnomalyClassificatorConfiguratorPanel.class);
         acCombobox.addActionListener(this);
         acCombobox.setModel(new DefaultComboBoxModel(acFactory.getRegisteredACNames()));
         acCombobox.setSelectedIndex(0);
@@ -93,7 +93,7 @@ public class ClassificatorSelectionPanel extends javax.swing.JPanel implements A
     }
 
     private void setClassificator() {
-        model.setClassificator(currentClassificator);
+        model.setClassificator(currentClassifier);
     }
 
 
@@ -101,7 +101,7 @@ public class ClassificatorSelectionPanel extends javax.swing.JPanel implements A
     private javax.swing.JComboBox acCombobox;
     private javax.swing.JPanel configuratorpanel;
     private javax.swing.JButton jButton1;
-    private AnomalyClassificator currentClassificator;
+    private AnomalyClassifier currentClassifier;
 
     // End of variables declaration//GEN-END:variables
     @Override
@@ -113,8 +113,8 @@ public class ClassificatorSelectionPanel extends javax.swing.JPanel implements A
             if (configuratorpanel.getComponents().length > 0) {
                 configuratorpanel.remove(0);
             }
-            currentClassificator = acFactory.create(acName);
-            configuratorpanel.add(acFactory.getConfiguratorPanel(acFactory.getConfigurator(currentClassificator)));
+            currentClassifier = acFactory.create(acName);
+            configuratorpanel.add(acFactory.getConfiguratorPanel(acFactory.getConfigurator(currentClassifier)));
         } catch (Exception exception) {
             exception.printStackTrace();
         }

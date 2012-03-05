@@ -5,11 +5,11 @@ import org.bham.aucom.data.timeseries.TimeSeries;
 
 public abstract class TimeSeriesToCSVConverter<T extends AbstractData> {
     public String convertTimeSeries(TimeSeries<T> timeSeriesToWrite) throws IllegalArgumentException {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         for (int i = 0; i < timeSeriesToWrite.size(); i++) {
-            output += convertTimeSeriesElement(timeSeriesToWrite.get(i)) + "\n";
+            output.append(convertTimeSeriesElement(timeSeriesToWrite.get(i))).append("\n");
         }
-        return output;
+        return output.toString();
     }
 
     protected abstract String convertTimeSeriesElement(T e);

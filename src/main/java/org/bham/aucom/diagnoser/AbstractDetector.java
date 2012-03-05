@@ -43,7 +43,7 @@ abstract public class AbstractDetector implements Detector, Presentable {
      * status of the detector changes
      * see: @DetectorStatus for more information
      *
-     * @param the listener to add
+     * @param listener the listener to add
      */
     @Override
     public void addStatusListener(DetectorStatusChangedListener listener) {

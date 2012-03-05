@@ -18,7 +18,7 @@ import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.data.util.DataManager;
 import org.bham.aucom.util.ExampleFileFilter;
-import org.bham.aucom.util.MonitorableArrayList;
+import org.bham.aucom.util.MonitorArrayList;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -39,7 +39,7 @@ import java.util.List;
 public class ScoreChartFrame extends javax.swing.JFrame implements
                                                         ListDataListener {
     File dir = new File("/home/rgolombe/work/experiments/data/tobi/FollowMe/");
-    MonitorableArrayList<Score> data;
+    MonitorArrayList<Score> data;
     private static final long serialVersionUID = 1L;
     XYSeriesCollection dataset = new XYSeriesCollection();
     private JFreeChart chart;
@@ -48,7 +48,7 @@ public class ScoreChartFrame extends javax.swing.JFrame implements
     /**
      * Creates new form ProbabilityChartFrame
      */
-    public ScoreChartFrame(MonitorableArrayList<Score> inData) {
+    public ScoreChartFrame(MonitorArrayList<Score> inData) {
         initComponents();
         initChart(inData);
     }
@@ -143,7 +143,7 @@ public class ScoreChartFrame extends javax.swing.JFrame implements
     public void intervalRemoved(ListDataEvent e) {
     }
 
-    public void initChart(MonitorableArrayList<Score> inData) {
+    public void initChart(MonitorArrayList<Score> inData) {
         inData.addListDataListener(this);
         data = inData;
         externDataset = Collections.synchronizedList(inData);
@@ -410,7 +410,7 @@ public class ScoreChartFrame extends javax.swing.JFrame implements
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                MonitorableArrayList<Score> s = new MonitorableArrayList<Score>(
+                MonitorArrayList<Score> s = new MonitorArrayList<Score>(
                         new ArrayList<Score>());
                 ScoreChartFrame p = new ScoreChartFrame(s);
                 p.setDefaultCloseOperation(EXIT_ON_CLOSE);

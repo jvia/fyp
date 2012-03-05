@@ -3,6 +3,7 @@ package org.bham;
 import org.bham.app.experiment.CastExperiment;
 import org.bham.app.experiment.CastObservationCollection;
 import org.bham.app.experiment.ClassificationToCSV;
+import org.bham.app.experiment.Replay;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.ExampleMode;
@@ -38,6 +39,12 @@ public class Aucom {
     private boolean toDat;
 
 
+    @Option(name = "-R",
+            aliases = "--replay",
+            usage = "Run aucom with a previously collected observation" +
+                    "files as the input.")
+    private boolean replay;
+
     // I/O options
     @Option(name = "-i",
             aliases = "--input",
@@ -51,6 +58,11 @@ public class Aucom {
                     "the type of file will be inferred.",
             required = true)
     private File out;
+
+    @Option(name = "-t",
+            aliases = "--training-file",
+            usage = "The file to use when training the model for replay mode.")
+    private File training;
 
     // Misc options
     @Option(name = "-s",
@@ -86,6 +98,15 @@ public class Aucom {
         }
     }
 
+    private void runReplay() {
+        Replay replay = new Replay(training, in, out);
+        try {
+            replay.call();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void runExperiment() {
         CastExperiment experiment = new CastExperiment(in, out, size, quiet, error);
         try {
@@ -114,6 +135,8 @@ public class Aucom {
             aucom.runCollection();
         } else if (aucom.toDat) {
             aucom.runConversion();
+        } else if (aucom.replay) {
+            aucom.runReplay();
         } else {
             System.err.println("Need to specify a major mode: Experiment, " +
                                "Collection, or Conversion.");
