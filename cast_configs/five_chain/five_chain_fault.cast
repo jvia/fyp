@@ -22,4 +22,3 @@ JAVA MG node7 experiments.Node --follows "node6 node5"  --delay "gaussian 100 10
 
 INCLUDE ../includes/aucom.cast
 INCLUDE ../includes/counter.cast
-INCLUDE ../includes/conductor.cast
