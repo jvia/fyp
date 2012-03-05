@@ -46,6 +46,12 @@ public class DiagnoserGui extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 1L;
 
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTabbedPane presentablesTabbedPane;
+    private javax.swing.JLabel statusLabel;
+    // End of variables declaration//GEN-END:variables
+    private ScheduledExecutorService frequencyUpdaterService;
+
     public DiagnoserGui(SystemConnection inConnection) {
         presentables = new ArrayList<Presentable>();
         try {
@@ -73,9 +79,9 @@ public class DiagnoserGui extends javax.swing.JFrame {
         presentables.remove(newPresentable);
         validateTree();
     }
-
     XYSeries frequencySeries;
     JLabel currentFrequencyLabel;
+
     JLabel numberRecordedEventsLabel;
 
     protected JButton makeNavigationButton(String imgLocation, String actionCommand, String toolTipText, String altText, ActionListener buttonActionListener) {
@@ -231,10 +237,4 @@ public class DiagnoserGui extends javax.swing.JFrame {
             System.out.println("usage: diagnoser systemName");
         }
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTabbedPane presentablesTabbedPane;
-    private javax.swing.JLabel statusLabel;
-    // End of variables declaration//GEN-END:variables
-    private ScheduledExecutorService frequencyUpdaterService;
 }
