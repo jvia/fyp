@@ -30,13 +30,13 @@ import java.io.IOException;
  */
 public class Replay implements Experiment {
 
-    private ModelTrainer trainer;
+    private final ModelTrainer trainer;
     private Detector detector;
     private PlayFileSystemConnection replay;
 
-    private File observation;
-    private File trainingObservation;
-    private File classification;
+    private final File observation;
+    private final File trainingObservation;
+    private final File classification;
 
     public Replay(File trainingObservation, File observation, File classification) {
         this.trainingObservation = trainingObservation;
@@ -104,6 +104,7 @@ public class Replay implements Experiment {
      * @param obs observation file
      * @return the observation time series
      */
+    @SuppressWarnings({"unchecked"})
     private TimeSeries<Observation> loadObservation(File obs) {
         TimeSeries<Observation> ts = null;
         try {
@@ -165,8 +166,13 @@ public class Replay implements Experiment {
     private T2GramDetector createDetector(final Model model) {
         T2GramDetector detector = new T2GramDetector();
         detector.setModel(model);
-        detector.setClassificator(new StatisticalAnomalyClassifier(0.3, 0.1));
-        detector.setSlidingWindow(new SlidingWindow(100, 10));
+        detector.setClassificator(new StatisticalAnomalyClassifier(0.6, 0.001));
+        detector.setSlidingWindow(new SlidingWindow(100, 50));
+
+        System.out.printf("Classifier:     %s%n", detector.getClassificator().getAttributes());
+        System.out.printf("Sliding Window: %s%n", detector.getSlidingWindow());
+        System.out.printf("Class. Model:   %s%n", detector.getDetectorGraph().getModel());
+
         return detector;
     }
 }
