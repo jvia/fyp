@@ -66,16 +66,15 @@ public class MatrixReducer {
         // Add data to connections
         connections.put(METRONOME, new ArrayList<Integer>(all));
         connections.get(METRONOME).add(METRONOME);
-        for (int i : all)
+        for (int i : all) {
             connections.put(i, Arrays.asList(METRONOME));
+        }
     }
 
     public boolean areConnected(int predecessor, int current) {
         boolean connected = false;
 
-        if (predecessor == current) {
-            connected = true;
-        } else if (!connections.containsKey(predecessor)) {
+        if (!connections.containsKey(predecessor)) {
             connected = false;
         } else {
             for (Integer successor : connections.get(predecessor)) {
