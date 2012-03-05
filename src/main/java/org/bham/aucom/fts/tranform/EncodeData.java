@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 public class EncodeData extends AbstractAucomTranformNode<Observation, DataType> {
     private static final long serialVersionUID = 4565588743167615696L;
     private Encoder encoder;
+    private long count;
     private final transient Logger log = Logger.getLogger(getClass().getName());
 
     /**
@@ -36,6 +37,7 @@ public class EncodeData extends AbstractAucomTranformNode<Observation, DataType>
         // TODO :: refactor this so that the encoder is constructor parameter
         super("EncodeData");
         setEncoder(Encoder.getInstance());
+        count = 0;
     }
 
     /**
@@ -54,7 +56,9 @@ public class EncodeData extends AbstractAucomTranformNode<Observation, DataType>
         try {
             int dataType = getEncoder().encode(input);
             List<DomainFeature> features = getEncoder().getFeatures(input);
-            return new DataType(features, dataType, input);
+            DataType d = new DataType(features, dataType, input);
+            d.addAttribute("count", String.valueOf(count++));
+            return d;
         } catch (Exception exception) {
             log.log(Level.SEVERE, "Features are null. Cannot return proper DataType.", exception);
             exception.printStackTrace();

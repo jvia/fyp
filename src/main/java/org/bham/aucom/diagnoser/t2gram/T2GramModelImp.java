@@ -31,7 +31,7 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
     public Collection<Integer> getDimensions() {
         Collection<Integer> dimensions = new HashSet<Integer>();
         for (Tuple<Integer, Integer> key : this.transitionMatrix.keySet()) {
-            log.info(key + "");
+            //log.info(key + "");
             dimensions.add(key.getFirstElement());
             dimensions.add(key.getSecondElement());
         }
@@ -92,7 +92,6 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
     public double getProbability(int from, int to, long timespan) {
         // TODO :: Perhaps matrix reducer can go here
         double probability;
-        log.info(String.format("Calculating P(timespan|to,from) => P(%d|%d,%d)", timespan, to, from));
 
         if (hasDistributionFor(from, to)) {
             ProbabilityDistribution distribution = getDistributionFor(from, to);
@@ -102,6 +101,8 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
             probability = LOWESTPROBABILITY;
             log.warning(String.format("P(%d|%d,%d) = Ø. Using %f instead", timespan, to, from, probability));
         }
+        log.info(String.format("P(timespan|to,from) => P(%d ms|%d,%d) = %.5f",
+                               timespan, to, from, probability));
         return probability;
     }
 

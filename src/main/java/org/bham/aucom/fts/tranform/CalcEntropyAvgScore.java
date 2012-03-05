@@ -6,6 +6,7 @@ import org.bham.aucom.data.SingleScore;
 import org.bham.aucom.data.TemporalProbabilityFeature;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static java.lang.String.format;
@@ -19,8 +20,7 @@ import static java.lang.String.format;
  * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk>
  */
 public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProbabilityFeature, Score> {
-
-    private final transient Logger log = Logger.getLogger(getClass().getName());
+    private transient final Logger log = Logger.getLogger(this.getClass().getName());
     private T2GramModelI model;
 
     /**
@@ -38,6 +38,7 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
      */
     public CalcEntropyAvgScore() {
         super("CalcEntropyAvgScore");
+        log.setLevel(Level.ALL);
     }
 
     /**
@@ -55,9 +56,6 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
         if (getModel().isEmpty()) {
             log.severe("Model not trained");
         }
-        if (current.getEventType() != 0) {
-            return null;
-        }
 
         double sum_entropy = calculateSumEntropy(current);
         // If entropy is too small, ensure minimal denominator
@@ -73,18 +71,21 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
             final TemporalProbabilityFeature current,
             final double denominator) {
         double val = 0.0;
-
+        // TODO :: remove later
+        System.out.printf("%d %s:%n", current.getEventType(), current.getAttributes());
         for (DataType predecessor : current.getPredecessors()) {
             int p = predecessor.getEventType();
             int c = current.getEventType();
             if (getModel().getDistributionFor(p, c) == null) {
                 log.warning(
                         format("No probability distribution for [%d ---> %d]",
-                                predecessor.getEventType(),
-                                current.getEventType()));
+                               predecessor.getEventType(),
+                               current.getEventType()));
             }
 
-            val += singleScoreValue(predecessor, current, denominator);
+            double s = singleScoreValue(predecessor, current, denominator);
+            System.out.printf("  %3d: %6.3f%n", predecessor.getEventType(), s);
+            val += s;
         }
 
         return val;
@@ -110,21 +111,21 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
         // Warn if values are illegal
         if (Double.isNaN(probability)) {
             log.warning(String.format("Probability is NaN: [%d --> %d]",
-                    predecessor.getEventType(),
-                    current.getEventType()));
+                                      predecessor.getEventType(),
+                                      current.getEventType()));
         }
         if (Double.isNaN(entropy)) {
             log.warning(String.format("Entropy is NaN: [%d --> %d]",
-                    predecessor.getEventType(),
-                    current.getEventType()));
+                                      predecessor.getEventType(),
+                                      current.getEventType()));
         }
 
         // Calculate output
         output = probability * (1 - Math.pow(entropy, 2) / denominator);
         log.fine(format("[%d ---> %d] => %.2f",
-                predecessor.getEventType(),
-                current.getEventType(),
-                output));
+                        predecessor.getEventType(),
+                        current.getEventType(),
+                        output));
         return output;
     }
 
@@ -162,7 +163,7 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
     /**
      * Gets the entropy of the distribution.
      *
-     * @param c     the current event type
+     * @param c the current event type
      * @param p the previous event type
      * @return the entropy of the relevant distribution
      */
