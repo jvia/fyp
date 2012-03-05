@@ -6,6 +6,7 @@ import org.bham.aucom.data.SingleScore;
 import org.bham.aucom.data.TemporalProbabilityFeature;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -36,6 +37,7 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
      */
     public CalcEntropyAvgScore() {
         super("CalcEnropyAvgScore");
+        log.setLevel(Level.ALL);
     }
 
     /**
