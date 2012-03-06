@@ -148,10 +148,10 @@ class ConnectionManager {
     private void openSocket() {
         int attempt = 0;
         // open socket to talk to cast
+        log.info(format("Connecting on %s:%d", host, port));
         do {
             attempt++;
             try {
-                log.info(format("Connecting on %s:%d", host, port));
                 cast = new Socket(host, port);
             } catch (UnknownHostException ex) {
                 log.severe("CAST host does not exist");

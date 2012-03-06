@@ -20,6 +20,7 @@ import static java.lang.String.format;
  * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk>
  */
 public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProbabilityFeature, Score> {
+    
     private transient final Logger log = Logger.getLogger(this.getClass().getName());
     private T2GramModelI model;
 
@@ -55,6 +56,7 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
             throws Exception {
         if (getModel().isEmpty()) {
             log.severe("Model not trained");
+            throw new RuntimeException("Model not trained");
         }
 
         double sum_entropy = calculateSumEntropy(current);
@@ -71,8 +73,7 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
             final TemporalProbabilityFeature current,
             final double denominator) {
         double val = 0.0;
-        // TODO :: remove later
-        System.out.printf("%d %s:%n", current.getEventType(), current.getAttributes());
+
         for (DataType predecessor : current.getPredecessors()) {
             int p = predecessor.getEventType();
             int c = current.getEventType();
@@ -83,11 +84,10 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
                                current.getEventType()));
             }
 
-            double s = singleScoreValue(predecessor, current, denominator);
-            System.out.printf("  %3d: %6.3f%n", predecessor.getEventType(), s);
-            val += s;
+            val += singleScoreValue(predecessor, current, denominator);
         }
 
+        log.fine(format("Raw score: %.5f", val));
         return val;
     }
 
@@ -132,7 +132,7 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
     /**
      * Normalizes the score.
      *
-     * @param current  the current feture
+     * @param current  the current feature
      * @param rawScore the raw score
      * @return the normalized score
      */
@@ -142,6 +142,9 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
         if (!current.getPredecessors().isEmpty()) {
             normalizedScore = rawScore / current.getPredecessors().size();
         }
+        log.fine(format("Normalized score (raw / predecessor): " +
+                        "%.2f / %d = %.5f", rawScore,
+                        current.getPredecessors().size(), normalizedScore));
         return normalizedScore;
     }
 
