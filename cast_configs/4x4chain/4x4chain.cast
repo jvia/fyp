@@ -27,4 +27,3 @@ JAVA MG node33 experiments.Node --follows "node32"  --delay "gaussian 500 10" --
 
 INCLUDE ../includes/aucom.cast
 INCLUDE ../includes/counter.cast
-INCLUDE ../includes/conductor.cast
