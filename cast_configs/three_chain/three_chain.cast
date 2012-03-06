@@ -4,7 +4,7 @@ HOST localhost
 #
 # 0 -> 1 -> 2 -> 3
 #
-SUBARCHITECTURE three.sa
+#SUBARCHITECTURE three.sa
 JAVA WM cast.architecture.SubarchitectureWorkingMemory
 JAVA TM cast.architecture.AlwaysPositiveTaskManager
 JAVA MG node0 experiments.Node --start          --delay "gaussian 100 10"

@@ -90,18 +90,17 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
 
     @Override
     public double getProbability(int from, int to, long timespan) {
-        // TODO :: Perhaps matrix reducer can go here
         double probability;
-        log.info(String.format("Calculating P(timespan|to,from) => P(%d|%d,%d)", timespan, to, from));
 
         if (hasDistributionFor(from, to)) {
             ProbabilityDistribution distribution = getDistributionFor(from, to);
             probability = distribution.getProbability(timespan);
-            log.fine(String.format("P(%d|%d,%d) = %f", timespan, to, from, probability));
         } else {
             probability = LOWESTPROBABILITY;
             log.warning(String.format("P(%d|%d,%d) = Ø. Using %f instead", timespan, to, from, probability));
         }
+        log.fine(String.format("P(timespan|to,from) => P(%d ms|%d,%d) = %.5f",
+                               timespan, to, from, probability));
         return probability;
     }
 

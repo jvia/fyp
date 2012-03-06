@@ -23,7 +23,7 @@ public class MatrixReducerTest {
     public void testAreConnected() throws Exception {
         assumeNotNull(getClass().getResource("/connections.txt"));
         MatrixReducer reducer = new MatrixReducer();
-        assertThat(reducer.areConnected(1, 2), is(true));
-        assertThat(reducer.areConnected(1, 100), is(false));
+        assertThat(reducer.areConnected(0, 2), is(true));
+        assertThat(reducer.areConnected(1, 2), is(false));
     }
 }
