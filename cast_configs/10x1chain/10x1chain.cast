@@ -24,4 +24,3 @@ JAVA MG node9 experiments.Node --start --delay "gaussian 100 10"
 
 INCLUDE ../includes/aucom.cast
 INCLUDE ../includes/counter.cast
-INCLUDE ../includes/conductor.cast
