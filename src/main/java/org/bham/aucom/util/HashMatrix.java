@@ -1,13 +1,15 @@
 package org.bham.aucom.util;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-
+/**
+ * A 2-dimensional matrix of data.
+ *
+ * @param <T> index one
+ * @param <U> index two
+ * @param <V> value
+ */
 public class HashMatrix<T, U, V> implements Serializable {
     private static final long serialVersionUID = 0L;
     HashMap<T, HashMap<U, V>> content;
@@ -27,8 +29,7 @@ public class HashMatrix<T, U, V> implements Serializable {
     }
 
     public void put(T indexOne, U indexTwo, V value) {
-        // TODO :: Perhaps reducer can go in here and just take care of things invisibly
-        HashMap<U, V> tmp = get(indexOne);
+        HashMap<U, V> tmp;
 
         // make sure there's is a row hashmap available
         if (!containsFirstKey(indexOne)) {
@@ -97,8 +98,8 @@ public class HashMatrix<T, U, V> implements Serializable {
         for (T rowKey : content.keySet()) {
             for (U colKey : content.get(rowKey).keySet()) {
                 out.append(String.format("(%s, %s) -> %s\n",
-                                         rowKey, colKey,
-                                         content.get(rowKey).get(colKey)));
+                        rowKey, colKey,
+                        content.get(rowKey).get(colKey)));
             }
         }
         return out.toString();

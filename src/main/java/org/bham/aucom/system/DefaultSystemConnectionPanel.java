@@ -12,17 +12,18 @@
 package org.bham.aucom.system;
 
 import org.bham.aucom.ActionNotPermittedException;
-import org.bham.aucom.data.timeseries.TimeSeriesStatusListener;
 import org.bham.aucom.data.timeseries.TimeSeriesStatusEvent;
+import org.bham.aucom.data.timeseries.TimeSeriesStatusListener;
 
 import javax.swing.*;
 
 /**
  * @author rgolombe
  */
-public class DefaultSystemConnectionPanel extends javax.swing.JPanel implements SystemConnectionStatusListener, TimeSeriesStatusListener {
+public class DefaultSystemConnectionPanel extends JPanel implements
+        SystemConnectionStatusListener, TimeSeriesStatusListener {
     private static final long serialVersionUID = 0L;
-    SystemConnection connection;
+    private SystemConnection connection;
 
     /**
      * Creates new form DefaultSystemConnectionPanel
@@ -128,7 +129,7 @@ public class DefaultSystemConnectionPanel extends javax.swing.JPanel implements 
 
     }
 
-    public void resetCounter() {
+    void resetCounter() {
         incomingSystemEventCounter = 0;
     }
 
