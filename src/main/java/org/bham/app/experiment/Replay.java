@@ -2,6 +2,7 @@ package org.bham.app.experiment;
 
 import nu.xom.ParsingException;
 import org.bham.aucom.ActionNotPermittedException;
+import org.bham.aucom.data.ClassificationTimeSeriesDescriptiveStatistics;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.data.timeseries.TimeSeries;
@@ -20,15 +21,21 @@ import org.bham.aucom.diagnoser.t2gram.detector.T2GramDetector;
 import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.StatisticalAnomalyClassifier;
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.system.SystemConnectionFailedException;
+import org.bham.aucom.util.Constants;
 import org.bham.system.playfile.PlayFileSystemConnection;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
+
+import static java.lang.String.format;
 
 /**
  * @author Jeremiah Via <jxv911@cs.bham.ac.uk>
  */
 public class Replay implements Experiment {
+
+    private transient final Logger log = Logger.getLogger(getClass().getName());
 
     private final ModelTrainer trainer;
     private Detector detector;
@@ -37,19 +44,34 @@ public class Replay implements Experiment {
     private final File observation;
     private final File trainingObservation;
     private final File classification;
+    private final T2GramModelI model;
 
     public Replay(File trainingObservation, File observation, File classification) {
         this.trainingObservation = trainingObservation;
         this.observation = observation;
         this.classification = classification;
+        model = null;
 
+        trainer = new T2GramModelTrainer();
+    }
+
+    public Replay(final File observation, final T2GramModelI model) {
+        this.trainingObservation = observation;
+        this.observation = observation;
+        this.classification = null;
+        this.model = model;
         trainer = new T2GramModelTrainer();
     }
 
     @Override
     public void preprocess() {
         try {
-            detector = createDetector(trainModel(loadObservation(observation)));
+            if (model == null) {
+                detector = createDetector(trainModel(loadObservation(observation)));
+            } else {
+                detector = createDetector(model);
+            }
+
             replay = new PlayFileSystemConnection();
             replay.setFile(trainingObservation);
             replay.connect();
@@ -87,7 +109,10 @@ public class Replay implements Experiment {
         } catch (ActionNotPermittedException e) {
             e.printStackTrace();
         }
-        AucomIO.getInstance().writeTimeSeries(detector.getOutput(), classification);
+
+        if (classification != null) {
+            AucomIO.getInstance().writeTimeSeries(detector.getOutput(), classification);
+        }
     }
 
     @Override
@@ -95,7 +120,20 @@ public class Replay implements Experiment {
         preprocess();
         process();
         postprocess();
-        return new EmptyResult();
+
+
+        // Calculate score mean & variance
+        log.finer(format("Calculating mean and variance from %d elements",
+                         detector.getOutput().size()));
+        detector.getOutput().addAttribute(Constants.FAULT_INDUCED, "0");
+        ClassificationTimeSeriesDescriptiveStatistics stats =
+                new ClassificationTimeSeriesDescriptiveStatistics(detector.getOutput());
+        log.fine(format("Mean: %.5f, Variance %.5f",
+                        stats.getTotalMeanScoreValue(),
+                        stats.getTotalScoreVarianceValue()));
+
+        return new MeanVarianceResult(stats.getTotalMeanScoreValue(),
+                                      stats.getTotalScoreVarianceValue());
     }
 
     /**
