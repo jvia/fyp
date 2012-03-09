@@ -3,43 +3,44 @@ package org.bham.aucom.data;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
- * Represents a Score generated out of a sequence of consecutive scores. @see
- * Score
- * Score value, abnormality and durations to precedessors are mean values of
- * the
- * scores
- * Timestamp and Precedessors are  elements of the first score in the
- * represented sequence
+ * Represents a Score generated out of a sequence of consecutive scores. {@see
+ * Score} Score value, abnormality and durations to predecessors are mean
+ * values of the scores Timestamp and Predecessors are elements of the first
+ * score in the represented sequence.
  */
 public class RangeScore extends Score {
     private List<Score> scores;
+    private transient final Logger log = Logger.getLogger(getClass().getName());
 
     public RangeScore(List<Score> scores) {
         // TODO :: this is very dangerous, but I have no clue how to solve it
         super(scores.get(0));
-        double meanValue = 0.0d;
-        int eventCounter = 0;
+
         if (scores.size() > 0) {
             setTimestamp(scores.get(0).getTimestamp());
             setContent(scores.get(0).getContent());
         }
+
+        log.fine(String.format("Range score from %s", scores));
+        double meanValue = 0.0d;
         for (Score s : scores) {
             meanValue += s.getValue();
-            eventCounter++;
             setFirstElement(isFirstElement() || s.isFirstElement());
             setLastElement(isLastElement() || s.isLastElement());
         }
+
         meanValue /= scores.size();
         setValue(meanValue);
         setVariance(calculateVarianceValue(scores));
-//      setAbnormal(SystemFaultStatus.UNKNOWN);
-        this.setScores(scores);
+        setScores(scores);
+        log.fine(String.format("Mean: %.5f, Variance: %.5f", getValue(), getVariance()));
     }
 
     public int size() {
-        return this.getScores().size();
+        return getScores().size();
     }
 
     private double calculateVarianceValue(List<Score> sequence) {
@@ -47,10 +48,11 @@ public class RangeScore extends Score {
         for (Score s : sequence) {
             var += Math.pow(this.getValue() - s.getValue(), 2);
         }
-        if (sequence.size() == 1)
+        if (sequence.size() == 1) {
             var /= sequence.size();
-        else
+        } else {
             var /= (sequence.size() - 1);
+        }
         return var;
     }
 
@@ -106,6 +108,4 @@ public class RangeScore extends Score {
         rs_copy.setLastElement(isLastElement());
         return rs_copy;
     }
-    // delegate to score elements of this range score object
-
 }

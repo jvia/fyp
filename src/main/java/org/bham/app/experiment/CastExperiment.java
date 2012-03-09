@@ -5,7 +5,6 @@ import org.bham.aucom.ActionNotPermittedException;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.data.timeseries.TimeSeries;
-import org.bham.aucom.data.util.SlidingWindow;
 import org.bham.aucom.diagnoser.ModelTrainerListener;
 import org.bham.aucom.diagnoser.StatusChangedEvent;
 import org.bham.aucom.diagnoser.TrainerStatus;
@@ -63,9 +62,6 @@ public class CastExperiment implements Experiment {
             Logger.getLogger(CastExperiment.class.getName()).log(Level.SEVERE, "Must have an observation file or a model file...quitting.");
             throw new RuntimeException();
         }
-
-        printBlockMessage("STARTING EXPERIMENT");
-
     }
 
     /**
@@ -75,20 +71,28 @@ public class CastExperiment implements Experiment {
     public void preprocess() {
         // if there is no model, we have to learn one
         T2GramModelI model;
-        printBlockMessage("LEARN MODEL");
         model = trainModel(loadObservation(observation));
         //saveModel(observation.getPath(), model);
 
         // load the fault detector
-        faultDetector = createDetector(model);
+        MeanVarianceResult r = new MeanVarianceResult(0.0, 0.0);
+        try {
+            r = (MeanVarianceResult) new Replay(observation, model).call();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        faultDetector = createDetector(model, r.getMean(), r.getVariance());
 
         // will block until connection is made
-        printBlockMessage("START CAST");
         cast = new CastSystemConnection();
         try {
-            if (!quiet) System.out.print("Waiting to connected...");
+            if (!quiet) {
+                System.out.print("Waiting to connected...");
+            }
             cast.connect();
-            if (!quiet) System.out.println("connected.");
+            if (!quiet) {
+                System.out.println("connected.");
+            }
         } catch (SystemConnectionFailedException ex) {
             Logger.getLogger(CastObservationCollection.class.getName()).log(Level.SEVERE, "Could not connect to CAST", ex);
             throw new RuntimeException();
@@ -105,8 +109,9 @@ public class CastExperiment implements Experiment {
      * @param model the model to save
      */
     private void saveModel(String wd, String name, T2GramModelI model) {
-        if (!quiet)
+        if (!quiet) {
             System.out.printf("%s with %d distributions%n", model.getName(), model.getNumberDistirbutions());
+        }
         for (Tuple<Integer, Integer> indices : model.getTransitionMatrix().keySet()) {
             System.out.printf("(%d, %d) = %s%n",
                               indices.getFirstElement(),
@@ -114,8 +119,9 @@ public class CastExperiment implements Experiment {
                               model.getTransitionMatrix().get(indices.getFirstElement()).get(indices.getSecondElement()));
         }
 
-        if (!quiet)
+        if (!quiet) {
             System.out.println("Saving model: " + wd + "/" + name + ".ml");
+        }
         AucomIO.getInstance().writeFaultDetectionModel(model, new File(wd + "/" + name + ".ml"));
     }
 
@@ -146,14 +152,16 @@ public class CastExperiment implements Experiment {
         try {
             // start fault detection
             faultDetector.start(cast.getObservationTimeSeries());
-            if (!quiet)
+            if (!quiet) {
                 System.out.println("Sliding window: " + faultDetector.getSlidingWindow().getIntervalSize());
+            }
 
             // wait here until it is done
             while (faultDetector.getOutput().size() < size) {
                 long size = faultDetector.getDetectorGraph().getTotalElementsSeen();
-                if (!quiet)
+                if (!quiet) {
                     System.out.printf("Detector: %d, Output: %d%n", size, faultDetector.getOutput().size());
+                }
                 Thread.sleep(500);
             }
 
@@ -175,16 +183,19 @@ public class CastExperiment implements Experiment {
      */
     @Override
     public void postprocess() {
-        if (error != 0)
+        if (error != 0) {
             System.out.printf("%dms%n", errorTime);
+        }
 
         try {
             if (classification.createNewFile()) {
-                if (!quiet)
+                if (!quiet) {
                     System.out.printf("Writing classification to %s%n", classification.getPath());
+                }
             } else {
-                if (!quiet)
+                if (!quiet) {
                     System.out.printf("Overwriting classification to %s%n", classification.getPath());
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -213,7 +224,6 @@ public class CastExperiment implements Experiment {
      * @return the model
      */
     private T2GramModelI trainModel(TimeSeries<Observation> observation) {
-        if (!quiet) System.out.print("Training model...");
         // use this object to wait here until the training is done
         final Object obj = new Object();
         trainer.addModelTrainerListener(new ModelTrainerListener() {
@@ -238,7 +248,6 @@ public class CastExperiment implements Experiment {
             e.printStackTrace();
         }
 
-        if (!quiet) System.out.println("complete.");
         return (T2GramModelI) trainer.getModel();
     }
 
@@ -251,35 +260,21 @@ public class CastExperiment implements Experiment {
      * Additionally it has a sliding window of 100ms with an initial overlap of
      * 50ms.
      *
-     * @param model the learned model
+     * @param model    the learned model
+     * @param mean     the mean to use for the classifier threshold
+     * @param variance the variance to use for the classifier
      * @return a new fault detector
      */
-    private T2GramDetector createDetector(T2GramModelI model) {
+    private T2GramDetector createDetector(T2GramModelI model, double mean, double variance) {
         T2GramDetector detector = new T2GramDetector();
         detector.setModel(model);
-        detector.setClassificator(new StatisticalAnomalyClassifier(0.5, 0.001));
+
+
+        // Create a new classifier with a mean that is a s
+        detector.setClassificator(new StatisticalAnomalyClassifier(mean / 2, variance));
         //detector.setSlidingWindow(new SlidingWindow(100, 50));
 
         System.out.printf("Classifier: %s", detector.getClassificator().getAttributes());
         return detector;
-    }
-
-    private void printBlockMessage(String msg) {
-        if (quiet) return;
-
-        int pad = msg.length();
-        pad = (70 - pad) / 2;
-
-        StringBuilder border = new StringBuilder();
-        for (int i = 0; i < 70; i++)
-            border.append("=");
-
-        StringBuilder padding = new StringBuilder();
-        for (int i = 0; i < pad; i++)
-            padding.append(" ");
-
-        System.out.println(border);
-        System.out.println(padding + msg);
-        System.out.println(border);
     }
 }

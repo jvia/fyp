@@ -20,7 +20,7 @@ import static java.lang.String.format;
  * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk>
  */
 public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProbabilityFeature, Score> {
-    
+
     private transient final Logger log = Logger.getLogger(this.getClass().getName());
     private T2GramModelI model;
 
@@ -62,11 +62,14 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
         double sum_entropy = calculateSumEntropy(current);
         // If entropy is too small, ensure minimal denominator
         double denominator = Math.max(Math.pow(sum_entropy, 2), 0.00001);
+        log.fine(format("Total entropy: %f", sum_entropy));
         double scoreValue;
 
         scoreValue = calculateAbsoluteScoreValue(current, denominator);
         scoreValue = normalize(current, scoreValue);
-        return new SingleScore(current, scoreValue);
+        Score score = new SingleScore(current, scoreValue);
+        score.addAttribute("raw_score", String.valueOf(scoreValue));
+        return score;
     }
 
     protected double calculateAbsoluteScoreValue(
@@ -122,10 +125,13 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
 
         // Calculate output
         output = probability * (1 - Math.pow(entropy, 2) / denominator);
-        log.fine(format("[%d ---> %d] => %.2f",
+        log.fine(format("Single score: [%d ---> %d] => %.2f%nProbability: %f%nEntropy: %f%nDenominator: %f",
                         predecessor.getEventType(),
                         current.getEventType(),
-                        output));
+                        output,
+                        probability,
+                        entropy,
+                        denominator));
         return output;
     }
 

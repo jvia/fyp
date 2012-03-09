@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * This class realizes an anomaly classifier for @Score score values. The
+ * This class realizes an anomaly classifier for score values. The
  * hypothesis is that a model should produce high score values for data
  * which belongs to this model. Furthermore consecutive score values in a
  * time-series should have low variance.
@@ -21,7 +21,9 @@ import java.util.List;
  * of consecutive elements of a time-series and uses this values to compute
  * a threshold. except a high score value an item which fits to the
  * corresponding model should have a low variance The idea is to incorporate
- * the variance of the score value
+ * the variance of the score value.
+ *
+ * @see Score
  */
 public class StatisticalAnomalyClassifier extends AbstractAnomalyClassifier {
 
@@ -35,27 +37,12 @@ public class StatisticalAnomalyClassifier extends AbstractAnomalyClassifier {
     private int historySize = 50;
 
 
-    public StatisticalAnomalyClassifier(final Double mean,
-                                        final Double variance) {
+    public StatisticalAnomalyClassifier(final double mean,
+                                        final double variance) {
         super("StatisticalAnomalyClassifier");
         setMean(mean);
         setVariance(variance);
         a = 0.95;
-    }
-
-    public StatisticalAnomalyClassifier() {
-        super("statistical");
-        setMean(Double.NaN);
-        setVariance(Double.NaN);
-        a = 0.95;
-        historySize = Integer.MIN_VALUE;
-    }
-
-    public StatisticalAnomalyClassifier(final double mean,
-                                        final double variance,
-                                        final int size) {
-        this(mean, variance);
-        historySize = size;
     }
 
     @Override
