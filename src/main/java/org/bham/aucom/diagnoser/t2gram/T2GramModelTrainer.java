@@ -190,21 +190,15 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
      */
     @Override
     public void graphStatusChanged(GraphStateChangedEvent evt) {
-        log.fine("Receives event: " + evt);
         switch (evt.getNewState()) {
             case RUNNING:
-                log.fine("New state is running");
                 setStatus(TrainerStatus.RUNNING);
                 break;
             case READY:
-                log.fine("New state is ready");
                 if (evt.getPreviousState().equals(GraphStatus.RUNNING)) {
                     // training is finished
-                    log.fine("Previous state was running");
                     TimeSeries<TemporalDurationFeature> output = graph.getOutput();
-                    log.finer("Got output from graph");
                     trainModel(output);
-                    log.finer("Trained");
                     setStatus(TrainerStatus.READY);
                 }
                 break;

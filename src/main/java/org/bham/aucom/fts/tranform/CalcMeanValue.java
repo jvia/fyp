@@ -6,6 +6,7 @@ import org.bham.aucom.data.util.SlidingWindow;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static java.lang.String.format;
@@ -34,6 +35,7 @@ public class CalcMeanValue extends AbstractAucomTranformNode<Score, Score> {
     public CalcMeanValue() {
         super("CalcMeanValue");
         history = new ArrayList<Score>();
+        log.setLevel(Level.ALL);
     }
 
     /**
@@ -46,8 +48,6 @@ public class CalcMeanValue extends AbstractAucomTranformNode<Score, Score> {
      */
     @Override
     protected Score iTransform(Score score) throws Exception {
-        log.finest(format("Calling iTransform with sliding window %s", getSlidingWindow()));
-
         history.add(score);
         Score mean = null;
 
@@ -60,13 +60,13 @@ public class CalcMeanValue extends AbstractAucomTranformNode<Score, Score> {
             mean = calcMeanScore(windowElements);
 
             if (mean == null) {
-                log.info("Not enough elements for mean score, returning null");
+                log.finest("Not enough elements for mean score, returning null");
                 return null;
             }
 
             if (lastElement(score)) {
                 mean.getAttributes().put("lastElement", "yes");
-                log.info("got last element, marking the output too");
+                log.finest("Received last element, marking the output too");
             }
 
             history.removeAll(elementsToRemove);
@@ -81,7 +81,6 @@ public class CalcMeanValue extends AbstractAucomTranformNode<Score, Score> {
      * Resets all data in the node.
      */
     public void reset() {
-        log.info("Resetting CalcMean");
         history.clear();
         windowStart = 0;
         windowEnd = getSlidingWindow().getIntervalSize();
@@ -183,6 +182,7 @@ public class CalcMeanValue extends AbstractAucomTranformNode<Score, Score> {
      * @return the scores within the sliding window
      */
     protected List<Score> getWindowElements(List<Score> history, long windowEnd) {
+        log.finest(format("Findings scores after %d in %n%s", windowEnd, history));
         List<Score> out = new ArrayList<Score>();
 
         // if we have seen the last element, return the whole history

@@ -103,7 +103,7 @@ public class SourceScopeTypeEncoder extends Encoder {
         List<DomainFeature> features = getFeatures(in);
         String encodedString = createFeatureString(features);
         int encodedId = convertEncoding(encodedString);
-        log.info(String.format("Encoding %s to STRING [%s] and ID [%d]", in, encodedString, encodedId));
+        log.finest(String.format("Encoding %s to STRING [%s] and ID [%d]", in, encodedString, encodedId));
         return encodedId;
     }
 
