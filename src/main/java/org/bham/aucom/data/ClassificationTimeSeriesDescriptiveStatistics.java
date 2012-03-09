@@ -6,6 +6,7 @@ import org.bham.aucom.util.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -20,6 +21,7 @@ import java.util.logging.Logger;
  */
 public class ClassificationTimeSeriesDescriptiveStatistics {
     private TimeSeries<Classification> classificationTimeSeries;
+    private final transient Logger log = Logger.getLogger(getClass().getName());
 
     /**
      * Creates a ready to go ClassificationTimeSeriesStatistics object
@@ -28,12 +30,13 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
      *                        generated. null is not permitted
      */
     public ClassificationTimeSeriesDescriptiveStatistics(TimeSeries<Classification> scoreTimeSeries) {
+        log.setLevel(Level.ALL);
         setTimeSeries(scoreTimeSeries);
         if (classificationTimeSeries.isEmpty()) {
-            Logger.getLogger(this.getClass().getCanonicalName()).severe(this.getClass() + " warning time series has length 0");
+            log.severe(this.getClass() + " warning time series has length 0");
         }
         if (!hasInducedFaultTimestamp()) {
-            Logger.getLogger(this.getClass().getCanonicalName()).severe(this.getClass() + " time series has no fault induces timestamp attribute");
+            log.severe(this.getClass() + " time series has no fault induces timestamp attribute");
         }
     }
 
@@ -237,6 +240,8 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
             }
             mean /= this.getTimeSeries().size();
         }
+
+        log.fine(String.format("Mean: %.8f", mean));
         return mean;
     }
 
@@ -289,6 +294,7 @@ public class ClassificationTimeSeriesDescriptiveStatistics {
             }
             variance /= this.getTimeSeries().size() - 1;
         }
+        log.fine(String.format("Variance: %.8f", variance));
         return variance;
     }
 
