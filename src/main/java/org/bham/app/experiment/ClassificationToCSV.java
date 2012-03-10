@@ -79,15 +79,16 @@ public class ClassificationToCSV implements Experiment {
     public void postprocess() {
         try {
             csv = new FileWriter(out);
-            csv.append("#    Timestamp     Score     Threshold     Status   Raw Score   Component\n");
+            csv.append("#    Timestamp     Score     Threshold     Status   Raw Score   Component   Count\n");
             for (Classification classification : list) {
-                csv.append(String.format("     %9d     %5.3f     %6.3f    %6.0f   %9.5f   %9d%n",
+                csv.append(String.format("     %9d     %5.3f     %6.3f    %6.0f   %9.5f   %9d   %5s%n",
                                          classification.getTimestamp(),
                                          classification.getValue(),
                                          Double.parseDouble(classification.getAttributeValue(StatisticalAnomalyClassifier.THRESHOLD_USED)),
                                          classification.getStatusAsDouble(),
                                          Double.parseDouble(classification.getAttributeValue("raw_score")),
-                                         classification.getEventType()));
+                                         classification.getEventType(),
+                                         classification.getAttributeValue("count")));
             }
         } catch (IOException e) {
             e.printStackTrace();
