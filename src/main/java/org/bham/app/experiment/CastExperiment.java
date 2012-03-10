@@ -5,6 +5,7 @@ import org.bham.aucom.ActionNotPermittedException;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.data.timeseries.TimeSeries;
+import org.bham.aucom.data.util.SlidingWindow;
 import org.bham.aucom.diagnoser.ModelTrainerListener;
 import org.bham.aucom.diagnoser.StatusChangedEvent;
 import org.bham.aucom.diagnoser.TrainerStatus;
