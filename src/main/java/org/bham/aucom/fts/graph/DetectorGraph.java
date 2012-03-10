@@ -104,7 +104,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
         rawScoreCalculatorNode = new CalcEntropyAvgScore();
 
         meanScoreCalculatorNode = new CalcMeanValue();
-        meanScoreCalculatorNode.setSlidingWindow(new SlidingWindow(10, 5));
+        meanScoreCalculatorNode.setSlidingWindow(new SlidingWindow(100, 50));
 
         classificationNode = new Classify();
         sink = new TimeSeriesSink<Classification>(new ClassificationTimeSeries());
@@ -175,8 +175,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     /**
      * Determines if all of the preconditions required to run the graph are
      * satisfied. In order for the graph to be ready, there must be valid
-     * input,
-     * a feature generator, a model, and an anomaly detector.
+     * input, a feature generator, a model, and an anomaly detector.
      *
      * @return true if ready.
      */
