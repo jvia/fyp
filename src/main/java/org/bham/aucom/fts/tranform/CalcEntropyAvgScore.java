@@ -59,10 +59,14 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
             throw new RuntimeException("Model not trained");
         }
 
-        double sum_entropy = calculateSumEntropy(current);
+        // TODO :: remove after debug
+        if (current.getAttributeValue("count").equals("2500")) {
+            log.fine("Error induced");
+        }
+
+        double denominator = calculateSumEntropy(current);
         // If entropy is too small, ensure minimal denominator
-        double denominator = Math.max(Math.pow(sum_entropy, 2), 0.00001);
-        log.fine(format("Total entropy: %f", sum_entropy));
+        log.fine(format("Total entropy: %f", denominator));
         double scoreValue;
 
         scoreValue = calculateAbsoluteScoreValue(current, denominator);
@@ -125,13 +129,17 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
 
         // Calculate output
         output = probability * (1 - Math.pow(entropy, 2) / denominator);
-        log.fine(format("Single score: [%d ---> %d] => %.2f%nProbability: %f%nEntropy: %f%nDenominator: %f",
+        log.fine(format("Single score: [%d ---> %d] => %.2f%nProbability: %f%n" +
+                        "Entropy:     %f%n" +
+                        "Denominator: %f%n" +
+                        "Time span:   %d",
                         predecessor.getEventType(),
                         current.getEventType(),
                         output,
                         probability,
                         entropy,
-                        denominator));
+                        denominator,
+                        current.getTimestamp() - predecessor.getTimestamp()));
         return output;
     }
 
@@ -148,9 +156,12 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
         if (!current.getPredecessors().isEmpty()) {
             normalizedScore = rawScore / current.getPredecessors().size();
         }
-        log.fine(format("Normalized score (raw / predecessor): " +
-                        "%.2f / %d = %.5f", rawScore,
-                        current.getPredecessors().size(), normalizedScore));
+        log.fine(format("Normalized score (raw / predecessor) for %s: " +
+                        "%.2f / %d = %.5f",
+                        current.getAttributeValue("count"),
+                        rawScore,
+                        current.getPredecessors().size(),
+                        normalizedScore));
         return normalizedScore;
     }
 
