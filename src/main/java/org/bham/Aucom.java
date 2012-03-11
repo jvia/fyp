@@ -10,6 +10,8 @@ import org.kohsuke.args4j.ExampleMode;
 import org.kohsuke.args4j.Option;
 
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Jeremiah Via <jxv911@cs.bham.ac.uk>
@@ -81,7 +83,7 @@ public class Aucom {
     private int error;
 
     private void runConversion() {
-        ClassificationToCSV conversion = new ClassificationToCSV(in, out, quiet);
+        ClassificationToCSV conversion = new ClassificationToCSV(in, out);
         try {
             conversion.call();
         } catch (Exception e) {
@@ -117,6 +119,7 @@ public class Aucom {
     }
 
     public static void main(String[] args) {
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).setLevel(Level.ALL);
         Aucom aucom = new Aucom();
         CmdLineParser parser = new CmdLineParser(aucom);
 

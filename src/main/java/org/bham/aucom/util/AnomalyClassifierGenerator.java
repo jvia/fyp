@@ -78,18 +78,21 @@ public class AnomalyClassifierGenerator {
 
     public LinkedList<AnomalyClassifier> generateClassifiersToTest() {
         LinkedList<AnomalyClassifier> thresholds = new LinkedList<AnomalyClassifier>();
-        double thresholdInterval = this.getMaxThresholdValue() - this.getInitialThresholdValue();
-        int thresholdIterations = (int) (thresholdInterval / this.getThresholdValueStep());
-        double varianceInterval = this.getMaxVarianceValue() - this.getInitialVarianceValue();
-        double varianceIterations = (int) (varianceInterval / this.getVarianceValueStep());
+        double thresholdIterations =
+                (maxThresholdValue - initialThresholdValue)
+                        / thresholdValueStep;
+        double varianceIterations =
+                (maxVarianceValue - initialVarianceValue)
+                        / varianceValueStep;
+
         for (int i = 0; i < thresholdIterations; i++) {
             for (int j = 0; j < varianceIterations; j++) {
-                double mean = this.getInitialThresholdValue() + i * this.getThresholdValueStep();
-                double variance = this.getInitialVarianceValue() + j * this.getVarianceValueStep();
-                thresholds.add(new StatisticalAnomalyClassifier(mean, variance));
+                double mean = initialThresholdValue + i * thresholdValueStep;
+                double variance = initialVarianceValue + j * varianceValueStep;
+                thresholds.add(
+                        new StatisticalAnomalyClassifier(mean, variance));
             }
         }
-        System.out.println("generated " + thresholds.size() + " thresholds for testing");
         return thresholds;
     }
 }

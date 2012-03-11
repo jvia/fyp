@@ -18,7 +18,10 @@ import static java.lang.String.format;
  * @author Raphael Golombek <rgolombe@cor-lab.uni-bielefeld.de>
  * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk
  */
-public class GenerateTemporalProbabilityFeature extends AbstractAucomTranformNode<TemporalDurationFeature, TemporalProbabilityFeature> {
+public class GenerateTemporalProbabilityFeature extends
+        AbstractAucomTranformNode<TemporalDurationFeature,
+                TemporalProbabilityFeature> {
+
     private static final long serialVersionUID = 3658564740012943868L;
     private T2GramModelI model;
     private transient final Logger log = Logger.getLogger(getClass().getName());
@@ -39,7 +42,8 @@ public class GenerateTemporalProbabilityFeature extends AbstractAucomTranformNod
      * @throws Exception something went wrong
      */
     @Override
-    protected TemporalProbabilityFeature iTransform(TemporalDurationFeature tdf) throws Exception {
+    protected TemporalProbabilityFeature iTransform(
+            TemporalDurationFeature tdf) throws Exception {
         if (checkIfModelNotTrained()) return null;
 
         HashMap<DataType, Double> probabilities = new HashMap<DataType, Double>();
@@ -50,7 +54,7 @@ public class GenerateTemporalProbabilityFeature extends AbstractAucomTranformNod
 
             // Calculate normalized probability from the raw & max probabilities
             double normalized = normalize(getModel().getProbability(predecessor.getEventType(), eventType, timespan),
-                                          getModel().getMaxProbabilityFor(predecessor.getEventType(), eventType));
+                    getModel().getMaxProbabilityFor(predecessor.getEventType(), eventType));
 
             probabilities.put(predecessor, normalized);
             log.fine(format("P(%d|%d --> %d) = %f", timespan, predecessor.getEventType(), tdf.getEventType(), normalized));

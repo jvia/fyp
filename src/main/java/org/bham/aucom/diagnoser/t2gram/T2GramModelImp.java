@@ -31,7 +31,7 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
     public Collection<Integer> getDimensions() {
         Collection<Integer> dimensions = new HashSet<Integer>();
         for (Tuple<Integer, Integer> key : this.transitionMatrix.keySet()) {
-            log.info(key + "");
+            //log.info(key + "");
             dimensions.add(key.getFirstElement());
             dimensions.add(key.getSecondElement());
         }
@@ -131,7 +131,7 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
 
     @Override
     public String toString() {
-        return String.format("Name: %s; Trained: %b", this.getName(), isTrained());
+        return String.format("Name: %s; Trained: %b, Dimensions: %s", this.getName(), isTrained(), getDimensions());
     }
 
     protected void setName(String name) {

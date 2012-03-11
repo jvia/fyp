@@ -51,8 +51,6 @@ public class EncodeData extends AbstractAucomTranformNode<Observation, DataType>
      */
     @Override
     public DataType iTransform(final Observation input) throws Exception {
-        log.info("Encoding " + input.toString());
-
         try {
             int dataType = getEncoder().encode(input);
             List<DomainFeature> features = getEncoder().getFeatures(input);

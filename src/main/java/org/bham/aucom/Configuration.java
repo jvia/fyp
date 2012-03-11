@@ -47,8 +47,7 @@ public final class Configuration {
 
         try {
             instance.load();
-        } catch (Exception ex) {
-            System.err.println("Couldn't load configuration file");
+        } catch (Exception ignore) {
         }
         return instance;
     }
@@ -166,9 +165,7 @@ public final class Configuration {
                 }
                 lines.add(str);
             }
-        } catch (IOException exception) {
-            System.err.println("exception caught: " +
-                               exception.getLocalizedMessage());
+        } catch (IOException ignored) {
         }
         return lines;
     }
@@ -179,7 +176,6 @@ public final class Configuration {
      * @throws java.io.IOException Error reading file
      */
     private void loadFromExternFile() throws IOException {
-        System.out.println("Extern");
         BufferedReader br = new BufferedReader(
                 new FileReader(new File(fileString)));
         loadFromBuffer(br);
@@ -190,7 +186,6 @@ public final class Configuration {
      * Loads an internal file.
      */
     private void loadFromInternFile() {
-        System.out.println("Intern");
         InputStream inStream = getClass().getResourceAsStream(resourcePath);
         loadFromBuffer(new BufferedReader(new InputStreamReader(inStream)));
     }

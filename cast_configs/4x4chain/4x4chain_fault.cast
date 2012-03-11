@@ -5,26 +5,26 @@ SUBARCHITECTURE 4x4.sa
 JAVA WM cast.architecture.SubarchitectureWorkingMemory
 JAVA TM cast.architecture.AlwaysPositiveTaskManager
 
-JAVA MG node0 experiments.Node  --start             --delay "gaussian 500 10"
-JAVA MG node1 experiments.Node  --follows "node0"   --delay "gaussian 500 10"
-JAVA MG node2 experiments.Node  --follows "node1"   --delay "gaussian 500 10"
-JAVA MG node3 experiments.Node  --follows "node2"   --delay "gaussian 500 10" --end
+JAVA MG node0 experiments.Node  --start             --delay "gaussian 300 10" --fault "2500"
+JAVA MG node1 experiments.Node  --follows "node0"   --delay "gaussian 300 10"
+JAVA MG node2 experiments.Node  --follows "node1"   --delay "gaussian 300 10"
+JAVA MG node3 experiments.Node  --follows "node2"   --delay "gaussian 300 10" --end
 
-JAVA MG node10 experiments.Node --start             --delay "gaussian 500 10"
-JAVA MG node11 experiments.Node --follows "node10"  --delay "gaussian 500 10"
-JAVA MG node12 experiments.Node --follows "node11"  --delay "gaussian 500 10"
-JAVA MG node13 experiments.Node --follows "node12"  --delay "gaussian 500 10" --end
+JAVA MG node10 experiments.Node --start             --delay "gaussian 300 10"
+JAVA MG node11 experiments.Node --follows "node10"  --delay "gaussian 300 10"
+JAVA MG node12 experiments.Node --follows "node11"  --delay "gaussian 300 10"
+JAVA MG node13 experiments.Node --follows "node12"  --delay "gaussian 300 10" --end
 
-JAVA MG node20 experiments.Node --start             --delay "gaussian 500 10"  --fault "2500"
-JAVA MG node21 experiments.Node --follows "node20"  --delay "gaussian 500 10"
-JAVA MG node22 experiments.Node --follows "node21"  --delay "gaussian 500 10"
-JAVA MG node23 experiments.Node --follows "node22"  --delay "gaussian 500 10" --end
+JAVA MG node20 experiments.Node --start             --delay "gaussian 300 10"
+JAVA MG node21 experiments.Node --follows "node20"  --delay "gaussian 300 10"
+JAVA MG node22 experiments.Node --follows "node21"  --delay "gaussian 300 10"
+JAVA MG node23 experiments.Node --follows "node22"  --delay "gaussian 300 10" --end
 
-JAVA MG node30 experiments.Node --start             --delay "gaussian 500 10"
-JAVA MG node31 experiments.Node --follows "node30"  --delay "gaussian 500 10"
-JAVA MG node32 experiments.Node --follows "node31"  --delay "gaussian 500 10"
-JAVA MG node33 experiments.Node --follows "node32"  --delay "gaussian 500 10" --end
+JAVA MG node30 experiments.Node --start             --delay "gaussian 300 10"
+JAVA MG node31 experiments.Node --follows "node30"  --delay "gaussian 300 10"
+JAVA MG node32 experiments.Node --follows "node31"  --delay "gaussian 300 10"
+JAVA MG node33 experiments.Node --follows "node32"  --delay "gaussian 300 10" --end
 
 INCLUDE ../includes/aucom.cast
 INCLUDE ../includes/counter.cast
-INCLUDE ../includes/conductor.cast
+

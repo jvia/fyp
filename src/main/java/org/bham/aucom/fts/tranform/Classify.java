@@ -7,8 +7,11 @@ import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClas
 
 import java.util.logging.Logger;
 
+import static java.lang.String.format;
+
 public class Classify extends AbstractAucomTranformNode<Score, Classification> {
-    private AnomalyClassifier classifier = null;
+    private AnomalyClassifier classifier;
+    private final transient Logger log = Logger.getLogger(getClass().getName());
 
     public Classify(AnomalyClassifier inThreshold) {
         super("ClassifyScore");
@@ -19,24 +22,9 @@ public class Classify extends AbstractAucomTranformNode<Score, Classification> {
         super("ClassifyScore");
     }
 
-    private Classification decide(Score in) {
-
-        Classification cl = null;
-
-        if (getClassifier().satisfies(in)) {
-            cl = new Classification(in, SystemFaultStatus.NORMAL);
-        } else {
-            cl = new Classification(in, SystemFaultStatus.ABNORMAL);
-        }
-
-        Logger.getLogger(this.getClass().getCanonicalName()).info(in.toString() + " classified as " + cl.getStatus());
-        return cl;
-    }
-
     @Override
     protected Classification iTransform(Score arg0) throws Exception {
         try {
-            Logger.getLogger(this.getClass().getCanonicalName()).info("classifying score " + arg0);
             return decide(arg0);
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -44,12 +32,24 @@ public class Classify extends AbstractAucomTranformNode<Score, Classification> {
         return null;
     }
 
+    private Classification decide(Score in) {
+        Classification cl;
+        if (getClassifier().satisfies(in)) {
+            cl = new Classification(in, SystemFaultStatus.NORMAL);
+        } else {
+            cl = new Classification(in, SystemFaultStatus.ABNORMAL);
+        }
+
+        log.fine(format("Classify(%s) => %s", in, cl.getStatus()));
+        return cl;
+    }
+
     public void setClassifier(AnomalyClassifier threshold) {
-        this.classifier = threshold;
+        classifier = threshold;
     }
 
     public AnomalyClassifier getClassifier() {
-        return this.classifier;
+        return classifier;
     }
 
     public void reset() {

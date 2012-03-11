@@ -31,7 +31,6 @@ public class PlayFileGraph extends AbstractAucomGraph {
 
     @Override
     protected void cleanUp() {
-        // ignored
     }
 
     public void setInput(TimeSeries<Observation> inTs) {
