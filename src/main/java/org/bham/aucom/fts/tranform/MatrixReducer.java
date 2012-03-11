@@ -1,10 +1,13 @@
 package org.bham.aucom.fts.tranform;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import static java.lang.String.format;
@@ -20,9 +23,11 @@ public class MatrixReducer {
     private Map<Integer, List<Integer>> connections;
     private static final String FILE_NAME = "/connections.txt";
     private final Logger log = Logger.getLogger(getClass().getName());
+    private static final int METRONOME = 0;
 
     public MatrixReducer() {
         connections = new HashMap<Integer, List<Integer>>();
+        Set<Integer> all = new HashSet<Integer>();
 
         Scanner s = null;
         try {
@@ -46,11 +51,9 @@ public class MatrixReducer {
                     int from = Integer.valueOf(result[i].trim());
                     int to = Integer.valueOf(result[i + 1].trim());
 
-                    // Add to data structure
-                    if (!connections.containsKey(from)) {
-                        connections.put(from, new ArrayList<Integer>());
-                    }
-                    connections.get(from).add(to);
+                    // Add to set of all components
+                    all.add(from);
+                    all.add(to);
                 }
             }
         } finally {
@@ -58,14 +61,20 @@ public class MatrixReducer {
                 s.close();
             }
         }
+
+
+        // Add data to connections
+        connections.put(METRONOME, new ArrayList<Integer>(all));
+        connections.get(METRONOME).add(METRONOME);
+        for (int i : all) {
+            connections.put(i, Arrays.asList(METRONOME));
+        }
     }
 
     public boolean areConnected(int predecessor, int current) {
         boolean connected = false;
 
-        if (predecessor == current) {
-            connected = true;
-        } else if (!connections.containsKey(predecessor)) {
+        if (!connections.containsKey(predecessor)) {
             connected = false;
         } else {
             for (Integer successor : connections.get(predecessor)) {
