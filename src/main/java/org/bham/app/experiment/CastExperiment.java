@@ -272,8 +272,8 @@ public class CastExperiment implements Experiment {
 
 
         // Create a new classifier with a mean that is a s
-        detector.setClassificator(new StatisticalAnomalyClassifier(mean / 2, variance));
-        //detector.setSlidingWindow(new SlidingWindow(100, 50));
+        detector.setClassificator(new StatisticalAnomalyClassifier(mean * (2./3.), variance));
+        detector.setSlidingWindow(new SlidingWindow(100, 50));
 
         System.out.printf("Classifier: %s", detector.getClassificator().getAttributes());
         return detector;
