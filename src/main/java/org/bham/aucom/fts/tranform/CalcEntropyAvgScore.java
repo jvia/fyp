@@ -58,6 +58,10 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
             log.severe("Model not trained");
             throw new RuntimeException("Model not trained");
         }
+        // only calculate score when we see the metronome
+        if (current.getEventType() != 0) {
+            return null;
+        }
 
         // TODO :: remove after debug
         if (current.getAttributeValue("count").equals("2500")) {

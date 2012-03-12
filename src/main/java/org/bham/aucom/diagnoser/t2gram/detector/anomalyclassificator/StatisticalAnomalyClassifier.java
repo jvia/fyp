@@ -10,6 +10,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class realizes an anomaly classifier for score values. The
@@ -29,6 +31,7 @@ public class StatisticalAnomalyClassifier extends AbstractAnomalyClassifier {
 
     private static final long serialVersionUID = 1L;
     public static final String THRESHOLD_USED = "thresholdUsed";
+    private final transient Logger log = Logger.getLogger(getClass().getName());
 
     private double classifierMean;
     private double classifierVariance;
@@ -43,6 +46,7 @@ public class StatisticalAnomalyClassifier extends AbstractAnomalyClassifier {
         setMean(mean);
         setVariance(variance);
         a = 0.95;
+        log.setLevel(Level.ALL);
     }
 
     @Override
@@ -56,14 +60,19 @@ public class StatisticalAnomalyClassifier extends AbstractAnomalyClassifier {
         double historyMean = calculateMeanOnHistoryElements(scoreHistory);
         double valueToCompare = getValueToCompare();
         scoreToCheck.addAttribute(THRESHOLD_USED, String.valueOf(valueToCompare));
-
+        log.fine(String.format("Satisfies: %f <= %f: %b",
+                               valueToCompare, historyMean,
+                               valueToCompare <= historyMean));
         return valueToCompare <= historyMean;
     }
 
     public double getValueToCompare() {
         double scoreVariance = calculateVarianceValue(scoreHistory);
         double quotient = scoreVariance / classifierVariance;
-        return (a * classifierMean) + ((1.0 - a) * classifierMean * quotient);
+        double value =(a * classifierMean) + ((1.0 - a) * classifierMean * quotient);
+        log.fine(String.format("Compare to: (%f * %f) + ((1.0 - %f) * %f * %f) = %f",
+                               a, classifierMean, a, classifierMean, quotient, value));
+        return value;
     }
 
     @Override
