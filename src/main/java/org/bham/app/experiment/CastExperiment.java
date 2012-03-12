@@ -74,21 +74,13 @@ public class CastExperiment implements Experiment {
         T2GramModelI model;
         model = trainModel(loadObservation(observation));
         //saveModel(observation.getPath(), model);
-
-        // load the fault detector
-        MeanVarianceResult r = new MeanVarianceResult(0.0, 0.0);
-        try {
-            r = (MeanVarianceResult) new Replay(observation, model).call();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        faultDetector = createDetector(model, r.getMean(), r.getVariance());
+        faultDetector = createDetector(model);
 
         // will block until connection is made
         cast = new CastSystemConnection();
         try {
             if (!quiet) {
-                System.out.print("Waiting to connected...");
+                System.out.print("\nWaiting to connect...");
             }
             cast.connect();
             if (!quiet) {
@@ -261,19 +253,25 @@ public class CastExperiment implements Experiment {
      * Additionally it has a sliding window of 100ms with an initial overlap of
      * 50ms.
      *
-     * @param model    the learned model
-     * @param mean     the mean to use for the classifier threshold
-     * @param variance the variance to use for the classifier
+     * @param model the learned model
      * @return a new fault detector
      */
-    private T2GramDetector createDetector(T2GramModelI model, double mean, double variance) {
+    private T2GramDetector createDetector(T2GramModelI model) {
+        // load the fault detector
+        MeanVarianceResult r = new MeanVarianceResult(0.0, 0.0);
+        try {
+            r = (MeanVarianceResult) new Replay(observation, model).call();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         T2GramDetector detector = new T2GramDetector();
         detector.setModel(model);
 
 
         // Create a new classifier with a mean that is a s
-        detector.setClassificator(new StatisticalAnomalyClassifier(mean * (2./3.), variance));
-        detector.setSlidingWindow(new SlidingWindow(100, 50));
+        detector.setClassificator(new StatisticalAnomalyClassifier(r.getMean() * (4. / 5.), r.getVariance()));
+        detector.setSlidingWindow(new SlidingWindow(800, 400));
 
         System.out.printf("Classifier: %s", detector.getClassificator().getAttributes());
         return detector;
