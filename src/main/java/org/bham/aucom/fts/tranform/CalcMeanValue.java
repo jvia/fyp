@@ -52,7 +52,7 @@ public class CalcMeanValue extends AbstractAucomTranformNode<Score, Score> {
         Score mean = null;
 
         if (shouldCalculateNewSlidingWindow(score)) {
-            log.info("Calculating new window");
+            //log.info("Calculating new window");
 
             List<Score> windowElements = getWindowElements(history, windowEnd);
             List<Score> elementsToRemove = getElementsToRemove(history, windowEnd);
@@ -74,6 +74,7 @@ public class CalcMeanValue extends AbstractAucomTranformNode<Score, Score> {
             checkIfLastTimestampOfTheWindowIsValid();
         }
 
+        log.fine(format("Mean score: %s", mean));
         return mean;
     }
 
@@ -154,7 +155,7 @@ public class CalcMeanValue extends AbstractAucomTranformNode<Score, Score> {
      */
     protected void checkIfLastTimestampOfTheWindowIsValid() {
         if (!history.isEmpty() && history.get(0).getTimestamp() > windowEnd) {
-            log.info("lastTimeStamp is not valid");
+            log.warning("lastTimeStamp is not valid");
             windowEnd = history.get(0).getTimestamp();
         }
     }
@@ -220,7 +221,7 @@ public class CalcMeanValue extends AbstractAucomTranformNode<Score, Score> {
      */
     protected boolean hasEnoughElementsForNextSlidingWindow() {
         long oldest = getOldestTimestamp();
-        log.fine(format("Oldest: %d, Window end: %d, Enough to slide? %b", oldest, windowEnd, windowEnd < oldest));
+        log.finest(format("Oldest: %d, Window end: %d, Enough to slide? %b", oldest, windowEnd, windowEnd < oldest));
         return windowEnd < oldest;
     }
 
@@ -235,8 +236,8 @@ public class CalcMeanValue extends AbstractAucomTranformNode<Score, Score> {
         // check whether the next window will be empty, if so skip it
         if (windowStart + getSlidingWindow().getIntervalSize() < history.get(0).getTimestamp()) {
             windowStart = history.get(0).getTimestamp();
-            log.info("first timestamp of the windows and the window are smaller than timestamp of the first element in history" + windowStart + getSlidingWindow().getIntervalSize()
-                     + history.get(0).getTimestamp());
+           // log.info("first timestamp of the windows and the window are smaller than timestamp of the first element in history" + windowStart + getSlidingWindow().getIntervalSize()
+           //          + history.get(0).getTimestamp());
         }
         return 0;
     }
