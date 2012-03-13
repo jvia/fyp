@@ -6,7 +6,6 @@ import org.bham.aucom.data.ClassificationTimeSeriesDescriptiveStatistics;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.data.timeseries.TimeSeries;
-import org.bham.aucom.data.util.SlidingWindow;
 import org.bham.aucom.diagnoser.Detector;
 import org.bham.aucom.diagnoser.Model;
 import org.bham.aucom.diagnoser.ModelTrainer;
@@ -205,7 +204,7 @@ public class Replay implements Experiment {
         T2GramDetector detector = new T2GramDetector();
         detector.setModel(model);
         detector.setClassificator(new StatisticalAnomalyClassifier(0.6, 0.001));
-        detector.setSlidingWindow(new SlidingWindow(100, 50));
+        //detector.setSlidingWindow(new SlidingWindow(100, 50));
 
         System.out.printf("Classifier:     %s%n", detector.getClassificator().getAttributes());
         System.out.printf("Sliding Window: %s%n", detector.getSlidingWindow());

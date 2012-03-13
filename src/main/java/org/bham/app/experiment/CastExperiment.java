@@ -5,7 +5,6 @@ import org.bham.aucom.ActionNotPermittedException;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.data.timeseries.TimeSeries;
-import org.bham.aucom.data.util.SlidingWindow;
 import org.bham.aucom.diagnoser.ModelTrainerListener;
 import org.bham.aucom.diagnoser.StatusChangedEvent;
 import org.bham.aucom.diagnoser.TrainerStatus;
@@ -111,7 +110,7 @@ public class CastExperiment implements Experiment {
      */
     private void saveModel(String wd, String name, T2GramModelI model) {
         if (!quiet) {
-            System.out.printf("%s with %d distributions%n", model.getName(), model.getNumberDistirbutions());
+            System.out.printf("%s with %d distributions%n", model.getName(), model.getNumberDistributions());
         }
         for (Tuple<Integer, Integer> indices : model.getTransitionMatrix().keySet()) {
             System.out.printf("(%d, %d) = %s%n",
@@ -158,7 +157,7 @@ public class CastExperiment implements Experiment {
             }
 
             // wait here until it is done
-            while (faultDetector.getOutput().size() < size) {
+            while (faultDetector.getOutput().size() < 1000 /*size*/) {
                 long size = faultDetector.getDetectorGraph().getTotalElementsSeen();
                 if (!quiet) {
                     System.out.printf("Detector: %d, Output: %d%n", size, faultDetector.getOutput().size());
@@ -273,7 +272,7 @@ public class CastExperiment implements Experiment {
 
         // Create a new classifier with a mean that is a s
         detector.setClassificator(new StatisticalAnomalyClassifier(mean * (2./3.), variance));
-        detector.setSlidingWindow(new SlidingWindow(100, 50));
+        //detector.setSlidingWindow(new SlidingWindow(500, 250));
 
         System.out.printf("Classifier: %s", detector.getClassificator().getAttributes());
         return detector;
