@@ -59,11 +59,6 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
             throw new RuntimeException("Model not trained");
         }
 
-        // TODO :: remove after debug
-        if (current.getAttributeValue("count").equals("2500")) {
-            log.fine("Error induced");
-        }
-
         double denominator = calculateSumEntropy(current);
         // If entropy is too small, ensure minimal denominator
         log.fine(format("Total entropy: %f", denominator));
@@ -128,7 +123,12 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
         }
 
         // Calculate output
-        output = probability * (1 - Math.pow(entropy, 2) / denominator);
+        // if entropy == denominator, then there is only one element
+        if (Math.abs(entropy - denominator) < 0.0001) {
+            output = probability;
+        } else {
+            output = probability * (1.0 - entropy / denominator);
+        }
         log.fine(format("Single score: [%d ---> %d] => %.2f%nProbability: %f%n" +
                         "Entropy:     %f%n" +
                         "Denominator: %f%n" +
