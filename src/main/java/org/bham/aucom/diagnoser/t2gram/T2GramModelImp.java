@@ -39,7 +39,7 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
     }
 
     @Override
-    public int getNumberDistirbutions() {
+    public int getNumberDistributions() {
         int numberavailableDistributions = 0;
         for (Tuple<Integer, Integer> key : this.transitionMatrix.keySet()) {
             if (this.transitionMatrix.get(key.getFirstElement(), key.getSecondElement()) != null) {
@@ -50,12 +50,12 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
     }
 
     @Override
-    public boolean hasDistributionFor(Integer from, Integer to) {
+    public boolean hasDistributionFor(int from, int to) {
         return transitionMatrix.containsKey(from, to);
     }
 
     @Override
-    public ProbabilityDistribution getDistributionFor(Integer from, Integer to) {
+    public ProbabilityDistribution getDistributionFor(int from, int to) {
         return transitionMatrix.get(from, to);
     }
 
@@ -105,7 +105,7 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
     }
 
     @Override
-    public void addDistribution(Integer from, Integer to, ProbabilityDistribution dist) {
+    public void addDistribution(int from, int to, ProbabilityDistribution dist) {
         transitionMatrix.put(from, to, dist);
     }
 
