@@ -1,21 +1,21 @@
 package org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.optimizer;
 
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassifier;
 
 import java.util.EventObject;
 
 public class ClassificatorOptimizerStatusEvent extends EventObject {
 
     private static final long serialVersionUID = 1L;
-    private AnomalyClassificator tested;
-    private AnomalyClassificator best;
+    private AnomalyClassifier tested;
+    private AnomalyClassifier best;
     private double fpr;
     private double distanceToMean;
     private int number;
     private int total;
     private boolean finished;
 
-    public ClassificatorOptimizerStatusEvent(Object source, AnomalyClassificator inTested, AnomalyClassificator inBest, double inFalsePositive, double inDistanceToMean, int inNumber, int inTotal) {
+    public ClassificatorOptimizerStatusEvent(Object source, AnomalyClassifier inTested, AnomalyClassifier inBest, double inFalsePositive, double inDistanceToMean, int inNumber, int inTotal) {
         super(source);
         this.tested = inTested;
         this.best = inBest;
@@ -25,11 +25,11 @@ public class ClassificatorOptimizerStatusEvent extends EventObject {
         this.setTotal(inTotal);
     }
 
-    public AnomalyClassificator getTestedClassificator() {
+    public AnomalyClassifier getTestedClassificator() {
         return this.tested;
     }
 
-    public AnomalyClassificator getBestClassificator() {
+    public AnomalyClassifier getBestClassificator() {
         return this.best;
     }
 

@@ -3,15 +3,27 @@ package org.bham.aucom.fts.graph;
 import org.bham.aucom.data.Classification;
 import org.bham.aucom.data.Observation;
 import org.bham.aucom.data.Score;
-import org.bham.aucom.data.timeseries.*;
+import org.bham.aucom.data.timeseries.ClassificationTimeSeries;
+import org.bham.aucom.data.timeseries.ScoreTimeSeries;
+import org.bham.aucom.data.timeseries.TimeSeries;
+import org.bham.aucom.data.timeseries.TimeSeriesStatusEvent;
+import org.bham.aucom.data.timeseries.TimeSeriesStatusListener;
 import org.bham.aucom.data.util.DataManager;
 import org.bham.aucom.data.util.SlidingWindow;
 import org.bham.aucom.diagnoser.t2gram.T2GramModelI;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.AnomalyClassifier;
 import org.bham.aucom.fts.sink.TimeSeriesSink;
 import org.bham.aucom.fts.source.ActionFailedException;
 import org.bham.aucom.fts.source.TimeSeriesSource;
-import org.bham.aucom.fts.tranform.*;
+import org.bham.aucom.fts.tranform.CalcEntropyAvgScore;
+import org.bham.aucom.fts.tranform.CalcMeanValue;
+import org.bham.aucom.fts.tranform.Classify;
+import org.bham.aucom.fts.tranform.CountDataTypes;
+import org.bham.aucom.fts.tranform.CropTimestampFromData;
+import org.bham.aucom.fts.tranform.EncodeData;
+import org.bham.aucom.fts.tranform.GenerateTemporalDurationFeature;
+import org.bham.aucom.fts.tranform.GenerateTemporalProbabilityFeature;
+import org.bham.aucom.fts.tranform.TemporalDurationFeatureGenerator;
 
 import java.util.logging.Logger;
 
@@ -39,8 +51,8 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     private transient GenerateTemporalDurationFeature durationFeatureNode;
     private transient GenerateTemporalProbabilityFeature probabilityFeatureNode;
     private transient CalcEntropyAvgScore rawScoreCalculatorNode;
-    private transient CalcMeanvalue meanScoreCalculatorNode;
-    private transient Classificate classificationNode;
+    private transient CalcMeanValue meanScoreCalculatorNode;
+    private transient Classify classificationNode;
 
     private transient TimeSeriesSource<Score> scoreTimeseriesSource;
     private transient TimeSeriesSink<Classification> sink;
@@ -75,13 +87,8 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
         }
     }
 
-    @Override
-    protected void setStatus(GraphStatus newStatus) {
-        super.setStatus(newStatus);
-    }
-
-    public void setClassificator(AnomalyClassificator classificatorToSet) {
-        classificationNode.setClassificator(classificatorToSet);
+    public void setClassificator(AnomalyClassifier classifierToSet) {
+        classificationNode.setClassifier(classifierToSet);
     }
 
     @Override
@@ -96,10 +103,10 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
         durationFeatureNode = new GenerateTemporalDurationFeature();
         rawScoreCalculatorNode = new CalcEntropyAvgScore();
 
-        meanScoreCalculatorNode = new CalcMeanvalue();
-        meanScoreCalculatorNode.setSlidingWindow(new SlidingWindow(100, 50));
+        meanScoreCalculatorNode = new CalcMeanValue();
+        meanScoreCalculatorNode.setSlidingWindow(new SlidingWindow(1000, 500));
 
-        classificationNode = new Classificate();
+        classificationNode = new Classify();
         sink = new TimeSeriesSink<Classification>(new ClassificationTimeSeries());
         DataManager.getInstance().addTimeSeries(sink.getOutput());
         sink.getOutput().addTimeSeriesStatusListener(this);
@@ -112,7 +119,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
         graph.connect(probabilityFeatureNode, rawScoreCalculatorNode);
         graph.connect(rawScoreCalculatorNode, meanScoreCalculatorNode);
         graph.connect(meanScoreCalculatorNode, classificationNode);
-
+        //graph.connect(rawScoreCalculatorNode, classificationNode);
         graph.connect(scoreTimeseriesSource, classificationNode);
 
         graph.connect(classificationNode, sink);
@@ -132,15 +139,15 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     }
 
     public String getName() {
-        return "testgraph";
+        return "DetectorGraph";
     }
 
     public void setInput(TimeSeries<Observation> inTimeSeries) throws ActionFailedException {
         observationNode.setInput(inTimeSeries);
     }
 
-    public AnomalyClassificator getClassificator() {
-        return classificationNode.getClassificator();
+    public AnomalyClassifier getClassificator() {
+        return classificationNode.getClassifier();
     }
 
     public void setSlidingWindow(SlidingWindow slidingWindow) {
@@ -168,14 +175,16 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     /**
      * Determines if all of the preconditions required to run the graph are
      * satisfied. In order for the graph to be ready, there must be valid
-     * input,
-     * a feature generator, a model, and an anomaly detector.
+     * input, a feature generator, a model, and an anomaly detector.
      *
      * @return true if ready.
      */
     @Override
     public boolean preconditionsSatisfied() {
-        return inputIsPresent() && featureGeneratorIsReady() && modelIsReady() && anomalyDetectorIsReady();
+        return inputIsPresent() &&
+               featureGeneratorIsReady() &&
+               modelIsReady() &&
+               anomalyDetectorIsReady();
     }
 
     /**
@@ -185,18 +194,22 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
      */
     @Override
     protected String getReason() {
-        String reason = "\n";
+        StringBuilder reason = new StringBuilder("\n");
 
-        if (!inputIsPresent())
-            reason += "- input is missing, connect to a system first\n";
-        if (!featureGeneratorIsReady())
-            reason += "- feature generator not ready\n";
-        if (!modelIsReady())
-            reason += "- model is not ready\n";
-        if (!anomalyDetectorIsReady())
-            reason += "- anomaly detector is not ready\n";
+        if (!inputIsPresent()) {
+            reason.append("- input is missing, connect to a system first\n");
+        }
+        if (!featureGeneratorIsReady()) {
+            reason.append("- feature generator not ready\n");
+        }
+        if (!modelIsReady()) {
+            reason.append("- model is not ready\n");
+        }
+        if (!anomalyDetectorIsReady()) {
+            reason.append("- anomaly detector is not ready\n");
+        }
 
-        return reason;
+        return reason.toString();
     }
 
     /**
@@ -209,12 +222,13 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     }
 
     /**
-     * Determines if the {@link Classificate} classificator is ready.
+     * Determines if the {@link org.bham.aucom.fts.tranform.Classify}
+     * classificator is ready.
      *
      * @return true if ready
      */
     private boolean anomalyDetectorIsReady() {
-        return classificationNode.getClassificator() != null;
+        return classificationNode.getClassifier() != null;
     }
 
     /**
@@ -231,7 +245,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
     }
 
     @Override
-    public void timeseriesStatusChanged(TimeseriesStatusEvent status) {
+    public void timeseriesStatusChanged(TimeSeriesStatusEvent status) {
 
     }
 

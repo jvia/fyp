@@ -11,7 +11,7 @@ HOST localhost
 SUBARCHITECTURE 10x1.sa
 JAVA WM cast.architecture.SubarchitectureWorkingMemory
 JAVA TM cast.architecture.AlwaysPositiveTaskManager
-JAVA MG node0 experiments.Node --start --delay "gaussian 100 10" --fault "2500"
+JAVA MG node0 experiments.Node --start --delay "gaussian 100 10" --fault "10000"
 JAVA MG node1 experiments.Node --start --delay "gaussian 100 10"
 JAVA MG node2 experiments.Node --start --delay "gaussian 100 10"
 JAVA MG node3 experiments.Node --start --delay "gaussian 100 10"
@@ -24,4 +24,4 @@ JAVA MG node9 experiments.Node --start --delay "gaussian 100 10"
 
 INCLUDE ../includes/aucom.cast
 INCLUDE ../includes/counter.cast
-INCLUDE ../includes/conductor.cast
+#INCLUDE ../includes/conductor.cast

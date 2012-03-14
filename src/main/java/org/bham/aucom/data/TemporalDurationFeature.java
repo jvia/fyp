@@ -17,6 +17,7 @@ public class TemporalDurationFeature extends DataType {
      */
     protected LinkedHashMap<DataType, Long> predecessorIdToDurationsMapping;
     private transient Logger log = Logger.getLogger(getClass().getName());
+    private static transient MatrixReducer reducer = new MatrixReducer();
 
     /**
      * Creates a non-initialized TemporalDurationFeature
@@ -42,7 +43,7 @@ public class TemporalDurationFeature extends DataType {
      * durations. See {@see predecessorIdToDurationsMapping} for an explanation
      * of durations.
      *
-     * @param dtt       the datatype
+     * @param dtt       the data type
      * @param durations the list of durations
      */
     public TemporalDurationFeature(DataType dtt, LinkedHashMap<DataType, Long> durations) {
@@ -75,9 +76,11 @@ public class TemporalDurationFeature extends DataType {
     }
 
     public long getDurationFor(int eventTypeId) {
-        for (DataType dtp : getPredecessorIdToDurationsMapping().keySet())
-            if (dtp.getEventType() == eventTypeId)
+        for (DataType dtp : getPredecessorIdToDurationsMapping().keySet()) {
+            if (dtp.getEventType() == eventTypeId) {
                 return getPredecessorIdToDurationsMapping().get(dtp);
+            }
+        }
 
         log.warning(format("Missing precedessor with ID: %d ", eventTypeId));
         return 0;
@@ -92,10 +95,12 @@ public class TemporalDurationFeature extends DataType {
      */
     public ArrayList<DataType> getPredecessors() {
         ArrayList<DataType> out = new ArrayList<DataType>();
-        // TODO :: put matrix reducer here and see what appens
-        for (DataType dtt : predecessorIdToDurationsMapping.keySet())
-            out.add(dtt);
-
+        for (DataType dtt : predecessorIdToDurationsMapping.keySet()) {
+            if (reducer.areConnected(dtt.getEventType(), getEventType())) {
+                out.add(dtt);
+            }
+        }
+        log.fine(format("Predecessors: %s", out));
         return out;
     }
 
@@ -108,8 +113,9 @@ public class TemporalDurationFeature extends DataType {
      */
     public ArrayList<Integer> getPrecedessorDataTypes() {
         ArrayList<Integer> out = new ArrayList<Integer>();
-        for (DataType dtt : predecessorIdToDurationsMapping.keySet())
+        for (DataType dtt : predecessorIdToDurationsMapping.keySet()) {
             out.add(dtt.getEventType());
+        }
 
         return out;
     }
@@ -118,8 +124,9 @@ public class TemporalDurationFeature extends DataType {
         DataType dtp = createRandomDataType();
         LinkedHashMap<DataType, Long> durations = new LinkedHashMap<DataType, Long>();
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 5; i++) {
             durations.put(createRandomDataType(), (long) (Math.random() * 1000));
+        }
 
         return new TemporalDurationFeature(dtp, durations);
     }
@@ -129,8 +136,9 @@ public class TemporalDurationFeature extends DataType {
         DataType dtp_copy = (DataType) super.copy();
         LinkedHashMap<DataType, Long> predecessorIdToDurationsMapping_copy = new LinkedHashMap<DataType, Long>();
 
-        for (DataType d : predecessorIdToDurationsMapping.keySet())
+        for (DataType d : predecessorIdToDurationsMapping.keySet()) {
             predecessorIdToDurationsMapping_copy.put((DataType) d.copy(), predecessorIdToDurationsMapping.get(d));
+        }
 
         return new TemporalDurationFeature(dtp_copy, predecessorIdToDurationsMapping_copy);
     }

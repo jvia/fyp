@@ -19,11 +19,12 @@ import static java.lang.String.format;
  */
 class CastObservationSource extends AucomSourceAdapter<Observation> {
 
-    private ConnectionManager cast;
+    private transient ConnectionManager cast;
+    private transient Logger log = Logger.getLogger(getClass().getName());
+    private transient final ArrayList<Observation> history;
+
     private final LinkedBlockingQueue<String[]> queue;
     private long count;
-    private final Logger log = Logger.getLogger(getClass().getName());
-    private final ArrayList<Observation> history;
 
     public CastObservationSource() {
         super("CastObservationSource");
@@ -41,8 +42,9 @@ class CastObservationSource extends AucomSourceAdapter<Observation> {
 
     @Override
     protected void iConnect() throws ActionFailedException {
-        if (getStatus().equals(SourceStatus.CONNECTED))
+        if (getStatus().equals(SourceStatus.CONNECTED)) {
             return;
+        }
         cast = new ConnectionManager(queue);
         setState(SourceStatus.CONNECTED);
         log.info("Connected");

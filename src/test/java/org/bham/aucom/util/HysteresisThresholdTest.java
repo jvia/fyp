@@ -2,16 +2,16 @@ package org.bham.aucom.util;
 
 import junit.framework.Assert;
 import org.bham.aucom.data.Score;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.HysteresisAnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.HysteresisAnomalyClassifier;
 import org.junit.Before;
 import org.junit.Test;
 
 public class HysteresisThresholdTest {
-    HysteresisAnomalyClassificator t;
+    HysteresisAnomalyClassifier t;
 
     @Before
     public void setUp() throws Exception {
-        this.t = new HysteresisAnomalyClassificator(1.0, 2.0);
+        this.t = new HysteresisAnomalyClassifier(1.0, 2.0);
     }
 
     public Score generateExampleScore(double value) {

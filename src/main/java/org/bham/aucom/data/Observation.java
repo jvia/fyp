@@ -8,6 +8,7 @@ import org.bham.aucom.util.Constants;
  * Represents an Observation in a running system.
  *
  * @author Raphael Golombek <rgolombe@cor-lab.uni-bielefeld.de>
+ * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk>
  */
 public class Observation extends AbstractData {
 
@@ -20,9 +21,7 @@ public class Observation extends AbstractData {
      * @param timestamp the timestamp
      * @see nu.xom.Element
      */
-    public Observation(Element content, long timestamp) {
-        //Assert.assertNotNull(content);
-        //Assert.assertTrue(timestamp != -1L);
+    public Observation(final Element content, final long timestamp) {
         super.setTimestamp(timestamp);
         this.content = content;
     }
@@ -31,26 +30,21 @@ public class Observation extends AbstractData {
      * Creates a new observation from an object which is from type Observation
      * or a subtype of it.
      *
-     * @param o
+     * @param o the observation
      */
-    public Observation(Observation o) {
+    public Observation(final Observation o) {
         if (o != null) {
-            this.setTimestamp(o.getTimestamp());
+            setTimestamp(o.getTimestamp());
             if (o.getContent() != null) {
-                this.setContent(o.getContent());
+                setContent(o.getContent());
             }
-            this.attributes.putAll(o.attributes);
-            this.setFirstElement(o.isFirstElement());
-            this.setLastElement(o.isLastElement());
+            attributes.putAll(o.attributes);
+            setFirstElement(o.isFirstElement());
+            setLastElement(o.isLastElement());
         }
     }
 
-    /**
-     * Creates an empty observation.
-     */
-    public Observation() {
-        // TODO consider removing empty constructor
-    }
+    public Observation() {}
 
     /**
      * Creates a random Observation object. Used for testing.
@@ -73,7 +67,7 @@ public class Observation extends AbstractData {
      * @return observation content
      */
     public Element getContent() {
-        return this.content;
+        return content;
     }
 
     /**
@@ -87,26 +81,25 @@ public class Observation extends AbstractData {
 
     /**
      * Creates a deep copy of this @Observation object. Be careful when using
-     * this call, the whole content which is an xom document is copied too
-     * which
-     * make the call expensive. TODO think about a shallow copy, too.
+     * this call, the whole content which, is an XOM document is copied too,
+     * which makes the call expensive.
+     * <p/>
+     * TODO think about a shallow copy, too.
      *
      * @return a copy of the Observation object
      */
     @Override
     public Object copy() {
-        Observation newObservation = new Observation();
-        newObservation.setTimestamp(getTimestamp());
-        newObservation.setFirstElement(isMarkedAsFirstElement());
-        newObservation.setLastElement(isMarkedAsLastElement());
-        newObservation.setContent((Element) getContent().copy());
+        Observation newObservation = new Observation((Element) getContent().copy(), getTimestamp());
+        newObservation.setFirstElement(isFirstElement());
+        newObservation.setLastElement(isLastElement());
         return newObservation;
     }
 
     /**
      * Returns a String representation of the Observation.
      *
-     * @return
+     * @return string representation
      */
     @Override
     public String toString() {

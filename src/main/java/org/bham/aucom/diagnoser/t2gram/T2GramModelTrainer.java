@@ -19,6 +19,7 @@ import org.bham.aucom.util.Tuple;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,13 +57,6 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
         previousStatus = TrainerStatus.READY;
     }
 
-    public double[] getValuesFromTrainingData(Integer firstKey, Integer secondKey) {
-        double[] values = new double[trainingData.get(firstKey, secondKey).size()];
-        for (int i = 0; i < values.length; i++)
-            values[i] = trainingData.get(firstKey, secondKey).get(i);
-        return values;
-    }
-
     @Override
     public void start(TimeSeries<Observation> inTrainingData) throws Exception {
         if (inTrainingData == null) {
@@ -80,8 +74,15 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
 
     }
 
+    public double[] getValuesFromTrainingData(Integer firstKey, Integer secondKey) {
+        double[] values = new double[trainingData.get(firstKey, secondKey).size()];
+        for (int i = 0; i < values.length; i++)
+            values[i] = trainingData.get(firstKey, secondKey).get(i);
+        return values;
+    }
+
     private void trainModel(TimeSeries<TemporalDurationFeature> output) {
-        log.info("Starting training");
+        log.info("Start training");
         try {
             HashMatrix<Integer, Integer, ArrayList<Double>> values = computeTrainingset(output);
             log.finer(format("Iterating through trainingset with %d elements", values.size()));
@@ -93,14 +94,14 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
         } catch (Exception exception) {
             exception.printStackTrace();
         }
+        log.info("Finish training");
     }
 
     private void updateModel(int firstElement, int secondElement, double[] durations) {
         createDistributionInModelIfMissing(model, firstElement, secondElement);
         ProbabilityDistribution distribution = model.getDistributionFor(firstElement, secondElement);
-        log.finer(format("Adding to distribution [%d --> %d] durations %s", firstElement, secondElement, durations));
+        log.finer(format("Adding to distribution [%d --> %d] durations %s", firstElement, secondElement, Arrays.toString(durations)));
         distribution.update(durations);
-//        model.getDistributionFor(firstElement, secondElement).update(durations);
     }
 
     private void createDistributionInModelIfMissing(T2GramModelI inModel, int firstElement, int secondElement) {
@@ -189,21 +190,15 @@ public class T2GramModelTrainer extends AbstractModelTrainer implements GraphSta
      */
     @Override
     public void graphStatusChanged(GraphStateChangedEvent evt) {
-        log.fine("Receives event: " + evt);
         switch (evt.getNewState()) {
             case RUNNING:
-                log.fine("New state is running");
                 setStatus(TrainerStatus.RUNNING);
                 break;
             case READY:
-                log.fine("New state is ready");
                 if (evt.getPreviousState().equals(GraphStatus.RUNNING)) {
                     // training is finished
-                    log.fine("Previous state was running");
                     TimeSeries<TemporalDurationFeature> output = graph.getOutput();
-                    log.finer("Got output from graph");
                     trainModel(output);
-                    log.finer("Trained");
                     setStatus(TrainerStatus.READY);
                 }
                 break;

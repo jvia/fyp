@@ -3,7 +3,13 @@ package org.bham.aucom.util;
 import java.io.Serializable;
 import java.util.*;
 
-
+/**
+ * A 2-dimensional matrix of data.
+ *
+ * @param <T> index one
+ * @param <U> index two
+ * @param <V> value
+ */
 public class HashMatrix<T, U, V> implements Serializable {
     private static final long serialVersionUID = 0L;
     HashMap<T, HashMap<U, V>> content;
@@ -23,10 +29,9 @@ public class HashMatrix<T, U, V> implements Serializable {
     }
 
     public void put(T indexOne, U indexTwo, V value) {
-        // TODO :: Perhaps reducer can go in here and just take care of things invisibly
-        HashMap<U, V> tmp = get(indexOne);
+        HashMap<U, V> tmp;
 
-        // make sure theres is a row hashmap available
+        // make sure there's is a row hashmap available
         if (!containsFirstKey(indexOne)) {
             tmp = new HashMap<U, V>();
             content.put(indexOne, tmp);
@@ -42,11 +47,9 @@ public class HashMatrix<T, U, V> implements Serializable {
     }
 
     public V get(T indexOne, U indexTwo) {
-        //System.out.println("contains index one " + content.containsKey(indexOne));
         if (!content.containsKey(indexOne)) {
             return null;
         }
-        //System.out.println("contains index two " + content.get(indexOne).containsKey(indexTwo));
         return content.get(indexOne).get(indexTwo);
     }
 
@@ -56,10 +59,9 @@ public class HashMatrix<T, U, V> implements Serializable {
 
     public boolean containsKey(T indexOne, U indexTwo) {
         boolean contains = content.containsKey(indexOne);
-//  System.out.println("1: " +contains);
-        if (contains)
+        if (contains) {
             contains = contains & content.get(indexOne).containsKey(indexTwo);
-//  System.out.println("2: " +contains);
+        }
         return contains;
     }
 
@@ -92,15 +94,15 @@ public class HashMatrix<T, U, V> implements Serializable {
 
     @Override
     public String toString() {
-        String out = "";
+        StringBuilder out = new StringBuilder();
         for (T rowKey : content.keySet()) {
             for (U colKey : content.get(rowKey).keySet()) {
-                out += "[" + rowKey.toString() + ">" + colKey + "]\n";
-                out += content.get(rowKey).get(colKey) + "\n";
+                out.append(String.format("(%s, %s) -> %s\n",
+                        rowKey, colKey,
+                        content.get(rowKey).get(colKey)));
             }
-            out += "\n";
         }
-        return out;
+        return out.toString();
     }
 
 }

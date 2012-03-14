@@ -2,6 +2,7 @@ package org.bham.aucom.fts.tranform;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.logging.Logger;
@@ -16,39 +17,46 @@ import static java.lang.String.format;
  */
 public class MatrixReducer {
 
-    private Map<Integer, ArrayList<Integer>> connections;
+    private Map<Integer, List<Integer>> connections;
     private static final String FILE_NAME = "/connections.txt";
     private final Logger log = Logger.getLogger(getClass().getName());
 
     public MatrixReducer() {
-        connections = new HashMap<Integer, ArrayList<Integer>>();
+        connections = new HashMap<Integer, List<Integer>>();
 
         Scanner s = null;
         try {
-            log.config(format("Loading connectons file from %s", getClass().getResourceAsStream(FILE_NAME)));
+            log.config(format("Loading connections file from %s", getClass().getResourceAsStream(FILE_NAME)));
             s = new Scanner(getClass().getResourceAsStream(FILE_NAME));
 
             while (s.hasNextLine()) {
                 // Get the next line, filtering comments & empty lines
                 String line = s.nextLine();
-                if (line.startsWith("#") || line.isEmpty()) continue;
+                if (line.startsWith("#") || line.isEmpty()) {
+                    continue;
+                }
 
                 // Parse the structure
                 String[] result = line.split(" -> ");
-                if (result.length == 0) continue;
+                if (result.length == 0) {
+                    continue;
+                }
 
                 for (int i = 0; i < result.length - 1; i++) {
                     int from = Integer.valueOf(result[i].trim());
                     int to = Integer.valueOf(result[i + 1].trim());
 
                     // Add to data structure
-                    if (!connections.containsKey(from))
+                    if (!connections.containsKey(from)) {
                         connections.put(from, new ArrayList<Integer>());
+                    }
                     connections.get(from).add(to);
                 }
             }
         } finally {
-            if (s != null) s.close();
+            if (s != null) {
+                s.close();
+            }
         }
     }
 

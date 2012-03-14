@@ -5,9 +5,13 @@ import org.bham.aucom.data.AbstractData;
 import org.bham.aucom.data.timeseries.TimeSeries;
 import org.bham.aucom.fts.sink.NodeStatus;
 
+import java.io.Serializable;
 import java.util.logging.Logger;
 
-public abstract class AbstractAucomTranformNode<TIn extends AbstractData, TOut extends AbstractData> extends AbstractTransformNode<TIn, TOut> {
+public abstract class AbstractAucomTranformNode<TIn extends AbstractData, TOut extends AbstractData>
+        extends AbstractTransformNode<TIn, TOut>
+        implements Serializable {
+
     protected TimeSeries<TOut> ts = null;
     long lastProcessingTime = 0l;
     long startTimestamp = 0l;
@@ -36,10 +40,10 @@ public abstract class AbstractAucomTranformNode<TIn extends AbstractData, TOut e
         }
 
         if (out == null) {
-            if (input.isMarkedAsFirstElement()) {
+            if (input.isFirstElement()) {
                 fireStatusChangedEvent(new TransformNodeEvent(this, NodeStatus.RECEIVEDFIRSTELEMENT));
                 System.out.println(this.toString() + " fires RECEIVEDFIRSTELEMENT");
-            } else if (input.isMarkedAsLastElement()) {
+            } else if (input.isLastElement()) {
                 fireStatusChangedEvent(new TransformNodeEvent(this, NodeStatus.RECEIVEDLASTELEMENT));
                 System.out.println(this.toString() + " fires RECEIVEDLASTELEMENT");
             }
@@ -55,7 +59,7 @@ public abstract class AbstractAucomTranformNode<TIn extends AbstractData, TOut e
 //            Logger.getLogger(this.getClass().getCanonicalName()).info(this.name + " current timestamp " + newpt + " increase: " + (this.lastProcessingTime - newpt));
         }
         this.lastProcessingTime = newpt;
-        if (this.getClass().equals(Classificate.class)) {
+        if (this.getClass().equals(Classify.class)) {
             if (input.getAttributes().size() != out.getAttributes().size()) {
                 System.out.println("in " + input.getAttributes() + " out " + out.getAttributes());
             }
@@ -68,12 +72,12 @@ public abstract class AbstractAucomTranformNode<TIn extends AbstractData, TOut e
      * @param out
      */
     private void copyMarkings(TIn input, TOut out) {
-        if (input.isMarkedAsFirstElement()) {
-            out.isMarkedAsFirstElement();
+        if (input.isFirstElement()) {
+            out.isFirstElement();
             Logger.getLogger(this.getClass().getCanonicalName()).info(this.getClass().getName() + " copying mark of first element");
         }
-        if (input.isMarkedAsLastElement()) {
-            out.markAsLastElement();
+        if (input.isLastElement()) {
+            out.setLastElement(true);
             Logger.getLogger(this.getClass().getCanonicalName()).info(this.getClass().getName() + " copying mark of last element");
         }
     }

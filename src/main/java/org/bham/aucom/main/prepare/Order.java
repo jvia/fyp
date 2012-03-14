@@ -1,6 +1,11 @@
 package org.bham.aucom.main.prepare;
 
-import nu.xom.*;
+import nu.xom.Builder;
+import nu.xom.Document;
+import nu.xom.Element;
+import nu.xom.Elements;
+import nu.xom.ParsingException;
+import nu.xom.ValidityException;
 import org.bham.aucom.util.FileOperator;
 
 import java.io.File;
@@ -43,41 +48,20 @@ public class Order {
 
     public SortedMap<Long, Element> sort(ArrayList<Element> list) {
         SortedMap<Long, Element> sortedMap = new TreeMap<Long, Element>();
-        ArrayList<Element> out = new ArrayList<Element>();
         for (Element element : list) {
             long currTimestamp = getTimestamp(element);
             if (currTimestamp == -1) {
-                System.out.println("removing " + element.getLocalName() + " due to cirrupted timestamp: '" + currTimestamp + "'");
+                System.out.println("removing " + element.getLocalName() + " due to corrupted timestamp: '" + currTimestamp + "'");
                 continue;
             }
             sortedMap.put(currTimestamp, element);
 
         }
-//  while(!list.isEmpty()){
-//   Element min = null;
-//   int index = 0;
-//   for(int i=0;i<list.size();i++){
-//    Element val = list.get(i);
-//
-//    if(min == null ){
-//     min = (Element)val.copy();
-//     index = i;
-//     continue;
-//    }
-//    long minTimestamp = getTimestamp(min);
-//    if(minTimestamp > currTimestamp){
-//      min = (Element)val.copy();
-//      index = i;
-//     }
-//    }
-//   out.add(min);
-//   list.remove(index);
-//  }
         return sortedMap;
     }
 
     public ArrayList<Element> extractXml(File inFile) {
-        Document doc = null;
+        Document doc;
         ArrayList<Element> list = null;
         if (this.builder == null) {
             this.builder = new Builder();

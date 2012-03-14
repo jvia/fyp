@@ -1,46 +1,28 @@
 package org.bham.aucom.data.timeseries;
 
-import org.bham.aucom.data.LinkEnum;
 import org.bham.aucom.data.Observation;
-
-import java.util.List;
-import java.util.UUID;
 
 public class ObservationTimeSeries extends TimeSeries<Observation> {
 
-    /*
-      *
-      * Constructors
-      */
-
-    /**
-     *
-     */
     private static final long serialVersionUID = -3349231759840972793L;
 
     public ObservationTimeSeries() {
         setType(TimeSeriesType.obs);
     }
 
-    public ObservationTimeSeries(int num) {
-        super(num);
-        setType(TimeSeriesType.obs);
-    }
+// --Commented out by Inspection START (2/28/12 11:17 AM):
+//    public ObservationTimeSeries(int num) {
+//        super(num);
+//        setType(TimeSeriesType.obs);
+//    }
+// --Commented out by Inspection STOP (2/28/12 11:17 AM)
 
-    public ObservationTimeSeries(UUID generatorID, UUID generatedFromID, UUID id, List<Observation> in) {
-        super(generatorID, generatedFromID, id, in);
-        setType(TimeSeriesType.obs);
-    }
-
-    /*
-      * Functions
-      */
-    public UUID getGeneratorId() {
-        if (containsLink(LinkEnum.generatorId)) {
-            return getLinks(LinkEnum.generatorId).get(0);
-        }
-        return null;
-    }
+// --Commented out by Inspection START (2/28/12 11:17 AM):
+//    public ObservationTimeSeries(UUID generatorID, UUID generatedFromID, UUID id, List<Observation> in) {
+//        super(generatorID, generatedFromID, id, in);
+//        setType(TimeSeriesType.obs);
+//    }
+// --Commented out by Inspection STOP (2/28/12 11:17 AM)
 
     @Override
     public boolean equals(Object arg0) {

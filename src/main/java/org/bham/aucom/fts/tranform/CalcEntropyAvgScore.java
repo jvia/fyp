@@ -21,7 +21,7 @@ import static java.lang.String.format;
  */
 public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProbabilityFeature, Score> {
 
-    private final transient Logger log = Logger.getLogger(getClass().getName());
+    private transient final Logger log = Logger.getLogger(this.getClass().getName());
     private T2GramModelI model;
 
     /**
@@ -56,15 +56,19 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
             throws Exception {
         if (getModel().isEmpty()) {
             log.severe("Model not trained");
+            throw new RuntimeException("Model not trained");
         }
-        double sum_entropy = calculateSumEntropy(current);
+
+        double denominator = calculateSumEntropy(current);
         // If entropy is too small, ensure minimal denominator
-        double denominator = Math.max(Math.pow(sum_entropy, 2), 0.00001);
+        log.fine(format("Total entropy: %f", denominator));
         double scoreValue;
 
         scoreValue = calculateAbsoluteScoreValue(current, denominator);
         scoreValue = normalize(current, scoreValue);
-        return new SingleScore(current, scoreValue);
+        Score score = new SingleScore(current, scoreValue);
+        score.addAttribute("raw_score", String.valueOf(scoreValue));
+        return score;
     }
 
     protected double calculateAbsoluteScoreValue(
@@ -119,11 +123,23 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
         }
 
         // Calculate output
-        output = probability * (1 - Math.pow(entropy, 2) / denominator);
-        log.fine(format("[%d ---> %d] => %.2f",
+        // if entropy == denominator, then there is only one element
+        if (Math.abs(entropy - denominator) < 0.0001) {
+            output = probability;
+        } else {
+            output = probability * (1.0 - entropy / denominator);
+        }
+        log.fine(format("Single score: [%d ---> %d] => %.2f%nProbability: %f%n" +
+                        "Entropy:     %f%n" +
+                        "Denominator: %f%n" +
+                        "Time span:   %d",
                         predecessor.getEventType(),
                         current.getEventType(),
-                        output));
+                        output,
+                        probability,
+                        entropy,
+                        denominator,
+                        current.getTimestamp() - predecessor.getTimestamp()));
         return output;
     }
 
@@ -140,9 +156,12 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
         if (!current.getPredecessors().isEmpty()) {
             normalizedScore = rawScore / current.getPredecessors().size();
         }
-        log.fine(format("Normalized score (raw / predecessor): " +
-                        "%.2f / %d = %.5f", rawScore,
-                        current.getPredecessors().size(), normalizedScore));
+        log.fine(format("Normalized score (raw / predecessor) for %s: " +
+                        "%.2f / %d = %.5f",
+                        current.getAttributeValue("count"),
+                        rawScore,
+                        current.getPredecessors().size(),
+                        normalizedScore));
         return normalizedScore;
     }
 

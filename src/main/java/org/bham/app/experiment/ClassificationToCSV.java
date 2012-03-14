@@ -1,15 +1,16 @@
 package org.bham.app.experiment;
 
-import nu.xom.ParsingException;
 import org.bham.aucom.data.Classification;
 import org.bham.aucom.data.io.AucomIO;
 import org.bham.aucom.data.timeseries.TimeSeries;
-import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.StatisticalAnomalyClassificator;
+import org.bham.aucom.diagnoser.t2gram.detector.anomalyclassificator.StatisticalAnomalyClassifier;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Jeremiah M. Via <jxv911@cs.bham.ac.uk>
@@ -17,63 +18,77 @@ import java.util.ArrayList;
  * @since 2011-09-06
  */
 public class ClassificationToCSV implements Experiment {
+
+    private final File in;
+    private final File out;
+
     private TimeSeries<Classification> classificationTimeSeries;
     private FileWriter csv;
     private ArrayList<Classification> list;
-    private final File in;
-    private final File out;
-    private final boolean quiet;
 
-    public ClassificationToCSV(final File in, final File out, final boolean quiet) {
+    private transient final Logger log = Logger.getLogger(getClass().getName());
+
+    /**
+     * Constructor ClassificationToCSV creates a new ClassificationToCSV
+     * instance.
+     *
+     * @param in  classification file
+     * @param out csv file
+     */
+    public ClassificationToCSV(final File in, final File out) {
         this.in = in;
         this.out = out;
-        this.quiet = quiet;
 
-        printBlockMessage("CONVERT TO CSV");
-        if (!quiet)
-            System.out.printf("Input: %s\nOutput: %s\n", in.getPath(), out.getPath());
+        log.setLevel(Level.ALL);
+        log.config(String.format("Classification file: %s%nCSV file: %s",
+                                 in, out));
     }
 
+    /**
+     * Method preprocess reads in the data.
+     */
+    @SuppressWarnings({"unchecked"})
     @Override
     public void preprocess() {
-        printBlockMessage("GATHERING TIMER SERIES DATA");
-        if (!quiet) System.out.print("Gathering...");
         try {
             classificationTimeSeries = (TimeSeries<Classification>) AucomIO.getInstance().readTimeSeries(in);
-        } catch (ParsingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("done");
+        log.fine(String.format("Classification time series size: %d",
+                               classificationTimeSeries.size()));
     }
 
+    /**
+     * Method process converts the data
+     */
     @Override
     public void process() {
-        printBlockMessage("PRUNING DATA");
-        if (!quiet) System.out.print("Pruning...");
         list = new ArrayList<Classification>();
         for (Classification classification : classificationTimeSeries.getall()) {
-            if (!list.contains(classification)) {
-                list.add(classification);
-            }
+            //if (!list.contains(classification)) {
+            list.add(classification);
+            // }
         }
-        System.out.println("done");
     }
 
+    /**
+     * Method postprocess writes out the data to CSV.
+     */
     @Override
     public void postprocess() {
-        printBlockMessage("SAVING DATA");
-        if (!quiet) System.out.print("Writing...");
         try {
             csv = new FileWriter(out);
-            csv.append("#    Timestamp     Score     Threshold     Status\n");
+            csv.append("#    Timestamp     Score     Threshold     Status   Raw Score   Component   Count\n");
             for (Classification classification : list) {
-                csv.append(String.format("     %9d     %5.3f     %6.3f    %6.0f\n",
+                csv.append(String.format("     %9d     %5.3f     %6.3f    %6.0f   %9.5f   %9d   %5s%n",
                                          classification.getTimestamp(),
                                          classification.getValue(),
-                                         Double.parseDouble(classification.getAttributeValue(StatisticalAnomalyClassificator.THRESHOLD_USED)),
-                                         classification.getStatusAsDouble()));
+                                         Double.parseDouble(classification.getAttributeValue(StatisticalAnomalyClassifier.THRESHOLD_USED)),
+                                         classification.getStatusAsDouble(),
+                                         Double.parseDouble(classification.getAttributeValue("raw_score")),
+                                         classification.getEventType(),
+                                         classification.getAttributeValue("count")));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -84,33 +99,19 @@ public class ClassificationToCSV implements Experiment {
                 e.printStackTrace();
             }
         }
-        if (!quiet) System.out.println("done");
     }
 
+    /**
+     * Method call runs the entire process.
+     *
+     * @return Result null
+     * @throws Exception something went wrong
+     */
     @Override
     public Result call() throws Exception {
         preprocess();
         process();
         postprocess();
         return null;
-    }
-
-    private void printBlockMessage(String msg) {
-        if (quiet) return;
-
-        int pad = msg.length();
-        pad = (70 - pad) / 2;
-
-        StringBuilder border = new StringBuilder();
-        for (int i = 0; i < 70; i++)
-            border.append("=");
-
-        StringBuilder padding = new StringBuilder();
-        for (int i = 0; i < pad; i++)
-            padding.append(" ");
-
-        System.out.println(border);
-        System.out.println(padding + msg);
-        System.out.println(border);
     }
 }

@@ -10,11 +10,11 @@ public interface T2GramModelI extends Model {
 
     public ProbabilityFactory getDistributionFactory();
 
-    public int getNumberDistirbutions();
+    public int getNumberDistributions();
 
-    public boolean hasDistributionFor(Integer from, Integer to);
+    public boolean hasDistributionFor(int from, int to);
 
-    public ProbabilityDistribution getDistributionFor(Integer from, Integer to);
+    public ProbabilityDistribution getDistributionFor(int from, int to);
 
     public double getEntropyOfDistribution(int indexOne, int indexTwo);
 
@@ -22,7 +22,7 @@ public interface T2GramModelI extends Model {
 
     public double getProbability(int from, int to, long timespan);
 
-    public void addDistribution(Integer from, Integer to, ProbabilityDistribution dist);
+    public void addDistribution(int from, int to, ProbabilityDistribution dist);
 
     public boolean isEmpty();
 

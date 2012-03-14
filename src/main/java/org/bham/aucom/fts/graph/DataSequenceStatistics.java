@@ -13,7 +13,7 @@ public class DataSequenceStatistics {
     TimeSeries<DataType> sequence;
     ArrayList<Integer> classIds = new ArrayList<Integer>();
     HashMap<String, Integer> sources = new HashMap<String, Integer>();
-    HashMap<String, Integer> sourcesFrequencies = new HashMap<String, Integer>();
+//    HashMap<String, Integer> sourcesFrequencies = new HashMap<String, Integer>();
     ArrayList<String> types = new ArrayList<String>();
     ArrayList<String> scopes = new ArrayList<String>();
     long duration = 0l;

@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class TemporalDurationFeatureGenerator {
@@ -25,9 +26,11 @@ public class TemporalDurationFeatureGenerator {
      * @param inInitialClasses
      */
     public TemporalDurationFeatureGenerator(Collection<Integer> inInitialClasses) {
+        log.setLevel(Level.ALL);
         initialClasses = new ArrayList<Integer>();
-        if (inInitialClasses != null)
+        if (inInitialClasses != null) {
             initialClasses.addAll(inInitialClasses);
+        }
     }
 
     public void clearInitialClasses() {
@@ -35,7 +38,9 @@ public class TemporalDurationFeatureGenerator {
     }
 
     public void addInitalClasses(Collection<Integer> inInitialClassesToAdd) {
-        if (inInitialClassesToAdd == null) return;
+        if (inInitialClassesToAdd == null) {
+            return;
+        }
         initialClasses.addAll(inInitialClassesToAdd);
     }
 
@@ -45,8 +50,9 @@ public class TemporalDurationFeatureGenerator {
 
     public boolean isLastOccurancesInitialized() {
         boolean isLastOccurancesInitialized = true;
-        for (int id : lastOccurrences.keySet())
+        for (int id : lastOccurrences.keySet()) {
             isLastOccurancesInitialized &= lastOccurrences.get(id).getTimestamp() == 0;
+        }
         return isLastOccurancesInitialized;
     }
 
@@ -60,7 +66,7 @@ public class TemporalDurationFeatureGenerator {
         log.info(String.format("Adding initial data points as last occurrences of %d classes", initialClasses.size()));
 
         for (int classId : initialClasses) {
-            log.info("adding initial occurrances for classId " + classId);
+            log.info("adding initial occurrences for classId " + classId);
             List<DomainFeature> features = Encoder.getInstance().decode(classId);
 
             DataType dummy = new DataType(features, classId, new Observation(new Element("emptyContent"), initializationValue));
@@ -71,6 +77,7 @@ public class TemporalDurationFeatureGenerator {
     }
 
     public TemporalDurationFeature generateFeature(DataType in) {
+        log.fine(String.format("Last occurrences: %s", lastOccurrences));
         LinkedHashMap<DataType, Long> durations = new LinkedHashMap<DataType, Long>();
 
         if (isLastOccurancesInitialized()) {
@@ -95,8 +102,9 @@ public class TemporalDurationFeatureGenerator {
      * @return the duration between two elements
      */
     private long calculateTimespanForElements(DataType inTestElement, DataType lastOccurrence) {
-        if (lastOccurrence.getTimestamp() != -1)
+        if (lastOccurrence.getTimestamp() != -1) {
             return inTestElement.getTimestamp() - lastOccurrence.getTimestamp();
+        }
         return 0;
     }
 

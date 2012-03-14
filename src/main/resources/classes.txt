@@ -1,4 +1,9 @@
 ####################
+# Conductor
+####################
+ADD:conductor:conductor.sa 0
+
+####################
 # 3-chain
 ####################
 ADD:node0:three.sa    1
@@ -258,18 +263,21 @@ OVERWRITE:spatial.translation:spatial.sa  230
 # 4x4 chain
 ####################
 ADD:node0:4x4.sa     231
-ADD:node1:4x4.sa     231
-ADD:node2:4x4.sa     232
-DELETE:node3:4x4.sa  233
-ADD:node10:4x4.sa    234
-ADD:node11:4x4.sa    235
-ADD:node12:4x4.sa    236
-DELETE:node13:4x4.sa 237
-ADD:node20:4x4.sa    238
-ADD:node21:4x4.sa    239
-ADD:node22:4x4.sa    240
-DELETE:node23:4x4.sa 241
-ADD:node30:4x4.sa    242
-ADD:node31:4x4.sa    243
-ADD:node32:4x4.sa    244
-DELETE:node33:4x4.sa 245
+ADD:node1:4x4.sa     232
+ADD:node2:4x4.sa     233
+DELETE:node3:4x4.sa  234
+
+ADD:node10:4x4.sa    235
+ADD:node11:4x4.sa    236
+ADD:node12:4x4.sa    237
+DELETE:node13:4x4.sa 238
+
+ADD:node20:4x4.sa    239
+ADD:node21:4x4.sa    240
+ADD:node22:4x4.sa    241
+DELETE:node23:4x4.sa 242
+
+ADD:node30:4x4.sa    243
+ADD:node31:4x4.sa    244
+ADD:node32:4x4.sa    245
+DELETE:node33:4x4.sa 246

@@ -31,7 +31,7 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
     public Collection<Integer> getDimensions() {
         Collection<Integer> dimensions = new HashSet<Integer>();
         for (Tuple<Integer, Integer> key : this.transitionMatrix.keySet()) {
-            log.info(key + "");
+            //log.info(key + "");
             dimensions.add(key.getFirstElement());
             dimensions.add(key.getSecondElement());
         }
@@ -39,7 +39,7 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
     }
 
     @Override
-    public int getNumberDistirbutions() {
+    public int getNumberDistributions() {
         int numberavailableDistributions = 0;
         for (Tuple<Integer, Integer> key : this.transitionMatrix.keySet()) {
             if (this.transitionMatrix.get(key.getFirstElement(), key.getSecondElement()) != null) {
@@ -50,12 +50,12 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
     }
 
     @Override
-    public boolean hasDistributionFor(Integer from, Integer to) {
+    public boolean hasDistributionFor(int from, int to) {
         return transitionMatrix.containsKey(from, to);
     }
 
     @Override
-    public ProbabilityDistribution getDistributionFor(Integer from, Integer to) {
+    public ProbabilityDistribution getDistributionFor(int from, int to) {
         return transitionMatrix.get(from, to);
     }
 
@@ -65,13 +65,13 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
         if (distribution != null) {
             return distribution.getEntropy();
         }
-        String decodedIndexOne = "";
+        StringBuilder decodedIndexOne = new StringBuilder();
         for (DomainFeature f : Encoder.getInstance().decode(indexOne)) {
-            decodedIndexOne += f.toString() + " ";
+            decodedIndexOne.append(f).append(" ");
         }
-        String decodedIndexTwo = "";
+        StringBuilder decodedIndexTwo = new StringBuilder();
         for (DomainFeature f : Encoder.getInstance().decode(indexTwo)) {
-            decodedIndexTwo += f.toString() + " ";
+            decodedIndexTwo.append(f).append(" ");
         }
         log.severe(String.format("CALC_ENTROPY: H(%d,%d) = H(%s,%s) = Ø",
                                  indexOne, indexTwo, decodedIndexOne, decodedIndexTwo));
@@ -105,7 +105,7 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
     }
 
     @Override
-    public void addDistribution(Integer from, Integer to, ProbabilityDistribution dist) {
+    public void addDistribution(int from, int to, ProbabilityDistribution dist) {
         transitionMatrix.put(from, to, dist);
     }
 
@@ -131,7 +131,7 @@ public class T2GramModelImp extends AbstractLinkableNode implements T2GramModelI
 
     @Override
     public String toString() {
-        return String.format("Name: %s; Trained: %b", this.getName(), isTrained());
+        return String.format("Name: %s; Trained: %b, Dimensions: %s", this.getName(), isTrained(), getDimensions());
     }
 
     protected void setName(String name) {

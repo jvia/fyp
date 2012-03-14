@@ -1,6 +1,12 @@
 package org.bham.aucom.main;
 
-import nu.xom.*;
+import nu.xom.Attribute;
+import nu.xom.Builder;
+import nu.xom.Document;
+import nu.xom.Element;
+import nu.xom.Elements;
+import nu.xom.ParsingException;
+import nu.xom.ValidityException;
 import org.bham.aucom.util.FileOperator;
 
 import java.io.File;
@@ -10,10 +16,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class XcfFacesOutBoostDetector {
-    ArrayList<Document> recordedDocumentsList;
+    //    ArrayList<Document> recordedDocumentsList;
 
     public XcfFacesOutBoostDetector(File f) {
-        recordedDocumentsList = new ArrayList<Document>();
+        //        recordedDocumentsList = new ArrayList<Document>();
     }
 
     /**
@@ -23,20 +29,21 @@ public class XcfFacesOutBoostDetector {
         File file = new File(args[0]);
         String name = FileOperator.getName(file);
         File file2 = new File(name + "_cc.dat");
-        String dataSetId = FileOperator.getName(file);
         Builder builder = new Builder();
-        ArrayList<Element> items = new ArrayList<Element>();
+
         try {
             Document doc = builder.build(file);
             Elements elements = doc.getRootElement().getChildElements();
             ArrayList<Element> org = new ArrayList<Element>();
+
             for (int i = 0; i < elements.size(); i++) {
                 org.add(elements.get(i));
             }
-            long firsttmpstamp = Long.valueOf(org.get(0).getAttribute("timestmap").getValue());
-            long tmpstamp = Long.valueOf(org.get(org.size() - 1).getAttribute("timestmap").getValue());
-            ArrayList<Element> xcfFacesOut = generateXcfFacesOuts(tmpstamp, firsttmpstamp + 120);
-            ArrayList<Element> boostDetector = generateBoostDetectoor(tmpstamp, firsttmpstamp + 240);
+
+            long firstTimestamp = Long.valueOf(org.get(0).getAttribute("timestamp").getValue());
+            long timestamp = Long.valueOf(org.get(org.size() - 1).getAttribute("timestamp").getValue());
+            ArrayList<Element> xcfFacesOut = generateXcfFacesOuts(timestamp, firstTimestamp + 120);
+            ArrayList<Element> boostDetector = generateBoostDetectoor(timestamp, firstTimestamp + 240);
             System.out.println("extracting " + org.size() + " elements from " + file.getName() + "file");
             ArrayList<Element> merged = merge(org, xcfFacesOut, boostDetector);
 
@@ -51,13 +58,13 @@ public class XcfFacesOutBoostDetector {
     }
 
     // private static ArrayList<Element> merge2(ArrayList<Element> merged) {
-//  ArrayList<Element> out = new ArrayList<Element>();
-//  for(Element e: merged){
-//   if(e.getAttribute(""))
-//  }
-//  return null;
-//
-// }
+    //  ArrayList<Element> out = new ArrayList<Element>();
+    //  for(Element e: merged){
+    //   if(e.getAttribute(""))
+    //  }
+    //  return null;
+    //
+    // }
     private static ArrayList<Element> merge(ArrayList<Element> org,
                                             ArrayList<Element> xcfFacesOut, ArrayList<Element> boostDetector) {
         ArrayList<Element> out = new ArrayList<Element>();
@@ -70,27 +77,33 @@ public class XcfFacesOutBoostDetector {
         int size = org.size() + xcfFacesOut.size() + boostDetector.size();
         for (int i = 0; i < size; i++) {
             Element tmp = null;
-            if (original == null && org_it.hasNext())
+            if (original == null && org_it.hasNext()) {
                 original = org_it.next();
-            if (xcf == null && xcf_it.hasNext())
+            }
+            if (xcf == null && xcf_it.hasNext()) {
                 xcf = xcf_it.next();
-            if (boost == null && boost_it.hasNext())
+            }
+            if (boost == null && boost_it.hasNext()) {
                 boost = boost_it.next();
+            }
             if (original != null) {
                 tmp = original;
                 if (xcf != null) {
-                    if (Long.valueOf(xcf.getAttribute("timestmap").getValue()) < Long.valueOf(tmp.getAttribute("timestmap").getValue()))
+                    if (Long.valueOf(xcf.getAttribute("timestamp").getValue()) < Long.valueOf(tmp.getAttribute("timestamp").getValue())) {
                         tmp = xcf;
+                    }
                 }
                 if (boost != null) {
-                    if (Long.valueOf(boost.getAttribute("timestmap").getValue()) < Long.valueOf(tmp.getAttribute("timestmap").getValue()))
+                    if (Long.valueOf(boost.getAttribute("timestamp").getValue()) < Long.valueOf(tmp.getAttribute("timestamp").getValue())) {
                         tmp = boost;
+                    }
                 }
             } else if (xcf != null) {
                 tmp = xcf;
                 if (boost != null) {
-                    if (Long.valueOf(boost.getAttribute("timestmap").getValue()) < Long.valueOf(tmp.getAttribute("timestmap").getValue()))
+                    if (Long.valueOf(boost.getAttribute("timestamp").getValue()) < Long.valueOf(tmp.getAttribute("timestamp").getValue())) {
                         tmp = boost;
+                    }
                 }
             } else {
                 if (boost != null) {
@@ -128,7 +141,7 @@ public class XcfFacesOutBoostDetector {
             tmp = new Element("event");
             tmp.addAttribute(new Attribute("generatorType", "BoostDetector"));
 
-            tmp.addAttribute(new Attribute("timestmap", String.valueOf(timestamp)));
+            tmp.addAttribute(new Attribute("timestamp", String.valueOf(timestamp)));
             tmp.addAttribute(new Attribute("eventType", "INSERT"));
             tmp.addAttribute(new Attribute("memoryName", "publisher"));
             tmp.addAttribute(new Attribute("dataSetId", "XCF"));
@@ -152,7 +165,7 @@ public class XcfFacesOutBoostDetector {
 
             tmp.addAttribute(new Attribute("generatorType", "xcfFacesOut"));
 
-            tmp.addAttribute(new Attribute("timestmap", String.valueOf(timestamp)));
+            tmp.addAttribute(new Attribute("timestamp", String.valueOf(timestamp)));
             tmp.addAttribute(new Attribute("eventType", "INSERT"));
             tmp.addAttribute(new Attribute("memoryName", "publisher"));
             tmp.addAttribute(new Attribute("dataSetId", "XCF"));

@@ -11,16 +11,14 @@ public class TemporalDurationFeatureTimeSeriesToCSVConverter extends TimeSeriesT
 
     @Override
     protected String convertTimeSeriesElement(TemporalDurationFeature e) {
-        String out = "";
-        out += e.getEventTypeIdAsString();
-        out += seperator;
-        out += e.getTimestamp();
-        out += seperator;
+        StringBuilder out = new StringBuilder();
+        out.append(e.getEventTypeIdAsString()).append(seperator);
+        out.append(e.getTimestamp()).append(seperator);
         List<Integer> predecessorDataTypes = e.getPrecedessorDataTypes();
         Collections.sort(predecessorDataTypes);
 
         for (Integer predecessor : predecessorDataTypes) {
-            out += e.getDurationFor(predecessor) + seperator;
+            out.append(e.getDurationFor(predecessor)).append(seperator);
         }
         return out.substring(0, out.length() - 1);
     }
