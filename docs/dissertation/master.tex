@@ -1,19 +1,16 @@
 %% !TEX TS-program = xelatex
 %% !TEX encoding = UTF-8 Unicode
-\documentclass[10pt, a4paper]{report}
-
+\documentclass[11pt, a4paper]{report}
 % Set up fonts
- \usepackage{fontspec}
- \usepackage{xunicode}
+\usepackage{fontspec}
+\usepackage{xunicode}
 \usepackage{xltxtra}
 \defaultfontfeatures{Mapping=tex-text}
 \setromanfont [Ligatures={Common}, Numbers={OldStyle}]{Linux Libertine O}
-
 % Layout
 \usepackage[xetex]{geometry}
 \usepackage{geometry}
 \geometry{a4paper, textheight=8.5in}
-
 % title page stuff
 \usepackage{setspace}
 \usepackage{graphicx}
@@ -51,27 +48,251 @@
 \end{titlepage}
 
 \tableofcontents
-\include{tex/abstract}
-\include{tex/acknowledgments}
-\include{tex/introduction} %% Motivation & introduction for rest of report
-\include{tex/background}   %% Lit. review & aucom background
-\include{tex/original}     
-\include{tex/connection}
-\include{tex/metronome}
-%\include{tex/experiments}
-\include{tex/management}
-\include{tex/evaluation}
-\include{tex/conclusion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+  Abstract
+\end{abstract}
 
-\bibliographystyle{agsm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Acknowledgments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\abstractname}{Acknowledgements}
+\begin{abstract}
+  Thanks Mum!
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Motivation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Motivation}
+\label{cha:motivation}
+
+\begin{itemize}
+\item What is the problem?
+\item Who else has wanted to solve it and how did they do it?
+  (High-level, the details will be in the literature review)
+\item What was my my base goal for the project?
+\item Introduce the rest of the dissertation
+\item intro literature review
+\item intro background
+\item intro mention reducing the model
+\item intro project management
+\item intro project evaluation
+\end{itemize}
+
+Something \cite{Antonelo2008}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Literature review
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Literature Review}
+\label{cha:lit-review}
+
+\begin{itemize}
+\item Talk about the approaches used by others in more depth than what
+  was hinted at in the motivation. Keep it concise and at a
+  high-level.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Background
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Background}
+\label{cha:background}
+
+% Example system:
+%     a      b      c
+%  A ---> B ---> C --->
+
+
+The trained model:
+\[
+\begin{bmatrix}
+  P_{aa} & P_{ab} & P_{ac}\\
+  P_{ba} & P_{bb} & P_{bc}\\
+  P_{ca} & P_{cb} & P_{cc}
+\end{bmatrix}
+\]
+
+\begin{itemize}
+\item Give the necessary background to understand Raphael's approach.
+\item Explain the math concisely.
+\item Give detailed explanation of the learned model so later
+  asymptotic analysis fits the story.
+\item Include a 2 component system which will serve as the example
+  throughout the paper.
+\item Use the example system to create an example matrix in all its
+  glory
+\item Mention CAST and give a brief overview of how it works, perhaps
+  juxtaposing it to XCF (although this may be out of the dissertation
+  scope).
+\end{itemize}
+
+% Train a model for each tuple $(e_i,e_j)$ in the Cartesian product of
+% the unique set of observations $U_E$.
+
+% The model of the system then becomes $M = \{P_{ij}|(e_i,e_j) \in U_E
+% \times U_E$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Original system
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Original Implementation}
+\label{cha:orig-impl}
+
+\begin{itemize}
+\item Original system: the idea (just mention because it should be
+  explained in the background), the implementation, and the
+  experimental results.
+\item Refer back to the original idea explain in the background
+\item Talk about implementation (FTS, CAST component, modifying aucom, etc.)
+\item Experimental setups
+\item Experimental results
+\item Asymptotic analysis as motivation for my extension.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Reduced system
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Connection-based Model}
+\label{cha:conn-based-model}
+
+\[
+\begin{bmatrix}
+  P_{aa} & \empty & \empty\\
+  P_{ba} & P_{bb} & \empty\\
+  \empty & P_{cb} & P_{cc}
+\end{bmatrix}
+\]
+
+
+\begin{itemize}
+\item First attempt, using a connection-based model
+\item the connection-based idea
+\item refer to jen's work
+\item implementation
+\item asymptotic analysis of the model
+\item reminder about experimental setups
+\item experimental results
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Metronome system
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Metronome Model}
+\label{cha:metronome-model}
+
+% Metronome model
+%
+%    a      b      c
+% A ---> B ---> C --->
+%
+%       M
+\[
+\begin{bmatrix}
+  P_{am} & P_{bm} & P_{cm} & P_{mm}
+\end{bmatrix}
+\]
+
+\begin{itemize}
+\item Metronome-based approach:
+\item the idea (showing a simple worked
+  example)
+\item the implementation
+\item asymptotic analysis.
+\item remind experiment setup
+\item Show experimental results showing that this approach is just as
+  performant as the original system.
+\item Maybe worth showing the ROC analysis of the three systems to show
+  how they perform under a range of parameter values.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Management
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Project Management}
+\label{cha:project-management}
+Large projects are strenuous. Effective project management then
+becomes crucial in ensuring constant progress throughout all periods
+of the academic year. 
+
+Git was used rather than Subversion for one key reason: it is easy to
+maintain multiple branches of the code and move changes to all of
+them. This feature was especially important because it meant that
+multiple ideas about the model implementation could be kept in
+separate branches. In Subversion, doing the equivalent would have made
+it very difficult to make updates to all branches when bugs were found
+and fixed.
+
+Because inheriting such a large code-base can be overwhelming, unit
+tests were used to create a contract of behavior for the most critical
+classes in the system. And by using Jenkins as a continuous
+integration server, it was possible to know when any change to the
+code caused a test on any branch to fail. Jenkins also published the
+results of static analysis run by Maven, the build system used. Static
+analysis helped suss out potential bugs and resulted in more robust code.
+
+Perhaps the most important aspect of project management, and
+unfortunately discovered only towards the end of the project, was
+issue management. It was possible to set project milestones and attach
+the issues necessary to complete the milestone. This has the benefit
+of putting in concrete terms the steps necessary to reach a goal. So
+rather than flailing around to figure out what to do next, there was
+always a concrete task that could be done.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Project evaluation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Project Evaluation}
+\label{cha:project-evaluation}
+
+\begin{itemize}
+\item Honest project evaluation:
+\item Talk about what I did right 
+  \begin{itemize}
+  \item summer work in anticipation of a busy first term
+  \end{itemize}
+\item the things from which I can learn.
+  \begin{itemize}
+    \item sticking with something even when it doesn't work
+    \item setting better goals
+  \end{itemize}
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Conclusion
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Future Work}
+\label{cha:future-work}
+
+\begin{itemize}
+\item Tie the story together \& mention some ideas for future
+  work.
+\end{itemize}
+
+
+% \include{tex/abstract}
+% \include{tex/acknowledgments}
+% \include{tex/introduction} %% Motivation & introduction for rest of report
+% \include{tex/background}   %% Lit. review & aucom background
+% \include{tex/original}
+% \include{tex/connection}
+% \include{tex/metronome}
+% % \include{tex/experiments}
+% \include{tex/management}
+% \include{tex/evaluation}
+% \include{tex/conclusion}
+\bibliographystyle{plain}
 \bibliography{references.bib}
 \end{document}
 
 %%% Local Variables:
 %%% TeX-engine: xetex
-%%% TeX-master: t
 %%% End:
 
 
 
 
+
+%  LocalWords:  tuple
