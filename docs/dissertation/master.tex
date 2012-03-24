@@ -6,7 +6,7 @@
 \usepackage{xunicode}
 \usepackage{xltxtra}
 \defaultfontfeatures{Mapping=tex-text}
-\setromanfont [Ligatures={Common}, Numbers={OldStyle}]{Linux Libertine O}
+\setromanfont[Ligatures={Common}, Numbers={OldStyle}]{Linux Libertine O}
 % Layout
 \usepackage[xetex]{geometry}
 \usepackage{geometry}
@@ -71,8 +71,9 @@
 
 \begin{itemize}
 \item What is the problem?
-\item Who else has wanted to solve it and how did they do it?
-  (High-level, the details will be in the literature review)
+\item Robots works with people more
+\item Because of this, fault detection is becoming more important. It
+  would be terrible for a fault to cause a robot to injure a human.
 \item What was my my base goal for the project?
 \item Introduce the rest of the dissertation
 \item intro literature review
@@ -90,30 +91,26 @@ Something \cite{Antonelo2008}.
 \label{cha:lit-review}
 
 \begin{itemize}
-\item Talk about the approaches used by others in more depth than what
-  was hinted at in the motivation. Keep it concise and at a
-  high-level.
+\item Who else has wanted to solve it and how did they do it?
+\item Two basic approaches: model-based \& data driven
+\item Model base:
+  \begin{itemize}
+  \item follows an analytical or knowledge-based approach
+  \item model state beforehand and use this to estimate model to
+    estimate current system state
+  \item precise and fairly close to the hardware
+  \item very time-consuming so less interest in complex cognitive
+    systems
+  \end{itemize}
 \end{itemize}
+
+\section{Model-based Approaches}
+\section{Data-driven Approaches}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Background
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Background}
-\label{cha:background}
-
-% Example system:
-%     a      b      c
-%  A ---> B ---> C --->
-
-
-The trained model:
-\[
-\begin{bmatrix}
-  P_{aa} & P_{ab} & P_{ac}\\
-  P_{ba} & P_{bb} & P_{bc}\\
-  P_{ca} & P_{cb} & P_{cc}
-\end{bmatrix}
-\]
+\chapter{Background}\label{cha:background}
 
 \begin{itemize}
 \item Give the necessary background to understand Raphael's approach.
@@ -129,6 +126,39 @@ The trained model:
   scope).
 \end{itemize}
 
+\section{Learning a model}
+
+% Example system:
+% a      b      c
+% A ---> B ---> C --->
+
+The trained model:
+\[
+\begin{bmatrix}
+  P_{aa} & P_{ab} & P_{ac}\\
+  P_{ba} & P_{bb} & P_{bc}\\
+  P_{ca} & P_{cb} & P_{cc}
+\end{bmatrix}
+\]
+
+% Another example system
+% a'     b
+% A +---> B -->
+% | a''    c
+% +---> C -->
+\[
+\begin{bmatrix}
+  P_{a'a'}  & P_{a'a''}  & P_{a'b}  & P_{a'c}\\
+  P_{a''a'} & P_{a''a''} & P_{a''b} & P_{a''c}\\
+  P_{ba'}   & P_{ba''}   & P_{bb}   & P_{bc}\\
+  P_{ca'}   & P_{ca''}   & P_{cb}   &  P_{cc}
+\end{bmatrix}
+\]
+
+\section{Score Calculation}
+\section{System Classification}
+\section{CAST}
+
 % Train a model for each tuple $(e_i,e_j)$ in the Cartesian product of
 % the unique set of observations $U_E$.
 
@@ -138,8 +168,8 @@ The trained model:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Original system
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Original Implementation}
-\label{cha:orig-impl}
+\chapter{Original Approach}
+\label{cha:orig-approach}
 
 \begin{itemize}
 \item Original system: the idea (just mention because it should be
@@ -151,6 +181,14 @@ The trained model:
 \item Experimental results
 \item Asymptotic analysis as motivation for my extension.
 \end{itemize}
+
+\section{Implementation}
+\subsection{FTS Graph processor}
+\subsection{CAST component}
+\section{Experiments}
+\subsection{Setups}
+\subsection{Results}
+\section{Asymptotic analysis}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Reduced system
@@ -166,7 +204,6 @@ The trained model:
 \end{bmatrix}
 \]
 
-
 \begin{itemize}
 \item First attempt, using a connection-based model
 \item the connection-based idea
@@ -177,23 +214,16 @@ The trained model:
 \item experimental results
 \end{itemize}
 
+\section{Idea}
+\section{Asymptotic analysis}
+\section{Implementation}
+\section{Experiments}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Metronome system
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Metronome Model}
 \label{cha:metronome-model}
-
-% Metronome model
-%
-%    a      b      c
-% A ---> B ---> C --->
-%
-%       M
-\[
-\begin{bmatrix}
-  P_{am} & P_{bm} & P_{cm} & P_{mm}
-\end{bmatrix}
-\]
 
 \begin{itemize}
 \item Metronome-based approach:
@@ -208,6 +238,25 @@ The trained model:
   how they perform under a range of parameter values.
 \end{itemize}
 
+\section{Idea}
+
+% Metronome model
+%
+% a      b      c
+% A ---> B ---> C --->
+%
+% M
+\[
+\begin{bmatrix}
+  P_{am} & P_{bm} & P_{cm} & P_{mm}
+\end{bmatrix}
+\]
+
+\section{Asymptotic analysis}
+\section{Implementation}
+\section{Experiments}
+\subsection{ROC analysis}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Management
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -215,7 +264,7 @@ The trained model:
 \label{cha:project-management}
 Large projects are strenuous. Effective project management then
 becomes crucial in ensuring constant progress throughout all periods
-of the academic year. 
+of the academic year.
 
 Git was used rather than Subversion for one key reason: it is easy to
 maintain multiple branches of the code and move changes to all of
@@ -249,26 +298,28 @@ always a concrete task that could be done.
 
 \begin{itemize}
 \item Honest project evaluation:
-\item Talk about what I did right 
+\item Talk about what I did right
   \begin{itemize}
   \item summer work in anticipation of a busy first term
   \end{itemize}
 \item the things from which I can learn.
   \begin{itemize}
-    \item sticking with something even when it doesn't work
-    \item setting better goals
+  \item sticking with something even when it doesn't work
+  \item setting better goals
   \end{itemize}
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Conclusion
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Future Work}
-\label{cha:future-work}
+\chapter{Conclusion \& Future Work}
+\label{cha:conclusion}
 
 \begin{itemize}
 \item Tie the story together \& mention some ideas for future
   work.
+\item Multiple-models
+\item Learning to detect specific faults
 \end{itemize}
 
 
@@ -295,4 +346,4 @@ always a concrete task that could be done.
 
 
 
-%  LocalWords:  tuple
+% LocalWords:  tuple analytical
