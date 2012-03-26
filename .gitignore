@@ -9,11 +9,14 @@ lib/
 nbproject/
 target/
 \#*#
+.#*
 *.toc
 *.pdf
 *.ml
 *.ser
-.#project.org
-aucom/data/algorithm/.#classes.txt
 *.ipr
 *.iws
+*.bbl
+*.blg
+*.xdv
+*.obs
