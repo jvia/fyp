@@ -11,11 +11,13 @@
 \usepackage[xetex]{geometry}
 \usepackage{geometry}
 \geometry{a4paper, textheight=8.5in}
-% title page stuff
 \usepackage{setspace}
+\usepackage{wrapfig}
 \usepackage{graphicx}
+\graphicspath{{./diagrams}{./images}}
+\DeclareGraphicsExtensions{.eps,.ps,.pdf,.png}
 \usepackage{mathtools}
-
+\usepackage{paralist}
 % ------------------------------------------------------------------ %
 % BEGIN DOCUMENT                                                     %
 % ------------------------------------------------------------------ %
@@ -98,7 +100,7 @@ What is the problem?
   would be terrible for a fault to cause a robot to injure a human.
 \end{itemize}
 
-What was my my base goal for the project?
+\noindent What was my my base goal for the project?
 \begin{itemize}
 \item Modify Raph's system to work with CAST
 \item examine the efficacy of this system
@@ -106,16 +108,18 @@ What was my my base goal for the project?
 \item actual extension: increase the efficient of the learned model
 \end{itemize}
 
-Introduce the rest of the dissertation:
-\begin{itemize}
-\item intro literature review
-\item intro background
-\item intro mention reducing the model
-\item intro project management
-\item intro project evaluation
-\end{itemize}
+The rest of this dissertation is composed of the following main
+sections:
+\begin{inparaenum}[\itshape a\upshape)]
+\item a brief literature review;
+\item an explanation of the technique;
+\item analysis of the technique and potential improvements;
+\item project evaluation.
+\end{inparaenum} The literature review will briefly explain approaches
+taken by others attempting to solve the problem previously mentioned.
+This will give the reader context from which to understand the work.
 
-Something \cite{Antonelo2008}.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Literature review
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -160,9 +164,12 @@ Something \cite{Antonelo2008}.
 
 \section{Learning a model}
 
-% Example system:
-% a      b      c
-% A ---> B ---> C --->
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \includegraphics[width=0.48\textwidth]{diagrams/ex1.pdf}
+  \caption{example1}
+  \label{fig:ex1}
+\end{wrapfigure}
 
 The trained model:
 \[
@@ -173,11 +180,11 @@ The trained model:
 \end{bmatrix}
 \]
 
-% Another example system
-% a'     b
-% A +---> B -->
-% | a''    c
-% +---> C -->
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \includegraphics[width=0.48\textwidth]{diagrams/ex2.pdf}
+  \caption{example2}
+  \label{fig:ex2}
+\end{wrapfigure}
 \[
 \begin{bmatrix}
   P_{a'a'}  & P_{a'a''}  & P_{a'b}  & P_{a'c}\\
@@ -354,18 +361,9 @@ always a concrete task that could be done.
 \item Learning to detect specific faults
 \end{itemize}
 
-
-% \include{tex/abstract}
-% \include{tex/acknowledgments}
-% \include{tex/introduction} %% Motivation & introduction for rest of report
-% \include{tex/background}   %% Lit. review & aucom background
-% \include{tex/original}
-% \include{tex/connection}
-% \include{tex/metronome}
-% % \include{tex/experiments}
-% \include{tex/management}
-% \include{tex/evaluation}
-% \include{tex/conclusion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \bibliographystyle{plain}
 \bibliography{references.bib}
 \end{document}
@@ -373,9 +371,4 @@ always a concrete task that could be done.
 %%% Local Variables:
 %%% TeX-engine: xetex
 %%% End:
-
-
-
-
-
 % LocalWords:  tuple analytical
