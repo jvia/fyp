@@ -1,6 +1,7 @@
 %% !TEX TS-program = xelatex
 %% !TEX encoding = UTF-8 Unicode
-\documentclass[11pt, a4paper]{report}
+%%\documentclass[11pt, a4paper]{report}
+\documentclass[11pt,a4paper]{article}
 % Set up fonts
 \usepackage{fontspec}
 \usepackage{xunicode}
@@ -50,6 +51,7 @@
 \end{titlepage}
 
 \tableofcontents
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Abstract
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -70,6 +72,7 @@
   \noindent\textit{Keywords}: robotics, fault detection,
   machine learning
 \end{abstract}
+\newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Acknowledgments
@@ -78,11 +81,12 @@
 \begin{abstract}
   Thanks Mum!
 \end{abstract}
+\newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Motivation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Motivation}
+\section{Motivation}
 \label{cha:motivation}
 The number of robots within in the economy is increasing as are their
 range of tasks. There are robots in factories automating difficult or
@@ -103,6 +107,14 @@ cause damage to products or the arm itself resulting in a loss of
 factory output. These examples underscore the importance of detecting
 and handling faults within a robot system.
 
+The main goal of this project was to determine if the technique
+developed by Raphael Golombek \cite{Golombek2011} could work on the
+CoSY Architecture Schema Toolkit (CAST) \cite{haweswyatt10aei}. To do
+this, Raphael's software was extensively modified to work with CAST
+and then experiments were performed to determine the efficacy of this
+approach. The extension for this project was to find a way to deal
+with the size of learned model so that this technique could scale to
+large systems.
 
 \noindent What was my my base goal for the project?
 %% - Modify Raph's system to work with CAST
@@ -125,7 +137,7 @@ This will give the reader context from which to understand the work.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Literature review
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Literature Review}
+\section{Literature Review}
 \label{cha:lit-review}
 
 \begin{itemize}
@@ -142,13 +154,13 @@ This will give the reader context from which to understand the work.
   \end{itemize}
 \end{itemize}
 
-\section{Model-based Approaches}
-\section{Data-driven Approaches}
+\subsection{Model-based Approaches}
+\subsection{Data-driven Approaches}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Background
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Background}\label{cha:background}
+\section{Background}\label{cha:background}
 
 \begin{itemize}
 \item Give the necessary background to understand Raphael's approach.
@@ -164,7 +176,7 @@ This will give the reader context from which to understand the work.
   scope).
 \end{itemize}
 
-\section{Learning a model}
+\subsection{Learning a model}
 
 
 \begin{wrapfigure}{r}{0.5\textwidth}
@@ -196,9 +208,9 @@ The trained model:
 \end{bmatrix}
 \]
 
-\section{Score Calculation}
-\section{System Classification}
-\section{CAST}
+\subsection{Score Calculation}
+\subsection{System Classification}
+\subsection{CAST}
 
 % Train a model for each tuple $(e_i,e_j)$ in the Cartesian product of
 % the unique set of observations $U_E$.
@@ -209,7 +221,7 @@ The trained model:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Original system
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Original Approach}
+\section{Original Approach}
 \label{cha:orig-approach}
 
 \begin{itemize}
@@ -223,18 +235,18 @@ The trained model:
 \item Asymptotic analysis as motivation for my extension.
 \end{itemize}
 
-\section{Implementation}
-\subsection{FTS Graph processor}
-\subsection{CAST component}
-\section{Experiments}
-\subsection{Setups}
-\subsection{Results}
-\section{Asymptotic analysis}
+\subsection{Implementation}
+\subsubsection{FTS Graph processor}
+\subsubsection{CAST component}
+\subsection{Experiments}
+\subsubsection{Setups}
+\subsubsection{Results}
+\subsection{Asymptotic analysis}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Reduced system
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Connection-based Model}
+\section{Connection-based Model}
 \label{cha:conn-based-model}
 
 \[
@@ -255,15 +267,15 @@ The trained model:
 \item experimental results
 \end{itemize}
 
-\section{Idea}
-\section{Asymptotic analysis}
-\section{Implementation}
-\section{Experiments}
+\subsection{Idea}
+\subsection{Asymptotic analysis}
+\subsection{Implementation}
+\subsection{Experiments}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Metronome system
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Metronome Model}
+\section{Metronome Model}
 \label{cha:metronome-model}
 
 \begin{itemize}
@@ -279,7 +291,7 @@ The trained model:
   how they perform under a range of parameter values.
 \end{itemize}
 
-\section{Idea}
+\subsection{Idea}
 
 % Metronome model
 %
@@ -293,15 +305,15 @@ The trained model:
 \end{bmatrix}
 \]
 
-\section{Asymptotic analysis}
-\section{Implementation}
-\section{Experiments}
-\subsection{ROC analysis}
+\subsection{Asymptotic analysis}
+\subsection{Implementation}
+\subsection{Experiments}
+\subsubsection{ROC analysis}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Management
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Project Management}
+\section{Project Management}
 \label{cha:project-management}
 Large projects are strenuous. Effective project management then
 becomes crucial in ensuring constant progress throughout all periods
@@ -334,7 +346,7 @@ always a concrete task that could be done.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Project evaluation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Project Evaluation}
+\section{Project Evaluation}
 \label{cha:project-evaluation}
 
 \begin{itemize}
@@ -353,7 +365,7 @@ always a concrete task that could be done.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Conclusion
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Conclusion \& Future Work}
+\section{Conclusion \& Future Work}
 \label{cha:conclusion}
 
 \begin{itemize}
@@ -373,4 +385,4 @@ always a concrete task that could be done.
 %%% Local Variables:
 %%% TeX-engine: xetex
 %%% End:
-% LocalWords:  tuple analytical
+% LocalWords:  tuple analytical Golombek CoSY Raphael's

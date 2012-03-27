@@ -219,7 +219,6 @@ Score does not change because there is a bug in the system right now.
 ** COMMENT 2012-03-12
 ** COMMENT 2012-03-19
 * Dissertation
-The story will unfold as follows:
 - Abstract
 - Motivation:
 - What is the problem?
