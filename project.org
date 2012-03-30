@@ -219,61 +219,106 @@ Score does not change because there is a bug in the system right now.
 ** COMMENT 2012-03-12
 ** COMMENT 2012-03-19
 * Dissertation
-- Abstract
-- Motivation:
-- What is the problem?
-- Who else has wanted to solve it and
-  how did they do it?
-- What was my my base goal for the project?
-- Introduce the rest of the dissertation
-- intro literature review
-- intro background
-- intro mention reducing the model
-- intro project management
-- intro project evaluation
-- Literature review: Talk about the approaches used by others in more
-  depth than what was hinted at in the motivation. Keep it concise and
-  at a high-level.
-- Give the necessary background to understand Raphael's approach.
-  Explain the math concisely. Give detailed explanation of the learned
-  model so later asymptotic analysis fits the story.
+** Abstract
+
+Fault-detection in robotics systems is a difficult task and as systems
+are becoming more larger and complex, subtle errors are becoming
+harder to diagnose. Traditional fault-detection approaches have relied
+on explicit modeling of component behavior, but this technique does
+not scale to complex robots operating in dynamic environments. A new
+technique which involves making the robot self-aware to the internal
+state of its various components is examined. The aim of this project
+is to implement and then measure the efficacy of this probabilistic
+self-awareness model for the robotics middleware CAST, and if time
+allows, deal with shortcomings of the original approach.
+
+Keywords: robotics, fault detection, machine learning
+
+** Acknowledgments
+** Motivation
+*** What is the problem & why is it important?
+- the problem is detecting faults within the software of complex
+  robotics systems
+- goal: giving a robot a sense of self-awareness can allow it to
+  degrade gracefully
+- faulty robots are dangerous
+- a fault can cause injury to a person
+- a fault can damage products or the robot
+- results in loss of property
+*** Who else has wanted to solve it and how did they do it?
+- two main approaches: model-based & data-driven
+- from raph's paper:
+  5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22
+- model-based
+  - analytic:
+    - "used in the design of control systems where the models are
+      constructed based on fundamental assumptions"
+    - time consuming, so not much use in the complex cognitive systems
+      of modern robots
+    - 6,7
+  - knowledge-based:
+    - "qualitative models of the system are used to
+      detect and diagnose faults"
+    - require expert knowledge to design the model
+    - 5,8,9,10,11,12,13,14,15,16,17
+- data-driven
+  - 18,19,20,21,22,1
+*** What was the goal of my project?
+- modify aucom to work with CAST
+- implement a CAST component to work with aucom
+- run experiments to determine the efficacy of this approach
+- extension was to modify the learned model to increase efficiency
+*** Introduce the rest of the dissertation
+**** What is the point of the literature review?
+**** Why talk about the theory?
+**** Why talk about the original system and then analyze it?
+**** What is the point of the improvements?
+**** Why talk about project management?
+**** Why evaluate the project?
+** Literature review
+- What kinds of approaches are there?
+- What are their main ideas?
+- Who has used the model-based approach and what did they do?
+- Who has used the data-driven approach and what did they do?
+- How does aucom fit in with these approaches?
+** Theory
+- Explain the math concisely.
+- Give detailed explanation of the learned model so later asymptotic
+  analysis fits the story.
 - Mention CAST and give a brief overview of how it works, perhaps
-  juxtaposing it to XCF (although this may be out of the dissertation
-  scope).
-- Original system: the idea (just mention because it should be
-  explained in the background), the implementation, and the
-  experimental results.
-- Refer back to the original idea explain in the background
-- Talk about implementation (FTS, CAST component, modifying aucom, etc.)
-- Experimental setups
-- Experimental results
+  juxtaposing it to XCF (although this may be out of the
+  dissertation scope).
+** Original system:
+- the idea (just mention because it should be explained in the
+  background),
+- the implementation, and
+- the experimental results.
 - Asymptotic analysis as motivation for my extension.
-- First attempt, using a connection-based model
-- the connection-based idea
-- refer to jen's work
-- implementation
-- asymptotic analysis of the model
-- reminder about experimental setups
-- experimental results
-- Metronome-based approach:
-- the idea (showing a simple worked
-  example)
-- the implementation
-- asymptotic analysis.
-- remind experiment setup
+** Connection-based model
+- the idea (perhaps mentioning how it could be done on CAST with
+    Jen's software) and
+- the implementation.
+- Show improved asymptotic analysis and
+- lead into the disappointing results.
+** Metronome-based approach
+- the idea (showing a simple worked example),
+- the implementation, and
+- its asymptotic analysis.
 - Show experimental results showing that this approach is just as
   performant as the original system.
 - Maybe worth showing the ROC analysis of the three systems to show
   how they perform under a range of parameter values.
-- Briefly cover project management.
-- git for version control
-- issues for project management
-- jenkins for CI testing
-- Honest project evaluation:
-- Talk about what I did right
-- the things from which I can learn.
-- Conclusion: Tie the story together & mention some ideas for future
-  work.
+** Project management
+*** maven
+*** Jenkins
+*** git
+*** Github
+** Project evaluation
+- Good
+- Bad
+** Conclusion
+- Tie the story together
+- mention some ideas for future work.
 * COMMENT Appendix
 
-#  LocalWords:  SRC Gantt Ela
+#  LocalWords:  SRC Gantt Ela aucom
