@@ -276,11 +276,11 @@ Keywords: robotics, fault detection, machine learning
 **** Why talk about project management?
 **** Why evaluate the project?
 ** Literature review
-- What kinds of approaches are there?
-- What are their main ideas?
-- Who has used the model-based approach and what did they do?
-- Who has used the data-driven approach and what did they do?
-- How does aucom fit in with these approaches?
+**** What kinds of approaches are there?
+**** What are their main ideas?
+**** Who has used the model-based approach and what did they do?
+**** Who has used the data-driven approach and what did they do?
+**** How does aucom fit in with these approaches?
 ** Theory
 - Explain the math concisely.
 - Give detailed explanation of the learned model so later asymptotic
@@ -289,11 +289,19 @@ Keywords: robotics, fault detection, machine learning
   juxtaposing it to XCF (although this may be out of the
   dissertation scope).
 ** Original system:
-- the idea (just mention because it should be explained in the
-  background),
-- the implementation, and
-- the experimental results.
-- Asymptotic analysis as motivation for my extension.
+*** Implementation
+**** CAST
+**** FTS graph
+*** Experimental results
+**** introduce the experiments for the rest of the report
+***** record fault tracking time
+**** 3x1 experiments
+**** 4x4 experiment results
+**** 10x1 experiment results
+**** dora experiment
+*** Asymptotic analysis
+**** Show mathematical derivation of model memory
+**** Show mathematical dervaition of score calculation
 ** Connection-based model
 - the idea (perhaps mentioning how it could be done on CAST with
     Jen's software) and
@@ -314,11 +322,11 @@ Keywords: robotics, fault detection, machine learning
 *** git
 *** Github
 ** Project evaluation
-- Good
-- Bad
+*** What was good?
+*** What can be learned?
 ** Conclusion
-- Tie the story together
-- mention some ideas for future work.
+*** Conclude story
+*** Future work
 * COMMENT Appendix
 
 #  LocalWords:  SRC Gantt Ela aucom
