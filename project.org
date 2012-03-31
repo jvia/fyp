@@ -78,13 +78,6 @@ criteria that can be answered with a yes or no question. Rather, I
 should select criteria which allows me to compare on multiple
 dimensions.
 
-** TODO 2011-10-24
-** TODO 2011-10-31
-** TODO 2011-11-07
-** TODO 2011-11-14
-** TODO 2011-11-21
-** TODO 2011-11-28
-** TODO 2011-12-05
 ** 2012-01-09
 *** Wednesday
 
@@ -211,14 +204,10 @@ Experiments to test the algorithm:
 
 Score does not change because there is a bug in the system right now.
 
-** COMMENT 2012-02-06
-** COMMENT 2012-02-13
-** COMMENT 2012-02-20
-** COMMENT 2012-02-27
-** COMMENT 2012-03-05
-** COMMENT 2012-03-12
-** COMMENT 2012-03-19
 * Dissertation
+:PROPERTIES:
+:EXPORT_FILE_NAME: dissertation
+:END:
 ** Abstract
 
 Fault-detection in robotics systems is a difficult task and as systems
@@ -232,11 +221,35 @@ is to implement and then measure the efficacy of this probabilistic
 self-awareness model for the robotics middleware CAST, and if time
 allows, deal with shortcomings of the original approach.
 
-Keywords: robotics, fault detection, machine learning
+/Keywords/: robotics, fault detection, machine learning
 
 ** Acknowledgments
 ** Motivation
 *** What is the problem & why is it important?
+The number of robots and their tasks is increasing. More and more
+robots are becoming part of the human daily experience.
+
+ There are now robots which clean the house, assist in surgery, and
+automate the construction of goods.
+
+There are robots in factories automating difficult or repetitive
+tasks. There are an increasing number of domestic robots being used
+for assistance in the home or as entertainment. It is important for
+these robots to function correctly, and if unable to do so, to degrade
+gracefully to minimize harm to themselves and others. To do this,
+robots need some way to determine their own operating conditions.
+Detecting faults within robot systems is a hard problem.
+
+The importance of equipping a robot with the ability of self-awareness
+to its internal state increases as humans interact more with robots.
+One could imagine a robot in the home which assisted an elderly person
+or \textit{another situation}. A malfunction in these situations a
+malfunction could cause serious harm to a human. One could also
+imagine robotic arms at a factory building cars. A malfunction could
+cause damage to products or the arm itself resulting in a loss of
+factory output. These examples underscore the importance of detecting
+and handling faults within a robot system.
+
 - the problem is detecting faults within the software of complex
   robotics systems
 - goal: giving a robot a sense of self-awareness can allow it to
@@ -303,27 +316,41 @@ Keywords: robotics, fault detection, machine learning
 **** Show mathematical derivation of model memory
 **** Show mathematical dervaition of score calculation
 ** Connection-based model
-- the idea (perhaps mentioning how it could be done on CAST with
-    Jen's software) and
-- the implementation.
-- Show improved asymptotic analysis and
-- lead into the disappointing results.
+*** Idea
+*** Implementation
+*** Asymptotic analysis
+**** model
+**** score calculation
+*** Experimental results
+**** 3x1 experiments
+**** 4x4 experiment results
+**** 10x1 experiment results
+**** dora experiment
 ** Metronome-based approach
-- the idea (showing a simple worked example),
-- the implementation, and
-- its asymptotic analysis.
-- Show experimental results showing that this approach is just as
-  performant as the original system.
-- Maybe worth showing the ROC analysis of the three systems to show
-  how they perform under a range of parameter values.
+*** Idea
+*** Implementation
+*** Asymptotic analysis
+**** model
+**** score calculation
+*** Experimental results
+**** 3x1 experiments
+**** 4x4 experiment results
+**** 10x1 experiment results
+**** dora experiment
+**** ROC analysis of the three approaches
 ** Project management
-*** maven
-*** Jenkins
-*** git
-*** Github
+*** Managing tasks & deadlines
+**** Github issues
+*** Managing code
+**** maven
+**** Jenkins
+**** git
 ** Project evaluation
 *** What was good?
+**** project planning w.r.t. summer work
 *** What can be learned?
+**** sticking with it when intial results are bad
+**** setting better goals
 ** Conclusion
 *** Conclude story
 *** Future work
