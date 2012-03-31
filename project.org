@@ -295,16 +295,21 @@ and handling faults within a robot system.
 **** Who has used the data-driven approach and what did they do?
 **** How does aucom fit in with these approaches?
 ** Theory
-- Explain the math concisely.
-- Give detailed explanation of the learned model so later asymptotic
-  analysis fits the story.
-- Mention CAST and give a brief overview of how it works, perhaps
-  juxtaposing it to XCF (although this may be out of the
-  dissertation scope).
+*** Give a high-level idea
+*** Introduce the example to be used in explaining the idea
+*** Explain model creation
+*** Explain classification
+*** Explain score calculation
+*** Explain threshold calculation
 ** Original system:
 *** Implementation
 **** CAST
+***** What is CAST?
+***** What did I have to do to make it work on CAST?
 **** FTS graph
+***** What is the FTS graph processor?
+- https://code.ai.techfak.uni-bielefeld.de/trac/xcf/wiki/FilterTransformSelect#topics
+- https://toolkit.cit-ec.uni-bielefeld.de/components/tools/fts-filter-transform-select-toolkit
 *** Experimental results
 **** introduce the experiments for the rest of the report
 ***** record fault tracking time

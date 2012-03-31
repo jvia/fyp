@@ -1,0 +1,161 @@
+#+title:   Probabilistic Models for Fault Detection in Event-Based Robotics Middlewares
+#+author:  Jeremiah M. Via
+#+options: H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+options: TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+startup: hidestars
+#+export_exclude_tags: noexport
+
+* Abstract
+
+Fault-detection in robotics systems is a difficult task and as systems
+are becoming more larger and complex, subtle errors are becoming
+harder to diagnose. Traditional fault-detection approaches have relied
+on explicit modeling of component behavior, but this technique does
+not scale to complex robots operating in dynamic environments. A new
+technique which involves making the robot self-aware to the internal
+state of its various components is examined. The aim of this project
+is to implement and then measure the efficacy of this probabilistic
+self-awareness model for the robotics middleware CAST, and if time
+allows, deal with shortcomings of the original approach.
+
+/Keywords/: robotics, fault detection, machine learning
+
+* Acknowledgments
+* Motivation
+** What is the problem & why is it important?
+The number and uses of robots is increasing. More and more robots are
+becoming part of the human daily experience. There are now robots
+which clean the house, assist in surgery, and automate the
+construction of goods.
+
+There are robots in factories automating difficult or repetitive
+tasks. There are an increasing number of domestic robots being used
+for assistance in the home or as entertainment. It is important for
+these robots to function correctly, and if unable to do so, to degrade
+gracefully to minimize harm to themselves and others. To do this,
+robots need some way to determine their own operating conditions.
+Detecting faults within robot systems is a hard problem.
+
+The importance of equipping a robot with the ability of self-awareness
+to its internal state increases as humans interact more with robots.
+One could imagine a robot in the home which assisted an elderly person
+or \textit{another situation}. A malfunction in these situations a
+malfunction could cause serious harm to a human. One could also
+imagine robotic arms at a factory building cars. A malfunction could
+cause damage to products or the arm itself resulting in a loss of
+factory output. These examples underscore the importance of detecting
+and handling faults within a robot system.
+
+- the problem is detecting faults within the software of complex
+  robotics systems
+- goal: giving a robot a sense of self-awareness can allow it to
+  degrade gracefully
+- faulty robots are dangerous
+- a fault can cause injury to a person
+- a fault can damage products or the robot
+- results in loss of property
+** Who else has wanted to solve it and how did they do it?
+- two main approaches: model-based & data-driven
+- from raph's paper:
+  5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22
+- model-based
+  - analytic:
+    - "used in the design of control systems where the models are
+      constructed based on fundamental assumptions"
+    - time consuming, so not much use in the complex cognitive systems
+      of modern robots
+    - 6,7
+  - knowledge-based:
+    - "qualitative models of the system are used to
+      detect and diagnose faults"
+    - require expert knowledge to design the model
+    - 5,8,9,10,11,12,13,14,15,16,17
+- data-driven
+  - 18,19,20,21,22,1
+** What was the goal of my project?
+*** modify aucom to work with CAST
+*** implement a CAST component to work with aucom
+*** run experiments to determine the efficacy of this approach
+*** extension was to modify the learned model to increase efficiency
+** Introduce the rest of the dissertation
+*** What is the point of the literature review?
+*** Why talk about the theory?
+*** Why talk about the original system and then analyze it?
+*** What is the point of the improvements?
+*** Why talk about project management?
+*** Why evaluate the project?
+* Literature review
+*** What kinds of approaches are there?
+*** What are their main ideas?
+*** Who has used the model-based approach and what did they do?
+*** Who has used the data-driven approach and what did they do?
+*** How does aucom fit in with these approaches?
+* Theory
+** Give a high-level idea & introduce the main theoretical steps
+** Introduce the example to be used in explaining the idea
+** Explain model creation
+** Explain classification
+** Explain score calculation
+** Explain threshold calculation
+* Original system:
+** Implementation
+*** CAST
+**** What is CAST?
+**** What did I have to do to make it work on CAST?
+*** FTS graph
+**** What is the FTS graph processor?
+- https://code.ai.techfak.uni-bielefeld.de/trac/xcf/wiki/FilterTransformSelect#topics
+- https://toolkit.cit-ec.uni-bielefeld.de/components/tools/fts-filter-transform-select-toolkit
+** Experimental results
+*** introduce the experiments for the rest of the report
+**** record fault tracking time
+*** 3x1 experiments
+*** 4x4 experiment results
+*** 10x1 experiment results
+*** dora experiment
+** Asymptotic analysis
+*** Show mathematical derivation of model memory
+*** Show mathematical dervaition of score calculation
+* Connection-based model
+** Idea
+** Implementation
+** Asymptotic analysis
+*** model
+*** score calculation
+** Experimental results
+*** 3x1 experiments
+*** 4x4 experiment results
+*** 10x1 experiment results
+*** dora experiment
+* Metronome-based approach
+** Idea
+** Implementation
+** Asymptotic analysis
+*** model
+*** score calculation
+** Experimental results
+*** 3x1 experiments
+*** 4x4 experiment results
+*** 10x1 experiment results
+*** dora experiment
+*** ROC analysis of the three approaches
+* Project management
+** Managing tasks & deadlines
+*** Github issues
+** Managing code
+*** maven
+*** Jenkins
+*** git
+* Project evaluation
+** What was good?
+*** project planning w.r.t. summer work
+** What can be learned?
+*** sticking with it when intial results are bad
+*** setting better goals
+* Conclusion
+** Conclude story
+** Future work
+
+
+\bibliographystyle{plain}
+\bibliography{references}
