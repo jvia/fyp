@@ -5,8 +5,12 @@
 #+startup: hidestars indent
 #+export_exclude_tags: noexport
 
+#+LATEX_HEADER: \title{Probabilistic Models for Fault Detection in Event-Based Robotics Middlewares}
+#+LATEX_HEADER: \author{Jeremiah M. Via}
+#+LATEX_HEADER: \Keywords{robotics, machine learning, fault detection}
 #+LaTeX_CLASS: article
 #+LaTeX_CLASS_OPTIONS: [a4paper,11pt]
+
 #+begin_latex
 \begin{titlepage}
 %% Set the line spacing to 1 for the title page.
@@ -35,18 +39,18 @@ Copyright {\copyright} 2012 School of Computer Science, University of Birmingham
 \end{spacing}
 \end{titlepage}
 
-\begin{abstract}
-Fault-detection in robotics systems is a difficult task and as
-systems are becoming more larger and complex, subtle errors are
-becoming harder to diagnose. Traditional fault-detection approaches
-have relied on explicit modeling of component behavior, but this
-technique does not scale to complex robots operating in dynamic
-environments. A new technique which involves making the robot
-self-aware to the internal state of its various components is
-examined. The aim of this project is to implement and then measure
-the efficacy of this probabilistic self-awareness model for the
-robotics middleware CAST, and if time allows, deal with shortcomings
-of the original approach.
+\begin{abstract} 
+Fault-detection in robotics systems is a difficult task and as systems
+are becoming more larger and complex, subtle errors are becoming
+harder to diagnose. Traditional fault-detection approaches have relied
+on explicit modeling of component behavior, but this technique does
+not scale to complex robots operating in dynamic environments. A new
+technique which involves making the robot self-aware to the internal
+state of its various components is examined. The aim of this project
+is to implement and then measure the efficacy of this probabilistic
+self-awareness model for the robotics middleware CAST
+\cite{haweswyatt10aei}, and if time allows, deal with shortcomings of
+the original approach.
 
 \vspace{0.5cm}
 \noindent\textit{Keywords}: robotics, fault detection,
@@ -125,11 +129,15 @@ and present an evaluation of the project.
 :PROPERTIES:
 :CUSTOM_ID: lit-review
 :END:
-** What kinds of approaches are there?
-Two main approaches: model-based and data-driven.
-** What are their main ideas?
-Within in model-based domain, there are two main approaches: analytic
-and knowledge-based.
+
+The problem of closing-the-loop with respect to robots is a problem
+which has received considerable attention since at least the 1980s
+\cite{deKleer:1987vc}. There are two main approaches to solving this
+problem: model-based and data-driven. Model-based approaches have been
+the domain of more traditional engineering and are created through
+exhaustive specification of component behavior. Data-driven approaches
+are newer and leverage machine learning techniques.
+
 ** Who has used the model-based approach and what did they do?
 *** analytic
 - "used in the design of control systems where the models are
@@ -162,7 +170,15 @@ and knowledge-based.
 *** (22) Overcoming HMM time independence assumption using n-gram based modelling for continuous speech recognition
 ** How does aucom fit in with these approaches?
 Aucom is a purely data-driven approach.
+
 * Theory
+
+The main hypothesis of this approach is that a robot is a set of
+communicating components which generate temporal communication
+patterns when accomplishing tasks. These temporal communication
+patterns then exhibit structures which depend on the current state of
+the robot \cite{Golombek:2010hj}. 
+
 ** Give a high-level idea & introduce the main theoretical steps
 ** Introduce the example to be used in explaining the idea
 ** Explain model creation
@@ -182,6 +198,11 @@ Aucom is a purely data-driven approach.
 *** introduce the experiments for the rest of the report
 **** record fault tracking time
 *** 3x1 experiments
+
+#+CAPTION:    The black-body emission of the disk around HR 4049
+#+LABEL:      fig:SED-HR4049
+#+ATTR_LaTeX: width=0.38\textwidth wrap placement={r}{0.4\textwidth}
+[[./data/original.eps]]
 *** 4x4 experiment results
 *** 10x1 experiment results
 *** dora experiment
