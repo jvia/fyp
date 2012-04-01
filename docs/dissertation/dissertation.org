@@ -4,68 +4,61 @@
 #+options: TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+startup: hidestars indent
 #+export_exclude_tags: noexport
-
-#+LATEX_HEADER: \title{Probabilistic Models for Fault Detection in Event-Based Robotics Middlewares}
-#+LATEX_HEADER: \author{Jeremiah M. Via}
-#+LATEX_HEADER: \Keywords{robotics, machine learning, fault detection}
-#+LaTeX_CLASS: article
-#+LaTeX_CLASS_OPTIONS: [a4paper,11pt]
-
 #+begin_latex
-\begin{titlepage}
-%% Set the line spacing to 1 for the title page.
-\begin{spacing}{1}
-\begin{large}
-\begin{center}
-\mbox{}
-\vfill
-\begin{sc}
-A Data-Driven Self-Awareness Model for Robotics Systems \\
-\end{sc}
-\vfill
-Jeremiah M. Via \\
-Supervisor: Nick Hawes \\
-\vspace*{4mm}
-\includegraphics[width=50mm]{crest.png}\\
-Submitted in conformity with the requirements\\
-for the degree of Artificial Intelligence \& Computer Science\\
-School of Computer Science\\
-University of Birmingham\\
-\vfill
-Copyright {\copyright} 2012 School of Computer Science, University of Birmingham\\
-\vspace*{.2in}
-\end{center}
-\end{large}
-\end{spacing}
-\end{titlepage}
-
-\begin{abstract} 
-Fault-detection in robotics systems is a difficult task and as systems
-are becoming more larger and complex, subtle errors are becoming
-harder to diagnose. Traditional fault-detection approaches have relied
-on explicit modeling of component behavior, but this technique does
-not scale to complex robots operating in dynamic environments. A new
-technique which involves making the robot self-aware to the internal
-state of its various components is examined. The aim of this project
-is to implement and then measure the efficacy of this probabilistic
-self-awareness model for the robotics middleware CAST
-\cite{haweswyatt10aei}, and if time allows, deal with shortcomings of
-the original approach.
-
-\vspace{0.5cm}
-\noindent\textit{Keywords}: robotics, fault detection,
-machine learning
-\end{abstract}
-\newpage
-
-\renewcommand{\abstractname}{Acknowledgments}
-\begin{abstract}
-Thanks Mum!
-\end{abstract}
-\newpage
-
-\tableofcontents
-\newpage
+  % \begin{titlepage}
+  % %% Set the line spacing to 1 for the title page.
+  % \begin{spacing}{1}
+  % \begin{large}
+  % \begin{center}
+  % \mbox{}
+  % \vfill
+  % \begin{sc}
+  % A Data-Driven Self-Awareness Model for Robotics Systems \\
+  % \end{sc}
+  % \vfill
+  % Jeremiah M. Via \\
+  % Supervisor: Nick Hawes \\
+  % \vspace*{4mm}
+  % \includegraphics[width=50mm]{crest.png}\\
+  % Submitted in conformity with the requirements\\
+  % for the degree of Artificial Intelligence \& Computer Science\\
+  % School of Computer Science\\
+  % University of Birmingham\\
+  % \vfill
+  % Copyright {\copyright} 2012 School of Computer Science, University of Birmingham\\
+  % \vspace*{.2in}
+  % \end{center}
+  % \end{large}
+  % \end{spacing}
+  % \end{titlepage}
+  
+  % \begin{abstract} 
+  % Fault-detection in robotics systems is a difficult task and as systems
+  % are becoming more larger and complex, subtle errors are becoming
+  % harder to diagnose. Traditional fault-detection approaches have relied
+  % on explicit modeling of component behavior, but this technique does
+  % not scale to complex robots operating in dynamic environments. A new
+  % technique which involves making the robot self-aware to the internal
+  % state of its various components is examined. The aim of this project
+  % is to implement and then measure the efficacy of this probabilistic
+  % self-awareness model for the robotics middleware CAST
+  % \cite{haweswyatt10aei}, and if time allows, deal with shortcomings of
+  % the original approach.
+  
+  % \vspace{0.5cm}
+  % \noindent\textit{Keywords}: robotics, fault detection,
+  % machine learning
+  % \end{abstract}
+  % \newpage
+  
+  % \renewcommand{\abstractname}{Acknowledgments}
+  % \begin{abstract}
+  % Thanks Mum!
+  % \end{abstract}
+  % \newpage
+  
+  % \tableofcontents
+  % \newpage
 #+end_latex
 
 * Motivation
@@ -177,7 +170,9 @@ The main hypothesis of this approach is that a robot is a set of
 communicating components which generate temporal communication
 patterns when accomplishing tasks. These temporal communication
 patterns then exhibit structures which depend on the current state of
-the robot \cite{Golombek:2010hj}. 
+the robot \cite{Golombek:2010hj}. Because this approach uses a
+machine-learned model, it falls completely within the data-driven
+approach to fault detection as described in section \ref{lit-review}.
 
 ** Give a high-level idea & introduce the main theoretical steps
 ** Introduce the example to be used in explaining the idea
@@ -248,6 +243,7 @@ the robot \cite{Golombek:2010hj}.
 * Conclusion
 ** Conclude story
 ** Future work
+
 
 
 \bibliographystyle{plain}
