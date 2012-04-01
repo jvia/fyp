@@ -1,95 +1,192 @@
 #+title:   Probabilistic Models for Fault Detection in Event-Based Robotics Middlewares
 #+author:  Jeremiah M. Via
-#+options: H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+options: H:4 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
 #+options: TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
-#+startup: hidestars
+#+startup: hidestars indent
 #+export_exclude_tags: noexport
 
-* Abstract
+#+LaTeX_CLASS: article
+#+LaTeX_CLASS_OPTIONS: [a4paper,11pt]
 
-Fault-detection in robotics systems is a difficult task and as systems
-are becoming more larger and complex, subtle errors are becoming
-harder to diagnose. Traditional fault-detection approaches have relied
-on explicit modeling of component behavior, but this technique does
-not scale to complex robots operating in dynamic environments. A new
-technique which involves making the robot self-aware to the internal
-state of its various components is examined. The aim of this project
-is to implement and then measure the efficacy of this probabilistic
-self-awareness model for the robotics middleware CAST, and if time
-allows, deal with shortcomings of the original approach.
+#+begin_latex
+\begin{titlepage}
+%% Set the line spacing to 1 for the title page.
+\begin{spacing}{1}
+\begin{large}
+\begin{center}
+\mbox{}
+\vfill
+\begin{sc}
+A Data-Driven Self-Awareness Model for Robotics Systems \\
+\end{sc}
+\vfill
+Jeremiah M. Via \\
+Supervisor: Nick Hawes \\
+\vspace*{4mm}
+\includegraphics[width=50mm]{crest.png}\\
+Submitted in conformity with the requirements\\
+for the degree of Artificial Intelligence \& Computer Science\\
+School of Computer Science\\
+University of Birmingham\\
+\vfill
+Copyright {\copyright} 2012 School of Computer Science, University of Birmingham\\
+\vspace*{.2in}
+\end{center}
+\end{large}
+\end{spacing}
+\end{titlepage}
 
-/Keywords/: robotics, fault detection, machine learning
+\begin{abstract}
+Fault-detection in robotics systems is a difficult task and as
+systems are becoming more larger and complex, subtle errors are
+becoming harder to diagnose. Traditional fault-detection approaches
+have relied on explicit modeling of component behavior, but this
+technique does not scale to complex robots operating in dynamic
+environments. A new technique which involves making the robot
+self-aware to the internal state of its various components is
+examined. The aim of this project is to implement and then measure
+the efficacy of this probabilistic self-awareness model for the
+robotics middleware CAST, and if time allows, deal with shortcomings
+of the original approach.
 
-* Acknowledgments
+\vspace{0.5cm}
+\noindent\textit{Keywords}: robotics, fault detection,
+machine learning
+\end{abstract}
+\newpage
+
+\renewcommand{\abstractname}{Acknowledgments}
+\begin{abstract}
+Thanks Mum!
+\end{abstract}
+\newpage
+
+\tableofcontents
+\newpage
+#+end_latex
+
 * Motivation
-** What is the problem & why is it important?
-The number and uses of robots is increasing. More and more robots are
-becoming part of the human daily experience. There are now robots
-which clean the house, assist in surgery, and automate the
-construction of goods.
+:PROPERTIES:
+:CUSTOM_ID: motivation
+:END:
 
-There are robots in factories automating difficult or repetitive
-tasks. There are an increasing number of domestic robots being used
-for assistance in the home or as entertainment. It is important for
-these robots to function correctly, and if unable to do so, to degrade
-gracefully to minimize harm to themselves and others. To do this,
-robots need some way to determine their own operating conditions.
-Detecting faults within robot systems is a hard problem.
+# ** What is the problem & why is it important?
+
+The number and uses of robots is increasing. More and more robots are
+becoming part of the daily human experience.
+# There are now robots which clean the house, assist in surgery, and
+# automate the construction of goods.
+There are robots in factories automating difficult, repetitive tasks.
+There are an increasing number of domestic robots being used for
+assistance in the home and as entertainment. There are even robots
+being used as surgical tools. It is important for these robots to
+function correctly, and if unable to do so, to degrade gracefully to
+minimize harm to themselves and others. To do this, robots need some
+way to determine their own operating conditions. Detecting faults
+within robot systems is a hard problem.
 
 The importance of equipping a robot with the ability of self-awareness
-to its internal state increases as humans interact more with robots.
-One could imagine a robot in the home which assisted an elderly person
-or \textit{another situation}. A malfunction in these situations a
-malfunction could cause serious harm to a human. One could also
+increases as humans interact more with robots. One could imagine a
+robot in the home which assisted an elderly person or a robot
+performing heart surgery. A malfunction in these situations a
+malfunction could cause death or serious injury. One could also
 imagine robotic arms at a factory building cars. A malfunction could
 cause damage to products or the arm itself resulting in a loss of
 factory output. These examples underscore the importance of detecting
 and handling faults within a robot system.
 
-- the problem is detecting faults within the software of complex
-  robotics systems
-- goal: giving a robot a sense of self-awareness can allow it to
-  degrade gracefully
-- faulty robots are dangerous
-- a fault can cause injury to a person
-- a fault can damage products or the robot
-- results in loss of property
-** Who else has wanted to solve it and how did they do it?
-- two main approaches: model-based & data-driven
-- from raph's paper:
-  5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22
-- model-based
-  - analytic:
-    - "used in the design of control systems where the models are
-      constructed based on fundamental assumptions"
-    - time consuming, so not much use in the complex cognitive systems
-      of modern robots
-    - 6,7
-  - knowledge-based:
-    - "qualitative models of the system are used to
-      detect and diagnose faults"
-    - require expert knowledge to design the model
-    - 5,8,9,10,11,12,13,14,15,16,17
-- data-driven
-  - 18,19,20,21,22,1
-** What was the goal of my project?
-*** modify aucom to work with CAST
-*** implement a CAST component to work with aucom
-*** run experiments to determine the efficacy of this approach
-*** extension was to modify the learned model to increase efficiency
+# ** Who else has wanted to solve it and how did they do it?
+#
+#- two main approaches: model-based & data-driven
+#- from raph's paper:
+#  5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22
+#- model-based
+#  - analytic:
+#    - "used in the design of control systems where the models are
+#      constructed based on fundamental assumptions"
+#    - time consuming, so not much use in the complex cognitive systems
+#      of modern robots
+#    - 6,7
+#  - knowledge-based:
+#    - "qualitative models of the system are used to
+#      detect and diagnose faults"
+#    - require expert knowledge to design the model
+#    - 5,8,9,10,11,12,13,14,15,16,17
+#- data-driven
+#  - 18,19,20,21,22,1
+#
+# ** What was the goal of my project?
+
+This project was conducted in collaboration with Raphael Golombek at
+Bielefeld University. The main goal for the project was to take
+Raphael's software, modify it to work with the robotics middleware
+used at the Univeristy of Birmingham---the CoSY Architecture Schema
+Toolkit---and determine its efficacy. To determine the efficacy of
+this approach, a number of experiments were conducted. With the time
+available after the completion of the main project component, the
+scalability of the learned model was examined and alternative
+formulations proposed.
+
 ** Introduce the rest of the dissertation
+
+The rest of the dissertation is organized into six main sections. It
+will begin with a literature review
+
+
+will broadly cover alternative approaches
+to this problem, the theory of this problem, experimental results of
+this approach and the alternative model formulations, and project
+evaluation.
+
 *** What is the point of the literature review?
+The literature review will
 *** Why talk about the theory?
 *** Why talk about the original system and then analyze it?
 *** What is the point of the improvements?
 *** Why talk about project management?
 *** Why evaluate the project?
 * Literature review
-*** What kinds of approaches are there?
-*** What are their main ideas?
-*** Who has used the model-based approach and what did they do?
-*** Who has used the data-driven approach and what did they do?
-*** How does aucom fit in with these approaches?
+:PROPERTIES:
+:CUSTOM_ID: lit-review
+:END:
+** What kinds of approaches are there?
+Two main approaches: model-based and data-driven.
+** What are their main ideas?
+Within in model-based domain, there are two main approaches: analytic
+and knowledge-based.
+** Who has used the model-based approach and what did they do?
+*** analytic
+- "used in the design of control systems where the models are
+   constructed based on fundamental assumptions"
+- time consuming, so not much use in the complex cognitive systems
+  of modern robots
+**** [6] Diagnosis and Fault-Tolerant Control
+**** [7] Integrated model-based and data-driven diagnosis of automotive antilock braking systems
+
+*** knowledge-based
+- "qualitative models of the system are used to
+   detect and diagnose faults"
+- require expert knowledge to design the model
+**** [5] Back to the future for consistency-based trajectory tracking
+**** [8] Diagnosing multiple faults
+**** [9] A model-based approach to reactive self-configuring systems
+**** [10] Hyde - a general framework for stochastic and hybrid model-based diagnosis
+**** [11] Approximation algorithms for model-based diagnosis
+**** [12] The Livingstone model of a main propulsion system
+**** [13] Lessons learned in the Livingstone 2 on Earth Observing One flight experiment
+**** [14] Diagnosis of Autosub 6000 using automatically generated software models
+**** [15] Combining particle filters and consistency-based approaches for monitoring and diagnosis of stochastic hybrid systems
+**** [16] Diagnosis by a waiter and a Mars explorer
+**** [17] Real-time diagnosis and repair of faults of robot control software
+** Who has used the data-driven approach and what did they do?
+*** [1] Learninga probabilistic error detection model for robotic systems
+*** [18] Fault Detection and Diagnosis in Industrial Systems
+*** [19] o reject or not to reject: that is the question-an answer in case of neural classifiers
+*** [20] Data mining for cyber security
+*** [21] A markov chain model of temporal behavior for anomaly detection
+*** [22] Overcoming HMM time indepen- dence assumption using n-gram based modelling for continuous speech recognition
+** How does aucom fit in with these approaches?
+Aucom is a purely data-driven approach.
 * Theory
 ** Give a high-level idea & introduce the main theoretical steps
 ** Introduce the example to be used in explaining the idea
@@ -159,3 +256,5 @@ and handling faults within a robot system.
 
 \bibliographystyle{plain}
 \bibliography{references}
+
+#  LocalWords:  middleware
