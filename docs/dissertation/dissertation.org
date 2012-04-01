@@ -7,7 +7,6 @@
 
 #+LaTeX_CLASS: article
 #+LaTeX_CLASS_OPTIONS: [a4paper,11pt]
-
 #+begin_latex
 \begin{titlepage}
 %% Set the line spacing to 1 for the title page.
@@ -70,8 +69,6 @@ Thanks Mum!
 :CUSTOM_ID: motivation
 :END:
 
-# ** What is the problem & why is it important?
-
 The number and uses of robots is increasing. More and more robots are
 becoming part of the daily human experience.
 # There are now robots which clean the house, assist in surgery, and
@@ -95,28 +92,9 @@ cause damage to products or the arm itself resulting in a loss of
 factory output. These examples underscore the importance of detecting
 and handling faults within a robot system.
 
-# ** Who else has wanted to solve it and how did they do it?
-#
-#- two main approaches: model-based & data-driven
-#- from raph's paper:
-#  5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22
-#- model-based
-#  - analytic:
-#    - "used in the design of control systems where the models are
-#      constructed based on fundamental assumptions"
-#    - time consuming, so not much use in the complex cognitive systems
-#      of modern robots
-#    - 6,7
-#  - knowledge-based:
-#    - "qualitative models of the system are used to
-#      detect and diagnose faults"
-#    - require expert knowledge to design the model
-#    - 5,8,9,10,11,12,13,14,15,16,17
-#- data-driven
-#  - 18,19,20,21,22,1
-#
-# ** What was the goal of my project?
+# Who else has wanted to solve it and how did they do it?
 
+# What was the goal of my project?
 This project was conducted in collaboration with Raphael Golombek at
 Bielefeld University. The main goal for the project was to take
 Raphael's software, modify it to work with the robotics middleware
@@ -127,24 +105,22 @@ available after the completion of the main project component, the
 scalability of the learned model was examined and alternative
 formulations proposed.
 
-** Introduce the rest of the dissertation
-
+# Introduce the rest of the dissertation
 The rest of the dissertation is organized into six main sections. It
-will begin with a literature review
+will begin with a literature review which gives a brief overview of
+the techniques used by others who have wanted to solve this problem.
+The literature review will also show where the technique presented in
+this dissertation fits with previous techniques. Following on from the
+literature revew, the theory with necessary background will be
+covered. This section should give the reader enough understanding to
+implement the algorithm. After an explanation of the theory, a section
+will cover its implementation on CAST. This section will also give
+some experimental results as well as asymptotic analysis of the
+algorithm. The next few sections will cover alternative formulations
+of the learned model, experimental results, as well as asymptotic
+analysis. Finally, the last few sections will cover project management
+and present an evaluation of the project.
 
-
-will broadly cover alternative approaches
-to this problem, the theory of this problem, experimental results of
-this approach and the alternative model formulations, and project
-evaluation.
-
-*** What is the point of the literature review?
-The literature review will
-*** Why talk about the theory?
-*** Why talk about the original system and then analyze it?
-*** What is the point of the improvements?
-*** Why talk about project management?
-*** Why evaluate the project?
 * Literature review
 :PROPERTIES:
 :CUSTOM_ID: lit-review
@@ -157,34 +133,33 @@ and knowledge-based.
 ** Who has used the model-based approach and what did they do?
 *** analytic
 - "used in the design of control systems where the models are
-   constructed based on fundamental assumptions"
+  constructed based on fundamental assumptions"
 - time consuming, so not much use in the complex cognitive systems
   of modern robots
-**** [6] Diagnosis and Fault-Tolerant Control
-**** [7] Integrated model-based and data-driven diagnosis of automotive antilock braking systems
-
+**** (6) Diagnosis and Fault-Tolerant Control
+**** (7) Integrated model-based and data-driven diagnosis of automotive antilock braking systems
 *** knowledge-based
 - "qualitative models of the system are used to
-   detect and diagnose faults"
+  detect and diagnose faults"
 - require expert knowledge to design the model
-**** [5] Back to the future for consistency-based trajectory tracking
-**** [8] Diagnosing multiple faults
-**** [9] A model-based approach to reactive self-configuring systems
-**** [10] Hyde - a general framework for stochastic and hybrid model-based diagnosis
-**** [11] Approximation algorithms for model-based diagnosis
-**** [12] The Livingstone model of a main propulsion system
-**** [13] Lessons learned in the Livingstone 2 on Earth Observing One flight experiment
-**** [14] Diagnosis of Autosub 6000 using automatically generated software models
-**** [15] Combining particle filters and consistency-based approaches for monitoring and diagnosis of stochastic hybrid systems
-**** [16] Diagnosis by a waiter and a Mars explorer
-**** [17] Real-time diagnosis and repair of faults of robot control software
+**** (5)  Back to the future for consistency-based trajectory tracking
+**** (8)  Diagnosing multiple faults
+**** (9)  A model-based approach to reactive self-configuring systems
+**** (10) Hyde - a general framework for stochastic and hybrid model-based diagnosis
+**** (11) Approximation algorithms for model-based diagnosis
+**** (12) The Livingstone model of a main propulsion system
+**** (13) Lessons learned in the Livingstone 2 on Earth Observing One flight experiment
+**** (14) Diagnosis of Autosub 6000 using automatically generated software models
+**** (15) Combining particle filters and consistency-based approaches for monitoring and diagnosis of stochastic hybrid systems
+**** (16) Diagnosis by a waiter and a Mars explorer
+**** (17) Real-time diagnosis and repair of faults of robot control software
 ** Who has used the data-driven approach and what did they do?
-*** [1] Learninga probabilistic error detection model for robotic systems
-*** [18] Fault Detection and Diagnosis in Industrial Systems
-*** [19] o reject or not to reject: that is the question-an answer in case of neural classifiers
-*** [20] Data mining for cyber security
-*** [21] A markov chain model of temporal behavior for anomaly detection
-*** [22] Overcoming HMM time indepen- dence assumption using n-gram based modelling for continuous speech recognition
+*** (1) Learning a probabilistic error detection model for robotic systems
+*** (18) Fault Detection and Diagnosis in Industrial Systems
+*** (19) To reject or not to reject: that is the question-an answer in case of neural classifiers
+*** (20) Data mining for cyber security
+*** (21) A markov chain model of temporal behavior for anomaly detection
+*** (22) Overcoming HMM time independence assumption using n-gram based modelling for continuous speech recognition
 ** How does aucom fit in with these approaches?
 Aucom is a purely data-driven approach.
 * Theory
