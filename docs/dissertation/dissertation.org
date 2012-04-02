@@ -1,11 +1,11 @@
 #+title:
 #+author:  Jeremiah M. Via
-#+options: H:4 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+options: H:2 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
 #+options: TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+startup: hidestars indent
 
 #+LATEX_CLASS: dissertation
-#+LATEX_CLASS_OPTIONS: [a4paper,10pt]
+#+LATEX_CLASS_OPTIONS: [a4paper,11pt]
 
 #+begin_latex
 \begin{titlepage}
@@ -204,15 +204,15 @@ To ground the discussion, a simplistic example is shown in Figure
 \ref{fig:ex1}. This graph represents a set of three components and how
 messages pass through the system. These components can be seen as
 chained together with a linear communication pattern. In this example,
-node /A/ publishes a message /a/ which is passes to node /B/. Node
-/B/, after doing some arbitrary computation, publishes a message /b/
-which is passed to node /C/. So, in this example, it can be expected
-that data flows linearly from node /A/ to node /C/. It is not
-necessary that data flow linearly through a system. In general,
-real-life robotics systems exhibit more complicated inter-component
-communication patterns. Figure \ref{fig:ex2} shows a system in which
-node /A/ publishes two types of messages, each of which is used by a
-separate component.
+node /A/ publishes a message /a/ at timestamp $t$ which passes to node
+/B/. Node /B/, after doing some arbitrary computation, publishes a
+message /b/ at timestamp $t'$ which is passed to node /C/. So, in this
+example, it can be expected that data flow linearly from node /A/ to
+node /C/. It is not necessary that data flow linearly through a
+system. In general, real-life robotics systems exhibit more
+complicated inter-component communication patterns. Figure
+\ref{fig:ex2} shows a system in which node /A/ publishes two types of
+messages, each of which is used by a separate component.
 
 #+CAPTION:    A non-linear component-based system
 #+LABEL:      fig:ex2
@@ -220,7 +220,7 @@ separate component.
 [[./diagrams/ex2.pdf]]
 
 The rest of this section will explain the theory using the examples of
-figures \ref{fig:ex1} and \ref{fig:ex2} as examples. Fist, the idea
+figures \ref{fig:ex1} and \ref{fig:ex2} as examples. First, the idea
 and creation of the learned model will be explained, followed by the
 calculation of the score, and then the calculation of the final
 classification.
@@ -228,6 +228,32 @@ classification.
 ######################################################################
 # Explain model creation
 ######################################################################
+The learned model exploits the hypothesis that a robot composed of a
+set of software components exhibits temporal communication patterns.
+These patterns exhibit different structures depending on the state of
+the robot. The goal then becomes to learn the inter-component
+communication patterns when the robot is functioning correctly. With
+this model, the robot's state can be classified depending on how
+closely its current communication patterns adhere to the learned
+communication patterns. If the current pattern deviates too far from
+the learned pattern, then the robot can be said to be in an anomalous
+state. The first step, then, is to create the learned model.
+
+The model is learned by collecting an observation time-series and
+learning how components publish with respect to one another. More
+formally, let $E$ be the set of encoded time-series of component
+communication data which is recorded during normal operation. For each
+tuple $(e_i,e_j) \in E \times E$, a probability distribution
+$P_{ij}=P(t|e_i,e_j)$ is estimated. The distribution $P_{ij}$
+represents the probability the even $e_i$ occurs at timestamp $t_i$
+and that after a delay of time $t$, event $e_j$ occurs (i.e., $t_j =
+t_i + t$). The event $e_i$ is constrained to be the last seen
+occurrence of this event type because the goal is to model temporal
+correlations between the current event and the last seen occurrence of
+a given event. Learning the model for the example present backed in
+figure \ref{fig:ex1}, results in a matrix of distributions as shown in
+equation \ref{matrix:ex1}.
+
 \begin{equation}
 \label{matrix:ex1}
 \begin{bmatrix}
@@ -237,16 +263,27 @@ P_{ca} & P_{cb} & P_{cc}
 \end{bmatrix}
 \end{equation}
 
-######################################################################
-# Explain classification
-######################################################################
+It should be clear by now that the model does not learn transition
+times between sets of connected components, but instead learns the
+likelihood of the time-span between the firing of any two components.
+
+The estimation of $P_{ij}$ makes use of Kernel Density estimators
+which have been initialized with a Guassian Kernel $K(u) =
+\frac{1}{2\pi}e^{-\frac{1}{2}u^2}$. The set of all learned
+distributions becomes the model $M = \{P_{ij}|(e_i,e_j) \in E \times
+E\}$. $M$ is now the matrix shown in equation \ref{matrix:ex1}.
 
 ######################################################################
 # Explain score calculation
 ######################################################################
 
+
 ######################################################################
 # Explain threshold calculation
+######################################################################
+
+######################################################################
+# Explain classification
 ######################################################################
 
 * Original system
@@ -347,4 +384,4 @@ always a concrete task that could be done.
 \bibliography{references}
 
 
-#  LocalWords:  middleware
+#  LocalWords:  middleware 
