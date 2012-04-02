@@ -1,64 +1,70 @@
-#+title:   Probabilistic Models for Fault Detection in Event-Based Robotics Middlewares
+#+title:
 #+author:  Jeremiah M. Via
 #+options: H:4 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
 #+options: TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+startup: hidestars indent
-#+export_exclude_tags: noexport
+#+LATEX_HEADER: \usepackage{wrapfig}
+#+LATEX_HEADER: \usepackage{graphicx}
+#+LATEX_HEADER: \graphicspath{{./diagrams}{./images}}
+#+LATEX_HEADER: \DeclareGraphicsExtensions{.eps,.ps,.pdf,.png}
+#+LATEX_HEADER: \usepackage{amsmath}
+#+LATEX_HEADER: \usepackage{paralist}
+
 #+begin_latex
-  % \begin{titlepage}
-  % %% Set the line spacing to 1 for the title page.
-  % \begin{spacing}{1}
-  % \begin{large}
-  % \begin{center}
-  % \mbox{}
-  % \vfill
-  % \begin{sc}
-  % A Data-Driven Self-Awareness Model for Robotics Systems \\
-  % \end{sc}
-  % \vfill
-  % Jeremiah M. Via \\
-  % Supervisor: Nick Hawes \\
-  % \vspace*{4mm}
-  % \includegraphics[width=50mm]{crest.png}\\
-  % Submitted in conformity with the requirements\\
-  % for the degree of Artificial Intelligence \& Computer Science\\
-  % School of Computer Science\\
-  % University of Birmingham\\
-  % \vfill
-  % Copyright {\copyright} 2012 School of Computer Science, University of Birmingham\\
-  % \vspace*{.2in}
-  % \end{center}
-  % \end{large}
-  % \end{spacing}
-  % \end{titlepage}
-  
-  % \begin{abstract} 
-  % Fault-detection in robotics systems is a difficult task and as systems
-  % are becoming more larger and complex, subtle errors are becoming
-  % harder to diagnose. Traditional fault-detection approaches have relied
-  % on explicit modeling of component behavior, but this technique does
-  % not scale to complex robots operating in dynamic environments. A new
-  % technique which involves making the robot self-aware to the internal
-  % state of its various components is examined. The aim of this project
-  % is to implement and then measure the efficacy of this probabilistic
-  % self-awareness model for the robotics middleware CAST
-  % \cite{haweswyatt10aei}, and if time allows, deal with shortcomings of
-  % the original approach.
-  
-  % \vspace{0.5cm}
-  % \noindent\textit{Keywords}: robotics, fault detection,
-  % machine learning
-  % \end{abstract}
-  % \newpage
-  
-  % \renewcommand{\abstractname}{Acknowledgments}
-  % \begin{abstract}
-  % Thanks Mum!
-  % \end{abstract}
-  % \newpage
-  
-  % \tableofcontents
-  % \newpage
+\begin{titlepage}
+%% Set the line spacing to 1 for the title page.
+\begin{spacing}{1}
+\begin{large}
+\begin{center}
+\mbox{}
+\vfill
+\begin{sc}
+A Data-Driven Self-Awareness Model for Robotics Systems \\
+\end{sc}
+\vfill
+Jeremiah M. Via \\
+Supervisor: Nick Hawes \\
+\vspace*{4mm}
+\includegraphics[width=50mm]{crest.png}\\
+Submitted in conformity with the requirements\\
+for the degree of Artificial Intelligence \& Computer Science\\
+School of Computer Science\\
+University of Birmingham\\
+\vfill
+Copyright {\copyright} 2012 School of Computer Science, University of Birmingham\\
+\vspace*{.2in}
+\end{center}
+\end{large}
+\end{spacing}
+\end{titlepage}
+
+\begin{abstract}
+Fault-detection in robotics systems is a difficult task and as systems
+are becoming more larger and complex, subtle errors are becoming
+harder to diagnose. Traditional fault-detection approaches have relied
+on explicit modeling of component behavior, but this technique does
+not scale to complex robots operating in dynamic environments. A new
+technique which involves making the robot self-aware to the internal
+state of its various components is examined. The aim of this project
+is to implement and then measure the efficacy of this probabilistic
+self-awareness model for the robotics middleware CAST
+\cite{haweswyatt10aei}, and if time allows, deal with shortcomings of
+the original approach.
+
+\vspace{0.5cm}
+\noindent\textit{Keywords}: robotics, fault detection,
+machine learning
+\end{abstract}
+\newpage
+
+\renewcommand{\abstractname}{Acknowledgments}
+\begin{abstract}
+Thanks Mum!
+\end{abstract}
+\newpage
+
+\tableofcontents
+\newpage
 #+end_latex
 
 * Motivation
@@ -174,6 +180,20 @@ the robot \cite{Golombek:2010hj}. Because this approach uses a
 machine-learned model, it falls completely within the data-driven
 approach to fault detection as described in section \ref{lit-review}.
 
+\begin{equation}
+\label{ex:1}
+\begin{bmatrix}
+P_{aa} & P_{ab} & P_{ac}\\
+P_{ba} & P_{bb} & P_{bc}\\
+P_{ca} & P_{cb} & P_{cc}
+\end{bmatrix}
+\end{equation}
+
+#+CAPTION:    A simple component-based system
+#+LABEL:      fig:ex1
+#+ATTR_LaTeX: width=0.38\textwidth wrap placement={r}{0.4\textwidth}
+[[./diagrams/ex1.pdf]]
+
 ** Give a high-level idea & introduce the main theoretical steps
 ** Introduce the example to be used in explaining the idea
 ** Explain model creation
@@ -228,6 +248,34 @@ approach to fault detection as described in section \ref{lit-review}.
 *** dora experiment
 *** ROC analysis of the three approaches
 * Project management
+Large projects are strenuous. Effective project management then
+becomes crucial in ensuring constant progress throughout all periods
+of the academic year.
+
+Git was used rather than Subversion for one key reason: it is easy to
+maintain multiple branches of the code and move changes to all of
+them. This feature was especially important because it meant that
+multiple ideas about the model implementation could be kept in
+separate branches. In Subversion, doing the equivalent would have made
+it very difficult to make updates to all branches when bugs were found
+and fixed.
+
+Because inheriting such a large code-base can be overwhelming, unit
+tests were used to create a contract of behavior for the most critical
+classes in the system. And by using Jenkins as a continuous
+integration server, it was possible to know when any change to the
+code caused a test on any branch to fail. Jenkins also published the
+results of static analysis run by Maven, the build system used. Static
+analysis helped suss out potential bugs and resulted in more robust code.
+
+Perhaps the most important aspect of project management, and
+unfortunately discovered only towards the end of the project, was
+issue management. It was possible to set project milestones and attach
+the issues necessary to complete the milestone. This has the benefit
+of putting in concrete terms the steps necessary to reach a goal. So
+rather than flailing around to figure out what to do next, there was
+always a concrete task that could be done.
+
 ** Managing tasks & deadlines
 *** Github issues
 ** Managing code
@@ -245,8 +293,9 @@ approach to fault detection as described in section \ref{lit-review}.
 ** Future work
 
 
-
+\newpage
 \bibliographystyle{plain}
 \bibliography{references}
+
 
 #  LocalWords:  middleware

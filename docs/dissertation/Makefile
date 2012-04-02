@@ -1,11 +1,11 @@
 CC=gcc
 EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
-BATCH_EMACS=$(EMACS) --batch -Q -l init.el dissertation.org
+BATCH_EMACS=$(EMACS) --batch -Q -l dissertation.org
 REQUIREMENTS=sh
 
 all: dissertation.pdf
 
-dissertation.tex: dissertation.org init.el
+dissertation.tex: dissertation.org
 	$(BATCH_EMACS) -f org-export-as-latex
 
 dissertation.pdf: dissertation.tex
