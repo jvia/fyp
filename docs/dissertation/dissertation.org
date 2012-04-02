@@ -171,17 +171,58 @@ are newer and leverage machine learning techniques.
 Aucom is a purely data-driven approach.
 
 * Theory
+** Give a high-level idea & introduce the main theoretical steps
 
-The main hypothesis of this approach is that a robot is a set of
+The main hypothesis of this approach states that a robot is a set of
 communicating components which generate temporal communication
 patterns when accomplishing tasks. These temporal communication
-patterns then exhibit structures which depend on the current state of
-the robot \cite{Golombek:2010hj}. Because this approach uses a
+patterns exhibit structures which depend on the current state of the
+robot \cite{Golombek:2010hj}. Because this approach uses a
 machine-learned model, it falls completely within the data-driven
 approach to fault detection as described in section \ref{lit-review}.
 
+In order to classify the robot as being in a normal or faulty state, a
+score is calculated against the learned model. This score is compared
+against a moving threshold to create the classification of the robot's
+state at any given time.
+
+** Introduce the example to be used in explaining the idea
+
+
+#+CAPTION:    A simple component-based system
+#+LABEL:      fig:ex1
+#+ATTR_LaTeX: width=0.7\textwidth
+[[./diagrams/ex1.pdf]]
+
+To ground the discussion, a simplistic example is shown in Figure
+\ref{fig:ex1}. This graph represents a set of three components and how
+messages pass through the system. These components can be seen as
+chained together with a linear communication pattern. In this example,
+node /A/ publishes a message /a/ which is passes to node /B/. Node
+/B/, after doing some arbitrary computation, publishes a message /b/
+which is passed to node /C/. So, in this example, it can be expected
+that data flows linearly from node /A/ to node /C/. It is not
+necessary that data flow linearly through a system. In general,
+real-life robotics systems exhibit more complicated inter-component
+communication patterns. Figure \ref{fig:ex2] shows a system in which
+node /A/ publishes two types of messages, each of which is used by a
+separate component.
+
+#+CAPTION:    A non-linear component-based system
+#+LABEL:      fig:ex2
+#+ATTR_LaTeX: width=0.5\textwidth
+[[./diagrams/ex2.pdf]]
+
+The rest of this section will explain the theory using the examples of
+figures \ref{fig:ex1} and \ref{fig:ex2} as examples. Fist, the idea
+and creation of the learned model will be explained, followed by the
+calculation of the score, and then the calculation of the final
+classification.
+
+** Explain model creation
+
 \begin{equation}
-\label{ex:1}
+\label{matrix:ex1}
 \begin{bmatrix}
 P_{aa} & P_{ab} & P_{ac}\\
 P_{ba} & P_{bb} & P_{bc}\\
@@ -189,14 +230,7 @@ P_{ca} & P_{cb} & P_{cc}
 \end{bmatrix}
 \end{equation}
 
-#+CAPTION:    A simple component-based system
-#+LABEL:      fig:ex1
-#+ATTR_LaTeX: width=0.38\textwidth wrap placement={r}{0.4\textwidth}
-[[./diagrams/ex1.pdf]]
 
-** Give a high-level idea & introduce the main theoretical steps
-** Introduce the example to be used in explaining the idea
-** Explain model creation
 ** Explain classification
 ** Explain score calculation
 ** Explain threshold calculation
@@ -216,7 +250,7 @@ P_{ca} & P_{cb} & P_{cc}
 
 #+CAPTION:    The black-body emission of the disk around HR 4049
 #+LABEL:      fig:SED-HR4049
-#+ATTR_LaTeX: width=0.38\textwidth wrap placement={r}{0.4\textwidth}
+#+ATTR_LaTeX: width=0.8\textwidth
 [[./data/original.eps]]
 *** 4x4 experiment results
 *** 10x1 experiment results
