@@ -10,9 +10,6 @@
 #+LATEX_CLASS: dissertation
 #+LATEX_CLASS_OPTIONS: [a4paper,11pt]
 
-
-
-
 #+begin_latex
 \begin{titlepage}
 %% Set the line spacing to 1 for the title page.
@@ -288,23 +285,34 @@ pattern. Formally, the score at event $e_j$ is defined as
 
 \begin{equation}
 \label{eq:score}
-  s_j = \sum_{e_i \ in E} w_{ij} \cdot P_{ij}(\Delta{}t_i)
+  s_j = \sum_{e_i \in E} w_{ij} \cdot P_{ij}(\Delta{}t_i)
 \end{equation}
 
-\noindent where $E$ is the set of last seen instance of each event type and
-$w_{ij}$ is the relative weighting of the probability value. The
-weight $w_{ij}$ 
+\noindent where $E$ is the set of last seen instance of each event
+type and $w_{ij}$ is the relative weighting of the probability value.
+The weight $w_{ij}$ is a measure of how meaningful the particular
+distribution $P_{ij}$ is as an indication to the system's performance.
+The weight is defined as
 
-$h_{ij}$ is the entropy of the distribution of $P_{ij}$, and $$H_j =
-\sum^E_{e_i} h_{ij}$$
+\begin{equation}
+\label{eq:weight}
+w_{ij} = 1 - \frac{h_{ij}}{{\displaystyle\sum_{e_i \in E} h_{ij}}}
+\end{equation}
 
-
-#\left(1 - \frac{h_{ij}}{H_j}\right)
-
-In equation \ref{eq:score}, it can be seen that the score is
-calculated over
+The weight calculation presented in equation \ref{eq:weight} makes use
+of the entropy of the distribution. This represents how much
+information is contained in a particual distribution and its
+trustworthiness. Essentially, the lower the entropy, and thus the more
+information contained in the distribution, the more willing we are to
+trust the correlation between the two event types.
 
 ** Calculating the threshold
+
+An important aspect of this technique is that as the score changes
+over the course of a system run, so does the threshold. What is
+considered the threshold for normal behavior is dependent on the
+communication patterns within the system. 
+
 ** Classifying the system
 * Original system
 ** Implementation
@@ -339,7 +347,7 @@ calculated over
 ** Experimental results
 *** 3x1 experiments
 
-#+begin_src gnuplot :var data="./data/reduced_3chain_fault" :exports none :file "img/reduced_3chain_fault.eps" 
+#+begin_src gnuplot :var data="./data/reduced_3chain_fault" :exports none :file "img/reduced_3chain_fault.eps" :cache yes
   reset
   set terminal postscript color solid eps enhanced 20
   set yrange [0:1]
@@ -349,7 +357,7 @@ calculated over
        data using 1:3 with lines title 'Threshold'
 #+end_src
 
-#+results:
+#+results[9ccf3b2dca2bb91beb98ba4a1be6a9b33c7b1112]:
 [[file:img/reduced_3chain_fault.eps]]
 
 
@@ -358,7 +366,7 @@ calculated over
 
 The results of the experiment.
 
-#+begin_src gnuplot :var data="./data/reduced_4x4_normal.csv" :exports none :file "img/reduced_4x4_normal.eps" 
+#+begin_src gnuplot :var data="./data/reduced_4x4_normal.csv" :exports none :file "img/reduced_4x4_normal.eps" :cache yes
   reset
   set terminal postscript color solid eps enhanced 20
   set yrange [0:1]
@@ -368,11 +376,12 @@ The results of the experiment.
        data using 1:2 with lines smooth bezier title 'Score (smoothed)',\
        data using 1:3 with lines title 'Threshold'
 #+end_src
-#+results:
+
+#+results[fb1cd17f2e0a6b3fffda70ab3cd1dfad0f703b48]:
 [[file:img/reduced_4x4_normal.eps]]
 
 
-#+begin_src gnuplot :var data="./data/reduced_4x4_fault.csv" :exports none :file "img/reduced_4x4_fault.eps" 
+#+begin_src gnuplot :var data="./data/reduced_4x4_fault.csv" :exports none :file "img/reduced_4x4_fault.eps" :cache yes
   reset
   set terminal postscript color solid eps enhanced 20
   set yrange [0:1]
@@ -381,7 +390,8 @@ The results of the experiment.
        data using 1:2 with lines smooth bezier title 'Score (smoothed)',\
        data using 1:3 with lines title 'Threshold'
 #+end_src
-#+results:
+
+#+results[b9082141948d6b6bb2e672f95ac3d7612c19a98f]:
 [[file:img/reduced_4x4_fault.eps]]
 
 
@@ -389,7 +399,7 @@ The results of the experiment.
 
 The results of the experiment.
 
-#+begin_src gnuplot :var data="./data/reduced_10x1_fault.csv" :exports results :file "img/reduced_10x1_fault.eps" 
+#+begin_src gnuplot :var data="./data/reduced_10x1_fault.csv" :exports results :file "img/reduced_10x1_fault.eps" :cache yes
   reset
   set terminal postscript color solid eps enhanced 20
   set yrange [0:1]
@@ -399,7 +409,7 @@ The results of the experiment.
        data using 1:3 with lines title 'Threshold'
 #+end_src
 
-#+results:
+#+results[02d0464828433875ba8f7fe252783f2d70fcdfed]:
 [[file:img/reduced_10x1_fault.eps]]
 
 *** dora experiment
