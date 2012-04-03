@@ -132,7 +132,7 @@ of the learned model, experimental results, as well as asymptotic
 analysis. Finally, the last few sections will cover project management
 and present an evaluation of the project.
 
-* Literature review
+* COMMENT Literature review
 :PROPERTIES:
 :CUSTOM_ID: lit-review
 :END:
@@ -198,46 +198,48 @@ state at any given time.
 ######################################################################
 # Introduce the example to be used in explaining the idea
 ######################################################################
-#+begin_src dot :exports none :file "img/simple.pdf" :cache yes
-   digraph Example1 {
-           rankdir=LR;
-           subgraph step3 {
-                   label="Step #3";
-                   A3[label="A"];
-                   B3[label="B"];
-                   C3[label="C"];
-                   A3 -> B3
-                   [label="a  "];
-                   B3 -> C3
-                   [label="b  (150ms)",color="red",style="bold",fontcolor="red"];
-           }
-           subgraph step2 {
-                   label="Step #2";
-                   A2[label="A"];
-                   B2[label="B"];
-                   C2[label="C"];
-                   A2 -> B2
-                   [label="a  (100ms)",color="red",style="bold",fontcolor="red"];
-                   B2 -> C2 [label="b  "];
-           }
-           subgraph step1 {
-                   label="Step #1";
-                   A1[label="A"];
-                   B1[label="B"];
-                   C1[label="C"];
-                   A1 -> B1 [label="a  "];
-                   B1 -> C1 [label="b  "];
-           }
-   }
+#+begin_src dot :exports none :file "img/simple.pdf" :cache no
+  digraph Example1 {
+  rankdir=LR;
+  subgraph cluster2 {
+  label="Event from B";
+  A3[label="A"];
+  B3[label="B"];
+  C3[label="C"];
+  A3 -> B3
+  [label="a  "];
+  B3 -> C3
+  [label="b  (150ms)",color="red",style="bold",fontcolor="red"];
 
+  }
+  subgraph cluster1 {
+  label="Event from A";
+  A2[label="A"];
+  B2[label="B"];
+  C2[label="C"];
+  A2 -> B2
+  [label="a  (100ms)",color="red",style="bold",fontcolor="red"];
+  B2 -> C2 [label="b  "];
+  }
+  subgraph cluster0 {
+  label="No event";
+  A1[label="A"];
+  B1[label="B"];
+  C1[label="C"];
+  A1 -> B1 [label="a  "];
+  B1 -> C1 [label="b  "];
+  }
 
+  }
 #+end_src
 
-#+results[6dfe8668008b6c6f1462c41a56c74a00eafcbe1d]:
+#+RESULTS[fc8897caa2a034eb34782fd9c83ca4451bb52636]:
 [[file:img/simple.pdf]]
 
 #+caption: In this simple example, it can be seen that.
 [[file:img/simple.pdf]]
+
+
 
 To ground the discussion, a simplistic example is shown in Figure
 \ref{fig:ex1}. This graph represents a set of three components and how
@@ -271,10 +273,10 @@ messages, each of which is used by a separate component.
 #+results[8033868d33a97b13559b13165338665ffeaaf6df]:
 [[file:img/complex.pdf]]
 
-# #+CAPTION:    A non-linear component-based system
-# #+LABEL:      fig:ex2
-# #+ATTR_LaTeX: width=0.5\textwidth
-[[# ./diagrams/ex2.pdf]]
+#+CAPTION:    A non-linear component-based system
+#+LABEL:      fig:ex2
+#+ATTR_LaTeX: width=0.5\textwidth
+[[file:img/complex.pdf]]
 
 The rest of this section will explain the theory using the examples of
 figures \ref{fig:ex1} and \ref{fig:ex2} as examples. First, the idea
@@ -309,8 +311,8 @@ t_i + t$). The event $e_i$ is constrained to be the last seen
 occurrence of this event type because the goal is to model temporal
 correlations between the current event and the last seen occurrence of
 a given event. Learning the model for the example present backed in
-figure \ref{fig:ex1}, results in a matrix of distributions as shown in
-matrix \eqref{matrix:ex1}.
+figure \ref{fig:ex1}, results in a matrix of distributions as shown
+the in matrix in \eqref{matrix:ex1}.
 
 \begin{equation}
 \label{matrix:ex1}
@@ -329,7 +331,28 @@ The estimation of $P_{ij}$ makes use of Kernel Density estimators
 which have been initialized with a Gaussian Kernel $K(u) =
 \frac{1}{2\pi}e^{-\frac{1}{2}u^2}$. The set of all learned
 distributions becomes the model $M = \{P_{ij}|(e_i,e_j) \in E \times
-E\}$. $M$ is now the matrix shown in equation \eqref{matrix:ex1}.
+E\}$. $M$ is now the matrix shown in \eqref{matrix:ex1}.
+
+#+begin_src dot :exports none :file "img/learned.pdf" :cache yes
+  digraph G {
+          rankdir=LR;
+          A -> A [label="P(AA)"];
+          A -> B [label="P(AB)"];
+          A -> C [label="P(AC)"];
+          B -> A [label="P(BA)"];
+          B -> B [label="P(BB)"];
+          B -> C [label="P(BC)"];
+          C -> A [label="P(CA)"];
+          C -> B [label="P(CB)"];
+          C -> C [label="P(CC)"];
+  }
+#+end_src
+
+#+RESULTS[cc2bb741e8fa3d5e6be7049aa932a42ec96640c5]:
+[[file:img/learned.pdf]]
+
+#+caption: A distribution is learned for each set of event types.
+[[file:img/learned.pdf]]
 
 ** Calculating the score
 
@@ -367,7 +390,7 @@ considered the threshold for normal behavior is dependent on the
 communication patterns within the system. The threshold changes
 according to formula \eqref{eq:threshold}. The idea behind this
 formula is that variance $S_{var}$ of consecutive scores $S = (s_1,
-\dotsm, s_{j-1}}, s_j)$ is lower when events match the normal pattern
+\dotsm, s_{j-1}, s_j)$ is lower when events match the normal pattern
 learned in the model $M$. So, when the variance is lower, and thus the
 events better match the learned model, the threshold is lowered. If
 the score variance increases, the threshold increases as well to make
@@ -397,7 +420,7 @@ $e_j$ does not exceed the calculated threshold $s^*$.
 \end{cases}
 \end{equation}
 
-* Original system
+* COMMENT Original system
 ** Implementation
 *** CAST
 **** What is CAST?
@@ -414,7 +437,6 @@ $e_j$ does not exceed the calculated threshold $s^*$.
           A -> B -> C;
   }
 #+end_src
-
 #+results[5b4802f2151b36f69ea7c8c907b61817091218d9]:
 [[file:img/experiments.pdf]]
 
@@ -427,18 +449,17 @@ digraph four_chain {
           M -> N -> O -> P;
 }
 #+end_src
-
 #+results[2c5c00e9891f5c001975c3b50767a7f5c481ed3c]:
 [[file:img/4x4.pdf]]
 
 #+begin_src dot :exports none :file "img/10x0.pdf" :cache yes
-    digraph G {
-            A; 
-            B; C; D; E; F; G; H; I; J;               
-    }
+  graph G {
+          A;
+          B; C; D; E; F; G; H; I; J;
+  }
 #+end_src
 
-#+results[2ab1bb29c9f5147b00d1ceb383fd6a6f9f1e4a6b]:
+#+RESULTS[e12770e1913edc49ff97a14d956f8a319dd77a5a]:
 [[file:img/10x0.pdf]]
 
 **** record fault tracking time
@@ -454,7 +475,7 @@ digraph four_chain {
 ** Asymptotic analysis
 *** Show mathematical derivation of model memory
 *** Show mathematical dervaition of score calculation
-* Connection-based model
+* COMMENT Connection-based model
 ** Idea
 ** Implementation
 ** Asymptotic analysis
@@ -527,7 +548,7 @@ The results of the experiment.
 [[file:img/reduced_10x1_fault.eps]]
 
 *** dora experiment
-* Metronome-based approach
+* COMMENT Metronome-based approach
 ** Idea
 ** Implementation
 ** Asymptotic analysis
@@ -574,13 +595,13 @@ always a concrete task that could be done.
 *** maven
 *** Jenkins
 *** git
-* Project evaluation
+* COMMENT Project evaluation
 ** What was good?
 *** project planning w.r.t. summer work
 ** What can be learned?
 *** sticking with it when intial results are bad
 *** setting better goals
-* Conclusion
+* COMMENT Conclusion
 ** Conclude story
 ** Future work
 
