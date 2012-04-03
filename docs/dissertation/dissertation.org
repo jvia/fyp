@@ -3,9 +3,15 @@
 #+options: H:2 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
 #+options: TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+startup: hidestars indent
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
 
 #+LATEX_CLASS: dissertation
 #+LATEX_CLASS_OPTIONS: [a4paper,11pt]
+
+
+
 
 #+begin_latex
 \begin{titlepage}
@@ -225,9 +231,8 @@ and creation of the learned model will be explained, followed by the
 calculation of the score, and then the calculation of the final
 classification.
 
-######################################################################
-# Explain model creation
-######################################################################
+** Learning the model
+
 The learned model exploits the hypothesis that a robot composed of a
 set of software components exhibits temporal communication patterns.
 These patterns exhibit different structures depending on the state of
@@ -238,6 +243,7 @@ closely its current communication patterns adhere to the learned
 communication patterns. If the current pattern deviates too far from
 the learned pattern, then the robot can be said to be in an anomalous
 state. The first step, then, is to create the learned model.
+
 
 The model is learned by collecting an observation time-series and
 learning how components publish with respect to one another. More
@@ -268,24 +274,38 @@ times between sets of connected components, but instead learns the
 likelihood of the time-span between the firing of any two components.
 
 The estimation of $P_{ij}$ makes use of Kernel Density estimators
-which have been initialized with a Guassian Kernel $K(u) =
+which have been initialized with a Gaussian Kernel $K(u) =
 \frac{1}{2\pi}e^{-\frac{1}{2}u^2}$. The set of all learned
 distributions becomes the model $M = \{P_{ij}|(e_i,e_j) \in E \times
 E\}$. $M$ is now the matrix shown in equation \ref{matrix:ex1}.
 
-######################################################################
-# Explain score calculation
-######################################################################
+** Calculating the score
+
+During a live run, the score is calculated by comparing the incoming
+stream of communication to the learned model. Essentially, the score
+is higher the more closely the incoming pattern matches the learned
+pattern. Formally, the score at event $e_j$ is defined as
+
+\begin{equation}
+\label{eq:score}
+  s_j = \sum_{e_i \ in E} w_{ij} \cdot P_{ij}(\Delta{}t_i)
+\end{equation}
+
+\noindent where $E$ is the set of last seen instance of each event type and
+$w_{ij}$ is the relative weighting of the probability value. The
+weight $w_{ij}$ 
+
+$h_{ij}$ is the entropy of the distribution of $P_{ij}$, and $$H_j =
+\sum^E_{e_i} h_{ij}$$
 
 
-######################################################################
-# Explain threshold calculation
-######################################################################
+#\left(1 - \frac{h_{ij}}{H_j}\right)
 
-######################################################################
-# Explain classification
-######################################################################
+In equation \ref{eq:score}, it can be seen that the score is
+calculated over
 
+** Calculating the threshold
+** Classifying the system
 * Original system
 ** Implementation
 *** CAST
@@ -318,8 +338,70 @@ E\}$. $M$ is now the matrix shown in equation \ref{matrix:ex1}.
 *** score calculation
 ** Experimental results
 *** 3x1 experiments
+
+#+begin_src gnuplot :var data="./data/reduced_3chain_fault" :exports none :file "img/reduced_3chain_fault.eps" 
+  reset
+  set terminal postscript color solid eps enhanced 20
+  set yrange [0:1]
+  set xrange [0:150000]
+  plot data using 1:2 with dots notitle,\
+       data using 1:2 with lines smooth bezier title 'Score (smoothed)',\
+       data using 1:3 with lines title 'Threshold'
+#+end_src
+
+#+results:
+[[file:img/reduced_3chain_fault.eps]]
+
+
+
 *** 4x4 experiment results
+
+The results of the experiment.
+
+#+begin_src gnuplot :var data="./data/reduced_4x4_normal.csv" :exports none :file "img/reduced_4x4_normal.eps" 
+  reset
+  set terminal postscript color solid eps enhanced 20
+  set yrange [0:1]
+  set xrange [0:150000]
+  
+  plot data using 1:2 with dots notitle,\
+       data using 1:2 with lines smooth bezier title 'Score (smoothed)',\
+       data using 1:3 with lines title 'Threshold'
+#+end_src
+#+results:
+[[file:img/reduced_4x4_normal.eps]]
+
+
+#+begin_src gnuplot :var data="./data/reduced_4x4_fault.csv" :exports none :file "img/reduced_4x4_fault.eps" 
+  reset
+  set terminal postscript color solid eps enhanced 20
+  set yrange [0:1]
+  set xrange [0:150000]
+  plot data using 1:2 with dots notitle,\
+       data using 1:2 with lines smooth bezier title 'Score (smoothed)',\
+       data using 1:3 with lines title 'Threshold'
+#+end_src
+#+results:
+[[file:img/reduced_4x4_fault.eps]]
+
+
 *** 10x1 experiment results
+
+The results of the experiment.
+
+#+begin_src gnuplot :var data="./data/reduced_10x1_fault.csv" :exports results :file "img/reduced_10x1_fault.eps" 
+  reset
+  set terminal postscript color solid eps enhanced 20
+  set yrange [0:1]
+  set xrange [0:150000]
+  plot data using 1:2 with dots notitle,\
+       data using 1:2 with lines smooth bezier title 'Score (smoothed)',\
+       data using 1:3 with lines title 'Threshold'
+#+end_src
+
+#+results:
+[[file:img/reduced_10x1_fault.eps]]
+
 *** dora experiment
 * Metronome-based approach
 ** Idea
@@ -384,4 +466,3 @@ always a concrete task that could be done.
 \bibliography{references}
 
 
-#  LocalWords:  middleware 
