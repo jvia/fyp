@@ -148,39 +148,54 @@ the domain of more traditional engineering and are created through
 exhaustive specification of component behavior. Data-driven approaches
 are newer and leverage machine learning techniques.
 
-** Who has used the model-based approach and what did they do?
-*** analytic
-- "used in the design of control systems where the models are
-  constructed based on fundamental assumptions"
-- time consuming, so not much use in the complex cognitive systems
-  of modern robots
-**** (6) Diagnosis and Fault-Tolerant Control
-**** (7) Integrated model-based and data-driven diagnosis of automotive antilock braking systems
-*** knowledge-based
-- "qualitative models of the system are used to
-  detect and diagnose faults"
-- require expert knowledge to design the model
-**** (5)  Back to the future for consistency-based trajectory tracking
-**** (8)  Diagnosing multiple faults
-**** (9)  A model-based approach to reactive self-configuring systems
-**** (10) Hyde - a general framework for stochastic and hybrid model-based diagnosis
-**** (11) Approximation algorithms for model-based diagnosis
-**** (12) The Livingstone model of a main propulsion system
-**** (13) Lessons learned in the Livingstone 2 on Earth Observing One flight experiment
-**** (14) Diagnosis of Autosub 6000 using automatically generated software models
-**** (15) Combining particle filters and consistency-based approaches for monitoring and diagnosis of stochastic hybrid systems
-**** (16) Diagnosis by a waiter and a Mars explorer
-**** (17) Real-time diagnosis and repair of faults of robot control software
-** Who has used the data-driven approach and what did they do?
+Within the domain of model-based approaches, there exists two styles
+of techniques. The first is the analytical approach which is used in
+problems which are close to the hardware. They depend on a set of
+assumptions, rigorous specification, and testing \cite{blanke2006}.
+These analytical approaches also require the creation of recovery
+routines for all possible faults. Because this approach is so tedious,
+work has been made on trying to incorporate the data-driven with
+analytical approaches \cite{Luo:2010ud}. The second is the
+knowledge-based approach where qualitative models are used. A popular
+method has been consistency-based diagnosis \cite{deKleer:1987vc},
+which often make use of propositional logic. There has been much work
+in this domain on diagnosis engines such as Livingstone
+\cite{Kurien:2000ta,Williams:1996wf}, HyDE \cite{Narasimhan:2007ty},
+and Lydia \cite{Feldman:2010uy}. The Livingstone has been very
+successful, having been used on /Deep Space One/ \cite{Bajwa:2002tm},
+/Earth Observing One/ \cite{Hayden:2004vn}, and on the /Autosub 6000/
+\cite{Ernits:2010tm}. 
+
+Data-driven approaches have used machine learning to 
+
+
+The method used in this project was first described in
+\cite{Golombek:2010hj} and \cite{Golombek:2011ek}. It is a purely
+data-driven approach which finds structure in the temporal-stream of
+communication between software components in a complex robotics
+system. The original system was developed to work with the XCF
+middleware and for this project has been extended to work the CAST
+middleware.
+
+** COMMENT Who has used the data-driven approach and what did they do?
 *** (1) Learning a probabilistic error detection model for robotic systems
 *** (18) Fault Detection and Diagnosis in Industrial Systems
 *** (19) To reject or not to reject: that is the question-an answer in case of neural classifiers
 *** (20) Data mining for cyber security
 *** (21) A markov chain model of temporal behavior for anomaly detection
 *** (22) Overcoming HMM time independence assumption using n-gram based modelling for continuous speech recognition
-** How does aucom fit in with these approaches?
-Aucom is a purely data-driven approach.
-
+** COMMENT knowledge-based
+*** (5)  Back to the future for consistency-based trajectory tracking
+*** (8)  Diagnosing multiple faults
+*** (9)  A model-based approach to reactive self-configuring systems
+*** (10) Hyde - a general framework for stochastic and hybrid model-based diagnosis
+*** (11) Approximation algorithms for model-based diagnosis
+*** (12) The Livingstone model of a main propulsion system
+*** (13) Lessons learned in the Livingstone 2 on Earth Observing One flight experiment
+*** (14) Diagnosis of Autosub 6000 using automatically generated software models
+*** (15) Combining particle filters and consistency-based approaches for monitoring and diagnosis of stochastic hybrid systems
+*** (16) Diagnosis by a waiter and a Mars explorer
+*** (17) Real-time diagnosis and repair of faults of robot control software
 * Theory
 :PROPERTIES:
 :CUSTOM_ID: sec:theory
@@ -395,11 +410,11 @@ the set E of last seen instances of all event types.}
 \begin{program}
 \FUNCT |score|(e_j, E) \BODY
 |return | \lVert \sum_{e_i}^E (1 - \frac{h_{ij}}{H_j}) P_{ij}(\Delta(e_i,e_j)) \rVert
-\END
 \WHERE
 h_{ij} \equiv \text{ entropy of } P_{ij}
 H_j    \equiv \text{ sum entropy of } P_{*j}
 \Delta(i,j) \equiv \text{ timespan between events $i$ and $j$}
+\END
 \end{program}
 \end{algorithm}
 #+END_LATEX
@@ -601,25 +616,24 @@ equation \eqref{eq:orignal_score}.
  #+BEGIN_LATEX
    \begin{equation}
      \label{eq:orignal_score}
-     \begin{align*}
+     \begin{split}
        score(n) &= H_{ij} + \sum_{e_i}^E\\
        score(n) &= n + 5n\\
        score(n) &= 6n\\
        score(n) &\in \Theta(n)
-     \end{align*}
+     \end{split}
    \end{equation}
  #+END_LATEX
 
-Since the sum entropy
-$H_j$ will be the same for all events $e_i \in E$ on the receipt of
-event $e_j$, this only needs to be calculated once. Calculating this
-value requires a simple summation over the $n$ entries which have
-information about the event type $j$, hence its value is $n$.
-Similarly, the score calculation is a summation over the $n$ relevant
-entries in $E$ with the addition of five steps for each entry, hence
-$5n$. Performing arithmetic, we can see that while the model may be
-$\Theta(n^2)$, the score calculation is only $\Theta(n)$ because it
-only considers the relevant entries.
+Since the sum entropy $H_j$ will be the same for all events $e_i \in
+E$ on the receipt of event $e_j$, this only needs to be calculated
+once. Calculating this value requires a simple summation over the $n$
+entries which have information about the event type $j$, hence its
+value is $n$. Similarly, the score calculation is a summation over the
+$n$ relevant entries in $E$ with the addition of five steps for each
+entry, hence $5n$. Performing arithmetic, we can see that while the
+model may be $\Theta(n^2)$, the score calculation is only $\Theta(n)$
+because it only considers the relevant entries.
 
 * Connection-based model
 ** Idea
@@ -757,3 +771,5 @@ always a concrete task that could be done.
 \bibliography{references}
 
 
+
+#  LocalWords:  analytical middleware
