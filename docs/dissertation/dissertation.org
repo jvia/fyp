@@ -1,6 +1,6 @@
 #+title:
 #+author:  Jeremiah M. Via
-#+options: H:2 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+options: H:4 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
 #+options: TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+startup: hidestars indent
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
@@ -135,7 +135,7 @@ of the learned model, experimental results, as well as asymptotic
 analysis. Finally, the last few sections will cover project management
 and present an evaluation of the project.
 
-* COMMENT Literature review
+* Literature review
 :PROPERTIES:
 :CUSTOM_ID: lit-review
 :END:
@@ -242,6 +242,7 @@ state at any given time.
 [[file:img/simple.pdf]]
 
 #+caption: In this simple example, it can be seen that.
+#+label: fig:simple
 [[file:img/simple.pdf]]
 
 To ground the discussion, a simplistic example is shown in Figure
@@ -403,7 +404,6 @@ H_j    \equiv \text{ sum entropy of } P_{*j}
 \end{algorithm}
 #+END_LATEX
 
-
 ** Calculating the threshold
 
 An important aspect of this technique is that as the score changes
@@ -491,24 +491,39 @@ The CoSy Architecture Schema Toolkit (CAST) \cite{haweswyatt10aei} ...
 **** COMMENT What is CAST?
 **** COMMENT What did I have to do to make it work on CAST?
 ** Experimental results
-######################################################################
-# introduce the experiments for the rest of the report
-######################################################################
+
 In order to evaluate the system, a series of experiments were create
 to test the algorithm. Three different CAST systems were created, each
-with properties to push the algorithm (and changes made to it) in some
-way. What follows now is a brief description of the experimental
-setups which will be reference in the rest of the dissertation.
+with properties to push the algorithm (and the changes made to it) in
+some way. In each of the following experiments, each component
+publishes only a single event type.
 
-#+begin_src dot :exports none :file "img/3x1.pdf" :cache yes
-  digraph G {
-          rankdir=LR;
-          A -> B -> C;
-  }
+*** COMMENT Linear chain
+**** Aim
+
+The linear chain was the simplest experiment run on the system. It is
+the exact system presented in figure \ref{fig:simple}. This CAST setup
+was used as a sanity check to ensure that the algorithm could function
+on the simplest case. Failure to work on this case would mean that the
+technique would likely not scale to larger systems.
+
+**** Methodology
+
+
+**** Results
+
+#+begin_src gnuplot :var data="./data/original-eps-converted-to" :exports none :file "img/reduced_3chain_fault.eps" :cache yes
+  reset
+  set terminal postscript color solid eps enhanced 20
+  set yrange [0:1]
+  set xrange [0:150000]
+  plot data using 1:2 with dots notitle,\
+       data using 1:2 with lines smooth bezier title 'Score (smoothed)',\
+       data using 1:3 with lines title 'Threshold'
 #+end_src
-#+results[5b4802f2151b36f69ea7c8c907b61817091218d9]:
-[[file:img/experiments.pdf]]
 
+*** Parallel chains
+**** Aim
 #+begin_src dot :exports none :file "img/4x4.pdf" :cache yes
 digraph four_chain {
           rankdir=LR;
@@ -520,33 +535,34 @@ digraph four_chain {
 #+end_src
 #+results[2c5c00e9891f5c001975c3b50767a7f5c481ed3c]:
 [[file:img/4x4.pdf]]
+**** Methodology
+**** Results
 
+#+begin_src gnuplot :var data="./data/original_4x4_normal.csv" :exports none :file "img/original_4x4_normal.eps" :cache yes
+  reset
+  set terminal postscript color solid eps enhanced 20
+  set yrange [0:1]
+  set xrange [0:150000]  
+  set title "Normal"
+  plot data using 1:2 with dots notitle,\
+       data using 1:2 with lines smooth bezier title 'Score (smoothed)',\
+       data using 1:3 with lines title 'Threshold'
+#+end_src
+#+results[12802d92bbf885038e1b1b88048cc51ecd592cc2]:
+[[file:img/original_4x4_normal.eps]]
+
+#+attr_latex: width=.5\textwidth
+[[file:img/original_4x4_normal.eps]]
+
+*** Non-connected components
 #+begin_src dot :exports none :file "img/10x0.pdf" :cache yes
   graph G {
           A;
           B; C; D; E; F; G; H; I; J;
   }
 #+end_src
-
-#+RESULTS[e12770e1913edc49ff97a14d956f8a319dd77a5a]:
+#+results[e12770e1913edc49ff97a14d956f8a319dd77a5a]:
 [[file:img/10x0.pdf]]
-
-######################################################################
-# 3x1 experiments
-######################################################################
-
-#+CAPTION:    The black-body emission of the disk around HR 4049
-#+LABEL:      fig:SED-HR4049
-#+ATTR_LaTeX: width=0.8\textwidth
-[[./data/original.eps]]
-
-######################################################################
-# 4x4 experiment
-######################################################################
-
-######################################################################
-# 10x1 experiment results
-######################################################################
 
 ** Asymptotic analysis
 
@@ -605,7 +621,7 @@ $5n$. Performing arithmetic, we can see that while the model may be
 $\Theta(n^2)$, the score calculation is only $\Theta(n)$ because it
 only considers the relevant entries.
 
-* COMMENT Connection-based model
+* Connection-based model
 ** Idea
 ** Implementation
 ** Asymptotic analysis
@@ -678,7 +694,7 @@ The results of the experiment.
 [[file:img/reduced_10x1_fault.eps]]
 
 *** dora experiment
-* COMMENT Metronome-based approach
+* Metronome-based approach
 ** Idea
 ** Implementation
 ** Asymptotic analysis
@@ -725,13 +741,13 @@ always a concrete task that could be done.
 *** maven
 *** Jenkins
 *** git
-* COMMENT Project evaluation
+* Project evaluation
 ** What was good?
 *** project planning w.r.t. summer work
 ** What can be learned?
 *** sticking with it when intial results are bad
 *** setting better goals
-* COMMENT Conclusion
+* Conclusion
 ** Conclude story
 ** Future work
 
