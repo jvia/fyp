@@ -6,9 +6,12 @@
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+EXPORT_SELECT_TAGS: export
 #+EXPORT_EXCLUDE_TAGS: noexport
-
 #+LATEX_CLASS: dissertation
 #+LATEX_CLASS_OPTIONS: [a4paper,11pt]
+#+LATEX_HEADER: \usepackage{algorithmic}
+#+LATEX_HEADER: \usepackage{algorithm}
+#+LATEX_HEADER: \usepackage{program}
+#+LATEX_HEADER: \NumberProgramstrue
 
 #+begin_latex
 \begin{titlepage}
@@ -179,6 +182,9 @@ are newer and leverage machine learning techniques.
 Aucom is a purely data-driven approach.
 
 * Theory
+:PROPERTIES:
+:CUSTOM_ID: sec:theory
+:END:
 ######################################################################
 # Give a high-level idea & introduce the main theoretical steps
 ######################################################################
@@ -327,8 +333,8 @@ likelihood of the time-span between the firing of any two components.
 The estimation of $P_{ij}$ makes use of Kernel Density estimators
 which have been initialized with a Gaussian Kernel $K(u) =
 \frac{1}{2\pi}e^{-\frac{1}{2}u^2}$. The set of all learned
-distributions becomes the model $M = \{P_{ij}|(e_i,e_j) \in E \times
-E\}$. $M$ is now the matrix shown in \eqref{matrix:ex1}.
+distributions becomes the model $\mathcal{M} = \{P_{ij}|(e_i,e_j) \in E \times
+E\}$. $\mathcal{M}$ is now the matrix shown in \eqref{matrix:ex1}.
 
 #+begin_src dot :exports none :file "img/learned.pdf" :cache yes
   digraph G {
@@ -374,10 +380,29 @@ w_{ij} = 1 - \frac{h_{ij}}{\sum_{e_i \in E} h_{ij}}
 
 The weight calculation presented in equation \eqref{eq:weight} makes use
 of the entropy of the distribution. This represents how much
-information is contained in a particual distribution and its
+information is contained in a particular distribution and its
 trustworthiness. Essentially, the lower the entropy, and thus the more
 information contained in the distribution, the more willing we are to
 trust the correlation between the two event types.
+
+#+BEGIN_LATEX
+  \begin{algorithm}
+    \caption{Calculating the score on the receipt of event $e_j$ with
+      the set E of last seen instances of all event types.}
+    \label{alg:score}
+    \begin{program}
+      \FUNCT |score|(e_j, E) \BODY
+      |return | \lVert \sum_{e_i}^E (1 - \frac{h_{ij}}{H_j}) P_{ij}(\Delta(e_i,e_j)) \rVert
+      \END
+      \WHERE
+      h_{ij} \equiv \text{ entropy of } P_{ij}
+      H_j    \equiv \text{ sum entropy of } P_{*j}
+      \Delta(i,j) \equiv \text{ timespan between events $i$ and $j$}
+    \end{program}
+  \end{algorithm}
+  #+END_LATEX
+
+
 
 ** Calculating the threshold
 
@@ -388,7 +413,7 @@ communication patterns within the system. The threshold changes
 according to formula \eqref{eq:threshold}. The idea behind this
 formula is that variance $S_{var}$ of consecutive scores $S = (s_1,
 \dotsm, s_{j-1}, s_j)$ is lower when events match the normal pattern
-learned in the model $M$. So, when the variance is lower, and thus the
+learned in the model $\mathcal{M}$. So, when the variance is lower, and thus the
 events better match the learned model, the threshold is lowered. If
 the score variance increases, the threshold increases as well to make
 the threshold harder to exceed.
@@ -450,7 +475,8 @@ increased code re-usability
 #+RESULTS[29479010baef6dfc79c12ac1a41b34a2420b283b]:
 [[file:img/fts.pdf]]
 
-#+caption: The main steps shown in the FTS processing graph representation. Decomposing problems this way allows for high code re-use.[[
+#+caption: The main steps shown in the FTS processing graph representation. Decomposing problems this way allows for high code re-use.
+#+attr_latex: width=0.3\textwidth
 [[file:img/fts.pdf]]
 
 
@@ -525,12 +551,27 @@ digraph four_chain {
 ** Asymptotic analysis
 
 When evaluating the approach first described in
-\cite{Golombek:2010hj}, it became necessary to perform asymptotic
-analysis to determine its run-time efficiency.
+\cite{Golombek:2010hj}, beyond knowing how it performed
+experimentally, it was also desirable to know how the algorithm would
+scale with input. This is done by performing asymptotic analysis of
+the technique. It is the learned model which is truly core to this
+approach and so analysis will focus on the model. There are two
+aspects worth analyzing: runtime efficiency of calculating the score
+from the model and space efficiency of the model itself.
+
+Space efficiency is concerned with analyzing the amount of memory an
+algorithm utilizes as input grows. In the approach described in
+section \ref{sec:theory}, we saw that the algorithm learns a
+probability distribution for the Cartesian product of the set of event
+types. Because this value is constant, we can represent it formally as
 
 \begin{equation}\label{eq:orig_memory}
-\text{model}(n) = n^2
+\text{model}(n) \in  \Theta(n^2)
 \end{equation}
+
+This means that as the number of event types $n$ increases, the size
+of the model must grow quadratically.
+
 
 
 *** Show mathematical derivation of model memory
