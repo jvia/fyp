@@ -229,17 +229,14 @@ state at any given time.
   A1 -> B1 [label="a  "];
   B1 -> C1 [label="b  "];
   }
-
   }
 #+end_src
 
-#+RESULTS[fc8897caa2a034eb34782fd9c83ca4451bb52636]:
+#+results[fc8897caa2a034eb34782fd9c83ca4451bb52636]:
 [[file:img/simple.pdf]]
 
 #+caption: In this simple example, it can be seen that.
 [[file:img/simple.pdf]]
-
-
 
 To ground the discussion, a simplistic example is shown in Figure
 \ref{fig:ex1}. This graph represents a set of three components and how
@@ -257,16 +254,16 @@ messages, each of which is used by a separate component.
 
 #+begin_src dot :exports none :file "img/complex.pdf" :cache yes
   digraph real {
-          rankdir=LR;
-          A -> B [dir="both"];
-          A -> C [dir="both"];
-          A -> D [dir="both"];
-          A -> E [dir="both"];
-          A -> F [dir="both"];
-          B -> E;
-          C -> D;
-          D -> E;
-          F -> D;
+  rankdir=LR;
+  A -> B [dir="both"];
+  A -> C [dir="both"];
+  A -> D [dir="both"];
+  A -> E [dir="both"];
+  A -> F [dir="both"];
+  B -> E;
+  C -> D;
+  D -> E;
+  F -> D;
   }
 #+end_src
 
@@ -420,17 +417,63 @@ $e_j$ does not exceed the calculated threshold $s^*$.
 \end{cases}
 \end{equation}
 
-* COMMENT Original system
+* Original system
 ** Implementation
-*** CAST
-**** What is CAST?
-**** What did I have to do to make it work on CAST?
-*** FTS graph
-**** What is the FTS graph processor?
+
+To implement the technique first specified by \cite{Golombek:2010hj}
+on CAST, it was necessary to modify the source first implemented by
+the original author and create a CAST component to connect to the
+modified source. This section will cover the changes made, and the
+background knowledge to put it into context, as well as the
+description of the CAST component, also with the required background
+knowledge.
+
+######################################################################
+# FTS
+######################################################################
+The original system create at Bielefeld was implemented using the
+Filtering, Transformation, and Selection Library (FTS)
+\cite{Luetkebohle09-FT}. Using FTS, one decomposes a problem into a
+set of nodes which process data in pieces. This technique allows for
+increased code re-usability
+
+#+begin_src dot :exports none :file "img/fts.pdf" :cache yes
+  digraph G {
+  CAST;
+  CalcScore [label="Calculate Score"];
+  ClassifyScore [label="Classify"];
+  CAST -> Encode -> CalcScore -> ClassifyScore;
+  ClassifyScore -> CAST [style="dotted"];
+  }
+#+end_src
+
+#+RESULTS[29479010baef6dfc79c12ac1a41b34a2420b283b]:
+[[file:img/fts.pdf]]
+
+#+caption: The main steps shown in the FTS processing graph representation. Decomposing problems this way allows for high code re-use.[[
+[[file:img/fts.pdf]]
+
+
+**** COMMENT What is the FTS graph processor?
 - https://code.ai.techfak.uni-bielefeld.de/trac/xcf/wiki/FilterTransformSelect#topics
 - https://toolkit.cit-ec.uni-bielefeld.de/components/tools/fts-filter-transform-select-toolkit
+######################################################################
+#  CAST
+######################################################################
+The CoSy Architecture Schema Toolkit (CAST) \cite{haweswyatt10aei} ...
+
+**** COMMENT What is CAST?
+**** COMMENT What did I have to do to make it work on CAST?
 ** Experimental results
-*** introduce the experiments for the rest of the report
+######################################################################
+# introduce the experiments for the rest of the report
+######################################################################
+In order to evaluate the system, a series of experiments were create
+to test the algorithm. Three different CAST systems were created, each
+with properties to push the algorithm (and changes made to it) in some
+way. What follows now is a brief description of the experimental
+setups which will be reference in the rest of the dissertation.
+
 #+begin_src dot :exports none :file "img/3x1.pdf" :cache yes
   digraph G {
           rankdir=LR;
@@ -462,17 +505,34 @@ digraph four_chain {
 #+RESULTS[e12770e1913edc49ff97a14d956f8a319dd77a5a]:
 [[file:img/10x0.pdf]]
 
-**** record fault tracking time
-*** 3x1 experiments
+######################################################################
+# 3x1 experiments
+######################################################################
 
 #+CAPTION:    The black-body emission of the disk around HR 4049
 #+LABEL:      fig:SED-HR4049
 #+ATTR_LaTeX: width=0.8\textwidth
 [[./data/original.eps]]
-*** 4x4 experiment results
-*** 10x1 experiment results
-*** dora experiment
+
+######################################################################
+# 4x4 experiment
+######################################################################
+
+######################################################################
+# 10x1 experiment results
+######################################################################
+
 ** Asymptotic analysis
+
+When evaluating the approach first described in
+\cite{Golombek:2010hj}, it became necessary to perform asymptotic
+analysis to determine its run-time efficiency.
+
+\begin{equation}\label{eq:orig_memory}
+\text{model}(n) = n^2
+\end{equation}
+
+
 *** Show mathematical derivation of model memory
 *** Show mathematical dervaition of score calculation
 * COMMENT Connection-based model
