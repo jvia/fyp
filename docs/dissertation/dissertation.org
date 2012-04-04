@@ -307,7 +307,7 @@ learning how components publish with respect to one another. More
 formally, let $E$ be the set of encoded time-series of component
 communication data which is recorded during normal operation. For each
 tuple $(e_i,e_j) \in E \times E$, a probability distribution
-$P_{ij}=P(t|e_i,e_j)$ is estimated. The distribution $P_{ij}$
+$P_{ij} = P(t \vert e_i,e_j)$ is estimated. The distribution $P_{ij}$
 represents the probability the even $e_i$ occurs at timestamp $t_i$
 and that after a delay of time $t$, event $e_j$ occurs (i.e., $t_j =
 t_i + t$). The event $e_i$ is constrained to be the last seen
@@ -333,8 +333,9 @@ likelihood of the time-span between the firing of any two components.
 The estimation of $P_{ij}$ makes use of Kernel Density estimators
 which have been initialized with a Gaussian Kernel $K(u) =
 \frac{1}{2\pi}e^{-\frac{1}{2}u^2}$. The set of all learned
-distributions becomes the model $\mathcal{M} = \{P_{ij}|(e_i,e_j) \in E \times
-E\}$. $\mathcal{M}$ is now the matrix shown in \eqref{matrix:ex1}.
+distributions becomes the model $\mathcal{M} = \{P_{ij} \vert
+(e_i,e_j) \in E \times E\}$. $\mathcal{M}$ is now the matrix shown in
+\eqref{matrix:ex1}.
 
 #+begin_src dot :exports none :file "img/learned.pdf" :cache yes
   digraph G {
@@ -386,22 +387,21 @@ information contained in the distribution, the more willing we are to
 trust the correlation between the two event types.
 
 #+BEGIN_LATEX
-  \begin{algorithm}
-    \caption{Calculating the score on the receipt of event $e_j$ with
-      the set E of last seen instances of all event types.}
-    \label{alg:score}
-    \begin{program}
-      \FUNCT |score|(e_j, E) \BODY
-      |return | \lVert \sum_{e_i}^E (1 - \frac{h_{ij}}{H_j}) P_{ij}(\Delta(e_i,e_j)) \rVert
-      \END
-      \WHERE
-      h_{ij} \equiv \text{ entropy of } P_{ij}
-      H_j    \equiv \text{ sum entropy of } P_{*j}
-      \Delta(i,j) \equiv \text{ timespan between events $i$ and $j$}
-    \end{program}
-  \end{algorithm}
-  #+END_LATEX
-
+\begin{algorithm}
+\caption{Calculating the score on the receipt of event $e_j$ with
+the set E of last seen instances of all event types.}
+\label{alg:score}
+\begin{program}
+\FUNCT |score|(e_j, E) \BODY
+|return | \lVert \sum_{e_i}^E (1 - \frac{h_{ij}}{H_j}) P_{ij}(\Delta(e_i,e_j)) \rVert
+\END
+\WHERE
+h_{ij} \equiv \text{ entropy of } P_{ij}
+H_j    \equiv \text{ sum entropy of } P_{*j}
+\Delta(i,j) \equiv \text{ timespan between events $i$ and $j$}
+\end{program}
+\end{algorithm}
+#+END_LATEX
 
 
 ** Calculating the threshold
@@ -570,12 +570,41 @@ types. Because this value is constant, we can represent it formally as
 \end{equation}
 
 This means that as the number of event types $n$ increases, the size
-of the model must grow quadratically.
+of the model must grow quadratically. During experimentation, it was
+observed that with a system of 100 components, memory usage had
+exceeded 4 GB.
 
+The runtime efficiency of score calculation was another area of
+concern because this algorithm depended directly on the size of the
+model. The calculation will be based off of the algorithm
+\ref{alg:score} from section \ref{sec:theory}. On analysis, we can see
+that there are two aspects to the algorithm: calculating the sum
+entropy and then calculating the whole score which can be seen in
+equation \eqref{eq:orignal_score}. 
 
+ #+BEGIN_LATEX
+   \begin{equation}
+     \label{eq:orignal_score}
+     \begin{align*}
+       score(n) &= H_{ij} + \sum_{e_i}^E\\
+       score(n) &= n + 5n\\
+       score(n) &= 6n\\
+       score(n) &\in \Theta(n)
+     \end{align*}
+   \end{equation}
+ #+END_LATEX
 
-*** Show mathematical derivation of model memory
-*** Show mathematical dervaition of score calculation
+Since the sum entropy
+$H_j$ will be the same for all events $e_i \in E$ on the receipt of
+event $e_j$, this only needs to be calculated once. Calculating this
+value requires a simple summation over the $n$ entries which have
+information about the event type $j$, hence its value is $n$.
+Similarly, the score calculation is a summation over the $n$ relevant
+entries in $E$ with the addition of five steps for each entry, hence
+$5n$. Performing arithmetic, we can see that while the model may be
+$\Theta(n^2)$, the score calculation is only $\Theta(n)$ because it
+only considers the relevant entries.
+
 * COMMENT Connection-based model
 ** Idea
 ** Implementation
