@@ -140,13 +140,13 @@ and present an evaluation of the project.
 :CUSTOM_ID: lit-review
 :END:
 
-The problem of closing-the-loop with respect to robots is a problem
-which has received considerable attention since at least the 1980s
-\cite{deKleer:1987vc}. There are two main approaches to solving this
-problem: model-based and data-driven. Model-based approaches have been
-the domain of more traditional engineering and are created through
-exhaustive specification of component behavior. Data-driven approaches
-are newer and leverage machine learning techniques.
+The problem of closing-the-loop is a problem which has received
+considerable attention since at least the 1980s \cite{deKleer:1987vc}.
+There are two main approaches to solving this problem: model-based and
+data-driven. Model-based approaches have been the domain of more
+traditional engineering and are created through exhaustive
+specification of component behavior. Data-driven approaches are newer
+and leverage machine learning techniques.
 
 Within the domain of model-based approaches, there exists two styles
 of techniques. The first is the analytical approach which is used in
@@ -403,20 +403,20 @@ information contained in the distribution, the more willing we are to
 trust the correlation between the two event types.
 
 #+BEGIN_LATEX
-  \begin{algorithm}
-  \caption{Calculating the score on the receipt of event $e_j$ with
-  the set E of last seen instances of all event types.}
-  \label{alg:score}
-  \begin{program}
-  \FUNCT |score|(e_j, E) \BODY
-  |return | \lVert \sum_{e_i}^E (1 - \frac{h_{ij}}{H_j}) P_{ij}(\Delta(e_i,e_j)) \rVert
-  \WHERE
-  h_{ij} \equiv \text{ entropy of } P_{ij}
-  H_j    \equiv \text{ sum entropy of } P_{*j}
-  \Delta(i,j) \equiv \text{ timespan between events $i$ and $j$}
-  \END
-  \end{program}
-  \end{algorithm}
+\begin{algorithm}
+\caption{Calculating the score on the receipt of event $e_j$ with
+the set E of last seen instances of all event types.}
+\label{alg:score}
+\begin{program}
+\FUNCT |score|(e_j, E) \BODY
+|return | \lVert \sum_{e_i}^E (1 - \frac{h_{ij}}{H_j}) P_{ij}(\Delta(e_i,e_j)) \rVert
+\WHERE
+h_{ij} \equiv \text{ entropy of } P_{ij}
+H_j    \equiv \text{ sum entropy of } P_{*j}
+\Delta(i,j) \equiv \text{ timespan between events $i$ and $j$}
+\END
+\end{program}
+\end{algorithm}
 #+END_LATEX
 
 ** Calculating the threshold
@@ -698,161 +698,104 @@ prune all distributions which correlate to the reverse direction,
 e.g., $P_{ab}$. It was decided that the distribution which modeled a
 component to itself would be kept because it would be useful to have a
 distribution of how often a component fired. All together, the model
-$\mathcal{M}$ could be reduced to
+$\mathcal{M}$ is reduced to
 
- #+BEGIN_LATEX
-   \begin{equation}
-     \label{eq:reduced_model}
-     \begin{bmatrix}
-       P_{aa} & \empty & \empty\\
-       P_{ba} & P_{bb} & \empty\\
-       \empty& P_{cb} & P_{cc}
-     \end{bmatrix}
-   \end{equation}
- #+END_LATEX
+#+BEGIN_LATEX
+\begin{equation}
+\label{eq:reduced_model}
+\begin{bmatrix}
+P_{aa} & \empty & \empty\\
+P_{ba} & P_{bb} & \empty\\
+\empty& P_{cb} & P_{cc}
+\end{bmatrix}
+\end{equation}
+#+END_LATEX
 
 ** Asymptotic analysis
-*** model
-*** score calculation
+
+The change in the formulation of the model affects how the size scales
+with new event types. Analyzing the space efficiency of this approach,
+we can see that in the worst case the system will be fully-connected.
+The best case occurs when the system contains no connection between
+any components. Formally, the space efficiency of this model is
+
+#+BEGIN_LATEX
+\begin{equation}
+\begin{split}
+\label{eq:reduced_asymp}
+model(n) &\in O(n^2)\\
+model(n) &\in \Omega(n)
+\end{split}
+\end{equation}
+#+END_LATEX
+
 ** Experimental results
-*** COMMENT Linear chain
-**** Aim
-
-The linear chain was the simplest experiment run on the system. It is
-the exact system presented in figure \ref{fig:simple}. This CAST setup
-was used as a sanity check to ensure that the algorithm could function
-on the simplest case. Failure to work on this case would mean that the
-technique would likely not scale to larger systems.
-
-**** Methodology
-
-
+*** Linear chain
+**** Aim & Methodology
 **** Results
-
-#+begin_src gnuplot :var data="./data/original-eps-converted-to" :exports none :file "img/reduced_3chain_fault.eps" :cache yes
-  reset
-  set terminal postscript color solid eps enhanced 20
-  set yrange [0:1]
-  set xrange [0:150000]
-  plot data using 1:2 with dots notitle,\
-       data using 1:2 with lines smooth bezier title 'Score (smoothed)',\
-       data using 1:3 with lines title 'Threshold'
-#+end_src
-
-*** COMMENT Parallel chains
-**** Aim
-#+begin_src dot :exports none :file "img/4x4.pdf" :cache yes
-digraph four_chain {
-          rankdir=LR;
-          A -> B -> C -> D;
-          E -> F -> G -> H;
-          I -> J -> K -> L;
-          M -> N -> O -> P;
-}
-#+end_src
-#+results[2c5c00e9891f5c001975c3b50767a7f5c481ed3c]:
-[[file:img/4x4.pdf]]
-**** Methodology
+*** Parallel chains
+**** Aim & Methodology
 **** Results
-
-#+begin_src gnuplot :var data="./data/original_4x4_normal.csv" :exports none :file "img/original_4x4_normal.eps" :cache yes
-  reset
-  set terminal postscript color solid eps enhanced 20
-  set yrange [0:1]
-  set xrange [0:150000]
-  set title "Normal"
-  plot data using 1:2 with dots notitle,\
-       data using 1:2 with lines smooth bezier title 'Score (smoothed)',\
-       data using 1:3 with lines title 'Threshold'
-#+end_src
-#+results[12802d92bbf885038e1b1b88048cc51ecd592cc2]:
-[[file:img/original_4x4_normal.eps]]
-
-#+attr_latex: width=.5\textwidth
-[[file:img/original_4x4_normal.eps]]
-
-*** COMMENT Non-connected components
-#+begin_src dot :exports none :file "img/10x0.pdf" :cache yes
-  graph G {
-          A;
-          B; C; D; E; F; G; H; I; J;
-  }
-#+end_src
-#+results[e12770e1913edc49ff97a14d956f8a319dd77a5a]:
-[[file:img/10x0.pdf]]
-
+*** Non-connected components
+**** Aim & Methodology
+**** Results
 * Metronome-based approach
 ** Idea & Implementation
+
+After the failure of the connection-based approach to reduce the model
+and remain performant, a new approach had to be created. What was
+created was based on the idea of a metronome, or a heartbeat, and how
+it fires at a constant rate. By learning how every other component
+fired relative to the metronome, it might be possible to dramatically
+reduce the model size while still remaining performant. 
+
+To implement, this meant adding an extra component in the CAST system
+and pruning all distributions which did not have the metronome =m= in
+the $j$ position of a distribution $P_{ij}$. Performing this
+optimization example shown in figure \ref{fig:simple} resulted in a
+model $\mathcal{M}$ reduced to
+
+#+begin_latex
+\begin{equation}
+\label{eq:metronome_model}
+\begin{bmatrix}
+P_{am} & P_{bm} & P_{cm} & P_{mm}
+\end{bmatrix}
+\end{equation}
+#+end_latex
+
 ** Asymptotic analysis
+
+Implementing this technique resulted in a far smaller model. Formally,
+the space efficiency of this new model became
+
+#+begin_latex
+  \begin{equation}
+  \label{eq:metronome_asymp}
+  model(n) \in \Theta(n + 1)  
+  \end{equation}
+#+end_latex
+
+This difference results in a rather dramatic reduction. For example,
+on complex CAST system with 100 components, the model size for the
+original implementation would be $model(n) \in \Theta(n^2) = 10,000$.
+With the metronome approach, the space efficiency for this same system
+becomes $model(n) \in \Theta(n + 1) = 101$. The difference in space
+efficiency means that the metronome approach could scale more than the
+original implementation.
+
 ** Experimental results
-*** COMMENT Linear chain
-**** Aim
-
-The linear chain was the simplest experiment run on the system. It is
-the exact system presented in figure \ref{fig:simple}. This CAST setup
-was used as a sanity check to ensure that the algorithm could function
-on the simplest case. Failure to work on this case would mean that the
-technique would likely not scale to larger systems.
-
-**** Methodology
-
-
+*** Linear chain
+**** Aim & Methodology
 **** Results
-
-#+begin_src gnuplot :var data="./data/original-eps-converted-to" :exports none :file "img/reduced_3chain_fault.eps" :cache yes
-  reset
-  set terminal postscript color solid eps enhanced 20
-  set yrange [0:1]
-  set xrange [0:150000]
-  plot data using 1:2 with dots notitle,\
-       data using 1:2 with lines smooth bezier title 'Score (smoothed)',\
-       data using 1:3 with lines title 'Threshold'
-#+end_src
-
-*** COMMENT Parallel chains
-**** Aim
-#+begin_src dot :exports none :file "img/4x4.pdf" :cache yes
-digraph four_chain {
-          rankdir=LR;
-          A -> B -> C -> D;
-          E -> F -> G -> H;
-          I -> J -> K -> L;
-          M -> N -> O -> P;
-}
-#+end_src
-#+results[2c5c00e9891f5c001975c3b50767a7f5c481ed3c]:
-[[file:img/4x4.pdf]]
-**** Methodology
+*** Parallel chains
+**** Aim & Methodology
 **** Results
-
-#+begin_src gnuplot :var data="./data/original_4x4_normal.csv" :exports none :file "img/original_4x4_normal.eps" :cache yes
-  reset
-  set terminal postscript color solid eps enhanced 20
-  set yrange [0:1]
-  set xrange [0:150000]
-  set title "Normal"
-  plot data using 1:2 with dots notitle,\
-       data using 1:2 with lines smooth bezier title 'Score (smoothed)',\
-       data using 1:3 with lines title 'Threshold'
-#+end_src
-#+results[12802d92bbf885038e1b1b88048cc51ecd592cc2]:
-[[file:img/original_4x4_normal.eps]]
-
-#+attr_latex: width=.5\textwidth
-[[file:img/original_4x4_normal.eps]]
-
-*** COMMENT Non-connected components
-#+begin_src dot :exports none :file "img/10x0.pdf" :cache yes
-  graph G {
-          A;
-          B; C; D; E; F; G; H; I; J;
-  }
-#+end_src
-#+results[e12770e1913edc49ff97a14d956f8a319dd77a5a]:
-[[file:img/10x0.pdf]]
-*** COMMENT dora experiment
-*** COMMENT ROC analysis of the three approaches
+*** Non-connected components
+**** Aim & Methodology
+**** Results
 * Project management
+
 Large projects are strenuous. Effective project management then
 becomes crucial in ensuring constant progress throughout all periods
 of the academic year.
@@ -894,12 +837,47 @@ always a concrete task that could be done.
 *** sticking with it when intial results are bad
 *** setting better goals
 * Conclusion
-######################################################################
-# Conclude story
-######################################################################
-######################################################################
-# Future work
-######################################################################
+
+#+begin_quote
+: "In this paper we presented the on-line application of our fault
+: detection approach for robotic systems. It is purely data-driven and
+: exploits generic information extracted from the system’s
+: inter-component communication. The conducted experiments demonstrated
+: that our approach is capable of detecting and tracking various induced
+: faults on-line with high probability and acceptable delay. Initially,
+: the algorithm suffers form false positives but introducing another
+: decision- layer based on a moving average reduces the false positive
+: rate. Next steps will involve additional experiments to increase the
+: significance of the results and evaluation of novel fault patterns.
+: Furthermore, we will extend the detection model with sub-models
+: representing different states of the system. This will involve
+: different states of normal behaviour as well as states for already
+: experienced faults. By this means we will on the one hand improve the
+: fault detection and on the other hand enable fault diagnosis for
+: experienced faults."
+#+end_quote
+
+#+begin_quote
+: In this paper we presented a novel method for fault detection in
+: robotic systems constructed on the basis of discrete event-based data
+: interchange. The introduced self- awareness model is strongly data
+: driven and thus (i) can be trained from good examples of normal system
+: behavior, (ii) is largely independent from specific scenarios and
+: (iii) shows promising results even for transient malfunctions in
+: system behavior. The resulting self-awareness model provides a basis
+: for a sophisticated autonomic computing architecture in the domain of
+: robotic systems, enhancing safety and robustness of robot operation
+: and ultimatively increasing the autonomoy of intelligent robot
+: systems. Future work will focus on a broader and more realistic daily
+: life evaluation as well as an exhaustive complexity and performance
+: analysis of the demonstrated approach. Over a long distance our goal
+: will be closing the autonomic control loop, effectively allowing
+: modification of relevant system properties upon detected anomalies,
+: the integration of anomaly detection with behavioral control and the
+: further exploration of fault diagnosis models for robotic
+: applications.
+#+end_quote
+
 
 \newpage
 \bibliographystyle{plain}
@@ -907,4 +885,4 @@ always a concrete task that could be done.
 
 
 
-#  LocalWords:  analytical middleware
+#  LocalWords:  analytical middleware performant
