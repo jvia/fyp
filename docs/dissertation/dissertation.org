@@ -164,9 +164,9 @@ in this domain on diagnosis engines such as Livingstone
 and Lydia \cite{Feldman:2010uy}. The Livingstone has been very
 successful, having been used on /Deep Space One/ \cite{Bajwa:2002tm},
 /Earth Observing One/ \cite{Hayden:2004vn}, and on the /Autosub 6000/
-\cite{Ernits:2010tm}. 
+\cite{Ernits:2010tm}.
 
-Data-driven approaches have used machine learning to 
+Data-driven approaches have used machine learning to
 
 
 The method used in this project was first described in
@@ -219,7 +219,7 @@ state at any given time.
 ######################################################################
 # Introduce the example to be used in explaining the idea
 ######################################################################
-#+begin_src dot :exports none :file "img/simple.pdf" :cache no
+#+begin_src dot :exports none :file "img/simple.pdf" :cache yes
   digraph Example1 {
   rankdir=LR;
   subgraph cluster2 {
@@ -403,20 +403,20 @@ information contained in the distribution, the more willing we are to
 trust the correlation between the two event types.
 
 #+BEGIN_LATEX
-\begin{algorithm}
-\caption{Calculating the score on the receipt of event $e_j$ with
-the set E of last seen instances of all event types.}
-\label{alg:score}
-\begin{program}
-\FUNCT |score|(e_j, E) \BODY
-|return | \lVert \sum_{e_i}^E (1 - \frac{h_{ij}}{H_j}) P_{ij}(\Delta(e_i,e_j)) \rVert
-\WHERE
-h_{ij} \equiv \text{ entropy of } P_{ij}
-H_j    \equiv \text{ sum entropy of } P_{*j}
-\Delta(i,j) \equiv \text{ timespan between events $i$ and $j$}
-\END
-\end{program}
-\end{algorithm}
+  \begin{algorithm}
+  \caption{Calculating the score on the receipt of event $e_j$ with
+  the set E of last seen instances of all event types.}
+  \label{alg:score}
+  \begin{program}
+  \FUNCT |score|(e_j, E) \BODY
+  |return | \lVert \sum_{e_i}^E (1 - \frac{h_{ij}}{H_j}) P_{ij}(\Delta(e_i,e_j)) \rVert
+  \WHERE
+  h_{ij} \equiv \text{ entropy of } P_{ij}
+  H_j    \equiv \text{ sum entropy of } P_{*j}
+  \Delta(i,j) \equiv \text{ timespan between events $i$ and $j$}
+  \END
+  \end{program}
+  \end{algorithm}
 #+END_LATEX
 
 ** Calculating the threshold
@@ -513,8 +513,12 @@ with properties to push the algorithm (and the changes made to it) in
 some way. In each of the following experiments, each component
 publishes only a single event type.
 
-*** COMMENT Linear chain
-**** Aim
+*** Linear chain
+:PROPERTIES:
+:CUSTOM_ID: sec:3chain
+:END:
+
+**** Aim & Methodology
 
 The linear chain was the simplest experiment run on the system. It is
 the exact system presented in figure \ref{fig:simple}. This CAST setup
@@ -522,11 +526,14 @@ was used as a sanity check to ensure that the algorithm could function
 on the simplest case. Failure to work on this case would mean that the
 technique would likely not scale to larger systems.
 
-**** Methodology
-
+The system was run with and without the induction of faults. The goal
+was to see if the system could detect the induced fault without
+flagging other states as fault. Data was collected and averaged over
+10 runs to prevent skewering by an anomalous run.
 
 **** Results
 
+#+begin_comment
 #+begin_src gnuplot :var data="./data/original-eps-converted-to" :exports none :file "img/reduced_3chain_fault.eps" :cache yes
   reset
   set terminal postscript color solid eps enhanced 20
@@ -536,9 +543,14 @@ technique would likely not scale to larger systems.
        data using 1:2 with lines smooth bezier title 'Score (smoothed)',\
        data using 1:3 with lines title 'Threshold'
 #+end_src
+#+end_comment
 
 *** Parallel chains
-**** Aim
+:PROPERTIES:
+:CUSTOM_ID: sec:4x4
+:END:
+**** Aim & Methodology
+
 #+begin_src dot :exports none :file "img/4x4.pdf" :cache yes
 digraph four_chain {
           rankdir=LR;
@@ -550,14 +562,28 @@ digraph four_chain {
 #+end_src
 #+results[2c5c00e9891f5c001975c3b50767a7f5c481ed3c]:
 [[file:img/4x4.pdf]]
-**** Methodology
+
+#+label: fig:4x4
+[[file:img/4x4.pdf]]
+
+The aim of this experiment was to test the algorithm on a more complex
+set of communication patterns. Figure \ref{fig:4x4} shows the layout
+of the nodes within this system. The communication proceeded through
+four separate linear chains---each chain completely independent of the
+others.
+
+As with the linear system described in section \ref{sec:3chain}, this
+system was run with and without the induction of faults. The system
+was run 10 times to ensure no anomalous experiment would skew
+the final results.
+
 **** Results
 
 #+begin_src gnuplot :var data="./data/original_4x4_normal.csv" :exports none :file "img/original_4x4_normal.eps" :cache yes
   reset
   set terminal postscript color solid eps enhanced 20
   set yrange [0:1]
-  set xrange [0:150000]  
+  set xrange [0:150000]
   set title "Normal"
   plot data using 1:2 with dots notitle,\
        data using 1:2 with lines smooth bezier title 'Score (smoothed)',\
@@ -570,6 +596,11 @@ digraph four_chain {
 [[file:img/original_4x4_normal.eps]]
 
 *** Non-connected components
+:PROPERTIES:
+:CUSTOM_ID: sec:10x1
+:END:
+**** Aim & Methodology
+
 #+begin_src dot :exports none :file "img/10x0.pdf" :cache yes
   graph G {
           A;
@@ -579,7 +610,17 @@ digraph four_chain {
 #+results[e12770e1913edc49ff97a14d956f8a319dd77a5a]:
 [[file:img/10x0.pdf]]
 
+This experiment was quite different from the others. It tested a
+system in which none of the components communicated with one
+another---a non-realistic system---in order to test the algorithm in
+key ways. Similarly to the other experiments, this system was run 10
+times with and without the induction of faults.
+
+**** Results
 ** Asymptotic analysis
+:PROPERTIES:
+:CUSTOM_ID: subsec:orig-asymp
+:END:
 
 When evaluating the approach first described in
 \cite{Golombek:2010hj}, beyond knowing how it performed
@@ -611,19 +652,19 @@ model. The calculation will be based off of the algorithm
 \ref{alg:score} from section \ref{sec:theory}. On analysis, we can see
 that there are two aspects to the algorithm: calculating the sum
 entropy and then calculating the whole score which can be seen in
-equation \eqref{eq:orignal_score}. 
+equation \eqref{eq:orignal_score}.
 
- #+BEGIN_LATEX
-   \begin{equation}
-     \label{eq:orignal_score}
-     \begin{split}
-       score(n) &= H_{ij} + \sum_{e_i}^E\\
-       score(n) &= n + 5n\\
-       score(n) &= 6n\\
-       score(n) &\in \Theta(n)
-     \end{split}
-   \end{equation}
- #+END_LATEX
+#+BEGIN_LATEX
+\begin{equation}
+\label{eq:orignal_score}
+\begin{split}
+score(n) &= H_{ij} + \sum_{e_i}^E\\
+score(n) &= n + 5n\\
+score(n) &= 6n\\
+score(n) &\in \Theta(n)
+\end{split}
+\end{equation}
+#+END_LATEX
 
 Since the sum entropy $H_j$ will be the same for all events $e_i \in
 E$ on the receipt of event $e_j$, this only needs to be calculated
@@ -636,15 +677,59 @@ model may be $\Theta(n^2)$, the score calculation is only $\Theta(n)$
 because it only considers the relevant entries.
 
 * Connection-based model
-** Idea
-** Implementation
+** Idea & Implementation
+
+The asymptotic analysis from section \ref{subsec:org-asymp} showed
+that the space efficiency of the learned model could not scale with
+larger systems. The goal for the rest of the project then became to
+find a way to reduced the size of this model. The initial idea was to
+use the information about the connections between components---all
+information which could be gathered /a priori/ on CAST
+\cite{Otto:2010uc}. This information could then be exploited to prune
+the model and retain only the parts of the model which correlate to
+actual paths of communication within the real system.
+
+Using the example presented in figure \ref{fig:simple}, we can see
+that informaton flows from node /A/ to node /B/ and from node /B/ to
+node /A/. Using the idea of pruning, we could remove from the model
+the learned distributions between nodes /A/ and /C/. Additionally,
+since information in this example flows as a directed graph, we can
+prune all distributions which correlate to the reverse direction,
+e.g., $P_{ab}$. It was decided that the distribution which modeled a
+component to itself would be kept because it would be useful to have a
+distribution of how often a component fired. All together, the model
+$\mathcal{M}$ could be reduced to
+
+ #+BEGIN_LATEX
+   \begin{equation}
+     \label{eq:reduced_model}
+     \begin{bmatrix}
+       P_{aa} & \empty & \empty\\
+       P_{ba} & P_{bb} & \empty\\
+       \empty& P_{cb} & P_{cc}
+     \end{bmatrix}
+   \end{equation}
+ #+END_LATEX
+
 ** Asymptotic analysis
 *** model
 *** score calculation
 ** Experimental results
-*** 3x1 experiments
+*** COMMENT Linear chain
+**** Aim
 
-#+begin_src gnuplot :var data="./data/reduced_3chain_fault" :exports none :file "img/reduced_3chain_fault.eps" :cache yes
+The linear chain was the simplest experiment run on the system. It is
+the exact system presented in figure \ref{fig:simple}. This CAST setup
+was used as a sanity check to ensure that the algorithm could function
+on the simplest case. Failure to work on this case would mean that the
+technique would likely not scale to larger systems.
+
+**** Methodology
+
+
+**** Results
+
+#+begin_src gnuplot :var data="./data/original-eps-converted-to" :exports none :file "img/reduced_3chain_fault.eps" :cache yes
   reset
   set terminal postscript color solid eps enhanced 20
   set yrange [0:1]
@@ -654,72 +739,119 @@ because it only considers the relevant entries.
        data using 1:3 with lines title 'Threshold'
 #+end_src
 
-#+results[9ccf3b2dca2bb91beb98ba4a1be6a9b33c7b1112]:
-[[file:img/reduced_3chain_fault.eps]]
+*** COMMENT Parallel chains
+**** Aim
+#+begin_src dot :exports none :file "img/4x4.pdf" :cache yes
+digraph four_chain {
+          rankdir=LR;
+          A -> B -> C -> D;
+          E -> F -> G -> H;
+          I -> J -> K -> L;
+          M -> N -> O -> P;
+}
+#+end_src
+#+results[2c5c00e9891f5c001975c3b50767a7f5c481ed3c]:
+[[file:img/4x4.pdf]]
+**** Methodology
+**** Results
 
-
-*** 4x4 experiment results
-
-The results of the experiment.
-
-#+begin_src gnuplot :var data="./data/reduced_4x4_normal.csv" :exports none :file "img/reduced_4x4_normal.eps" :cache yes
+#+begin_src gnuplot :var data="./data/original_4x4_normal.csv" :exports none :file "img/original_4x4_normal.eps" :cache yes
   reset
   set terminal postscript color solid eps enhanced 20
   set yrange [0:1]
   set xrange [0:150000]
-
+  set title "Normal"
   plot data using 1:2 with dots notitle,\
        data using 1:2 with lines smooth bezier title 'Score (smoothed)',\
        data using 1:3 with lines title 'Threshold'
 #+end_src
+#+results[12802d92bbf885038e1b1b88048cc51ecd592cc2]:
+[[file:img/original_4x4_normal.eps]]
 
-#+results[fb1cd17f2e0a6b3fffda70ab3cd1dfad0f703b48]:
-[[file:img/reduced_4x4_normal.eps]]
+#+attr_latex: width=.5\textwidth
+[[file:img/original_4x4_normal.eps]]
 
-
-#+begin_src gnuplot :var data="./data/reduced_4x4_fault.csv" :exports none :file "img/reduced_4x4_fault.eps" :cache yes
-  reset
-  set terminal postscript color solid eps enhanced 20
-  set yrange [0:1]
-  set xrange [0:150000]
-  plot data using 1:2 with dots notitle,\
-       data using 1:2 with lines smooth bezier title 'Score (smoothed)',\
-       data using 1:3 with lines title 'Threshold'
+*** COMMENT Non-connected components
+#+begin_src dot :exports none :file "img/10x0.pdf" :cache yes
+  graph G {
+          A;
+          B; C; D; E; F; G; H; I; J;
+  }
 #+end_src
+#+results[e12770e1913edc49ff97a14d956f8a319dd77a5a]:
+[[file:img/10x0.pdf]]
 
-#+results[b9082141948d6b6bb2e672f95ac3d7612c19a98f]:
-[[file:img/reduced_4x4_fault.eps]]
-
-*** 10x1 experiment results
-
-The results of the experiment.
-
-#+begin_src gnuplot :var data="./data/reduced_10x1_fault.csv" :exports results :file "img/reduced_10x1_fault.eps" :cache yes
-  reset
-  set terminal postscript color solid eps enhanced 20
-  set yrange [0:1]
-  set xrange [0:150000]
-  plot data using 1:2 with dots notitle,\
-       data using 1:2 with lines smooth bezier title 'Score (smoothed)',\
-       data using 1:3 with lines title 'Threshold'
-#+end_src
-
-#+results[02d0464828433875ba8f7fe252783f2d70fcdfed]:
-[[file:img/reduced_10x1_fault.eps]]
-
-*** dora experiment
 * Metronome-based approach
-** Idea
-** Implementation
+** Idea & Implementation
 ** Asymptotic analysis
-*** model
-*** score calculation
 ** Experimental results
-*** 3x1 experiments
-*** 4x4 experiment results
-*** 10x1 experiment results
-*** dora experiment
-*** ROC analysis of the three approaches
+*** COMMENT Linear chain
+**** Aim
+
+The linear chain was the simplest experiment run on the system. It is
+the exact system presented in figure \ref{fig:simple}. This CAST setup
+was used as a sanity check to ensure that the algorithm could function
+on the simplest case. Failure to work on this case would mean that the
+technique would likely not scale to larger systems.
+
+**** Methodology
+
+
+**** Results
+
+#+begin_src gnuplot :var data="./data/original-eps-converted-to" :exports none :file "img/reduced_3chain_fault.eps" :cache yes
+  reset
+  set terminal postscript color solid eps enhanced 20
+  set yrange [0:1]
+  set xrange [0:150000]
+  plot data using 1:2 with dots notitle,\
+       data using 1:2 with lines smooth bezier title 'Score (smoothed)',\
+       data using 1:3 with lines title 'Threshold'
+#+end_src
+
+*** COMMENT Parallel chains
+**** Aim
+#+begin_src dot :exports none :file "img/4x4.pdf" :cache yes
+digraph four_chain {
+          rankdir=LR;
+          A -> B -> C -> D;
+          E -> F -> G -> H;
+          I -> J -> K -> L;
+          M -> N -> O -> P;
+}
+#+end_src
+#+results[2c5c00e9891f5c001975c3b50767a7f5c481ed3c]:
+[[file:img/4x4.pdf]]
+**** Methodology
+**** Results
+
+#+begin_src gnuplot :var data="./data/original_4x4_normal.csv" :exports none :file "img/original_4x4_normal.eps" :cache yes
+  reset
+  set terminal postscript color solid eps enhanced 20
+  set yrange [0:1]
+  set xrange [0:150000]
+  set title "Normal"
+  plot data using 1:2 with dots notitle,\
+       data using 1:2 with lines smooth bezier title 'Score (smoothed)',\
+       data using 1:3 with lines title 'Threshold'
+#+end_src
+#+results[12802d92bbf885038e1b1b88048cc51ecd592cc2]:
+[[file:img/original_4x4_normal.eps]]
+
+#+attr_latex: width=.5\textwidth
+[[file:img/original_4x4_normal.eps]]
+
+*** COMMENT Non-connected components
+#+begin_src dot :exports none :file "img/10x0.pdf" :cache yes
+  graph G {
+          A;
+          B; C; D; E; F; G; H; I; J;
+  }
+#+end_src
+#+results[e12770e1913edc49ff97a14d956f8a319dd77a5a]:
+[[file:img/10x0.pdf]]
+*** COMMENT dora experiment
+*** COMMENT ROC analysis of the three approaches
 * Project management
 Large projects are strenuous. Effective project management then
 becomes crucial in ensuring constant progress throughout all periods
@@ -749,22 +881,25 @@ of putting in concrete terms the steps necessary to reach a goal. So
 rather than flailing around to figure out what to do next, there was
 always a concrete task that could be done.
 
-** Managing tasks & deadlines
+** COMMENT Managing tasks & deadlines
 *** Github issues
-** Managing code
+** COMMENT Managing code
 *** maven
 *** Jenkins
 *** git
 * Project evaluation
-** What was good?
+** COMMENT What was good?
 *** project planning w.r.t. summer work
-** What can be learned?
+** COMMENT What can be learned?
 *** sticking with it when intial results are bad
 *** setting better goals
 * Conclusion
-** Conclude story
-** Future work
-
+######################################################################
+# Conclude story
+######################################################################
+######################################################################
+# Future work
+######################################################################
 
 \newpage
 \bibliographystyle{plain}
