@@ -217,67 +217,75 @@ specific middleware and instead focus on intuitive words to better
 explain the theory. This technique aims to detect faults in software
 and so all discussion will implicitly be in this domain unless other
 specified. We will consider the whole of a robot's software a system
-which are divided into a set of components. Each components does one
-small job (e.g., a component which takes in laser and map data to
-determine the robots location) and the coordination of multiple
-components is used to solve some task. Components will be said to
-subscribe and publish to one another. If component /A/ subscribes to
-component /B/, component /A/ will received all data published by
-component /B/. When a component publishes a message, it is considered
-an event. These messages are typed, so, returning to the example of a
-localizing component, its message type might be the coordinates
-required to described its position in configuration space. Events also
-have a type: the metadata required to describe a component, its
-location in a robotics system, and the message type. This is necessary
-because a component can publish more than one message type and more
-than one component can publish the same message type. With this
-requisite vocabulary, a formal description of the theory will follow.
+which are divided into a set of components. Each component does some
+job (e.g., a component which takes in laser and map data to determine
+the robots location) and the coordination of multiple components is
+used to solve some task. Components will be said to subscribe and
+publish to one another. If component /A/ subscribes to component /B/,
+component /A/ will received all messages published by component /B/. When
+a component publishes a message, it is considered an event. These
+messages are typed, so, returning to the example of a localizing
+component, its message type might be the coordinates required to
+described its position in configuration space. Events also have a
+type: the metadata required to describe a component, its location in a
+robotics system, and the message type. This is necessary because a
+component can publish more than one message type and more than one
+component can publish the same message type. With this requisite
+vocabulary, a formal description of the theory will follow.
 
-The main hypothesis of this approach states that a robot is a set of
-communicating components which generate temporal communication
-patterns when accomplishing tasks. These temporal communication
-patterns exhibit structures which depend on the current state of the
-robot \cite{Golombek:2010hj}. Because this approach uses a
-machine-learned model, it falls completely within the data-driven
+The main hypothesis of this approach states that a robotics system is
+a set of communicating components which generate temporal
+communication patterns when accomplishing tasks. These temporal
+communication patterns exhibit structures which depend on the current
+state of the robot \cite{Golombek:2010hj}. Because this approach uses
+a machine-learned model, it falls completely within the data-driven
 approach to fault detection as described in section \ref{lit-review}.
+The goal of this technique is to exploit the latent temporal-structure
+within the observed communication stream to learn a pattern of
+communication which correlates with normal system behavior.
 
 In order to classify the robot as being in a normal or faulty state, a
-score is calculated against the learned model. This score is compared
-against a moving threshold to create the classification of the robot's
-state at any given time.
+score is calculated against the learned model. This model represents
+the pattern of communication during normal system behavior. More
+specifically, the model represents the expectation of the time between
+publication events between all event types. Once the score is
+calculated, it is compared against a moving threshold to create the
+classification of the robot's state at any given time.
 
 ######################################################################
 # Introduce the example to be used in explaining the idea
 ######################################################################
 
-#+caption: In this simple example, it can be seen that.
+#+caption: This example shows a system at three discrete points in time and how data flows through a system. Notice that a message event occurs at a point in time. The goal is to exploit this knowledge to learn a model.
 #+label: fig:simple
+#+attr_latex: width=0.6\textwidth wrap placement={R}{0.61\textwidth}
 [[file:img/simple.pdf]]
 
 To ground the discussion, a simplistic example is shown in figure
-\ref{fig:simple}. This graph represents a set of three components and how
-messages pass through the system. These components can be seen as
-chained together with a linear communication pattern. In this example,
-node /A/ publishes a message /a/ at timestamp $t$ which passes to node
+\ref{fig:simple}. This graph represents a set of three components and
+how messages pass through the system. These components can be seen as
+chained together n a linear communication pattern. In this example,
+node /A/ publishes message /a/ at timestamp $t$ which passes to node
 /B/. Node /B/, after doing some arbitrary computation, publishes a
 message /b/ at timestamp $t'$ which is passed to node /C/. So, in this
-example, it can be expected that data flow linearly from node /A/ to
-node /C/. It is not necessary that data flow linearly through a
-system. In general, real-life robotics systems exhibit more
-complicated inter-component communication patterns. Figure
-\ref{fig:complex} shows a system in which node /A/ publishes two types of
-messages, each of which is used by a separate component.
+example, a message event occurs at 100 milliseconds which could be
+encoded as =A:a:100ms= and a message event occurs at 150
+milliseconds which could be encoded as =B:b:150ms=. It is not
+necessary that data flow linearly through a system. In general,
+real-life robotics systems exhibit more complicated inter-component
+communication patterns. Figure \ref{fig:complex} shows a more complex
+system in which components publish multiple messages types and
+subscribe to multiple components.
 
-#+CAPTION:    A non-linear component-based system
-#+LABEL:      fig:ex2
-#+ATTR_LaTeX: width=0.5\textwidth
+#+caption:    In a real system, data flow will likely be non-linear.
+#+label:      fig:ex2
+#+attr_latex: width=0.6\textwidth wrap placement={L}{0.55\textwidth}
 [[file:img/complex.pdf]]
 
-The rest of this section will explain the theory using the examples of
-figures \ref{fig:ex1} and \ref{fig:ex2} as examples. First, the idea
-and creation of the learned model will be explained, followed by the
-calculation of the score, and then the calculation of the final
-classification.
+The rest of this section will use figure \ref{fig:simple} as a simple
+example for pedagogic purposes. First, the idea and creation of the
+learned model will be explained, followed by the calculation of the
+score, and then the calculation of the final classification.
 
 ** Learning the model
 
@@ -305,7 +313,7 @@ t_i + t$). The event $e_i$ is constrained to be the last seen
 occurrence of this event type because the goal is to model temporal
 correlations between the current event and the last seen occurrence of
 a given event. Learning the model for the example present backed in
-figure \ref{fig:ex1}, results in a matrix of distributions as shown
+figure \ref{fig:simple}, results in a matrix of distributions as shown
 the in matrix in \eqref{matrix:ex1}.
 
 \begin{equation}
@@ -329,6 +337,8 @@ distributions becomes the model $\mathcal{M} = \{P_{ij} \vert
 \eqref{matrix:ex1}.
 
 #+caption: A distribution is learned for each set of event types.
+#+label:      fig:ex2
+#+attr_latex: width=0.5\textwidth wrap placement={R}{0.55\textwidth}
 [[file:img/learned.pdf]]
 
 ** Calculating the score
@@ -658,18 +668,7 @@ model(n) &\in \Omega(n)
 #+END_LATEX
 
 ** Experimental results
-*** Linear chain
-**** Aim & Methodology
-**** Results
-*** Parallel chains
-**** Aim & Methodology
-**** Results
 
-
-
-*** Non-connected components
-**** Aim & Methodology
-**** Results
 * Metronome-based approach
 ** Idea & Implementation
 
@@ -716,18 +715,8 @@ efficiency means that the metronome approach could scale more than the
 original implementation.
 
 ** Experimental results
-*** Linear chain
-**** Aim & Methodology
-**** Results
-*** Parallel chains
-**** Aim & Methodology
-**** Results
 
 [[file:img/metronome_4x4.eps]]
-
-*** Non-connected components
-**** Aim & Methodology
-**** Results
 
 [[file:img/metronome_10x1.eps]]
 
@@ -777,6 +766,9 @@ A project
 *** sticking with it when intial results are bad
 *** setting better goals
 * Conclusion
+
+I conclude!
+
 #+begin_comment
 #+begin_quote
 : In this paper we presented the on-line application of our fault
@@ -825,7 +817,7 @@ A project
 
 
 
-#  LocalWords:  analytical middleware performant
+#  LocalWords:  analytical middleware performant metadata
 * Graphs                                                           :NOEXPORT:
 ** Original
 *** Linear
