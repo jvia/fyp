@@ -219,42 +219,6 @@ state at any given time.
 ######################################################################
 # Introduce the example to be used in explaining the idea
 ######################################################################
-#+begin_src dot :exports none :file "img/simple.pdf" :cache yes
-  digraph Example1 {
-  rankdir=LR;
-  subgraph cluster2 {
-  label="Event from B";
-  A3[label="A"];
-  B3[label="B"];
-  C3[label="C"];
-  A3 -> B3
-  [label="a  "];
-  B3 -> C3
-  [label="b  (150ms)",color="red",style="bold",fontcolor="red"];
-
-  }
-  subgraph cluster1 {
-  label="Event from A";
-  A2[label="A"];
-  B2[label="B"];
-  C2[label="C"];
-  A2 -> B2
-  [label="a  (100ms)",color="red",style="bold",fontcolor="red"];
-  B2 -> C2 [label="b  "];
-  }
-  subgraph cluster0 {
-  label="No event";
-  A1[label="A"];
-  B1[label="B"];
-  C1[label="C"];
-  A1 -> B1 [label="a  "];
-  B1 -> C1 [label="b  "];
-  }
-  }
-#+end_src
-
-#+results[fc8897caa2a034eb34782fd9c83ca4451bb52636]:
-[[file:img/simple.pdf]]
 
 #+caption: In this simple example, it can be seen that.
 #+label: fig:simple
@@ -274,24 +238,6 @@ complicated inter-component communication patterns. Figure
 \ref{fig:ex2} shows a system in which node /A/ publishes two types of
 messages, each of which is used by a separate component.
 
-#+begin_src dot :exports none :file "img/complex.pdf" :cache yes
-  digraph real {
-  rankdir=LR;
-  A -> B [dir="both"];
-  A -> C [dir="both"];
-  A -> D [dir="both"];
-  A -> E [dir="both"];
-  A -> F [dir="both"];
-  B -> E;
-  C -> D;
-  D -> E;
-  F -> D;
-  }
-#+end_src
-
-#+results[8033868d33a97b13559b13165338665ffeaaf6df]:
-[[file:img/complex.pdf]]
-
 #+CAPTION:    A non-linear component-based system
 #+LABEL:      fig:ex2
 #+ATTR_LaTeX: width=0.5\textwidth
@@ -302,7 +248,6 @@ figures \ref{fig:ex1} and \ref{fig:ex2} as examples. First, the idea
 and creation of the learned model will be explained, followed by the
 calculation of the score, and then the calculation of the final
 classification.
-
 
 ** Learning the model
 
@@ -352,24 +297,6 @@ which have been initialized with a Gaussian Kernel $K(u) =
 distributions becomes the model $\mathcal{M} = \{P_{ij} \vert
 (e_i,e_j) \in E \times E\}$. $\mathcal{M}$ is now the matrix shown in
 \eqref{matrix:ex1}.
-
-#+begin_src dot :exports none :file "img/learned.pdf" :cache yes
-  digraph G {
-          rankdir=LR;
-          A -> A [label="P(AA)"];
-          A -> B [label="P(AB)"];
-          A -> C [label="P(AC)"];
-          B -> A [label="P(BA)"];
-          B -> B [label="P(BB)"];
-          B -> C [label="P(BC)"];
-          C -> A [label="P(CA)"];
-          C -> B [label="P(CB)"];
-          C -> C [label="P(CC)"];
-  }
-#+end_src
-
-#+RESULTS[cc2bb741e8fa3d5e6be7049aa932a42ec96640c5]:
-[[file:img/learned.pdf]]
 
 #+caption: A distribution is learned for each set of event types.
 [[file:img/learned.pdf]]
@@ -477,19 +404,6 @@ Filtering, Transformation, and Selection Library (FTS)
 set of nodes which process data in pieces. This technique allows for
 increased code re-usability
 
-#+begin_src dot :exports none :file "img/fts.pdf" :cache yes
-  digraph G {
-  CAST;
-  CalcScore [label="Calculate Score"];
-  ClassifyScore [label="Classify"];
-  CAST -> Encode -> CalcScore -> ClassifyScore;
-  ClassifyScore -> CAST [style="dotted"];
-  }
-#+end_src
-
-#+RESULTS[29479010baef6dfc79c12ac1a41b34a2420b283b]:
-[[file:img/fts.pdf]]
-
 #+caption: The main steps shown in the FTS processing graph representation. Decomposing problems this way allows for high code re-use.
 #+attr_latex: width=0.3\textwidth
 [[file:img/fts.pdf]]
@@ -533,17 +447,6 @@ flagging other states as fault. Data was collected and averaged over
 
 **** Results
 
-#+begin_comment
-#+begin_src gnuplot :var data="./data/original-eps-converted-to" :exports none :file "img/reduced_3chain_fault.eps" :cache yes
-  reset
-  set terminal postscript color solid eps enhanced 20
-  set yrange [0:1]
-  set xrange [0:150000]
-  plot data using 1:2 with dots notitle,\
-       data using 1:2 with lines smooth bezier title 'Score (smoothed)',\
-       data using 1:3 with lines title 'Threshold'
-#+end_src
-#+end_comment
 
 *** Parallel chains
 :PROPERTIES:
@@ -579,21 +482,10 @@ the final results.
 
 **** Results
 
-#+begin_src gnuplot :var data="./data/original_4x4_normal.csv" :exports none :file "img/original_4x4_normal.eps" :cache yes
-  reset
-  set terminal postscript color solid eps enhanced 20
-  set yrange [0:1]
-  set xrange [0:150000]
-  set title "Normal"
-  plot data using 1:2 with dots notitle,\
-       data using 1:2 with lines smooth bezier title 'Score (smoothed)',\
-       data using 1:3 with lines title 'Threshold'
-#+end_src
-#+results[12802d92bbf885038e1b1b88048cc51ecd592cc2]:
-[[file:img/original_4x4_normal.eps]]
+#+attr_latex: width=0.8\textwidth
+[[file:./img/original_4x4.eps]]
 
-#+attr_latex: width=.5\textwidth
-[[file:img/original_4x4_normal.eps]]
+Fault was detected 1.18 seconds after induction.
 
 *** Non-connected components
 :PROPERTIES:
@@ -617,6 +509,12 @@ key ways. Similarly to the other experiments, this system was run 10
 times with and without the induction of faults.
 
 **** Results
+
+#+attr_latex: width=0.8\textwidth
+[[file:img/original_10x1.eps]]
+
+Fault was detected 500 milliseconds after induction.
+
 ** Asymptotic analysis
 :PROPERTIES:
 :CUSTOM_ID: subsec:orig-asymp
@@ -736,6 +634,9 @@ model(n) &\in \Omega(n)
 *** Parallel chains
 **** Aim & Methodology
 **** Results
+
+
+
 *** Non-connected components
 **** Aim & Methodology
 **** Results
@@ -747,7 +648,7 @@ and remain performant, a new approach had to be created. What was
 created was based on the idea of a metronome, or a heartbeat, and how
 it fires at a constant rate. By learning how every other component
 fired relative to the metronome, it might be possible to dramatically
-reduce the model size while still remaining performant. 
+reduce the model size while still remaining performant.
 
 To implement, this meant adding an extra component in the CAST system
 and pruning all distributions which did not have the metronome =m= in
@@ -770,10 +671,10 @@ Implementing this technique resulted in a far smaller model. Formally,
 the space efficiency of this new model became
 
 #+begin_latex
-  \begin{equation}
-  \label{eq:metronome_asymp}
-  model(n) \in \Theta(n + 1)  
-  \end{equation}
+\begin{equation}
+\label{eq:metronome_asymp}
+model(n) \in \Theta(n + 1)
+\end{equation}
 #+end_latex
 
 This difference results in a rather dramatic reduction. For example,
@@ -791,14 +692,20 @@ original implementation.
 *** Parallel chains
 **** Aim & Methodology
 **** Results
+
+[[file:img/metronome_4x4.eps]]
+
 *** Non-connected components
 **** Aim & Methodology
 **** Results
+
+[[file:img/metronome_10x1.eps]]
+
 * Project management
 
 Large projects are strenuous. Effective project management then
-becomes crucial in ensuring constant progress throughout all periods
-of the academic year.
+becomes crucial in ensuring constant progress throughout academic
+year.
 
 Git was used rather than Subversion for one key reason: it is easy to
 maintain multiple branches of the code and move changes to all of
@@ -837,9 +744,9 @@ always a concrete task that could be done.
 *** sticking with it when intial results are bad
 *** setting better goals
 * Conclusion
-
+#+begin_comment
 #+begin_quote
-: "In this paper we presented the on-line application of our fault
+: In this paper we presented the on-line application of our fault
 : detection approach for robotic systems. It is purely data-driven and
 : exploits generic information extracted from the system’s
 : inter-component communication. The conducted experiments demonstrated
@@ -854,7 +761,7 @@ always a concrete task that could be done.
 : different states of normal behaviour as well as states for already
 : experienced faults. By this means we will on the one hand improve the
 : fault detection and on the other hand enable fault diagnosis for
-: experienced faults."
+: experienced faults.
 #+end_quote
 
 #+begin_quote
@@ -877,7 +784,7 @@ always a concrete task that could be done.
 : further exploration of fault diagnosis models for robotic
 : applications.
 #+end_quote
-
+#+end_comment
 
 \newpage
 \bibliographystyle{plain}
@@ -886,3 +793,168 @@ always a concrete task that could be done.
 
 
 #  LocalWords:  analytical middleware performant
+* Graphs                                                           :NOEXPORT:
+** Original
+*** Linear
+#+begin_comment
+#+begin_src gnuplot :var data="./data/original-eps-converted-to" :exports none :file "img/reduced_3chain_fault.eps" :cache yes
+  reset
+  set terminal postscript color solid eps enhanced 20
+  set yrange [0:1]
+  set xrange [0:150000]
+  plot data using 1:2 with dots notitle,\
+       data using 1:2 with lines smooth bezier title 'Score (smoothed)',\
+       data using 1:3 with lines title 'Threshold'
+#+end_src
+#+end_comment
+*** 4x4
+
+#+begin_src gnuplot :var norm="./data/original_4x4_normal.csv" fault="./data/original_4x4_fault.csv" :exports none :file "img/original_4x4.eps" :cache yes :tangle "data/original_4x4.plt"
+  reset
+  unset term
+  set term postscript eps color solid eps enhanced 20
+  set multiplot
+  set yrange [0:1]
+  set xrange [0:150000]
+  set size 0.5, 1.0
+
+  set title 'Normal'
+  set origin 0.0, 0.0
+  plot norm using 1:2 with dots notitle,\
+       norm using 1:2 with lines smooth bezier title 'Score (smoothed)',\
+       norm using 1:3 with lines title 'Threshold'
+  set title 'Fault'
+  set origin 0.5, 0.0
+  plot fault using 1:2 with dots notitle,\
+       fault using 1:2 with lines smooth bezier title 'Score (smoothed)',\
+       fault using 1:3 with lines title 'Threshold'
+
+#+end_src
+
+#+RESULTS[7cd4153226f45a21b472dd5400d2db3560a33f9b]:
+[[file:img/original_4x4.eps]]
+
+*** 4x4 normal
+
+#+begin_src gnuplot :var data="./data/original_4x4_normal.csv" :exports none :file "img/original_4x4_normal.eps" :cache yes
+  reset
+  set terminal postscript color solid eps enhanced 20
+  set yrange [0:1]
+  set xrange [0:150000]
+
+  set title 'Normal'
+  plot norm using 1:2 with dots notitle,\
+       norm using 1:2 with lines smooth bezier title 'Score (smoothed)',\
+       norm using 1:3 with lines title 'Threshold'
+#+end_src
+
+#+RESULTS[712afaa890dd2a697fe7b6fcc85e9d8f3528686f]:
+[[file:img/original_4x4_normal.eps]]
+
+*** 4x4 fault
+
+#+begin_src gnuplot :var data="./data/original_4x4_fault.csv" :exports none :file "img/original_4x4_fault.eps" :cache yes
+  reset
+  set terminal postscript color solid eps enhanced 20
+  set yrange [0:1]
+  set xrange [0:150000]
+  set title "Normal"
+  plot data using 1:2 with dots notitle,\
+       data using 1:2 with lines smooth bezier title 'Score (smoothed)',\
+       data using 1:3 with lines title 'Threshold'
+#+end_src
+#+RESULTS[43081e236f08b1ee98a8982967e878c0ad9f7e27]:
+[[file:img/original_4x4_fault.eps]]
+
+* Dot                                                              :NOEXPORT:
+** Simple example
+
+#+begin_src dot :exports none :file "img/simple.pdf" :cache yes
+  digraph Example1 {
+  rankdir=LR;
+  subgraph cluster2 {
+  label="Event from B";
+  A3[label="A"];
+  B3[label="B"];
+  C3[label="C"];
+  A3 -> B3
+  [label="a  "];
+  B3 -> C3
+  [label="b  (150ms)",color="red",style="bold",fontcolor="red"];
+
+  }
+  subgraph cluster1 {
+  label="Event from A";
+  A2[label="A"];
+  B2[label="B"];
+  C2[label="C"];
+  A2 -> B2
+  [label="a  (100ms)",color="red",style="bold",fontcolor="red"];
+  B2 -> C2 [label="b  "];
+  }
+  subgraph cluster0 {
+  label="No event";
+  A1[label="A"];
+  B1[label="B"];
+  C1[label="C"];
+  A1 -> B1 [label="a  "];
+  B1 -> C1 [label="b  "];
+  }
+  }
+#+end_src
+#+results[fc8897caa2a034eb34782fd9c83ca4451bb52636]:
+[[file:img/simple.pdf]]
+
+** Complex example
+
+#+begin_src dot :exports none :file "img/complex.pdf" :cache yes
+  digraph real {
+  rankdir=LR;
+  A -> B [dir="both"];
+  A -> C [dir="both"];
+  A -> D [dir="both"];
+  A -> E [dir="both"];
+  A -> F [dir="both"];
+  B -> E;
+  C -> D;
+  D -> E;
+  F -> D;
+  }
+#+end_src
+
+#+results[8033868d33a97b13559b13165338665ffeaaf6df]:
+[[file:img/complex.pdf]]
+
+** Learned
+
+#+begin_src dot :exports none :file "img/learned.pdf" :cache yes
+  digraph G {
+          rankdir=LR;
+          A -> A [label="P(AA)"];
+          A -> B [label="P(AB)"];
+          A -> C [label="P(AC)"];
+          B -> A [label="P(BA)"];
+          B -> B [label="P(BB)"];
+          B -> C [label="P(BC)"];
+          C -> A [label="P(CA)"];
+          C -> B [label="P(CB)"];
+          C -> C [label="P(CC)"];
+  }
+#+end_src
+
+#+RESULTS[cc2bb741e8fa3d5e6be7049aa932a42ec96640c5]:
+[[file:img/learned.pdf]]
+** FTS graph
+
+#+begin_src dot :exports none :file "img/fts.pdf" :cache yes
+  digraph G {
+  CAST;
+  CalcScore [label="Calculate Score"];
+  ClassifyScore [label="Classify"];
+  CAST -> Encode -> CalcScore -> ClassifyScore;
+  ClassifyScore -> CAST [style="dotted"];
+  }
+#+end_src
+
+#+RESULTS[29479010baef6dfc79c12ac1a41b34a2420b283b]:
+[[file:img/fts.pdf]]
