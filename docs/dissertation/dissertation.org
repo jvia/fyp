@@ -172,8 +172,20 @@ successful, having been used on /Deep Space One/ \cite{Bajwa:2002tm},
 /Earth Observing One/ \cite{Hayden:2004vn}, and on the /Autosub 6000/
 \cite{Ernits:2010tm}.
 
-Data-driven approaches have used machine learning to
-
+Data-driven approaches have used machine learning in an attempt to
+bypass the effort involved with model-based approaches. A wide variety
+of approaches have been tried, broadly categorized into deterministic
+and stochastic \cite{Golombek:2011ek}. Deterministic approaches have
+generally attempted to cluster the feature space to separate normal
+classes from faulty ones \cite{DeStefano:2000vt,Chandola:2006um}.
+Stochastic techniques have assumed that anomalous data points would be
+in low probability areas \cite{Casar:2008tp,Ye:2000uu}. The idea then
+is to use statistical inference on model which has been fit to
+previously gathered data. Generally, the deterministic approaches have
+failed to handle the uncertainty present in the complex systems in
+robots.The stochastic approaches previously mentioned have depended on
+the Markov assumption which does not hold in the complex communication
+patterns in a robot \cite{Golombek:2010hj}.
 
 The method used in this project was first described in
 \cite{Golombek:2010hj} and \cite{Golombek:2011ek}. It is a purely
@@ -183,13 +195,15 @@ system. The original system was developed to work with the XCF
 middleware and for this project has been extended to work the CAST
 middleware.
 
+** COMMENT 2010 paper
+*** (9) Reliable detection of episodes in event sequences
 ** COMMENT Who has used the data-driven approach and what did they do?
 *** (1) Learning a probabilistic error detection model for robotic systems
 *** (18) Fault Detection and Diagnosis in Industrial Systems
-*** (19) To reject or not to reject: that is the question-an answer in case of neural classifiers
-*** (20) Data mining for cyber security
-*** (21) A markov chain model of temporal behavior for anomaly detection
-*** (22) Overcoming HMM time independence assumption using n-gram based modelling for continuous speech recognition
+*** (19; 21) To reject or not to reject: that is the question-an answer in case of neural classifiers
+*** (20; 4) Data mining for cyber security
+*** (21; 26) A markov chain model of temporal behavior for anomaly detection
+*** (22; 3) Overcoming HMM time independence assumption using n-gram based modelling for continuous speech recognition
 ** COMMENT knowledge-based
 *** (5)  Back to the future for consistency-based trajectory tracking
 *** (8)  Diagnosing multiple faults
@@ -233,6 +247,11 @@ component can publish more than one message type and more than one
 component can publish the same message type. With this requisite
 vocabulary, a formal description of the theory will follow.
 
+#+caption: This example shows a system at three discrete points in time and how data flows through a system. Notice that a message event occurs at a point in time. The goal is to exploit this knowledge to learn a model.
+#+label: fig:simple
+#+attr_latex: width=0.6\textwidth wrap placement={R}{0.61\textwidth}
+[[file:img/simple.pdf]]
+
 The main hypothesis of this approach states that a robotics system is
 a set of communicating components which generate temporal
 communication patterns when accomplishing tasks. These temporal
@@ -255,11 +274,6 @@ classification of the robot's state at any given time.
 ######################################################################
 # Introduce the example to be used in explaining the idea
 ######################################################################
-
-#+caption: This example shows a system at three discrete points in time and how data flows through a system. Notice that a message event occurs at a point in time. The goal is to exploit this knowledge to learn a model.
-#+label: fig:simple
-#+attr_latex: width=0.6\textwidth wrap placement={R}{0.61\textwidth}
-[[file:img/simple.pdf]]
 
 To ground the discussion, a simplistic example is shown in figure
 \ref{fig:simple}. This graph represents a set of three components and
@@ -456,7 +470,7 @@ allows for increased code re-usability due to the fact that nodes can
 be connected any number of ways. 
 
 #+caption: The main steps shown in the FTS processing graph representation. Decomposing problems this way allows for high code re-use.
-#+attr_latex: width=0.6\textwidth wrap placement={L}{0.61\textwidth}
+#+attr_latex: width=0.4\textwidth wrap placement={L}{0.41\textwidth}
 #+label: fig:fts
 [[file:img/fts.pdf]]
 
@@ -473,7 +487,7 @@ fault-detection system. The CAST component could additionally receive
 the classification status back from the fault-detect for use by other
 components but this was never explored.
 
-*** Experimental results
+** Experimental results
 
 In order to evaluate the system, a series of experiments were create
 to test the algorithm. Three different CAST systems were created, each
@@ -491,26 +505,24 @@ following conditions
 | Host system    | Mac OSX    10.7.3   |
 +----------------+---------------------+
 
-*** Linear chain
-:PROPERTIES:
-:CUSTOM_ID: sec:3chain
-:END:
+# *** COMMENT Linear chain
+# :PROPERTIES:
+# :CUSTOM_ID: sec:3chain
+# :END:
+# **** Aim & Methodology
 
-**** Aim & Methodology
+# The linear chain was the simplest experiment run on the system. It is
+# the exact system presented in figure \ref{fig:simple}. This CAST setup
+# was used as a sanity check to ensure that the algorithm could function
+# on the simplest case. Failure to work on this case would mean that the
+# technique would likely not scale to larger systems.
 
-The linear chain was the simplest experiment run on the system. It is
-the exact system presented in figure \ref{fig:simple}. This CAST setup
-was used as a sanity check to ensure that the algorithm could function
-on the simplest case. Failure to work on this case would mean that the
-technique would likely not scale to larger systems.
+# The system was run with and without the induction of faults. The goal
+# was to see if the system could detect the induced fault without
+# flagging other states as fault. Data was collected and averaged over
+# 10 runs to prevent skewering by an anomalous run.
 
-The system was run with and without the induction of faults. The goal
-was to see if the system could detect the induced fault without
-flagging other states as fault. Data was collected and averaged over
-10 runs to prevent skewering by an anomalous run.
-
-**** Results
-
+# **** Results
 
 *** Parallel chains
 :PROPERTIES:
@@ -583,6 +595,7 @@ times with and without the induction of faults.
 
 Fault was detected 500 milliseconds after induction.
 
+*** COMMENT Dora
 ** Asymptotic analysis
 :PROPERTIES:
 :CUSTOM_ID: subsec:orig-asymp
