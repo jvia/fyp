@@ -1,7 +1,7 @@
 #+title:
 #+author:  Jeremiah M. Via
 #+options: H:4 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
-#+options: TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+options: TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:nil
 #+startup: hidestars indent
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+EXPORT_SELECT_TAGS: export
@@ -70,7 +70,7 @@ Thanks Mum!
 \newpage
 #+end_latex
 
-* Motivation
+* Motivation                                                          :DRAFT:
 :PROPERTIES:
 :CUSTOM_ID: motivation
 :END:
@@ -141,7 +141,7 @@ trade-offs required will be discussed. Finally, the last few sections
 will cover project management and present an evaluation of the
 project.
 
-* Literature review
+* Literature review                                                   :DRAFT:
 :PROPERTIES:
 :CUSTOM_ID: lit-review
 :END:
@@ -216,14 +216,19 @@ middleware.
 *** (15) Combining particle filters and consistency-based approaches for monitoring and diagnosis of stochastic hybrid systems
 *** (16) Diagnosis by a waiter and a Mars explorer
 *** (17) Real-time diagnosis and repair of faults of robot control software
-* Theory
-
+* Theory                                                              :DRAFT:
+\label{sec:theory}
 :PROPERTIES:
 :CUSTOM_ID: sec:theory
 :END:
 ######################################################################
 # Give a high-level idea & introduce the main theoretical steps
 ######################################################################
+
+#+caption: This example shows a system at three discrete points in time and how data flows through a system. Notice that a message event occurs at a point in time. The goal is to exploit this knowledge to learn a model.
+#+label: fig:simple
+#+attr_latex: width=0.6\textwidth wrap placement={R}{0.61\textwidth}
+[[file:img/simple.pdf]]
 
 Before we proceed, it is useful to define some vocabulary. The
 vocabulary intends to be independent of the terminology of any
@@ -246,11 +251,6 @@ robotics system, and the message type. This is necessary because a
 component can publish more than one message type and more than one
 component can publish the same message type. With this requisite
 vocabulary, a formal description of the theory will follow.
-
-#+caption: This example shows a system at three discrete points in time and how data flows through a system. Notice that a message event occurs at a point in time. The goal is to exploit this knowledge to learn a model.
-#+label: fig:simple
-#+attr_latex: width=0.6\textwidth wrap placement={R}{0.61\textwidth}
-[[file:img/simple.pdf]]
 
 The main hypothesis of this approach states that a robotics system is
 a set of communicating components which generate temporal
@@ -292,7 +292,7 @@ system in which components publish multiple messages types and
 subscribe to multiple components.
 
 #+caption:    In a real system, data flow will likely be non-linear.
-#+label:      fig:ex2
+#+label:      fig:complex
 #+attr_latex: width=0.6\textwidth wrap placement={L}{0.55\textwidth}
 [[file:img/complex.pdf]]
 
@@ -301,7 +301,7 @@ example for pedagogic purposes. First, the idea and creation of the
 learned model will be explained, followed by the calculation of the
 score, and then the calculation of the final classification.
 
-** Learning the model
+** Learning the model                                                :DRAFT:
 
 The learned model exploits the hypothesis that a robot composed of a
 set of software components exhibits temporal communication patterns
@@ -356,7 +356,7 @@ event types.
 #+attr_latex: width=0.5\textwidth wrap placement={R}{0.55\textwidth}
 [[file:img/learned.pdf]]
 
-** Calculating the score
+** Calculating the score                                             :DRAFT:
 
 During a live run, the score is calculated by comparing the incoming
 stream of communication (i.e., message events) to the learned model.
@@ -408,7 +408,7 @@ H_j    \equiv \text{ sum entropy of } P_{*j}
 \end{algorithm}
 #+end_latex
 
-** Calculating the threshold
+** Calculating the threshold                                         :DRAFT:
 
 An important aspect of this technique is that as the score changes
 over the course of a system run, so does the threshold. What is
@@ -433,7 +433,7 @@ where $S_{var}$ is the score variance, $s^*$ is the threshold
 variance, and $s^*_{val}$ is a constant minimum threshold which is
 determined before runtime.
 
-** Classifying the system
+** Classifying the system                                            :DRAFT:
 
 With the score and threshold calculated, classifying the system is
 straight forward. As can be seen in \eqref{eq:classification}, the
@@ -450,7 +450,7 @@ $e_j$ does not exceed the calculated threshold $s^*$.
 #+end_latex
 
 * Original system
-** Implementation
+** Implementation                                                    :DRAFT:
 
 To implement the technique first specified by \cite{Golombek:2010hj}
 on CAST, it was necessary to modify the source first implemented by
@@ -458,6 +458,13 @@ the original author and create a CAST component to connect to the
 modified source. This section will cover the changes made, and the
 background knowledge to put it into context, as well as the
 description of the CAST component.
+
+#+begin_comment
+#+caption: The main steps shown in the FTS processing graph representation. Decomposing problems this way allows for high code re-use.
+#+attr_latex: width=0.4\textwidth wrap placement={R}{0.41\textwidth}
+#+label: fig:fts
+[[file:img/fts.pdf]]
+#+end_comment
 
 ######################################################################
 # FTS
@@ -467,12 +474,7 @@ Filtering, Transformation, and Selection Library (FTS)
 \cite{Luetkebohle09-FT}. Using FTS, one decomposes a problem into a
 set of nodes which process data in discrete steps. This technique
 allows for increased code re-usability due to the fact that nodes can
-be connected any number of ways. 
-
-#+caption: The main steps shown in the FTS processing graph representation. Decomposing problems this way allows for high code re-use.
-#+attr_latex: width=0.4\textwidth wrap placement={L}{0.41\textwidth}
-#+label: fig:fts
-[[file:img/fts.pdf]]
+be connected any number of ways.
 
 In a CAST system, tasks are solved by a set of components grouped into
 subarchitectures. Components communicate to one another through a
@@ -487,13 +489,16 @@ fault-detection system. The CAST component could additionally receive
 the classification status back from the fault-detect for use by other
 components but this was never explored.
 
-** Experimental results
+** TODO Experimental results
 
 In order to evaluate the system, a series of experiments were create
 to test the algorithm. Three different CAST systems were created, each
 with properties to push the algorithm (and the changes made to it) in
 some way. In each of the following experiments, each component
-publishes only a single event type. All experiments were run under the
+publishes only a single event type.
+
+#+begin_comment
+All experiments were run under the
 following conditions
 
 #+ATTR_LaTeX:
@@ -504,6 +509,8 @@ following conditions
 +----------------+---------------------+
 | Host system    | Mac OSX    10.7.3   |
 +----------------+---------------------+
+#+end_comment
+
 
 # *** COMMENT Linear chain
 # :PROPERTIES:
@@ -530,20 +537,10 @@ following conditions
 :END:
 **** Aim & Methodology
 
-#+begin_src dot :exports none :file "img/4x4.pdf" :cache yes
-digraph four_chain {
-          rankdir=LR;
-          A -> B -> C -> D;
-          E -> F -> G -> H;
-          I -> J -> K -> L;
-          M -> N -> O -> P;
-}
-#+end_src
-#+results[2c5c00e9891f5c001975c3b50767a7f5c481ed3c]:
-[[file:img/4x4.pdf]]
-
+# wrap placement={R}{0.61\textwidth}
 #+label: fig:4x4
-#+attr_latex: width=0.6\textwidth wrap placement={R}{0.61\textwidth}
+#+attr_latex: width=0.6\textwidth
+#+caption: Four parallel, independent linear chains.
 [[file:img/4x4.pdf]]
 
 The aim of this experiment was to test the algorithm on a more complex
@@ -559,11 +556,12 @@ the final results.
 
 **** Results
 
-
-#+attr_latex: width=0.6\textwidth wrap placement={R}{0.61\textwidth}
+#+attr_latex: width=0.8\textwidth
 [[file:./img/original_4x4.eps]]
 
 Fault was detected 1.18 seconds after induction.
+
+\vspace{0.5cm}
 
 *** Non-connected components
 :PROPERTIES:
@@ -579,7 +577,7 @@ Fault was detected 1.18 seconds after induction.
 #+end_src
 #+results[e12770e1913edc49ff97a14d956f8a319dd77a5a]:
 
-#+attr_latex: width=0.6\textwidth wrap placement={R}{0.61\textwidth}
+#+attr_latex: width=0.6\textwidth
 [[file:img/10x0.pdf]]
 
 This experiment was quite different from the others. It tested a
@@ -596,7 +594,7 @@ times with and without the induction of faults.
 Fault was detected 500 milliseconds after induction.
 
 *** COMMENT Dora
-** Asymptotic analysis
+** Asymptotic analysis                                               :DRAFT:
 :PROPERTIES:
 :CUSTOM_ID: subsec:orig-asymp
 :END:
@@ -656,7 +654,7 @@ model may be $\Theta(n^2)$, the score calculation is only $\Theta(n)$
 because it only considers the relevant entries.
 
 * Connection-based model
-** Idea & Implementation
+** Idea & Implementation                                             :DRAFT:
 
 The asymptotic analysis from section \ref{subsec:org-asymp} showed
 that the space efficiency of the learned model could not scale with
@@ -690,7 +688,7 @@ P_{ba} & P_{bb} & \empty\\
 \end{equation}
 #+END_LATEX
 
-** Asymptotic analysis
+** Asymptotic analysis                                               :DRAFT:
 
 The change in the formulation of the model affects how the size scales
 with new event types. Analyzing the space efficiency of this approach,
@@ -708,9 +706,9 @@ model(n) &\in \Omega(n)
 \end{equation}
 #+END_LATEX
 
-** Experimental results
+** TODO Experimental results
 * Metronome-based approach
-** Idea & Implementation
+** Idea & Implementation                                             :DRAFT:
 
 After the failure of the connection-based approach to reduce the model
 and remain performant, a new approach had to be created. What was
@@ -734,7 +732,7 @@ P_{am} & P_{bm} & P_{cm} & P_{mm}
 \end{equation}
 #+end_latex
 
-** Asymptotic analysis
+** Asymptotic analysis                                               :DRAFT:
 
 Implementing this technique resulted in a far smaller model. Formally,
 the space efficiency of this new model became
@@ -754,13 +752,13 @@ becomes $model(n) \in \Theta(n + 1) = 101$. The difference in space
 efficiency means that the metronome approach could scale more than the
 original implementation.
 
-** Experimental results
+** TODO Experimental results
 
 [[file:img/metronome_4x4.eps]]
 
 [[file:img/metronome_10x1.eps]]
 
-* Project management
+* Project management                                                  :DRAFT:
 
 Large projects are strenuous. Effective project management then
 becomes crucial in ensuring constant progress throughout academic
@@ -796,18 +794,31 @@ always a concrete task that could be done.
 *** maven
 *** Jenkins
 *** git
-* Project evaluation
-
-A project
-
+* TODO Project evaluation
 ** COMMENT What was good?
 *** project planning w.r.t. summer work
 ** COMMENT What can be learned?
 *** sticking with it when intial results are bad
 *** setting better goals
-* Conclusion
+* Conclusion                                                          :DRAFT:
 
-I conclude!
+This dissertation presented the theory behind a new data-driven
+technique for detecting faults in event-based robotics middlewares. It
+learns a model of the predicted timespan between all pairs of event
+types. By exploiting this model, a score for a live system can be
+calculated which can be used to classify the robot as being either in
+a normal or faulty state. The original implementation was heavily
+modified to work with a different middleware than initially designed
+and experimental results for this system were presented. Asymptotic
+analysis provided motivation for the need to reduced the size of this
+learned model. Two alternative model formulations were shown with
+experimental results and asymptotic analysis. Experimentation showed
+one approach failed to work and so was discarded. Future work on this
+topic incorporate multiple models to increase flexibility.
+Additionally, models could be learned against known faults which the
+robot could utilize to perform specific actions for graceful
+degradation. This project took a lot of effort but was well worth it
+for the knowledge gained about the topic and on project management.
 
 #+begin_comment
 #+begin_quote
@@ -858,6 +869,7 @@ I conclude!
 
 
 #  LocalWords:  analytical middleware performant metadata runtime
+
 * Graphs                                                           :NOEXPORT:
 ** Original
 *** Linear
@@ -1023,4 +1035,17 @@ I conclude!
 
 #+RESULTS[29479010baef6dfc79c12ac1a41b34a2420b283b]:
 [[file:img/fts.pdf]]
-#  LocalWords:  Virtualization subarchitecture
+#  LocalWords:  Virtualization subarchitecture timespan
+** 4x4
+
+#+begin_src dot :exports none :file "img/4x4.pdf" :cache yes
+digraph four_chain {
+          rankdir=LR;
+          A -> B -> C -> D;
+          E -> F -> G -> H;
+          I -> J -> K -> L;
+          M -> N -> O -> P;
+}
+#+end_src
+#+results[2c5c00e9891f5c001975c3b50767a7f5c481ed3c]:
+[[file:img/4x4.pdf]]
