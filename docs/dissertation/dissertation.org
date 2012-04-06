@@ -7,7 +7,7 @@
 #+EXPORT_SELECT_TAGS: export
 #+EXPORT_EXCLUDE_TAGS: noexport
 #+LATEX_CLASS: dissertation
-#+LATEX_CLASS_OPTIONS: [a4paper,11pt]
+#+LATEX_CLASS_OPTIONS: [a4paper,oneside,12pt,onecolumn,final,openany]
 #+LATEX_HEADER: \usepackage{algorithmic}
 #+LATEX_HEADER: \usepackage{algorithm}
 #+LATEX_HEADER: \usepackage{program}
@@ -290,9 +290,9 @@ score, and then the calculation of the final classification.
 ** Learning the model
 
 The learned model exploits the hypothesis that a robot composed of a
-set of software components exhibits temporal communication patterns.
-These patterns exhibit different structures depending on the state of
-the robot. The goal then becomes to learn the inter-component
+set of software components exhibits temporal communication patterns
+and that these patterns exhibit different structures depending on the
+state of the robot. The goal then becomes to learn the inter-component
 communication patterns when the robot is functioning correctly. With
 this model, the robot's state can be classified depending on how
 closely its current communication patterns adhere to the learned
@@ -300,21 +300,19 @@ communication patterns. If the current pattern deviates too far from
 the learned pattern, then the robot can be said to be in an anomalous
 state. The first step, then, is to create the learned model.
 
-
 The model is learned by collecting an observation time-series and
 learning how components publish with respect to one another. More
 formally, let $E$ be the set of encoded time-series of component
 communication data which is recorded during normal operation. For each
-tuple $(e_i,e_j) \in E \times E$, a probability distribution
-$P_{ij} = P(t \vert e_i,e_j)$ is estimated. The distribution $P_{ij}$
-represents the probability the even $e_i$ occurs at timestamp $t_i$
-and that after a delay of time $t$, event $e_j$ occurs (i.e., $t_j =
-t_i + t$). The event $e_i$ is constrained to be the last seen
-occurrence of this event type because the goal is to model temporal
-correlations between the current event and the last seen occurrence of
-a given event. Learning the model for the example present backed in
-figure \ref{fig:simple}, results in a matrix of distributions as shown
-the in matrix in \eqref{matrix:ex1}.
+tuple $(e_i,e_j) \in E \times E$, a probability distribution $P_{ij} =
+P(t \vert e_i,e_j)$ is estimated. The distribution $P_{ij}$ represents
+the expected timespan of event $e_j$ occurring after event $e_i$. The
+event $e_i$ is constrained to be the last seen occurrence of this
+event type because the goal is to model temporal correlations between
+the current event and the last seen occurrence of a given event type.
+Learning the model for the example present back in figure
+\ref{fig:simple}, results in a matrix of distributions as shown in the
+matrix in \eqref{matrix:ex1}.
 
 \begin{equation}
 \label{matrix:ex1}
@@ -325,32 +323,39 @@ P_{ca} & P_{cb} & P_{cc}
 \end{bmatrix}
 \end{equation}
 
-It should be clear by now that the model does not learn transition
-times between sets of connected components, but instead learns the
-likelihood of the time-span between the firing of any two components.
+# It should be clear by now that the model does not learn transition
+# times between sets of connected components, but instead learns the
+# likelihood of the time-span between the publication of message events
+# of any two components.
 
-The estimation of $P_{ij}$ makes use of Kernel Density estimators
+The estimation of $P_{ij}$ makes use of a Kernel Density estimator
 which have been initialized with a Gaussian Kernel $K(u) =
-\frac{1}{2\pi}e^{-\frac{1}{2}u^2}$. The set of all learned
-distributions becomes the model $\mathcal{M} = \{P_{ij} \vert
-(e_i,e_j) \in E \times E\}$. $\mathcal{M}$ is now the matrix shown in
-\eqref{matrix:ex1}.
+\frac{1}{2\pi}e^{-\frac{1}{2}u^2}$ \cite{Golombek:2011ek}. The set of
+all learned distributions becomes the model $\mathcal{M} = \{P_{ij}
+\vert (e_i,e_j) \in E \times E\}$. $\mathcal{M}$ is now the matrix
+shown in \eqref{matrix:ex1}. Figure \ref{fig:learned} makes clear that
+a distribution is learned for the Cartesian product of the set of
+event types.
 
-#+caption: A distribution is learned for each set of event types.
-#+label:      fig:ex2
+#+caption:    A distribution is learned for each pair of event types.
+#+label:      fig:learned
 #+attr_latex: width=0.5\textwidth wrap placement={R}{0.55\textwidth}
 [[file:img/learned.pdf]]
 
 ** Calculating the score
 
 During a live run, the score is calculated by comparing the incoming
-stream of communication to the learned model. Essentially, the score
-is higher the more closely the incoming pattern matches the learned
-pattern. Formally, the score at event $e_j$ is defined as
+stream of communication (i.e., message events) to the learned model.
+The score is higher the more closely the incoming pattern
+matches the learned pattern. Formally, the score at event $e_j$ is
+defined as
 
+#+begin_latex
 \begin{equation}\label{eq:score}
 s_j = \sum_{e_i \in E} w_{ij} \cdot P_{ij}(\Delta{}t_i)
 \end{equation}
+#+end_latex
+
 
 \noindent where $E$ is the set of last seen instance of each event
 type and $w_{ij}$ is the relative weighting of the probability value.
@@ -358,25 +363,28 @@ The weight $w_{ij}$ is a measure of how meaningful the particular
 distribution $P_{ij}$ is as an indication to the system's performance.
 The weight is defined as
 
+#+begin_latex
 \begin{equation}\label{eq:weight}
 w_{ij} = 1 - \frac{h_{ij}}{\sum_{e_i \in E} h_{ij}}
 \end{equation}
+#+end_latex
 
-The weight calculation presented in equation \eqref{eq:weight} makes use
-of the entropy of the distribution. This represents how much
+The weight calculation presented in equation \eqref{eq:weight} makes
+use of the entropy of the distribution. This represents how much
 information is contained in a particular distribution and its
 trustworthiness. Essentially, the lower the entropy, and thus the more
 information contained in the distribution, the more willing we are to
 trust the correlation between the two event types.
 
-#+BEGIN_LATEX
+#+begin_latex
 \begin{algorithm}
 \caption{Calculating the score on the receipt of event $e_j$ with
 the set E of last seen instances of all event types.}
 \label{alg:score}
 \begin{program}
 \FUNCT |score|(e_j, E) \BODY
-|return | \lVert \sum_{e_i}^E (1 - \frac{h_{ij}}{H_j}) P_{ij}(\Delta(e_i,e_j)) \rVert
+s \gets \sum_{e_i}^E (1 - \frac{h_{ij}}{H_j}) P_{ij}(\Delta(e_i,e_j))
+|return | \lVert s \rVert
 \WHERE
 h_{ij} \equiv \text{ entropy of } P_{ij}
 H_j    \equiv \text{ sum entropy of } P_{*j}
@@ -384,27 +392,28 @@ H_j    \equiv \text{ sum entropy of } P_{*j}
 \END
 \end{program}
 \end{algorithm}
-#+END_LATEX
+#+end_latex
 
 ** Calculating the threshold
 
 An important aspect of this technique is that as the score changes
 over the course of a system run, so does the threshold. What is
 considered the threshold for normal behavior is dependent on the
-communication patterns within the system. The threshold changes
-according to formula \eqref{eq:threshold}. The idea behind this
-formula is that variance $S_{var}$ of consecutive scores $S = (s_1,
-\dotsm, s_{j-1}, s_j)$ is lower when events match the normal pattern
-learned in the model $\mathcal{M}$. So, when the variance is lower, and thus the
-events better match the learned model, the threshold is lowered. If
-the score variance increases, the threshold increases as well to make
-the threshold harder to exceed.
-
+consistency of the communication pattern within the system. The
+threshold changes according to formula \eqref{eq:threshold}. The idea
+behind this formula is that variance $S_{var}$ of consecutive scores
+$S = (s_1, \dotsm, s_{j-1}, s_j)$ is lower when events match the
+normal pattern learned in the model $\mathcal{M}$. So, when the
+variance is lower, and thus the events better match the learned model,
+the threshold is lowered. If the score variance increases, the
+threshold increases as well to make the threshold harder to exceed.
 This formula is defined formally as
 
+#+begin_latex
 \begin{equation}\label{eq:threshold}
 s^* = a \cdot s^*_{val} + (1 - a) \cdot s^*_{val} \cdot \frac{S_{var}}{s^*_{var}}
 \end{equation}
+#+end_latex
 
 where $S_{var}$ is the score variance, $s^*$ is the threshold
 variance, and $s^*_{val}$ is a constant minimum threshold which is
@@ -417,12 +426,14 @@ straight forward. As can be seen in \eqref{eq:classification}, the
 system is considered abnormal anytime the score of the current event
 $e_j$ does not exceed the calculated threshold $s^*$.
 
+#+begin_latex
 \begin{equation}\label{eq:classification}
 \text{abnormal}(e_j) = \begin{cases}
 &\text{true}  : s_j < s^*\\
 &\text{false} : else
 \end{cases}
 \end{equation}
+#+end_latex
 
 * Original system
 ** Implementation
@@ -432,40 +443,53 @@ on CAST, it was necessary to modify the source first implemented by
 the original author and create a CAST component to connect to the
 modified source. This section will cover the changes made, and the
 background knowledge to put it into context, as well as the
-description of the CAST component, also with the required background
-knowledge.
+description of the CAST component.
 
 ######################################################################
 # FTS
 ######################################################################
-The original system create at Bielefeld was implemented using the
+The original system created at Bielefeld was implemented using the
 Filtering, Transformation, and Selection Library (FTS)
 \cite{Luetkebohle09-FT}. Using FTS, one decomposes a problem into a
-set of nodes which process data in pieces. This technique allows for
-increased code re-usability
+set of nodes which process data in discrete steps. This technique
+allows for increased code re-usability due to the fact that nodes can
+be connected any number of ways. 
 
 #+caption: The main steps shown in the FTS processing graph representation. Decomposing problems this way allows for high code re-use.
-#+attr_latex: width=0.3\textwidth
+#+attr_latex: width=0.6\textwidth wrap placement={L}{0.61\textwidth}
+#+label: fig:fts
 [[file:img/fts.pdf]]
 
+In a CAST system, tasks are solved by a set of components grouped into
+subarchitectures. Components communicate to one another through a
+working memory local to the subarchitecture. Additionally, any
+inter-subarchitecture communication also occurs through working
+memories. A full explanation of CAST can be found in
+\cite{haweswyatt10aei} but is beyond the scope of this dissertation. A
+CAST component was created to monitor changes to any working memory
+within the system. If a change was detected, metadata about the
+message event was created and sent over a network connection to the
+fault-detection system. The CAST component could additionally receive
+the classification status back from the fault-detect for use by other
+components but this was never explored.
 
-**** COMMENT What is the FTS graph processor?
-- https://code.ai.techfak.uni-bielefeld.de/trac/xcf/wiki/FilterTransformSelect#topics
-- https://toolkit.cit-ec.uni-bielefeld.de/components/tools/fts-filter-transform-select-toolkit
-######################################################################
-#  CAST
-######################################################################
-The CoSy Architecture Schema Toolkit (CAST) \cite{haweswyatt10aei} ...
-
-**** COMMENT What is CAST?
-**** COMMENT What did I have to do to make it work on CAST?
-** Experimental results
+*** Experimental results
 
 In order to evaluate the system, a series of experiments were create
 to test the algorithm. Three different CAST systems were created, each
 with properties to push the algorithm (and the changes made to it) in
 some way. In each of the following experiments, each component
-publishes only a single event type.
+publishes only a single event type. All experiments were run under the
+following conditions
+
+#+ATTR_LaTeX:
++----------------+---------------------+
+| Virtualization | Parallels 7.0.15054 |
++----------------+---------------------+
+| Guest system   | Ubuntu 10.04 32-bit |
++----------------+---------------------+
+| Host system    | Mac OSX    10.7.3   |
++----------------+---------------------+
 
 *** Linear chain
 :PROPERTIES:
@@ -507,6 +531,7 @@ digraph four_chain {
 [[file:img/4x4.pdf]]
 
 #+label: fig:4x4
+#+attr_latex: width=0.6\textwidth wrap placement={R}{0.61\textwidth}
 [[file:img/4x4.pdf]]
 
 The aim of this experiment was to test the algorithm on a more complex
@@ -522,7 +547,8 @@ the final results.
 
 **** Results
 
-#+attr_latex: width=0.8\textwidth
+
+#+attr_latex: width=0.6\textwidth wrap placement={R}{0.61\textwidth}
 [[file:./img/original_4x4.eps]]
 
 Fault was detected 1.18 seconds after induction.
@@ -540,6 +566,8 @@ Fault was detected 1.18 seconds after induction.
   }
 #+end_src
 #+results[e12770e1913edc49ff97a14d956f8a319dd77a5a]:
+
+#+attr_latex: width=0.6\textwidth wrap placement={R}{0.61\textwidth}
 [[file:img/10x0.pdf]]
 
 This experiment was quite different from the others. It tested a
@@ -668,7 +696,6 @@ model(n) &\in \Omega(n)
 #+END_LATEX
 
 ** Experimental results
-
 * Metronome-based approach
 ** Idea & Implementation
 
@@ -817,7 +844,7 @@ I conclude!
 
 
 
-#  LocalWords:  analytical middleware performant metadata
+#  LocalWords:  analytical middleware performant metadata runtime
 * Graphs                                                           :NOEXPORT:
 ** Original
 *** Linear
@@ -983,3 +1010,4 @@ I conclude!
 
 #+RESULTS[29479010baef6dfc79c12ac1a41b34a2420b283b]:
 [[file:img/fts.pdf]]
+#  LocalWords:  Virtualization subarchitecture
