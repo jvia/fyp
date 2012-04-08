@@ -86,6 +86,8 @@ Thanks Mum!
 #+begin_latex
 \tableofcontents
 \newpage
+\listoffigures
+\newpage
 #+end_latex
 
 * Motivation                                                          :DRAFT:
@@ -518,12 +520,12 @@ publishes only a single event type.
 *** Systems
 
 - Linear chain :: The linear chain was the simplest experiment run on
-                  the system. It is the exact system presented in
-                  figure \ref{fig:simple}. This CAST setup was used as
-                  a sanity check to ensure that the algorithm could
-                  function on the simplest case. Failure to work on
-                  this case would mean that the technique would likely
-                  not scale to larger systems.
+    the system. It is the exact system presented in
+    figure \ref{fig:simple}. This CAST setup was used as
+    a sanity check to ensure that the algorithm could
+    function on the simplest case. Failure to work on
+    this case would mean that the technique would likely
+    not scale to larger systems.
 - Parallel chains :: The aim of this experiment was to test the
      algorithm on a more complex set of communication patterns. Figure
      \ref{fig:4x4} shows the layout of the components within this
@@ -581,17 +583,17 @@ publishes only a single event type.
 
 *** Results
 
-|---------------+-----+-----+-----+------+-----------|
++---------------+-----+-----+-----+------+-----------+
 |               | FDR | FTR | FAR | SFAR | Delay     |
-|---------------+-----+-----+-----+------+-----------|
++---------------+-----+-----+-----+------+-----------+
 | Linear        |     |     |     |      |           |
-|---------------+-----+-----+-----+------+-----------|
++---------------+-----+-----+-----+------+-----------+
 | Parallel      |     |     |     |      | 1.18 sec. |
-|---------------+-----+-----+-----+------+-----------|
++---------------+-----+-----+-----+------+-----------+
 | Non-connected |     |     |     |      | 0.5 sec.  |
-|---------------+-----+-----+-----+------+-----------|
++---------------+-----+-----+-----+------+-----------+
 | Dora          |     |     |     |      |           |
-|---------------+-----+-----+-----+------+-----------|
++---------------+-----+-----+-----+------+-----------+
 
 *** Parallel chains
 :PROPERTIES:
@@ -1185,3 +1187,14 @@ digraph four_chain {
 #+end_src
 #+results[2c5c00e9891f5c001975c3b50767a7f5c481ed3c]:
 [[file:img/4x4.pdf]]
+** Dora
+
+#+begin_src dot :exports none :file "img/dora.pdf" :cache yes
+digraph four_chain {
+          rankdir=LR;
+          A -> B -> C -> D;
+          E -> F -> G -> H;
+          I -> J -> K -> L;
+          M -> N -> O -> P;
+}
+#+end_src
