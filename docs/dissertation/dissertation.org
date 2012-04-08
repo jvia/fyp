@@ -515,39 +515,83 @@ with properties to push the algorithm (and the changes made to it) in
 some way. In each of the following experiments, each component
 publishes only a single event type.
 
-#+begin_comment
-All experiments were run under the
-following conditions
+*** Systems
 
-#+ATTR_LaTeX:
-+----------------+---------------------+
-| Virtualization | Parallels 7.0.15054 |
-+----------------+---------------------+
-| Guest system   | Ubuntu 10.04 32-bit |
-+----------------+---------------------+
-| Host system    | Mac OSX    10.7.3   |
-+----------------+---------------------+
-#+end_comment
+- Linear chain :: The linear chain was the simplest experiment run on
+                  the system. It is the exact system presented in
+                  figure \ref{fig:simple}. This CAST setup was used as
+                  a sanity check to ensure that the algorithm could
+                  function on the simplest case. Failure to work on
+                  this case would mean that the technique would likely
+                  not scale to larger systems.
+- Parallel chains :: The aim of this experiment was to test the
+     algorithm on a more complex set of communication patterns. Figure
+     \ref{fig:4x4} shows the layout of the components within this
+     system. The communication proceeded through four separate linear
+     chains---each chain completely independent of the others.
+- Non-connected components :: This experiment was quite different from
+     the others. It tested a system in which none of the components
+     communicated with one another---a non-realistic system---in order
+     to test the algorithm in key ways. Similarly to the other
+     experiments, this system was run 10 times with and without the
+     induction of faults.
+#- Dora :: asa
 
+*** Methodology
+\label{subsubsec:experiment_methodology}
 
-# *** COMMENT Linear chain
-# :PROPERTIES:
-# :CUSTOM_ID: sec:3chain
-# :END:
-# **** Aim & Methodology
+#+begin_example
+: We conduct the experiments on BIRON [2] our human robot interaction
+: platform. We evaluate the on-line capabili- ties in the context of the
+: RoboCup task Follow Me executed by an expert in our laboratory. During
+: this task the human partner uses commands to advice the robot to
+: follow him, to stop, and either turn left or right. In return the
+: robot is allowed to ask questions (e.g. do you want me to follow you?)
+: if it is unsure which action to perform. Each evaluation run consists
+: of three phases, all executed on-line. In the first phase data from
+: three minutes of in- teraction are recorded and used to train the
+: fault detection model. Next, an additional time-series of 30 second
+: length is ecorded and used to optimize the parameter of the
+: statistical classifier. Finally, we monitor the system during normal
+: interaction and induce the to be detected fault. First, we record 30
+: seconds of normal interaction. Afterwards, we induce the fault at a
+: random point in time. By this means we always record a fixed time
+: period of normal behaviour of the system which we use to calculate the
+: false alarm rate. We monitor the system after inducing and detecting
+: the fault for 30 seconds. In case that our fault detector does not
+: report anything within 30 seconds after inducing the fault we stop the
+: experiment. In this case we declare the detection-run as failed. To
+: analyse the performance of our fault detection approach we measure i)
+: the system’s fault detection rate (FDR), ii) the tracking rate after
+: fault detection (FTR), iii) the false alarm rate (FAR), iv) the
+: seriousness of the false alarm i.e., the percentage of individual data
+: false alarms in relation to all events recorded during normal
+: behaviour(SFAR) and v) the delay between inducing the fault and it’s
+: reporting by the detector. Figure 2 visualizes the different measures
+: along an exemplary time-series of scores for a recorded data. First we
+: induce a disturbance of the the navigation com- ponent (NAV) which
+: disables the robot’s mobility. Next, we disturb the self localization
+: and mapping component (SLAM) leading to errors in components relying
+: on global planning. Furthermore, we introduce a malfunction in the
+: speech recognition sub-system (SR) which widely influences the human
+: robot interaction. Finally, we simulate a resource starvation (RS)
+: fault caused by a component which greedily occupies system resources
+: having unforeseen impact on the system as a whole.
+#+end_example
 
-# The linear chain was the simplest experiment run on the system. It is
-# the exact system presented in figure \ref{fig:simple}. This CAST setup
-# was used as a sanity check to ensure that the algorithm could function
-# on the simplest case. Failure to work on this case would mean that the
-# technique would likely not scale to larger systems.
+*** Results
 
-# The system was run with and without the induction of faults. The goal
-# was to see if the system could detect the induced fault without
-# flagging other states as fault. Data was collected and averaged over
-# 10 runs to prevent skewering by an anomalous run.
-
-# **** Results
+|---------------+-----+-----+-----+------+-----------|
+|               | FDR | FTR | FAR | SFAR | Delay     |
+|---------------+-----+-----+-----+------+-----------|
+| Linear        |     |     |     |      |           |
+|---------------+-----+-----+-----+------+-----------|
+| Parallel      |     |     |     |      | 1.18 sec. |
+|---------------+-----+-----+-----+------+-----------|
+| Non-connected |     |     |     |      | 0.5 sec.  |
+|---------------+-----+-----+-----+------+-----------|
+| Dora          |     |     |     |      |           |
+|---------------+-----+-----+-----+------+-----------|
 
 *** Parallel chains
 :PROPERTIES:
@@ -561,11 +605,6 @@ following conditions
 #+caption: Four parallel, independent linear chains.
 [[file:img/4x4.pdf]]
 
-The aim of this experiment was to test the algorithm on a more complex
-set of communication patterns. Figure \ref{fig:4x4} shows the layout
-of the components within this system. The communication proceeded through
-four separate linear chains---each chain completely independent of the
-others.
 
 As with the linear system described in section \ref{sec:3chain}, this
 system was run with and without the induction of faults. The system
@@ -587,31 +626,17 @@ Fault was detected 1.18 seconds after induction.
 :END:
 **** Aim & Methodology
 
-#+begin_src dot :exports none :file "img/10x0.pdf" :cache yes
-  graph G {
-          A;
-          B; C; D; E; F; G; H; I; J;
-  }
-#+end_src
-#+results[e12770e1913edc49ff97a14d956f8a319dd77a5a]:
-
 #+attr_latex: width=0.6\textwidth
 [[file:img/10x0.pdf]]
-
-This experiment was quite different from the others. It tested a
-system in which none of the components communicated with one
-another---a non-realistic system---in order to test the algorithm in
-key ways. Similarly to the other experiments, this system was run 10
-times with and without the induction of faults.
 
 **** Results
 
 #+attr_latex: width=0.8\textwidth
 [[file:img/original_10x1.eps]]
 
+The system performed
 Fault was detected 500 milliseconds after induction.
 
-*** COMMENT Dora
 ** Asymptotic analysis                                               :DRAFT:
 :PROPERTIES:
 :CUSTOM_ID: subsec:orig-asymp
@@ -725,6 +750,22 @@ model(n) &\in \Omega(n)
 #+END_LATEX
 
 ** TODO Experimental results
+
+The same methodology described in
+\ref{subsubsec:experiment_methodology} was used for these experiments.
+
+|---------------+-----+-----+-----+------+-----------|
+|               | FDR | FTR | FAR | SFAR | Delay     |
+|---------------+-----+-----+-----+------+-----------|
+| Linear        |     |     |     |      |           |
+|---------------+-----+-----+-----+------+-----------|
+| Parallel      |     |     |     |      |           |
+|---------------+-----+-----+-----+------+-----------|
+| Non-connected |     |     |     |      |           |
+|---------------+-----+-----+-----+------+-----------|
+| Dora          |     |     |     |      |           |
+|---------------+-----+-----+-----+------+-----------|
+
 * Metronome-based approach
 ** Idea & Implementation                                             :DRAFT:
 
@@ -772,9 +813,20 @@ original implementation.
 
 ** TODO Experimental results
 
-[[file:img/metronome_4x4.eps]]
+The same methodology described in
+\ref{subsubsec:experiment_methodology} was used for these experiments.
 
-[[file:img/metronome_10x1.eps]]
+|---------------+-----+-----+-----+------+-----------|
+|               | FDR | FTR | FAR | SFAR | Delay     |
+|---------------+-----+-----+-----+------+-----------|
+| Linear        |     |     |     |      |           |
+|---------------+-----+-----+-----+------+-----------|
+| Parallel      |     |     |     |      |           |
+|---------------+-----+-----+-----+------+-----------|
+| Non-connected |     |     |     |      |           |
+|---------------+-----+-----+-----+------+-----------|
+| Dora          |     |     |     |      |           |
+|---------------+-----+-----+-----+------+-----------|
 
 * Project management                                                  :DRAFT:
 \label{sec:management}
@@ -826,7 +878,7 @@ The original goals of the project were to modify the code used by
 Raphael Golombek, author of the original approach, to work with CAST
 and then to determine its efficacy in this system. These goals were
 met with enough time to extend the original approach in a meaningful
-way. 
+way.
 
 During the project, I had the habit of wanting to discard an approach
 if I did not get the desired results immediately. This fatalistic
@@ -849,7 +901,7 @@ formulations could not break the code base in unexpected ways. I also
 managed my time well. Knowing that the autumn term would be incredibly
 busy, I finished the core of my project over the summer holiday. This
 eased the stress I would have otherwise felt and let me focus on that
-term's work. 
+term's work.
 
 Overall, I did a lot right which made the project easier than it could
 have been. I also learned a lot about how to approach the scientific
@@ -926,6 +978,26 @@ for the knowledge gained about the topic and on project management.
 
 #  LocalWords:  analytical middleware performant metadata runtime
 
+* Appendix: Results
+** Original model
+*** Linear chain
+*** Parallel chains
+[[file:img/original_4x4.eps]]
+*** Non-connected components
+[[file:img/original_10x1.eps]]
+*** Dora
+** Connection-based model
+*** Linear chain
+*** Parallel chains
+*** Non-connected components
+*** Dora
+** Metronome model
+*** Linear chain
+*** Parallel chains
+[[file:img/metronome_4x4.eps]]
+*** Non-connected components
+[[file:img/metronome_10x1.eps]]
+*** Dora
 * Graphs                                                           :NOEXPORT:
 ** Original
 *** Linear
@@ -1092,7 +1164,15 @@ for the knowledge gained about the topic and on project management.
 #+RESULTS[29479010baef6dfc79c12ac1a41b34a2420b283b]:
 [[file:img/fts.pdf]]
 #  LocalWords:  Virtualization subarchitecture timespan
-** 4x4
+** 10x0 system
+#+begin_src dot :exports none :file "img/10x0.pdf" :cache yes
+  graph G {
+          A;
+          B; C; D; E; F; G; H; I; J;
+  }
+#+end_src
+#+results[e12770e1913edc49ff97a14d956f8a319dd77a5a]:
+** 4x4 system
 
 #+begin_src dot :exports none :file "img/4x4.pdf" :cache yes
 digraph four_chain {
