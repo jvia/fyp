@@ -759,6 +759,7 @@ original implementation.
 [[file:img/metronome_10x1.eps]]
 
 * Project management                                                  :DRAFT:
+\label{sec:management}
 
 Large projects are strenuous. Effective project management then
 becomes crucial in ensuring constant progress throughout academic
@@ -795,11 +796,48 @@ always a concrete task that could be done.
 *** Jenkins
 *** git
 * TODO Project evaluation
-** COMMENT What was good?
-*** project planning w.r.t. summer work
-** COMMENT What can be learned?
-*** sticking with it when intial results are bad
-*** setting better goals
+\label{sec:evaluation}
+
+This section will focus on evaluating two important aspects of a
+project. First, it will evaluate how well the project met its intended
+goals. Second, it will evaluate my performance during the course of
+this project. For both aspects, things done right will be mentioned as
+will areas of improvement for future projects.
+
+The original goals of the project were to modify the code used by
+Raphael Golombek, author of the original approach, to work with CAST
+and then to determine its efficacy in this system. These goals were
+met with enough time to extend the original approach in a meaningful
+way. 
+
+During the project, I had the habit of wanting to discard an approach
+if I did not get the desired results immediately. This fatalistic
+approach to science inhibits the discovery of all but the most trivial
+new knowledge. Additionally, I had the bad habit of accepting any of
+the data that came out of the system without understanding why those
+results had occurred. Fortunately, my supervisor Nick helped me start
+to break these habits. Because he would ask me to explain why I had
+the results I had, I was forced to sit and analyze the system. By
+doing this I was able to find and fix a number of bugs in the original
+implementation and correct errors in the score calculation which did
+not match the papers describing the technique. I am very grateful to
+have to learned these lessons sooner in my science career.
+
+I also did a lot of things right during the project. As covered in
+section \ref{sec:management}, I did a lot to ease the management and
+understanding of such a large, experimental code base. Adding unit
+tests to the core classes ensured that my alternative model
+formulations could not break the code base in unexpected ways. I also
+managed my time well. Knowing that the autumn term would be incredibly
+busy, I finished the core of my project over the summer holiday. This
+eased the stress I would have otherwise felt and let me focus on that
+term's work. 
+
+Overall, I did a lot right which made the project easier than it could
+have been. I also learned a lot about how to approach the scientific
+aspects of the project. These lessons will be useful in graduate
+school so I feel lucky for having learned them now.
+
 * Conclusion                                                          :DRAFT:
 
 This dissertation presented the theory behind a new data-driven
@@ -869,6 +907,8 @@ for the knowledge gained about the topic and on project management.
 
 
 #  LocalWords:  analytical middleware performant metadata runtime
+
+* Appendix: How to run
 
 * Graphs                                                           :NOEXPORT:
 ** Original
