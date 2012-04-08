@@ -13,6 +13,9 @@
 #+LATEX_HEADER: \usepackage{program}
 #+LATEX_HEADER: \NumberProgramstrue
 
+######################################################################
+# Title page
+######################################################################
 #+begin_latex
 \begin{titlepage}
 %% Set the line spacing to 1 for the title page.
@@ -40,7 +43,12 @@ Copyright {\copyright} 2012 School of Computer Science, University of Birmingham
 \end{large}
 \end{spacing}
 \end{titlepage}
+#+end_latex
 
+######################################################################
+# Abstract
+######################################################################
+#+begin_latex
 \begin{abstract}
 Fault-detection in robotics systems is a difficult task and as systems
 are becoming more larger and complex, subtle errors are becoming
@@ -59,13 +67,23 @@ the original approach.
 machine learning
 \end{abstract}
 \newpage
+#+end_latex
 
+######################################################################
+# Acknowledgments
+######################################################################
+#+begin_latex
 \renewcommand{\abstractname}{Acknowledgments}
 \begin{abstract}
 Thanks Mum!
 \end{abstract}
 \newpage
+#+end_latex
 
+######################################################################
+# TOC
+######################################################################
+#+begin_latex
 \tableofcontents
 \newpage
 #+end_latex
@@ -795,7 +813,7 @@ always a concrete task that could be done.
 *** maven
 *** Jenkins
 *** git
-* TODO Project evaluation
+* Project evaluation                                                  :DRAFT:
 \label{sec:evaluation}
 
 This section will focus on evaluating two important aspects of a
@@ -907,8 +925,6 @@ for the knowledge gained about the topic and on project management.
 
 
 #  LocalWords:  analytical middleware performant metadata runtime
-
-* Appendix: How to run
 
 * Graphs                                                           :NOEXPORT:
 ** Original
