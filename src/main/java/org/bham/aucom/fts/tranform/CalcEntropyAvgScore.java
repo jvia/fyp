@@ -132,7 +132,7 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
         }
 
         // Calculate output
-        output = probability * (1 - Math.pow(entropy, 2) / denominator);
+        output = Math.abs(probability * (1 - Math.pow(entropy, 2) / denominator));
         log.fine(format("Single score: [%d ---> %d] => %.2f%nProbability: %f%n" +
                         "Entropy:     %f%n" +
                         "Denominator: %f%n" +

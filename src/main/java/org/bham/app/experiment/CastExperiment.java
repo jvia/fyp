@@ -150,7 +150,7 @@ public class CastExperiment implements Experiment {
             }
 
             // wait here until it is done
-            while (faultDetector.getOutput().size() < size) {
+            while (faultDetector.getOutput().size() < 500) {
                 long size = faultDetector.getDetectorGraph().getTotalElementsSeen();
                 if (!quiet) {
                     System.out.printf("Detector: %d, Output: %d%n", size, faultDetector.getOutput().size());
@@ -270,7 +270,7 @@ public class CastExperiment implements Experiment {
 
 
         // Create a new classifier with a mean that is a s
-        detector.setClassificator(new StatisticalAnomalyClassifier(r.getMean() * (4. / 5.), r.getVariance()));
+        detector.setClassificator(new StatisticalAnomalyClassifier(r.getMean(), r.getVariance()));
         detector.setSlidingWindow(new SlidingWindow(800, 400));
 
         System.out.printf("Classifier: %s", detector.getClassificator().getAttributes());
