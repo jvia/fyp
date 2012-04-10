@@ -1,3 +1,4 @@
+# Fault induced at 64007?
 #    Timestamp     Score     Threshold     Status   Raw Score   Component   Count
              0     0.327      0.303         0     0.11860         239       0
            502     0.426      0.630         1     0.36054         243      56

@@ -520,12 +520,12 @@ publishes only a single event type.
 *** Systems
 
 - Linear chain :: The linear chain was the simplest experiment run on
-    the system. It is the exact system presented in
-    figure \ref{fig:simple}. This CAST setup was used as
-    a sanity check to ensure that the algorithm could
-    function on the simplest case. Failure to work on
-    this case would mean that the technique would likely
-    not scale to larger systems.
+                  the system. It is the exact system presented in
+                  figure \ref{fig:simple}. This CAST setup was used as
+                  a sanity check to ensure that the algorithm could
+                  function on the simplest case. Failure to work on
+                  this case would mean that the technique would likely
+                  not scale to larger systems.
 - Parallel chains :: The aim of this experiment was to test the
      algorithm on a more complex set of communication patterns. Figure
      \ref{fig:4x4} shows the layout of the components within this
@@ -583,17 +583,13 @@ publishes only a single event type.
 
 *** Results
 
-+---------------+-----+-----+-----+------+-----------+
-|               | FDR | FTR | FAR | SFAR | Delay     |
-+---------------+-----+-----+-----+------+-----------+
-| Linear        |     |     |     |      |           |
-+---------------+-----+-----+-----+------+-----------+
-| Parallel      |     |     |     |      | 1.18 sec. |
-+---------------+-----+-----+-----+------+-----------+
-| Non-connected |     |     |     |      | 0.5 sec.  |
-+---------------+-----+-----+-----+------+-----------+
-| Dora          |     |     |     |      |           |
-+---------------+-----+-----+-----+------+-----------+
+
+|               | Sensitivity | Specificity |  MCC | Delay     |
+|---------------+-------------+-------------+------+-----------|
+| Linear        |         1.0 |         1.0 |  1.0 | 0.37 sec. |
+| Parallel      |         1.0 |        0.90 | 0.92 | 0 sec.    |
+| Non-connected |        0.99 |        0.94 | 0.96 | 0.50 sec. |
+
 
 *** Parallel chains
 :PROPERTIES:
@@ -753,20 +749,11 @@ model(n) &\in \Omega(n)
 
 ** TODO Experimental results
 
-The same methodology described in
-\ref{subsubsec:experiment_methodology} was used for these experiments.
-
-|---------------+-----+-----+-----+------+-----------|
-|               | FDR | FTR | FAR | SFAR | Delay     |
-|---------------+-----+-----+-----+------+-----------|
-| Linear        |     |     |     |      |           |
-|---------------+-----+-----+-----+------+-----------|
-| Parallel      |     |     |     |      |           |
-|---------------+-----+-----+-----+------+-----------|
-| Non-connected |     |     |     |      |           |
-|---------------+-----+-----+-----+------+-----------|
-| Dora          |     |     |     |      |           |
-|---------------+-----+-----+-----+------+-----------|
+|               | Sensitivity | Specificity |  MCC | Delay     |
+|---------------+-------------+-------------+------+-----------|
+| Linear        |             |             |      |           |
+| Parallel      |             |             |      |           |
+| Non-connected |             |             |      |           |
 
 * Metronome-based approach
 ** Idea & Implementation                                             :DRAFT:
@@ -815,20 +802,11 @@ original implementation.
 
 ** TODO Experimental results
 
-The same methodology described in
-\ref{subsubsec:experiment_methodology} was used for these experiments.
-
-|---------------+-----+-----+-----+------+-----------|
-|               | FDR | FTR | FAR | SFAR | Delay     |
-|---------------+-----+-----+-----+------+-----------|
-| Linear        |     |     |     |      |           |
-|---------------+-----+-----+-----+------+-----------|
-| Parallel      |     |     |     |      |           |
-|---------------+-----+-----+-----+------+-----------|
-| Non-connected |     |     |     |      |           |
-|---------------+-----+-----+-----+------+-----------|
-| Dora          |     |     |     |      |           |
-|---------------+-----+-----+-----+------+-----------|
+|               | Sensitivity | Specificity |  MCC | Delay     |
+|---------------+-------------+-------------+------+-----------|
+| Linear        |             |             |      |           |
+| Parallel      |             |             |      |           |
+| Non-connected |             |             |      |           |
 
 * Project management                                                  :DRAFT:
 \label{sec:management}
