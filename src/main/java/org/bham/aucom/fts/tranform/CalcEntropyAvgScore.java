@@ -127,7 +127,7 @@ public class CalcEntropyAvgScore extends AbstractAucomTranformNode<TemporalProba
         if (Math.abs(entropy - denominator) < 0.0001) {
             output = probability;
         } else {
-            output = probability * (1.0 - entropy / denominator);
+            output = Math.abs(probability * (1.0 - entropy / denominator));
         }
         log.fine(format("Single score: [%d ---> %d] => %.2f%nProbability: %f%n" +
                         "Entropy:     %f%n" +

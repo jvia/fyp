@@ -157,7 +157,7 @@ public class CastExperiment implements Experiment {
             }
 
             // wait here until it is done
-            while (faultDetector.getOutput().size() < 1000 /*size*/) {
+            while (faultDetector.getOutput().size() < 500 /*size*/) {
                 long size = faultDetector.getDetectorGraph().getTotalElementsSeen();
                 if (!quiet) {
                     System.out.printf("Detector: %d, Output: %d%n", size, faultDetector.getOutput().size());
