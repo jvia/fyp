@@ -104,7 +104,7 @@ public class DetectorGraph extends AbstractAucomGraph implements TimeSeriesStatu
         rawScoreCalculatorNode = new CalcEntropyAvgScore();
 
         meanScoreCalculatorNode = new CalcMeanValue();
-        meanScoreCalculatorNode.setSlidingWindow(new SlidingWindow(800, 400));
+        meanScoreCalculatorNode.setSlidingWindow(new SlidingWindow(100, 50));
 
         classificationNode = new Classify();
         sink = new TimeSeriesSink<Classification>(new ClassificationTimeSeries());
