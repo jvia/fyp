@@ -1,3 +1,4 @@
+# Fault induced at 230599 ms
 #    Timestamp     Score     Threshold     Status   Raw Score   Component   Count
             76     0.610      0.587         0     0.60705           0      10
            594     0.631      0.593         0     0.59095           0      65

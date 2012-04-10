@@ -583,13 +583,11 @@ publishes only a single event type.
 
 *** Results
 
-
 |               | Sensitivity | Specificity |  MCC | Delay     |
 |---------------+-------------+-------------+------+-----------|
 | Linear        |         1.0 |         1.0 |  1.0 | 0.37 sec. |
 | Parallel      |         1.0 |        0.90 | 0.92 | 0 sec.    |
 | Non-connected |        0.99 |        0.94 | 0.96 | 0.50 sec. |
-
 
 *** Parallel chains
 :PROPERTIES:
@@ -749,11 +747,11 @@ model(n) &\in \Omega(n)
 
 ** TODO Experimental results
 
-|               | Sensitivity | Specificity |  MCC | Delay     |
-|---------------+-------------+-------------+------+-----------|
-| Linear        |             |             |      |           |
-| Parallel      |             |             |      |           |
-| Non-connected |             |             |      |           |
+|               | Sensitivity | Specificity |   MCC | Delay |
+|---------------+-------------+-------------+-------+-------|
+| Linear        |         0.0 |         1.0 | -0.05 | -     |
+| Parallel      |         0.0 |       0.954 | -0.19 | -     |
+| Non-connected |         0.0 |         1.0 |  0.12 | -     |
 
 * Metronome-based approach
 ** Idea & Implementation                                             :DRAFT:
@@ -805,8 +803,8 @@ original implementation.
 |               | Sensitivity | Specificity |  MCC | Delay     |
 |---------------+-------------+-------------+------+-----------|
 | Linear        |             |             |      |           |
-| Parallel      |             |             |      |           |
-| Non-connected |             |             |      |           |
+| Parallel      |        0.96 |         1.0 | 0.94 | 12.9 sec  |
+| Non-connected |        0.91 |        0.99 | 0.90 | 23.9 sec. |
 
 * Project management                                                  :DRAFT:
 \label{sec:management}
