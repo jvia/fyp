@@ -9,9 +9,18 @@
 (setq org-confirm-babel-evaluate nil)
 (add-to-list 'org-export-latex-classes
              '("dissertation"
-"\\documentclass{article}
-\\usepackage[utf8]{inputenc}
-\\usepackage[T1]{fontenc}
+               "
+% !TEX TS-program = xelatex
+% !TEX encoding = UTF-8 Unicode
+\\documentclass{article}
+\\usepackage{fontspec}
+\\usepackage{xunicode}
+\\usepackage{xltxtra}
+\\usepackage{xunicode}
+\\usepackage{xltxtra}
+\\defaultfontfeatures{Mapping=tex-text}
+\\setromanfont{Linux Libertine O}
+\\setmonofont[Scale=0.8]{Monaco}
 \\usepackage{geometry}
 \\usepackage{setspace}
 \\usepackage{wrapfig}
@@ -27,6 +36,7 @@
 \\usepackage{latexsym}
 \\usepackage{amssymb}
 \\usepackage{hyperref}
+\\usepackage{setspace}
 \\tolerance=1000
 \\usepackage{color}
 \\usepackage{listings}
@@ -37,3 +47,6 @@
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                ("\\paragraph{%s}" . "\\paragraph*{%s}")
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+(setq org-latex-to-pdf-process 
+  '("xelatex -interaction nonstopmode %f"
+     "xelatex -interaction nonstopmode %f")) ;; for multiple passes
