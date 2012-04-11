@@ -509,129 +509,84 @@ fault-detection system. The CAST component could additionally receive
 the classification status back from the fault-detect for use by other
 components but this was never explored.
 
-** TODO Experimental results
+** Experimental results
 
-In order to evaluate the system, a series of experiments were create
+In order to evaluate the system, a series of experiments were created
 to test the algorithm. Three different CAST systems were created, each
 with properties to push the algorithm (and the changes made to it) in
 some way. In each of the following experiments, each component
-publishes only a single event type.
+publishes only a single event type. The following sections will
+present the systems tested, the methodology used, and the results of
+the experiments.
 
 *** Systems
 
-- Linear chain :: The linear chain was the simplest experiment run on
-                  the system. It is the exact system presented in
-                  figure \ref{fig:simple}. This CAST setup was used as
-                  a sanity check to ensure that the algorithm could
-                  function on the simplest case. Failure to work on
-                  this case would mean that the technique would likely
-                  not scale to larger systems.
-- Parallel chains :: The aim of this experiment was to test the
-     algorithm on a more complex set of communication patterns. Figure
-     \ref{fig:4x4} shows the layout of the components within this
-     system. The communication proceeded through four separate linear
-     chains---each chain completely independent of the others.
-- Non-connected components :: This experiment was quite different from
-     the others. It tested a system in which none of the components
-     communicated with one another---a non-realistic system---in order
-     to test the algorithm in key ways. Similarly to the other
-     experiments, this system was run 10 times with and without the
-     induction of faults.
-#- Dora :: asa
+TODO: add pictures of parallel & non-connected systems
+
+- Linear chain system :: This is the simple system presented as an
+     example back in section \ref{sec:theory} and was used as a sanity
+     check when running experiments.
+- Parallel chains system :: This system is a more complex version of
+     the linear chain system. It is four independent, linear systems.
+     The goal with this system was to test how independent chains of
+     message events would affect one another.
+- Non-connected system :: This system had ten unconnected components.
+     It was created to test the ability of the algorithm. It is worth
+     nothing that this system does not represent a realistic system
+     for solving a task in an event-based architecture.
 
 *** Methodology
 \label{subsubsec:experiment_methodology}
 
-#+begin_example
-: We conduct the experiments on BIRON [2] our human robot interaction
-: platform. We evaluate the on-line capabili- ties in the context of the
-: RoboCup task Follow Me executed by an expert in our laboratory. During
-: this task the human partner uses commands to advice the robot to
-: follow him, to stop, and either turn left or right. In return the
-: robot is allowed to ask questions (e.g. do you want me to follow you?)
-: if it is unsure which action to perform. Each evaluation run consists
-: of three phases, all executed on-line. In the first phase data from
-: three minutes of in- teraction are recorded and used to train the
-: fault detection model. Next, an additional time-series of 30 second
-: length is ecorded and used to optimize the parameter of the
-: statistical classifier. Finally, we monitor the system during normal
-: interaction and induce the to be detected fault. First, we record 30
-: seconds of normal interaction. Afterwards, we induce the fault at a
-: random point in time. By this means we always record a fixed time
-: period of normal behaviour of the system which we use to calculate the
-: false alarm rate. We monitor the system after inducing and detecting
-: the fault for 30 seconds. In case that our fault detector does not
-: report anything within 30 seconds after inducing the fault we stop the
-: experiment. In this case we declare the detection-run as failed. To
-: analyse the performance of our fault detection approach we measure i)
-: the system’s fault detection rate (FDR), ii) the tracking rate after
-: fault detection (FTR), iii) the false alarm rate (FAR), iv) the
-: seriousness of the false alarm i.e., the percentage of individual data
-: false alarms in relation to all events recorded during normal
-: behaviour(SFAR) and v) the delay between inducing the fault and it’s
-: reporting by the detector. Figure 2 visualizes the different measures
-: along an exemplary time-series of scores for a recorded data. First we
-: induce a disturbance of the the navigation com- ponent (NAV) which
-: disables the robot’s mobility. Next, we disturb the self localization
-: and mapping component (SLAM) leading to errors in components relying
-: on global planning. Furthermore, we introduce a malfunction in the
-: speech recognition sub-system (SR) which widely influences the human
-: robot interaction. Finally, we simulate a resource starvation (RS)
-: fault caused by a component which greedily occupies system resources
-: having unforeseen impact on the system as a whole.
-#+end_example
+The experiments were run in a virtual machine with each system being
+run ten times. During the first phase, four-thousand message events
+are collected from a normal run of this system. It is this data that
+will be used to train the model that is used in the ten runs. In the
+second phase, the system is run for another four-thousand message
+events with a fault being induced at the two-thousand message event
+mark. The performance is analyzed by calculating the delay between
+fault induction and fault detection, the sensitivity and
+specificity of the fault detector, and the Matthews correlation
+coefficient.
+
+The delay being fault induction and fault detection tells us how
+quickly the algorithm can detect a fault within the system. The goal
+is to detect a fault as quickly as possible. The sensitivity indicates
+the likelihood that the fault detector will classify a faulty as being
+a faulty state. The specificity indicates the likelihood that a normal
+state will be correctly classified. The Matthews correlation
+coefficient (MCC) is measure of the agreement between predicted state and
+observed state. If the MCC value is +1, it indicates perfect
+prediction; if -1, it indicates total disagreement; and if 0, it
+indicates random prediction \cite{Baldi:2000wp}.
 
 *** Results
 
+#+caption: Experimental results from the original algorithm.
+#+attr_latex: align=|l|r|r|r|r| 
+#+label: tbl:original
+|---------------+-------------+-------------+------+-----------|
 |               | Sensitivity | Specificity |  MCC | Delay     |
 |---------------+-------------+-------------+------+-----------|
 | Linear        |         1.0 |         1.0 |  1.0 | 0.37 sec. |
+|---------------+-------------+-------------+------+-----------|
 | Parallel      |         1.0 |        0.90 | 0.92 | 0 sec.    |
+|---------------+-------------+-------------+------+-----------|
 | Non-connected |        0.99 |        0.94 | 0.96 | 0.50 sec. |
+|---------------+-------------+-------------+------+-----------|
 
-*** Parallel chains
-:PROPERTIES:
-:CUSTOM_ID: sec:4x4
-:END:
-**** Aim & Methodology
-
-# wrap placement={R}{0.61\textwidth}
-#+label: fig:4x4
-#+attr_latex: width=0.6\textwidth
-#+caption: Four parallel, independent linear chains.
-[[file:img/4x4.pdf]]
-
-
-As with the linear system described in section \ref{sec:3chain}, this
-system was run with and without the induction of faults. The system
-was run 10 times to ensure no anomalous experiment would skew
-the final results.
-
-**** Results
-
-#+attr_latex: width=0.8\textwidth
-[[file:./img/original_4x4.eps]]
-
-Fault was detected 1.18 seconds after induction.
-
-\vspace{0.5cm}
-
-*** Non-connected components
-:PROPERTIES:
-:CUSTOM_ID: sec:10x1
-:END:
-**** Aim & Methodology
-
-#+attr_latex: width=0.6\textwidth
-[[file:img/10x0.pdf]]
-
-**** Results
-
-#+attr_latex: width=0.8\textwidth
-[[file:img/original_10x1.eps]]
-
-The system performed
-Fault was detected 500 milliseconds after induction.
+Table \ref{tbl:original} summarizes the results of the experiments.
+The original approach has nearly perfect sensitivity in all
+experiments meaning nearly the entirety of the faulty system state.
+This might be at the cost of a lower specificity but the specificity
+results are also high. The MCC value indicates that the fault detector
+prediction almost perfectly matched the ground truth in all
+experiments. All faults were detected in less than half of a second.
+To be clear, the reason why there is a delay and perfect sensitivity
+in the linear experiment is due to the fact that there is a delay in
+the calculation of the score. The first system classification after
+the fault was induced was faulty, but it took 0.37 seconds for this
+classification to occur.
 
 ** Asymptotic analysis                                               :DRAFT:
 :PROPERTIES:
@@ -745,13 +700,19 @@ model(n) &\in \Omega(n)
 \end{equation}
 #+END_LATEX
 
-** TODO Experimental results
+** Experimental results
 
+#+caption: Experimental results from the connection-based model.
+#+attr_latex: align=|l|r|r|r|r| 
+|---------------+-------------+-------------+-------+-------|
 |               | Sensitivity | Specificity |   MCC | Delay |
 |---------------+-------------+-------------+-------+-------|
 | Linear        |         0.0 |         1.0 | -0.05 | -     |
+|---------------+-------------+-------------+-------+-------|
 | Parallel      |         0.0 |       0.954 | -0.19 | -     |
+|---------------+-------------+-------------+-------+-------|
 | Non-connected |         0.0 |         1.0 |  0.12 | -     |
+|---------------+-------------+-------------+-------+-------|
 
 * Metronome-based approach
 ** Idea & Implementation                                             :DRAFT:
@@ -798,13 +759,19 @@ becomes $model(n) \in \Theta(n + 1) = 101$. The difference in space
 efficiency means that the metronome approach could scale more than the
 original implementation.
 
-** TODO Experimental results
+** Experimental results
 
-|               | Sensitivity | Specificity |  MCC | Delay     |
-|---------------+-------------+-------------+------+-----------|
-| Linear        |             |             |      |           |
-| Parallel      |        0.96 |         1.0 | 0.94 | 12.9 sec  |
-| Non-connected |        0.91 |        0.99 | 0.90 | 23.9 sec. |
+#+caption: Experimental results from the metronome model.
+#+attr_latex: align=|l|r|r|r|r| 
+|---------------+-------------+-------------+------+----------|
+|               | Sensitivity | Specificity |  MCC | Delay    |
+|---------------+-------------+-------------+------+----------|
+| Linear        |        0.84 |         1.0 | 0.83 | 6.5 sec. |
+|---------------+-------------+-------------+------+----------|
+| Parallel      |        0.95 |        0.76 | 0.73 | 1.8 sec. |
+|---------------+-------------+-------------+------+----------|
+| Non-connected |        0.94 |        0.95 | 0.88 | 9.2 sec. |
+|---------------+-------------+-------------+------+----------|
 
 * Project management                                                  :DRAFT:
 \label{sec:management}
@@ -953,29 +920,27 @@ for the knowledge gained about the topic and on project management.
 \bibliography{references}
 
 
-
-#  LocalWords:  analytical middleware performant metadata runtime
-
-* Appendix: Results
+\appendix
+\appendixpage
+\addappheadtotoc
+* Experiment graphs
 ** Original model
 *** Linear chain
 *** Parallel chains
 [[file:img/original_4x4.eps]]
 *** Non-connected components
 [[file:img/original_10x1.eps]]
-*** Dora
 ** Connection-based model
 *** Linear chain
 *** Parallel chains
 *** Non-connected components
-*** Dora
 ** Metronome model
 *** Linear chain
 *** Parallel chains
 [[file:img/metronome_4x4.eps]]
 *** Non-connected components
 [[file:img/metronome_10x1.eps]]
-*** Dora
+* User guide
 * Graphs                                                           :NOEXPORT:
 ** Original
 *** Linear
@@ -1085,7 +1050,8 @@ for the knowledge gained about the topic and on project management.
   }
   }
 #+end_src
-#+results[fc8897caa2a034eb34782fd9c83ca4451bb52636]:
+
+#+results[28b705f07d1e03abb305d766c3977c98ea4a8c35]:
 [[file:img/simple.pdf]]
 
 ** Complex example
@@ -1105,7 +1071,7 @@ for the knowledge gained about the topic and on project management.
   }
 #+end_src
 
-#+results[8033868d33a97b13559b13165338665ffeaaf6df]:
+#+results[99f3dcb61f89218e0549f24db3818522474e40b1]:
 [[file:img/complex.pdf]]
 
 ** Learned
@@ -1125,8 +1091,9 @@ for the knowledge gained about the topic and on project management.
   }
 #+end_src
 
-#+RESULTS[cc2bb741e8fa3d5e6be7049aa932a42ec96640c5]:
+#+results[cc2bb741e8fa3d5e6be7049aa932a42ec96640c5]:
 [[file:img/learned.pdf]]
+
 ** FTS graph
 
 #+begin_src dot :exports none :file "img/fts.pdf" :cache yes
@@ -1149,7 +1116,10 @@ for the knowledge gained about the topic and on project management.
           B; C; D; E; F; G; H; I; J;
   }
 #+end_src
-#+results[e12770e1913edc49ff97a14d956f8a319dd77a5a]:
+
+#+results[b8b5f54062138b16fa109b193bbe3784095243ef]:
+[[file:img/10x0.pdf]]
+
 ** 4x4 system
 
 #+begin_src dot :exports none :file "img/4x4.pdf" :cache yes
@@ -1161,8 +1131,10 @@ digraph four_chain {
           M -> N -> O -> P;
 }
 #+end_src
-#+results[2c5c00e9891f5c001975c3b50767a7f5c481ed3c]:
+
+#+results[102e7bb2e2a92621d961c874d899b77a207c512b]:
 [[file:img/4x4.pdf]]
+
 ** Dora
 
 #+begin_src dot :exports none :file "img/dora.pdf" :cache yes
@@ -1174,3 +1146,8 @@ digraph four_chain {
           M -> N -> O -> P;
 }
 #+end_src
+
+#+results[9256b7f8aa8b1fdab31ab3f2e0eec2527c138cb7]:
+[[file:img/dora.pdf]]
+
+#  LocalWords:  analytical middleware performant metadata runtime
