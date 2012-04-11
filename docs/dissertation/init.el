@@ -28,6 +28,8 @@
 \\usepackage{amssymb}
 \\usepackage{hyperref}
 \\tolerance=1000
+\\usepackage{color}
+\\usepackage{listings}
 [NO-DEFAULT-PACKAGES]
 [NO-PACKAGES]"
                ("\\section{%s}" . "\\section*{%s}")

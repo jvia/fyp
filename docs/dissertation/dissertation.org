@@ -1,6 +1,6 @@
 #+title:
 #+author:  Jeremiah M. Via
-#+options: H:4 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+options: H:4 num:t toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
 #+options: TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:nil
 #+startup: hidestars indent
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
@@ -79,12 +79,12 @@ machine learning
 # Acknowledgments
 ######################################################################
 #+begin_latex
-  \renewcommand{\abstractname}{}%{Acknowledgments}
-  \begin{abstract}
-  To Nick, Marc, and Raphael for guiding me on the first project of my
-  scientific career.
-  \end{abstract}
-  \newpage
+\renewcommand{\abstractname}{}%{Acknowledgments}
+\begin{abstract}
+To Nick, Marc, and Raphael for guiding me on the first project of my
+scientific career.
+\end{abstract}
+\newpage
 #+end_latex
 
 ######################################################################
@@ -941,6 +941,116 @@ for the knowledge gained about the topic and on project management.
 #+end_center
 
 * User guide
+** Installation
+
+As this project depends on Java and CAST, you must have a system which
+can run both. A working installation of CAST is necessary;
+instructions can be found on the project homepage [fn:1]. Once CAST is
+installed, most of the prerequisites will be met.
+
+Additionally, this project uses Apache Maven as its build system. This
+has the benefit that most libraries are automatically installed from a
+remote repository with no work on your part. Unfortunately, not all
+of the necessary Java libraries are available in the Maven
+repositories so in addition, there is a top-level folder called =lib=
+which contains additional libraries. Within =lib=, there is a script
+called =install_libs= which will install all of the libraries. It
+can be executed at the command line like so
+
+#+begin_example
+  user@machine:~/fyp/libs$ ./install_libs
+#+end_example
+
+With of all the necessary preconditions met, building the project
+should be simple. To build the project into a =jar=, simply go to
+top-level folder in the project and execute the following command
+
+#+begin_example
+  user@machine:~/fyp$ mvn package
+#+end_example
+
+This command will compile the code, run all of the unit tests, and
+then build the =jar= file.
+
+** Running
+
+#+begin_example
+  user@machine:~/fyp$ java -Xmx2g \
+                           -jar target/aucom-0.0.1-jar-with-dependencies.jar
+#+end_example
+
+The following command line options are available for determine which
+part of the system you would like to run. 
+
+#+begin_example 
+  java AucomMain [options...]
+   -C         : Run the data collector. This must be used with
+                the -o options to specify the name of the
+                output file
+   -D         : Transform a classification file into a dat file
+                suitable for graphing in gnuplot.
+   -E         : Run the data collector. This must be used with
+                the -i and -o options to specify the name of
+                the input and output files
+   -R         : Run aucom with a previously collected
+                observationfiles as the input.
+   -e N       : The observation when the error is to occur.
+   -i FILE    : *Required* The input file. Given the major mode
+                of the program, the type of file will be
+                inferred.
+   -o FILE    : *Required* The output file. Given the major
+                mode of the program, the type of file will be
+                inferred.
+   -q         : Inhibit output, with the exception of the fault
+                timestamp when running an experiment.
+   -s N       : The number of observations to collect before
+                terminating the program.
+   -t FILE    : The file to use when training the model for
+                replay mode.
+#+end_example
+                                          
+Because it can be so tedious to specify Java VM options and options
+for the fault detector, there are a serious of wrapper scripts to make
+it more bearable. These can be found in the directory
+=experiment_configs=. The script =observation_collection.sh= creates a
+run the necessary components to collect an input observation stream
+for training, the script =experiment.sh= will run an experiment, and
+the script =convert.sh= will convert from the default classification
+XML data to a space separated CSV file for easier plotting. There is
+an additional script, =replay.sh=, which allows one to run an entire
+experiment independent of CAST. All that is needed are two observation
+time series; one is used as the training data and the other used as
+input to the trained fault detector.
+
+** Analysis
+
+Analysis is an important aspect of this project so a lot of work has
+been done to make it as quick as possible. As a result, data comes out
+of the system in a format easily interpreted by the =gnuplot=. This
+has been the program used for plotting data throughout this project
+and there are a number of example scripts scattered through the
+project directories. A simple =gnuplot= script is presented below which will
+display the graph to the screen. 
+
+#+begin_example
+  reset
+  set yrange [0:1]
+  data='experimental_data.csv'
+  plot data using 1:2 with lines title 'Score',\
+       data using 1:3 with lines title 'Threshold'
+  #+end_example
+
+To generate the plot, run the script with the command below making
+sure you enter the =-p= because it keeps the window after the script
+has terminated.
+
+#+begin_example
+  gnuplt -p analysis.plt
+#+end_example
+
+More options can be found in the manpages or in the excellent online
+documentation.
+
 * Graphs                                                           :NOEXPORT:
 ** Original
 *** Linear
@@ -1314,3 +1424,7 @@ digraph four_chain {
 [[file:img/dora.pdf]]
 
 #  LocalWords:  analytical middleware performant metadata runtime
+
+* Footnotes
+
+[fn:1] [[http://www.cs.bham.ac.uk/research/projects/cosy/cast/doxygen/manual/html/man_installation.html]]
