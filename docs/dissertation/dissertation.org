@@ -50,6 +50,11 @@ Copyright {\copyright} 2012 School of Computer Science, University of Birmingham
 # Abstract
 ######################################################################
 #+begin_latex
+\thispagestyle{empty}
+\newpage
+\setcounter{page}{1}
+\pagenumbering{roman}
+
 \begin{abstract}
 Fault-detection in robotics systems is a difficult task and as systems
 are becoming more larger and complex, subtle errors are becoming
@@ -74,11 +79,12 @@ machine learning
 # Acknowledgments
 ######################################################################
 #+begin_latex
-\renewcommand{\abstractname}{Acknowledgments}
-\begin{abstract}
-Thanks Mum!
-\end{abstract}
-\newpage
+  \renewcommand{\abstractname}{}%{Acknowledgments}
+  \begin{abstract}
+  To Nick, Marc, and Raphael for guiding me on the first project of my
+  scientific career.
+  \end{abstract}
+  \newpage
 #+end_latex
 
 ######################################################################
@@ -87,6 +93,9 @@ Thanks Mum!
 #+begin_latex
 \tableofcontents
 \newpage
+
+\setcounter{page}{1}
+\pagenumbering{arabic}
 #+end_latex
 
 * Motivation                                                          :DRAFT:
