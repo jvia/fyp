@@ -99,24 +99,18 @@ machine learning
 #+end_latex
 
 * Motivation                                                          :DRAFT:
-:PROPERTIES:
-:CUSTOM_ID: motivation
-:END:
-######################################################################
-# Why is it important?
-######################################################################
+\label{sec:motivation}
+
 The number and uses of robots is increasing. More and more robots are
-becoming part of the daily human experience.
-# There are now robots which clean the house, assist in surgery, and
-# automate the construction of goods.
-There are robots in factories automating difficult, repetitive tasks.
-There are an increasing number of domestic robots being used for
-assistance in the home and as entertainment. There are even robots
-being used as surgical tools. It is important for these robots to
-function correctly, and if unable to do so, to degrade gracefully to
-minimize harm to themselves and others. To do this, robots need some
-way to determine their own operating conditions. Detecting faults
-within robotics systems is a hard problem.
+becoming part of the daily human experience. There are robots in
+factories automating difficult, repetitive tasks. There are an
+increasing number of domestic robots being used for assistance in the
+home and as entertainment. There are even robots being used as
+surgical tools. It is important for these robots to function
+correctly, and if unable to do so, to degrade gracefully to minimize
+harm to themselves and others. To do this, robots need some way to
+determine their own operating conditions. Detecting faults within
+robotics systems is a hard problem.
 
 The importance of equipping a robot with the ability of self-awareness
 increases as humans interact more with robots. One could imagine a
@@ -128,9 +122,6 @@ the arm itself resulting in a loss of factory output. These examples
 underscore the importance of detecting and handling faults within a
 robot system.
 
-######################################################################
-# What was the goal of my project?
-######################################################################
 This project was conducted in collaboration with Raphael Golombek at
 Bielefeld University who first implemented this technique on the XCF
 middleware \cite{Wrede:2004th}. The main goal for the project was to
@@ -144,9 +135,6 @@ algorithm's capabilities. With the time available after the completion
 of the main project component, the scalability of the learned model
 was examined and alternative formulations proposed.
 
-######################################################################
-# Introduce the rest of the dissertation
-######################################################################
 The rest of the dissertation is organized into six main sections. It
 will begin with a literature review which gives a brief overview of
 the techniques used by others who have attempted to solve this
@@ -170,9 +158,7 @@ will cover project management and present an evaluation of the
 project.
 
 * Literature review                                                   :DRAFT:
-:PROPERTIES:
-:CUSTOM_ID: lit-review
-:END:
+\label{sec:lit-review}
 
 The problem of closing-the-loop is a problem which has received
 considerable attention since at least the 1980s \cite{deKleer:1987vc}.
@@ -223,35 +209,8 @@ system. The original system was developed to work with the XCF
 middleware and for this project has been extended to work the CAST
 middleware.
 
-** COMMENT 2010 paper
-*** (9) Reliable detection of episodes in event sequences
-** COMMENT Who has used the data-driven approach and what did they do?
-*** (1) Learning a probabilistic error detection model for robotic systems
-*** (18) Fault Detection and Diagnosis in Industrial Systems
-*** (19; 21) To reject or not to reject: that is the question-an answer in case of neural classifiers
-*** (20; 4) Data mining for cyber security
-*** (21; 26) A markov chain model of temporal behavior for anomaly detection
-*** (22; 3) Overcoming HMM time independence assumption using n-gram based modelling for continuous speech recognition
-** COMMENT knowledge-based
-*** (5)  Back to the future for consistency-based trajectory tracking
-*** (8)  Diagnosing multiple faults
-*** (9)  A model-based approach to reactive self-configuring systems
-*** (10) Hyde - a general framework for stochastic and hybrid model-based diagnosis
-*** (11) Approximation algorithms for model-based diagnosis
-*** (12) The Livingstone model of a main propulsion system
-*** (13) Lessons learned in the Livingstone 2 on Earth Observing One flight experiment
-*** (14) Diagnosis of Autosub 6000 using automatically generated software models
-*** (15) Combining particle filters and consistency-based approaches for monitoring and diagnosis of stochastic hybrid systems
-*** (16) Diagnosis by a waiter and a Mars explorer
-*** (17) Real-time diagnosis and repair of faults of robot control software
 * Theory                                                              :DRAFT:
 \label{sec:theory}
-:PROPERTIES:
-:CUSTOM_ID: sec:theory
-:END:
-######################################################################
-# Give a high-level idea & introduce the main theoretical steps
-######################################################################
 
 #+begin_latex
 \begin{wrapfigure}{R}{0.61\textwidth}
@@ -273,8 +232,8 @@ job (e.g., a component which takes in laser and map data to determine
 the robots location) and the coordination of multiple components is
 used to solve some task. Components will be said to subscribe and
 publish to one another. If component /A/ subscribes to component /B/,
-component /A/ will received all messages published by component /B/. When
-a component publishes a message, it is considered an event. These
+component /A/ will received all messages published by component /B/.
+When a component publishes a message, it is considered an event. These
 messages are typed, so, returning to the example of a localizing
 component, its message type might be the coordinates required to
 described its position in configuration space. Events also have a
@@ -471,6 +430,20 @@ determined before runtime.
 
 ** Classifying the system                                            :DRAFT:
 
+With the score and threshold calculated, classifying the system is
+straight forward. As can be seen in \eqref{eq:classification}, the
+system is considered abnormal anytime the score of the current event
+$e_j$ does not exceed the calculated threshold $s^*$.
+
+#+begin_latex
+\begin{equation}\label{eq:classification}
+\text{abnormal}(e_j) = \begin{cases}
+&\text{true}  : s_j < s^*\\
+&\text{false} : else
+\end{cases}
+\end{equation}
+#+end_latex
+
 * Original system
 ** Implementation                                                    :DRAFT:
 
@@ -490,15 +463,14 @@ description of the CAST component.
 \end{wrapfigure}
 #+end_latex
 
-######################################################################
-# FTS
-######################################################################
 The original system created at Bielefeld was implemented using the
 Filtering, Transformation, and Selection Library (FTS)
 \cite{Luetkebohle09-FT}. Using FTS, one decomposes a problem into a
 set of nodes which process data in discrete steps. This technique
 allows for increased code re-usability due to the fact that nodes can
-be connected any number of ways.
+be connected any number of ways. By modifying the nodes and their
+connections, the original implementation was modified to use CAST as
+the data source instead of the XCF middleware.
 
 In a CAST system, tasks are solved by a set of components grouped into
 subarchitectures. Components communicate to one another through a
@@ -675,7 +647,7 @@ component to itself would be kept because it would be useful to have a
 distribution of how often a component fired. All together, the model
 $\mathcal{M}$ is reduced to
 
-#+BEGIN_LATEX
+#+begin_latex
 \begin{equation}
 \label{eq:reduced_model}
 \begin{bmatrix}
@@ -684,7 +656,7 @@ P_{ba} & P_{bb} & \empty\\
 \empty& P_{cb} & P_{cc}
 \end{bmatrix}
 \end{equation}
-#+END_LATEX
+#+end_latex
 
 ** Asymptotic analysis                                               :DRAFT:
 
@@ -694,7 +666,7 @@ we can see that in the worst case the system will be fully-connected.
 The best case occurs when the system contains no connection between
 any components. Formally, the space efficiency of this model is
 
-#+BEGIN_LATEX
+#+begin_latex
 \begin{equation}
 \begin{split}
 \label{eq:reduced_asymp}
@@ -702,7 +674,7 @@ model(n) &\in O(n^2)\\
 model(n) &\in \Omega(n)
 \end{split}
 \end{equation}
-#+END_LATEX
+#+end_latex
 
 ** Experimental results
 
