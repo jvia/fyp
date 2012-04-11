@@ -11,6 +11,7 @@
 #+LATEX_HEADER: \usepackage{algorithmic}
 #+LATEX_HEADER: \usepackage{algorithm}
 #+LATEX_HEADER: \usepackage{program}
+#+LATEX_HEADER: \usepackage{appendix}
 #+LATEX_HEADER: \NumberProgramstrue
 
 ######################################################################
@@ -85,8 +86,6 @@ Thanks Mum!
 ######################################################################
 #+begin_latex
 \tableofcontents
-\newpage
-\listoffigures
 \newpage
 #+end_latex
 
@@ -245,10 +244,14 @@ middleware.
 # Give a high-level idea & introduce the main theoretical steps
 ######################################################################
 
-#+caption: This example shows a system at three discrete points in time and how data flows through a system. Notice that a message event occurs at a point in time. The goal is to exploit this knowledge to learn a model.
-#+label: fig:simple
-#+attr_latex: width=0.6\textwidth wrap placement={R}{0.61\textwidth}
-[[file:img/simple.pdf]]
+#+begin_latex
+\begin{wrapfigure}{R}{0.61\textwidth}
+\centering
+\includegraphics[width=0.6\textwidth]{img/simple.pdf}
+\caption[A simple system]{This example shows a system at three discrete points in time and how data flows through a system. Notice that a message event occurs at a point in time. The goal is to exploit this knowledge to learn a model.}
+\label{fig:simple}
+\end{wrapfigure}
+#+end_latex
 
 Before we proceed, it is useful to define some vocabulary. The
 vocabulary intends to be independent of the terminology of any
@@ -311,10 +314,14 @@ communication patterns. Figure \ref{fig:complex} shows a more complex
 system in which components publish multiple messages types and
 subscribe to multiple components.
 
-#+caption:    In a real system, data flow will likely be non-linear.
-#+label:      fig:complex
-#+attr_latex: width=0.6\textwidth wrap placement={L}{0.55\textwidth}
-[[file:img/complex.pdf]]
+#+begin_latex
+\begin{wrapfigure}{L}{0.41\textwidth}
+\centering
+\includegraphics[width=0.4\textwidth]{img/complex.pdf}
+\caption[A complex system]{In a real system, data flow will likely be non-linear.}
+\label{fig:complex}
+\end{wrapfigure}
+#+end_latex
 
 The rest of this section will use figure \ref{fig:simple} as a simple
 example for pedagogic purposes. First, the idea and creation of the
@@ -455,20 +462,6 @@ determined before runtime.
 
 ** Classifying the system                                            :DRAFT:
 
-With the score and threshold calculated, classifying the system is
-straight forward. As can be seen in \eqref{eq:classification}, the
-system is considered abnormal anytime the score of the current event
-$e_j$ does not exceed the calculated threshold $s^*$.
-
-#+begin_latex
-\begin{equation}\label{eq:classification}
-\text{abnormal}(e_j) = \begin{cases}
-&\text{true}  : s_j < s^*\\
-&\text{false} : else
-\end{cases}
-\end{equation}
-#+end_latex
-
 * Original system
 ** Implementation                                                    :DRAFT:
 
@@ -479,12 +472,14 @@ modified source. This section will cover the changes made, and the
 background knowledge to put it into context, as well as the
 description of the CAST component.
 
-#+begin_comment
-#+caption: The main steps shown in the FTS processing graph representation. Decomposing problems this way allows for high code re-use.
-#+attr_latex: width=0.4\textwidth wrap placement={R}{0.41\textwidth}
-#+label: fig:fts
-[[file:img/fts.pdf]]
-#+end_comment
+#+begin_latex
+\begin{wrapfigure}{R}{0.41\textwidth}
+\centering
+\includegraphics[width=0.4\textwidth]{img/fts.pdf}
+\caption[The FTS graph processor]{The main steps shown in the FTS processing graph representation. Decomposing problems this way allows for high code re-use.}
+\label{fig:fts}
+\end{wrapfigure}
+#+end_latex
 
 ######################################################################
 # FTS
@@ -506,7 +501,7 @@ CAST component was created to monitor changes to any working memory
 within the system. If a change was detected, metadata about the
 message event was created and sent over a network connection to the
 fault-detection system. The CAST component could additionally receive
-the classification status back from the fault-detect for use by other
+the classification status back from the fault-detector for use by other
 components but this was never explored.
 
 ** Experimental results
@@ -520,8 +515,6 @@ present the systems tested, the methodology used, and the results of
 the experiments.
 
 *** Systems
-
-TODO: add pictures of parallel & non-connected systems
 
 - Linear chain system :: This is the simple system presented as an
      example back in section \ref{sec:theory} and was used as a sanity
@@ -563,7 +556,7 @@ indicates random prediction \cite{Baldi:2000wp}.
 *** Results
 
 #+caption: Experimental results from the original algorithm.
-#+attr_latex: align=|l|r|r|r|r| 
+#+attr_latex: align=|l|r|r|r|r|
 #+label: tbl:original
 |---------------+-------------+-------------+------+-----------|
 |               | Sensitivity | Specificity |  MCC | Delay     |
@@ -586,12 +579,14 @@ To be clear, the reason why there is a delay and perfect sensitivity
 in the linear experiment is due to the fact that there is a delay in
 the calculation of the score. The first system classification after
 the fault was induced was faulty, but it took 0.37 seconds for this
-classification to occur.
+classification to occur. The approach was least performant on the
+non-connected component system. This was because there was so little
+information in the interaction between components for the model to
+contain and as a result, when one component was killed the score did
+not change much.
 
 ** Asymptotic analysis                                               :DRAFT:
-:PROPERTIES:
-:CUSTOM_ID: subsec:orig-asymp
-:END:
+\label{subsec:orig-asymp}
 
 When evaluating the approach first described in
 \cite{Golombek:2010hj}, beyond knowing how it performed
@@ -625,7 +620,7 @@ that there are two aspects to the algorithm: calculating the sum
 entropy and then calculating the whole score which can be seen in
 equation \eqref{eq:orignal_score}.
 
-#+BEGIN_LATEX
+#+begin_latex
 \begin{equation}
 \label{eq:orignal_score}
 \begin{split}
@@ -635,7 +630,7 @@ score(n) &= 6n\\
 score(n) &\in \Theta(n)
 \end{split}
 \end{equation}
-#+END_LATEX
+#+end_latex
 
 Since the sum entropy $H_j$ will be the same for all events $e_i \in
 E$ on the receipt of event $e_j$, this only needs to be calculated
@@ -702,17 +697,37 @@ model(n) &\in \Omega(n)
 
 ** Experimental results
 
+The same methodology presented in section
+\ref{subsubsec:experiment_methodology} was used to evaluate the
+connection-based model approach. Table \ref{tbl:reduced} shows the
+results from the experiments. What can be seen from the results is
+that this approach cannot detect faults. When analyzing the model
+against the score calculation this makes sense. The score is
+calculated when a message event is received but because the model only
+contains distributions for message events originating from the self
+component and the message events which the self component subscribes
+to, it has a limited capacity to notice that message events are no
+longer occurring. Consider the example presented in figure
+\ref{fig:simple}: if component /B/ were to die, no more messages
+events from components /B/ or /C/ would ever be received. The only
+message events which could generate scores would be the messages from
+component /A/. If component /A/ is publishing according to the model,
+the score would remain high for that message event and this the entire
+system. The failure of this approach was the impetus to try the
+approach presented in the following section.
+
 #+caption: Experimental results from the connection-based model.
-#+attr_latex: align=|l|r|r|r|r| 
-|---------------+-------------+-------------+-------+-------|
-|               | Sensitivity | Specificity |   MCC | Delay |
-|---------------+-------------+-------------+-------+-------|
-| Linear        |         0.0 |         1.0 | -0.05 | -     |
-|---------------+-------------+-------------+-------+-------|
-| Parallel      |         0.0 |       0.954 | -0.19 | -     |
-|---------------+-------------+-------------+-------+-------|
-| Non-connected |         0.0 |         1.0 |  0.12 | -     |
-|---------------+-------------+-------------+-------+-------|
+#+attr_latex: align=|l|r|r|r|r|
+#+label: tbl:reduced
+|---------------+-------------+-------------+-------+----------|
+|               | Sensitivity | Specificity |   MCC | Delay    |
+|---------------+-------------+-------------+-------+----------|
+| Linear        |        0.00 |        0.99 | -0.05 | -        |
+|---------------+-------------+-------------+-------+----------|
+| Parallel      |        0.00 |        0.95 | -0.18 | -        |
+|---------------+-------------+-------------+-------+----------|
+| Non-connected |        0.06 |        1.00 |  0.11 | 207 sec. |
+|---------------+-------------+-------------+-------+----------|
 
 * Metronome-based approach
 ** Idea & Implementation                                             :DRAFT:
@@ -762,7 +777,8 @@ original implementation.
 ** Experimental results
 
 #+caption: Experimental results from the metronome model.
-#+attr_latex: align=|l|r|r|r|r| 
+#+attr_latex: align=|l|r|r|r|r|
+#+label: tbl:metronome
 |---------------+-------------+-------------+------+----------|
 |               | Sensitivity | Specificity |  MCC | Delay    |
 |---------------+-------------+-------------+------+----------|
@@ -772,6 +788,18 @@ original implementation.
 |---------------+-------------+-------------+------+----------|
 | Non-connected |        0.94 |        0.95 | 0.88 | 9.2 sec. |
 |---------------+-------------+-------------+------+----------|
+
+Using the same methodology from section
+\ref{subsubsec:experiment_methodology}, experiments were conducted to
+analyze the performance of the metronome-based model and table
+\ref{tbl:metronome} summarizes the results. It can be seen that in all
+cases this system takes longer to detect faults. Given the massive
+reduction in model size, the trade-off is likely worth the increased
+delay. It is also the case the sensitivity, specificity, and the
+Matthews correlation coefficient suffer from this change in the model.
+Given that the only change in the system is the formulation of the
+model, it is worth investigating if changes to the score and threshold
+calculation algorithms could make this approach more performant.
 
 * Project management                                                  :DRAFT:
 \label{sec:management}
@@ -804,12 +832,6 @@ of putting in concrete terms the steps necessary to reach a goal. So
 rather than flailing around to figure out what to do next, there was
 always a concrete task that could be done.
 
-** COMMENT Managing tasks & deadlines
-*** Github issues
-** COMMENT Managing code
-*** maven
-*** Jenkins
-*** git
 * Project evaluation                                                  :DRAFT:
 \label{sec:evaluation}
 
@@ -873,114 +895,139 @@ robot could utilize to perform specific actions for graceful
 degradation. This project took a lot of effort but was well worth it
 for the knowledge gained about the topic and on project management.
 
-#+begin_comment
-#+begin_quote
-: In this paper we presented the on-line application of our fault
-: detection approach for robotic systems. It is purely data-driven and
-: exploits generic information extracted from the system’s
-: inter-component communication. The conducted experiments demonstrated
-: that our approach is capable of detecting and tracking various induced
-: faults on-line with high probability and acceptable delay. Initially,
-: the algorithm suffers form false positives but introducing another
-: decision- layer based on a moving average reduces the false positive
-: rate. Next steps will involve additional experiments to increase the
-: significance of the results and evaluation of novel fault patterns.
-: Furthermore, we will extend the detection model with sub-models
-: representing different states of the system. This will involve
-: different states of normal behaviour as well as states for already
-: experienced faults. By this means we will on the one hand improve the
-: fault detection and on the other hand enable fault diagnosis for
-: experienced faults.
-#+end_quote
-
-#+begin_quote
-: In this paper we presented a novel method for fault detection in
-: robotic systems constructed on the basis of discrete event-based data
-: interchange. The introduced self- awareness model is strongly data
-: driven and thus (i) can be trained from good examples of normal system
-: behavior, (ii) is largely independent from specific scenarios and
-: (iii) shows promising results even for transient malfunctions in
-: system behavior. The resulting self-awareness model provides a basis
-: for a sophisticated autonomic computing architecture in the domain of
-: robotic systems, enhancing safety and robustness of robot operation
-: and ultimatively increasing the autonomoy of intelligent robot
-: systems. Future work will focus on a broader and more realistic daily
-: life evaluation as well as an exhaustive complexity and performance
-: analysis of the demonstrated approach. Over a long distance our goal
-: will be closing the autonomic control loop, effectively allowing
-: modification of relevant system properties upon detected anomalies,
-: the integration of anomaly detection with behavioral control and the
-: further exploration of fault diagnosis models for robotic
-: applications.
-#+end_quote
-#+end_comment
-
 \newpage
 \bibliographystyle{plain}
 \bibliography{references}
 
 
-\appendix
-\appendixpage
-\addappheadtotoc
+\appendix\appendixpage\addappheadtotoc
 * Experiment graphs
 ** Original model
 *** Linear chain
+
+#+begin_center
+[[file:img/original_linear.eps]]
+#+end_center
+
 *** Parallel chains
-[[file:img/original_4x4.eps]]
+
+#+begin_center
+[[file:img/original_parallel.eps]]
+#+end_center
+
 *** Non-connected components
-[[file:img/original_10x1.eps]]
+
+#+begin_center
+[[file:img/original_nonconnected.eps]]
+#+end_center
+
 ** Connection-based model
 *** Linear chain
+
+#+begin_center
+[[file:img/reduced_linear.eps]]
+#+end_center
+
 *** Parallel chains
+
+#+begin_center
+[[file:img/reduced_parallel.eps]]
+#+end_center
+
 *** Non-connected components
+
+#+begin_center
+[[file:img/reduced_nonconnected.eps]]
+#+end_center
+
 ** Metronome model
 *** Linear chain
+
+#+begin_center
+[[file:img/metronome_linear.eps]]
+#+end_center
+
 *** Parallel chains
-[[file:img/metronome_4x4.eps]]
+
+#+begin_center
+[[file:img/metronome_parallel.eps]]
+#+end_center
+
 *** Non-connected components
-[[file:img/metronome_10x1.eps]]
+
+#+begin_center
+[[file:img/metronome_nonconnected.eps]]
+#+end_center
+
 * User guide
 * Graphs                                                           :NOEXPORT:
 ** Original
 *** Linear
-#+begin_comment
-#+begin_src gnuplot :var data="./data/original-eps-converted-to" :exports none :file "img/reduced_3chain_fault.eps" :cache yes
+
+#+begin_src gnuplot :var data="./data/original_3chain_fault.csv" :exports none :file "img/original_linear.eps" :cache yes
   reset
   set terminal postscript color solid eps enhanced 20
+  set parametric
   set yrange [0:1]
-  set xrange [0:150000]
-  plot data using 1:2 with dots notitle,\
-       data using 1:2 with lines smooth bezier title 'Score (smoothed)',\
-       data using 1:3 with lines title 'Threshold'
+  set ylabel 'Score'
+  set y2label 'Threshold'
+  set xlabel 'Seconds'
+  #set xrange [0:150000]
+  set format x "%3.0f"
+  set key below
+  fault = 255#255673
+  plot data using ($1/1000):($2) with lines  title 'Score',\
+       data using ($1/1000):($3) with lines title 'Threshold',\
+       fault, t title 'Induced fault'
 #+end_src
-#+end_comment
-*** 4x4
 
-#+begin_src gnuplot :var norm="./data/original_4x4_normal.csv" fault="./data/original_4x4_fault.csv" :exports none :file "img/original_4x4.eps" :cache yes :tangle "data/original_4x4.plt"
+#+results[857ecf0ba9b830ab8504247a9f41f5de22748601]:
+[[file:img/original_linear.eps]]
+
+*** Parallel
+
+#+begin_src gnuplot :var data="./data/original_4x4_fault.csv" :exports none :file "img/original_parallel.eps" :cache yes
   reset
-  unset term
-  set term postscript eps color solid eps enhanced 20
-  set multiplot
+  set terminal postscript color solid eps enhanced 20
+  set parametric
   set yrange [0:1]
-  set xrange [0:150000]
-  set size 0.5, 1.0
-
-  set title 'Normal'
-  set origin 0.0, 0.0
-  plot norm using 1:2 with dots notitle,\
-       norm using 1:2 with lines smooth bezier title 'Score (smoothed)',\
-       norm using 1:3 with lines title 'Threshold'
-  set title 'Fault'
-  set origin 0.5, 0.0
-  plot fault using 1:2 with dots notitle,\
-       fault using 1:2 with lines smooth bezier title 'Score (smoothed)',\
-       fault using 1:3 with lines title 'Threshold'
-
+  set ylabel 'Score'
+  set y2label 'Threshold'
+  set xlabel 'Seconds'
+  set xrange [0:120]
+  set format x "%3.0f"
+  set key below
+  fault = 51#51878
+  plot data using ($1/1000):($2) with lines  title 'Score',\
+       data using ($1/1000):($3) with lines title 'Threshold',\
+       fault, t title 'Induced fault'
 #+end_src
 
-#+RESULTS[7cd4153226f45a21b472dd5400d2db3560a33f9b]:
-[[file:img/original_4x4.eps]]
+#+results[42d138abeea0f0e70706b50f7600dc73fa81be66]:
+[[file:img/original_parallel.eps]]
+
+*** Non-connected
+
+#+begin_src gnuplot :var data="./data/original_10x1_fault.csv" :exports none :file "img/original_nonconnected.eps" :cache yes
+  reset
+  set terminal postscript color solid eps enhanced 20
+  set parametric
+  set yrange [0:1]
+  set ylabel 'Score'
+  set y2label 'Threshold'
+  set xlabel 'Seconds'
+  set xrange [0:200]
+  set format x "%3.0f"
+  set key below
+  fault = 101#101500
+  plot data using ($1/1000):($2) with lines  title 'Score',\
+       data using ($1/1000):($3) with lines title 'Threshold',\
+       fault, t title 'Induced fault'
+#+end_src
+
+#+results[e7af16506a2820b6664d748d1e20cb0b60cb7e73]:
+[[file:img/original_nonconnected.eps]]
+
 
 *** 4x4 normal
 
@@ -1013,6 +1060,140 @@ for the knowledge gained about the topic and on project management.
 #+end_src
 #+RESULTS[43081e236f08b1ee98a8982967e878c0ad9f7e27]:
 [[file:img/original_4x4_fault.eps]]
+
+** Reduced
+*** Linear
+
+#+begin_src gnuplot :var data="./data/reduced_3chain_fault.csv" :exports none :file "img/reduced_linear.eps" :cache yes
+  reset
+  set terminal postscript color solid eps enhanced 20
+  set parametric
+  set yrange [0:1]
+  set ylabel 'Score'
+  set y2label 'Threshold'
+  set xlabel 'Seconds'
+  #set xrange [0:200]
+  set format x "%3.0f"
+  set key below
+  fault = 102
+  plot data using ($1/1000):($2) with lines  title 'Score',\
+       data using ($1/1000):($3) with lines title 'Threshold',\
+       fault, t title 'Induced fault'
+#+end_src
+
+#+results[bbab97be2f7ea32a6fbe7de3afc7a86be64cac84]:
+[[file:img/reduced_linear.eps]]
+
+*** Parallel
+
+#+begin_src gnuplot :var data="./data/reduced_4x4_fault.csv" :exports none :file "img/reduced_parallel.eps" :cache yes
+  reset
+  set terminal postscript color solid eps enhanced 20
+  set parametric
+  set yrange [0:1]
+  set ylabel 'Score'
+  set y2label 'Threshold'
+  set xlabel 'Seconds'
+  #set xrange [0:200]
+  set format x "%3.0f"
+  set key below
+  fault = 64
+  plot data using ($1/1000):($2) with lines  title 'Score',\
+       data using ($1/1000):($3) with lines title 'Threshold',\
+       fault, t title 'Induced fault'
+#+end_src
+
+#+results[309ac14f19a2ef08284781a59e6f7c9dcf0f54cf]:
+[[file:img/reduced_parallel.eps]]
+
+*** Non-connected
+
+#+begin_src gnuplot :var data="./data/reduced_10x1_fault.csv" :exports none :file "img/reduced_nonconnected.eps" :cache yes
+  reset
+  set terminal postscript color solid eps enhanced 20
+  set parametric
+  set yrange [0:1]
+  set ylabel 'Score'
+  set y2label 'Threshold'
+  set xlabel 'Seconds'
+  #set xrange [0:200]
+  set format x "%3.0f"
+  set key below
+  fault = 101
+  plot data using ($1/1000):($2) with lines  title 'Score',\
+       data using ($1/1000):($3) with lines title 'Threshold',\
+       fault, t title 'Induced fault'
+#+end_src
+
+#+results[4f08cfd84807207fb83a60dd47b6c7cd6a2f36a0]:
+[[file:img/reduced_nonconnected.eps]]
+
+** Metronome
+*** Linear
+
+#+begin_src gnuplot :var data="./data/metronome_3chain_fault.csv" :exports none :file "img/metronome_linear.eps" :cache yes
+  reset
+  set terminal postscript color solid eps enhanced 20
+  set parametric
+  set yrange [0:1]
+  set ylabel 'Score'
+  set y2label 'Threshold'
+  set xlabel 'Seconds'
+  #set xrange [0:200]
+  set format x "%3.0f"
+  set key below
+  fault = 21
+  plot data using ($1/1000):($2) with lines  title 'Score',\
+       data using ($1/1000):($3) with lines title 'Threshold',\
+       fault, t title 'Induced fault'
+#+end_src
+
+#+results[221fb4a4721c1723807b78c23d92405a24ef1ea2]:
+[[file:img/metronome_linear.eps]]
+
+*** Parallel
+
+#+begin_src gnuplot :var data="./data/metronome_4x4_fault.csv" :exports none :file "img/metronome_parallel.eps" :cache yes
+  reset
+  set terminal postscript color solid eps enhanced 20
+  set parametric
+  set yrange [0:1]
+  set ylabel 'Score'
+  set y2label 'Threshold'
+  set xlabel 'Seconds'
+  #set xrange [0:200]
+  set format x "%3.0f"
+  set key below
+  fault = 18
+  plot data using ($1/1000):($2) with lines  title 'Score',\
+       data using ($1/1000):($3) with lines title 'Threshold',\
+       fault, t title 'Induced fault'
+#+end_src
+
+#+results[e9b29ec59f1b19cd4b6af0fd6491894c38c92cc6]:
+[[file:img/metronome_parallel.eps]]
+
+*** Non-connected
+
+#+begin_src gnuplot :var data="./data/metronome_10x1_fault.csv" :exports none :file "img/metronome_nonconnected.eps" :cache yes
+  reset
+  set terminal postscript color solid eps enhanced 20
+  set parametric
+  set yrange [0:1]
+  set ylabel 'Score'
+  set y2label 'Threshold'
+  set xlabel 'Seconds'
+  #set xrange [0:200]
+  set format x "%3.0f"
+  set key below
+  fault = 93
+  plot data using ($1/1000):($2) with lines  title 'Score',\
+       data using ($1/1000):($3) with lines title 'Threshold',\
+       fault, t title 'Induced fault'
+#+end_src
+
+#+results[c1414d7a1aaba8ba6ea10939296f50127b5e511e]:
+[[file:img/metronome_nonconnected.eps]]
 
 * Dot                                                              :NOEXPORT:
 ** Simple example
@@ -1106,8 +1287,9 @@ for the knowledge gained about the topic and on project management.
   }
 #+end_src
 
-#+RESULTS[29479010baef6dfc79c12ac1a41b34a2420b283b]:
+#+results[5710aa41772addb6164eb3ba5522bf326d7464ce]:
 [[file:img/fts.pdf]]
+
 #  LocalWords:  Virtualization subarchitecture timespan
 ** 10x0 system
 #+begin_src dot :exports none :file "img/10x0.pdf" :cache yes
