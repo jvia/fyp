@@ -12,7 +12,10 @@
 #+LATEX_HEADER: \usepackage{algorithm}
 #+LATEX_HEADER: \usepackage{program}
 #+LATEX_HEADER: \usepackage{appendix}
+#+LATEX_HEADER: \usepackage[section]{placeins}
+#+LATEX_HEADER: \usepackage{subfig}
 #+LATEX_HEADER: \NumberProgramstrue
+#+LATEX_HEADER: \linespread{1.3}
 
 ######################################################################
 # Title page
@@ -50,32 +53,32 @@ Copyright {\copyright} 2012 School of Computer Science, University of Birmingham
 # Abstract
 ######################################################################
 #+begin_latex
-  \thispagestyle{empty}
-  \newpage
-  \setcounter{page}{1}
-  \pagenumbering{roman}
-  
-  \begin{abstract}
-    Fault-detection in robotics systems is a difficult task. As robotics
-    systems are becoming larger and more complex, subtle errors are
-    becoming harder to detect and diagnose. Traditional fault-detection
-    approaches have relied on explicit modeling of component behavior,
-    either quantitatively or qualitatively, but these techniques will
-    not scale to complex robots operating in dynamic environments.
-    Machine learning approaches have become one way to overcome this
-    limitation. A new technique which involves making the robot
-    self-aware to the internal state of its own components is examined.
-    This project implements and then measures the efficacy of a
-    probabilistic self-awareness model for event-based robotics
-    middlewares. Alternative model formulations are proposed and
-    examined experimentally and asymptotically as a way to deal with
-    shortcomings of the original approach.
-  
-    \vspace{0.5cm}
-    \noindent\textit{Keywords}: robotics, fault detection,
-    machine learning
-  \end{abstract}
-  \newpage
+\thispagestyle{empty}
+\newpage
+\setcounter{page}{1}
+\pagenumbering{roman}
+
+\begin{abstract}
+Fault-detection in robotics systems is a difficult task. As robotics
+systems are becoming larger and more complex, subtle errors are
+becoming harder to detect and diagnose. Traditional fault-detection
+approaches have relied on explicit modeling of component behavior,
+either quantitatively or qualitatively, but these techniques will
+not scale to complex robots operating in dynamic environments.
+Machine learning approaches have become one way to overcome this
+limitation. A new technique which involves making the robot
+self-aware to the internal state of its own components is examined.
+This project implements and then measures the efficacy of a
+probabilistic self-awareness model for event-based robotics
+middlewares. Alternative model formulations are proposed and
+examined experimentally and asymptotically as a way to deal with
+shortcomings of the original approach.
+
+\vspace{0.5cm}
+\noindent\textit{Keywords}: robotics, fault detection,
+machine learning
+\end{abstract}
+\newpage
 #+end_latex
 
 ######################################################################
@@ -124,7 +127,7 @@ situations could cause death or serious injury. One could also imagine
 robotic arms at a factory building cars where a malfunction could
 cause damage to products, or the arm itself, resulting in a loss of
 factory output. These examples underscore the importance of detecting
-and handling faults within a robot system. 
+and handling faults within a robot system.
 
 This project was conducted in collaboration with Raphael Golombek at
 Bielefeld University who first implemented this technique on the XCF
@@ -291,6 +294,8 @@ communication patterns. Figure \ref{fig:complex} shows a more complex
 system in which components publish multiple messages types and
 subscribe to multiple components.
 
+
+
 #+begin_latex
 \begin{wrapfigure}{L}{0.41\textwidth}
 \centering
@@ -317,6 +322,15 @@ closely its current communication pattern adheres to the learned
 communication pattern. If the current pattern deviates too far from
 the learned pattern, then the robot can be said to be in an anomalous
 state. The first step is to create the learned model.
+
+#+begin_latex
+\begin{wrapfigure}{l}{0.41\textwidth}
+\centering
+\includegraphics[width=0.4\textwidth]{img/learned.pdf}
+\caption{A distribution is learned for each pair of event types.}
+\label{fig:learned}
+\end{wrapfigure}
+#+end_latex
 
 The model is learned by collecting an observation time-series and
 learning how components publish with respect to one another. More
@@ -355,11 +369,6 @@ all learned distributions becomes the model $\mathcal{M} = \{P_{ij}
 shown in \eqref{matrix:ex1}. Figure \ref{fig:learned} makes clear that
 a distribution is learned for the Cartesian product of the set of
 event types.
-
-#+caption:    A distribution is learned for each pair of event types.
-#+label:      fig:learned
-#+attr_latex: width=0.5\textwidth wrap placement={R}{0.55\textwidth}
-[[file:img/learned.pdf]]
 
 ** Calculating the score                                             :PASS1:
 
@@ -476,7 +485,7 @@ as the description of the CAST component.
 
 The original system created at Bielefeld was implemented using the
 Filtering, Transformation, and Selection Library (FTS)
-\cite{Luetkebohle09-FT}. Using FTS, one decomposes a problem into a
+\cite{Lutkebohle:2009vy}. Using FTS, one decomposes a problem into a
 set of nodes which process data in discrete steps. This technique
 allows for increased code re-usability due to the fact that nodes can
 be connected any number of ways. By modifying the nodes and their
@@ -1035,7 +1044,7 @@ part of the system you would like to run.
    -t FILE    : The file to use when training the model for
                 replay mode.
 #+end_example
-                                          
+
 Because it can be so tedious to specify Java VM options and options
 for the fault detector, there are a serious of wrapper scripts to make
 it more bearable. These can be found in the directory
@@ -1058,14 +1067,14 @@ has been the program used for plotting data throughout this project
 and there are a number of example scripts scattered through the
 project directories. A simple =gnuplot= script is presented below which will
 display the graph to the screen. 
- 
+
 #+begin_example
   reset
   set yrange [0:1]
   data='experimental_data.csv'
   plot data using 1:2 with lines title 'Score',\
        data using 1:3 with lines title 'Threshold'
-  #+end_example
+#+end_example
 
 To generate the plot, run the script with the command below making
 sure you enter the =-p= to persist the window after the script terminates.
@@ -1090,8 +1099,8 @@ project with extra directories for experimental configurations and the
 dissertation. The folder =cast_configs= contains all of the CAST
 scripts to run the experimental setups. The folder
 =experiment_configs= contains the wrapper scripts to ease running
-experiments. The =docs= folder contains this dissertation as well as
-the proposal in \LaTeX{} form. 
+experiments. The =docs= folder contains this dissertation and proposal
+in \LaTeX{} form.
 
 Additionally, the =src= folder of each of three model formulations is
 provided. If more up-to-date versions are desired, they can be found
