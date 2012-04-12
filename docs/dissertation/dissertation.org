@@ -57,17 +57,19 @@ Copyright {\copyright} 2012 School of Computer Science, University of Birmingham
   \pagenumbering{roman}
   
   \begin{abstract}
-    Fault-detection in robotics systems is a difficult task and as
+    Fault-detection in robotics systems is a difficult task. As robotics
     systems are becoming larger and more complex, subtle errors are
-    becoming harder to diagnose. Traditional fault-detection approaches
-    have relied on explicit modeling of component behavior,
-    quantitatively and qualitatively, but these techniques do not scale
-    to complex robots operating in dynamic environments. A new technique
-    which involves making the robot self-aware to the internal state of
-    its own components is examined. This project implements and then
-    measures the efficacy of a probabilistic self-awareness model for
-    event-based robotics middlewares. Alternative model formulations are
-    proposed and examined experimentally and asymptotically to deal with
+    becoming harder to detect and diagnose. Traditional fault-detection
+    approaches have relied on explicit modeling of component behavior,
+    either quantitatively or qualitatively, but these techniques will
+    not scale to complex robots operating in dynamic environments.
+    Machine learning approaches have become one way to overcome this
+    limitation. A new technique which involves making the robot
+    self-aware to the internal state of its own components is examined.
+    This project implements and then measures the efficacy of a
+    probabilistic self-awareness model for event-based robotics
+    middlewares. Alternative model formulations are proposed and
+    examined experimentally and asymptotically as a way to deal with
     shortcomings of the original approach.
   
     \vspace{0.5cm}
@@ -100,7 +102,7 @@ scientific career.
 \pagenumbering{arabic}
 #+end_latex
 
-* Motivation                                                          :DRAFT:
+* Motivation                                                          :PASS1:
 \label{sec:motivation}
 
 The number and uses of robots is increasing. More and more robots are
@@ -108,42 +110,44 @@ becoming part of the daily human experience. There are robots in
 factories automating difficult, repetitive tasks. There are an
 increasing number of domestic robots being used for assistance in the
 home and as entertainment. There are even robots being used as
-surgical tools. It is important for these robots to function
-correctly, and if unable to do so, to degrade gracefully to minimize
-harm to themselves and others. To do this, robots need some way to
-determine their own operating conditions. Detecting faults within
-robotics systems is a hard problem.
+surgical tools, allowing doctors to perform surgery more safely. It is
+important for these robots to function correctly, and if unable to do
+so, for them to degrade gracefully to minimize harm to themselves and others.
+To do this, robots need some way to determine their own operating
+conditions. Detecting faults within robotics systems is a hard
+problem.
 
 The importance of equipping a robot with the ability of self-awareness
 increases as humans interact more with robots. One could imagine a
-domestic robot which assisted an elderly person or a robot performing
-heart surgery. A malfunction in these situations could cause death or
-serious injury. One could also imagine robotic arms at a factory
-building cars where a malfunction could cause damage to products or
-the arm itself resulting in a loss of factory output. These examples
-underscore the importance of detecting and handling faults within a
-robot system.
+domestic robot which assisted an elderly person with chores around the
+home or a robot performing heart surgery. A malfunction in these
+situations could cause death or serious injury. One could also imagine
+robotic arms at a factory building cars where a malfunction could
+cause damage to products, or the arm itself, resulting in a loss of
+factory output. These examples underscore the importance of detecting
+and handling faults within a robot system. 
 
 This project was conducted in collaboration with Raphael Golombek at
 Bielefeld University who first implemented this technique on the XCF
 middleware \cite{Wrede:2004th}. The main goal for the project was to
 take Raphael's software, modify it to work with the robotics
 middleware used at the Univeristy of Birmingham---the CoSY
-Architecture Schema Toolkit (CAST)---and determine its efficacy. The
-impetus behind this was to see if the technique developed by Raphael
-could work on another middleware. To determine the efficacy of this
-approach, a number of experiments were conducted to test the
-algorithm's capabilities. With the time available after the completion
-of the main project component, the scalability of the learned model
-was examined and alternative formulations proposed.
+Architecture Schema Toolkit (CAST) \cite{haweswyatt10aei}---and
+determine its efficacy. The impetus for this project was to see if the
+technique developed by Raphael could work on another middleware. To
+determine the efficacy of this approach, a number of experiments were
+conducted to test the algorithm's capabilities. With the time
+available after the completion of the main project component, the
+scalability of the learned model was examined and alternative
+formulations proposed.
 
 The rest of the dissertation is organized into six main sections. It
-will begin with a literature review which gives a brief overview of
-the techniques used by others who have attempted to solve this
-problem. The literature review will also show where the technique
-presented in this dissertation fits with previous techniques.
-Following on from the literature revew, the theory section will cover
-the necessary background to understanding the technique presented in
+will begin with a literature review which will give a brief overview
+of techniques used by others who have attempted to solve this problem.
+The literature review will also show where the technique presented in
+this dissertation fit with previous techniques. Following on from the
+literature revew, the theory section will cover the necessary
+background needed to understand the technique presented in
 \cite{Golombek:2011ek}. This section should give the reader enough
 understanding to implement the technique on any event-based robotics
 middleware. After an explanation of the theory, a section will cover
@@ -154,43 +158,46 @@ important motivation for the alternative model formulations presented
 in later sections. After covering the original implementation and its
 analysis, the next few sections will cover alternative formulations of
 the learned model, experimental results, as well as asymptotic
-analysis. The differences between these model formulations and the
-trade-offs required will be discussed. Finally, the last few sections
-will cover project management and present an evaluation of the
-project.
+analyses of these alternative models. The differences between these
+model formulations and the trade-offs required will be discussed.
+Finally, the last few sections will cover project management and
+present an evaluation of the project.
 
-* Literature review                                                   :DRAFT:
+* Literature review                                                   :PASS1:
 \label{sec:lit-review}
 
-The problem of closing-the-loop is a problem which has received
-considerable attention since at least the 1980s \cite{deKleer:1987vc}.
-There are two main approaches to solving this problem: model-based and
-data-driven. Model-based approaches have been the domain of more
-traditional engineering and are created through exhaustive
-specification of component behavior. Data-driven approaches are newer
-and leverage machine learning techniques.
+Detecting faults and closing-the-loop has received considerable
+attention since at least the 1980s \cite{deKleer:1987vc}, although not
+necessarily on robots. There are two main approaches to solving this
+problem: model-based and data-driven. Model-based approaches have come
+from traditional engineering disciplines and are created through
+exhaustive specification of component behavior. Data-driven approaches
+are newer and leverage machine learning techniques.
 
-Within the domain of model-based approaches, there exists two styles
-of techniques. The first is the analytical approach which is used in
-problems which are close to the hardware. They depend on a set of
-assumptions, rigorous specification, and testing \cite{blanke2006}.
-These analytical approaches also require the creation of recovery
-routines for all possible faults. Because this approach is so tedious,
-work has been made on trying to incorporate the data-driven with
-analytical approaches \cite{Luo:2010ud}. The second is the
-knowledge-based approach where qualitative models are used. A popular
-method has been consistency-based diagnosis \cite{deKleer:1987vc},
-which often make use of propositional logic. There has been much work
-in this domain on diagnosis engines such as Livingstone
+There exists two styles within the domain of model-based approaches.
+The first is the analytical approach which is used in problems which
+are close to the hardware. They depend on a set of assumptions,
+rigorous specification, and testing \cite{blanke2006}. These
+analytical approaches also require the creation of recovery routines
+for all possible faults. Because this approach is so tedious, work has
+been made on trying to combine data-driven approaches with analytical
+approaches \cite{Luo:2010ud}. The second is the knowledge-based
+approach where qualitative models are used. A popular method has been
+consistency-based diagnosis \cite{deKleer:1987vc}, which often make
+use of propositional logic. There has been much work using this idea
+on diagnosis engines such as Livingstone
 \cite{Kurien:2000ta,Williams:1996wf}, HyDE \cite{Narasimhan:2007ty},
 and Lydia \cite{Feldman:2010uy}. The Livingstone has been very
 successful, having been used on /Deep Space One/ \cite{Bajwa:2002tm},
 /Earth Observing One/ \cite{Hayden:2004vn}, and on the /Autosub 6000/
-\cite{Ernits:2010tm}.
+\cite{Ernits:2010tm}. Unfortunately, model-based approaches are suboptimal for
+complex robotics systems due to fact that explicit modeling of all
+component interactions is required. This modeling requires expert
+knowledge of all components in the robotics system.
 
 Data-driven approaches have used machine learning in an attempt to
 bypass the effort involved with model-based approaches. A wide variety
-of approaches have been tried, broadly categorized into deterministic
+of approaches have been tried, broadly categorized as deterministic
 and stochastic \cite{Golombek:2011ek}. Deterministic approaches have
 generally attempted to cluster the feature space to separate normal
 classes from faulty ones \cite{DeStefano:2000vt,Chandola:2006um}.
@@ -211,7 +218,7 @@ system. The original system was developed to work with the XCF
 middleware and for this project has been extended to work the CAST
 middleware.
 
-* Theory                                                              :DRAFT:
+* Theory                                                              :PASS1:
 \label{sec:theory}
 
 #+begin_latex
@@ -225,20 +232,20 @@ middleware.
 
 Before we proceed, it is useful to define some vocabulary. The
 vocabulary intends to be independent of the terminology of any
-specific middleware and instead focus on intuitive words to better
+specific middleware and will instead focus on intuitive words to better
 explain the theory. This technique aims to detect faults in software
-and so all discussion will implicitly be in this domain unless other
+and so all discussion will implicitly be in this domain unless otherwise
 specified. We will consider the whole of a robot's software a system
-which are divided into a set of components. Each component does some
+which is divided into a set of components. Each component does some
 job (e.g., a component which takes in laser and map data to determine
-the robots location) and the coordination of multiple components is
+the robot's location) and the coordination of multiple components is
 used to solve some task. Components will be said to subscribe and
 publish to one another. If component /A/ subscribes to component /B/,
 component /A/ will received all messages published by component /B/.
 When a component publishes a message, it is considered an event. These
 messages are typed, so, returning to the example of a localizing
 component, its message type might be the coordinates required to
-described its position in configuration space. Events also have a
+describe its position in configuration space. Events also have a
 type: the metadata required to describe a component, its location in a
 robotics system, and the message type. This is necessary because a
 component can publish more than one message type and more than one
@@ -250,11 +257,12 @@ a set of communicating components which generate temporal
 communication patterns when accomplishing tasks. These temporal
 communication patterns exhibit structures which depend on the current
 state of the robot \cite{Golombek:2010hj}. Because this approach uses
-a machine-learned model, it falls completely within the data-driven
-approach to fault detection as described in section \ref{lit-review}.
-The goal of this technique is to exploit the latent temporal-structure
-within the observed communication stream to learn a pattern of
-communication which correlates with normal system behavior.
+a machine learned model, it falls completely within the data-driven
+approach to fault detection as described in section
+\ref{sec:lit-review}. The goal of this technique is to exploit the
+latent temporal-structure within the observed communication stream to
+learn a pattern of communication which correlates with normal system
+behavior.
 
 In order to classify the robot as being in a normal or faulty state, a
 score is calculated against the learned model. This model represents
@@ -294,11 +302,11 @@ subscribe to multiple components.
 #+end_latex
 
 The rest of this section will use figure \ref{fig:simple} as a simple
-example for pedagogic purposes. First, the idea and creation of the
+example for illustrative purposes. First, the idea and creation of the
 learned model will be explained, followed by the calculation of the
 score, and then the calculation of the final classification.
 
-** Learning the model                                                :DRAFT:
+** Learning the model                                                :PASS1:
 
 The learned model exploits the hypothesis that a robot composed of a
 set of software components exhibits temporal communication patterns
@@ -306,14 +314,14 @@ and that these patterns exhibit different structures depending on the
 state of the robot. The goal then becomes to learn the inter-component
 communication patterns when the robot is functioning correctly. With
 this model, the robot's state can be classified depending on how
-closely its current communication patterns adhere to the learned
-communication patterns. If the current pattern deviates too far from
+closely its current communication pattern adheres to the learned
+communication pattern. If the current pattern deviates too far from
 the learned pattern, then the robot can be said to be in an anomalous
-state. The first step, then, is to create the learned model.
+state. The first step is to create the learned model.
 
 The model is learned by collecting an observation time-series and
 learning how components publish with respect to one another. More
-formally, let $E$ be the set of encoded time-series of component
+formally, let $E$ be the set of an encoded time-series of component
 communication data which is recorded during normal operation. For each
 tuple $(e_i,e_j) \in E \times E$, a probability distribution $P_{ij} =
 P(t \vert e_i,e_j)$ is estimated. The distribution $P_{ij}$ represents
@@ -334,13 +342,14 @@ P_{ca} & P_{cb} & P_{cc}
 \end{bmatrix}
 \end{equation}
 
-# It should be clear by now that the model does not learn transition
-# times between sets of connected components, but instead learns the
-# likelihood of the time-span between the publication of message events
-# of any two components.
+To be clear, the model does not learn transition times between sets of
+connected components, but instead learns the likelihood of the
+time-span between the publication of message events of any two
+components, even those which never directly communicate within the
+system.
 
 The estimation of $P_{ij}$ makes use of a Kernel Density estimator
-which have been initialized with a Gaussian Kernel $K(u) =
+which has been initialized with a Gaussian Kernel $K(u) =
 \frac{1}{2\pi}e^{-\frac{1}{2}u^2}$ \cite{Golombek:2011ek}. The set of
 all learned distributions becomes the model $\mathcal{M} = \{P_{ij}
 \vert (e_i,e_j) \in E \times E\}$. $\mathcal{M}$ is now the matrix
@@ -353,7 +362,7 @@ event types.
 #+attr_latex: width=0.5\textwidth wrap placement={R}{0.55\textwidth}
 [[file:img/learned.pdf]]
 
-** Calculating the score                                             :DRAFT:
+** Calculating the score                                             :PASS1:
 
 During a live run, the score is calculated by comparing the incoming
 stream of communication (i.e., message events) to the learned model.
@@ -367,8 +376,7 @@ s_j = \sum_{e_i \in E} w_{ij} \cdot P_{ij}(\Delta{}t_i)
 \end{equation}
 #+end_latex
 
-
-\noindent where $E$ is the set of last seen instance of each event
+\noindent where $E$ is the set of last seen instances of each event
 type and $w_{ij}$ is the relative weighting of the probability value.
 The weight $w_{ij}$ is a measure of how meaningful the particular
 distribution $P_{ij}$ is as an indication to the system's performance.
@@ -382,10 +390,12 @@ w_{ij} = 1 - \frac{h_{ij}}{\sum_{e_i \in E} h_{ij}}
 
 The weight calculation presented in equation \eqref{eq:weight} makes
 use of the entropy of the distribution. This represents how much
-information is contained in a particular distribution and its
-trustworthiness. Essentially, the lower the entropy, and thus the more
-information contained in the distribution, the more willing we are to
-trust the correlation between the two event types.
+information is contained in a particular distribution and is used as a
+measure of trustworthiness. Essentially, the lower the entropy, and
+thus the more information contained in the distribution, the more
+willing we are to trust the correlation between the two event types.
+An algorithm for calculating the score is presented in algorithm
+\ref{alg:score}.
 
 #+begin_latex
 \begin{algorithm}
@@ -405,14 +415,14 @@ H_j    \equiv \text{ sum entropy of } P_{*j}
 \end{algorithm}
 #+end_latex
 
-** Calculating the threshold                                         :DRAFT:
+** Calculating the threshold                                         :PASS1:
 
 An important aspect of this technique is that as the score changes
-over the course of a system run, so does the threshold. What is
+over the course of a system run so does the threshold. What is
 considered the threshold for normal behavior is dependent on the
 consistency of the communication pattern within the system. The
 threshold changes according to formula \eqref{eq:threshold}. The idea
-behind this formula is that variance $S_{var}$ of consecutive scores
+behind this formula is that the variance $S_{var}$ of consecutive scores
 $S = (s_1, \dotsm, s_{j-1}, s_j)$ is lower when events match the
 normal pattern learned in the model $\mathcal{M}$. So, when the
 variance is lower, and thus the events better match the learned model,
@@ -430,7 +440,7 @@ where $S_{var}$ is the score variance, $s^*$ is the threshold
 variance, and $s^*_{val}$ is a constant minimum threshold which is
 determined before runtime.
 
-** Classifying the system                                            :DRAFT:
+** Classifying the system                                            :PASS1:
 
 With the score and threshold calculated, classifying the system is
 straight forward. As can be seen in \eqref{eq:classification}, the
@@ -446,15 +456,15 @@ $e_j$ does not exceed the calculated threshold $s^*$.
 \end{equation}
 #+end_latex
 
-* Original system
-** Implementation                                                    :DRAFT:
+* Original system                                                     :PASS1:
+** Implementation                                                    :PASS1:
 
 To implement the technique first specified by \cite{Golombek:2010hj}
-on CAST, it was necessary to modify the source first implemented by
-the original author and create a CAST component to connect to the
-modified source. This section will cover the changes made, and the
-background knowledge to put it into context, as well as the
-description of the CAST component.
+on CAST, it was necessary to modify the code first implemented by the
+original author and create a CAST component to connect to the modified
+source. This section will cover the changes made to the original
+source, and the background knowledge to put it into context, as well
+as the description of the CAST component.
 
 #+begin_latex
 \begin{wrapfigure}{R}{0.41\textwidth}
@@ -484,14 +494,14 @@ CAST component was created to monitor changes to any working memory
 within the system. If a change was detected, metadata about the
 message event was created and sent over a network connection to the
 fault-detection system. The CAST component could additionally receive
-the classification status back from the fault-detector for use by other
-components but this was never explored.
+the classification status back from the fault-detector for use by
+other components but this scenario was never explored.
 
-** Experimental results
+** Experimental results                                              :PASS1:
 
 In order to evaluate the system, a series of experiments were created
 to test the algorithm. Three different CAST systems were created, each
-with properties to push the algorithm (and the changes made to it) in
+with properties to challenge the algorithm (and the changes made to it) in
 some way. In each of the following experiments, each component
 publishes only a single event type. The following sections will
 present the systems tested, the methodology used, and the results of
@@ -505,11 +515,13 @@ the experiments.
 - Parallel chains system :: This system is a more complex version of
      the linear chain system. It is four independent, linear systems.
      The goal with this system was to test how independent chains of
-     message events would affect one another.
+     message events would affect one another and how the technique
+     would handle disturbances.
 - Non-connected system :: This system had ten unconnected components.
-     It was created to test the ability of the algorithm. It is worth
-     nothing that this system does not represent a realistic system
-     for solving a task in an event-based architecture.
+     It was created as an edge case to test the ability of the
+     algorithm. It is worth noting that this system does not
+     represent a realistic system for solving a task in an event-based
+     architecture.
 
 *** Methodology
 \label{subsubsec:experiment_methodology}
@@ -525,16 +537,19 @@ fault induction and fault detection, the sensitivity and
 specificity of the fault detector, and the Matthews correlation
 coefficient.
 
-The delay being fault induction and fault detection tells us how
+The delay between fault induction and fault detection tells us how
 quickly the algorithm can detect a fault within the system. The goal
 is to detect a fault as quickly as possible. The sensitivity indicates
-the likelihood that the fault detector will classify a faulty as being
+the likelihood that the fault detector will classify a fault as being
 a faulty state. The specificity indicates the likelihood that a normal
 state will be correctly classified. The Matthews correlation
 coefficient (MCC) is measure of the agreement between predicted state and
 observed state. If the MCC value is +1, it indicates perfect
 prediction; if -1, it indicates total disagreement; and if 0, it
 indicates random prediction \cite{Baldi:2000wp}.
+
+Graphs for all experiments can be found in appendix
+\ref{append:graphs}.
 
 *** Results
 
@@ -552,23 +567,25 @@ indicates random prediction \cite{Baldi:2000wp}.
 |---------------+-------------+-------------+------+-----------|
 
 Table \ref{tbl:original} summarizes the results of the experiments.
-The original approach has nearly perfect sensitivity in all
-experiments meaning nearly the entirety of the faulty system state.
-This might be at the cost of a lower specificity but the specificity
-results are also high. The MCC value indicates that the fault detector
-prediction almost perfectly matched the ground truth in all
-experiments. All faults were detected in less than half of a second.
-To be clear, the reason why there is a delay and perfect sensitivity
-in the linear experiment is due to the fact that there is a delay in
-the calculation of the score. The first system classification after
-the fault was induced was faulty, but it took 0.37 seconds for this
-classification to occur. The approach was least performant on the
-non-connected component system. This was because there was so little
-information in the interaction between components for the model to
-contain and as a result, when one component was killed the score did
-not change much.
+The original approach had nearly perfect sensitivity in all
+experiments meaning correct classification occurred during almost the
+entirety of the faulty system state. The specificity is also high
+which means that few false alarms were signalled during the run. This
+is a desirable property because fault recovery routines could be
+costly with respect to a robot's task goal. The MCC value indicates
+that the fault detector prediction almost perfectly matched the ground
+truth in all experiments. All faults were detected in less than half
+of a second. To be clear, the reason why there is a delay and perfect
+sensitivity in the linear experiment is due to the fact that there is
+a delay in the calculation of the score. The first system
+classification value after the fault was induced was faulty, but it
+took 0.37 seconds for this classification to occur. The approach was
+least performant on the non-connected component system. This was
+because there is less information in the interaction between
+components for the model to contain and as a result, when one
+component was killed the score did not change much.
 
-** Asymptotic analysis                                               :DRAFT:
+** Asymptotic analysis                                               :PASS1:
 \label{subsec:orig-asymp}
 
 When evaluating the approach first described in
@@ -577,8 +594,8 @@ experimentally, it was also desirable to know how the algorithm would
 scale with input. This is done by performing asymptotic analysis of
 the technique. It is the learned model which is truly core to this
 approach and so analysis will focus on the model. There are two
-aspects worth analyzing: runtime efficiency of calculating the score
-from the model and space efficiency of the model itself.
+aspects worth analyzing: the runtime efficiency score calculation from
+the model and the space efficiency of the model itself.
 
 Space efficiency is concerned with analyzing the amount of memory an
 algorithm utilizes as input grows. In the approach described in
@@ -593,11 +610,13 @@ types. Because this value is constant, we can represent it formally as
 This means that as the number of event types $n$ increases, the size
 of the model must grow quadratically. During experimentation, it was
 observed that with a system of 100 components, memory usage had
-exceeded 4 GB.
+exceeded 4 GB. This would become a major concern on a system like the
+Asimo which, due to its behavior-based architecture, runs hundreds of
+components at a time \cite{Sakagami:2002cf}.
 
 The runtime efficiency of score calculation was another area of
 concern because this algorithm depended directly on the size of the
-model. The calculation will be based off of the algorithm
+model. The calculation is off of the algorithm
 \ref{alg:score} from section \ref{sec:theory}. On analysis, we can see
 that there are two aspects to the algorithm: calculating the sum
 entropy and then calculating the whole score which can be seen in
@@ -625,14 +644,15 @@ entry, hence $5n$. Performing arithmetic, we can see that while the
 model may be $\Theta(n^2)$, the score calculation is only $\Theta(n)$
 because it only considers the relevant entries.
 
-* Connection-based model
-** Idea & Implementation                                             :DRAFT:
+* Connection-based model                                              :PASS1:
+** Idea & Implementation                                             :PASS1:
 
-The asymptotic analysis from section \ref{subsec:org-asymp} showed
+The asymptotic analysis from section \ref{subsec:orig-asymp} showed
 that the space efficiency of the learned model could not scale with
-larger systems. The goal for the rest of the project then became to
-find a way to reduced the size of this model. The initial idea was to
-use the information about the connections between components---all
+larger systems and provided motivation for alternative model
+formulations. The goal for the rest of the project then became to find
+a way to reduced the size of this model. The initial idea was to use
+the information about the connections between components---all
 information which could be gathered /a priori/ on CAST
 \cite{Otto:2010uc}. This information could then be exploited to prune
 the model and retain only the parts of the model which correlate to
@@ -646,7 +666,7 @@ since information in this example flows as a directed graph, we can
 prune all distributions which correlate to the reverse direction,
 e.g., $P_{ab}$. It was decided that the distribution which modeled a
 component to itself would be kept because it would be useful to have a
-distribution of how often a component fired. All together, the model
+distribution of how often a component published. All together, the model
 $\mathcal{M}$ is reduced to
 
 #+begin_latex
@@ -660,7 +680,7 @@ P_{ba} & P_{bb} & \empty\\
 \end{equation}
 #+end_latex
 
-** Asymptotic analysis                                               :DRAFT:
+** Asymptotic analysis                                               :PASS1:
 
 The change in the formulation of the model affects how the size scales
 with new event types. Analyzing the space efficiency of this approach,
@@ -678,7 +698,7 @@ model(n) &\in \Omega(n)
 \end{equation}
 #+end_latex
 
-** Experimental results
+** Experimental results                                              :PASS1:
 
 The same methodology presented in section
 \ref{subsubsec:experiment_methodology} was used to evaluate the
@@ -687,12 +707,12 @@ results from the experiments. What can be seen from the results is
 that this approach cannot detect faults. When analyzing the model
 against the score calculation this makes sense. The score is
 calculated when a message event is received but because the model only
-contains distributions for message events originating from the self
-component and the message events which the self component subscribes
+contains distributions for message events originating from the publishing
+component and the message events which the publishing component subscribes
 to, it has a limited capacity to notice that message events are no
 longer occurring. Consider the example presented in figure
 \ref{fig:simple}: if component /B/ were to die, no more messages
-events from components /B/ or /C/ would ever be received. The only
+events from components /B/ or /C/ would ever be published. The only
 message events which could generate scores would be the messages from
 component /A/. If component /A/ is publishing according to the model,
 the score would remain high for that message event and this the entire
@@ -712,21 +732,23 @@ approach presented in the following section.
 | Non-connected |        0.06 |        1.00 |  0.11 | 207 sec. |
 |---------------+-------------+-------------+-------+----------|
 
-* Metronome-based approach
-** Idea & Implementation                                             :DRAFT:
+* Metronome-based approach                                            :PASS1:
+** Idea & Implementation                                             :PASS1:
 
 After the failure of the connection-based approach to reduce the model
 and remain performant, a new approach had to be created. What was
-created was based on the idea of a metronome, or a heartbeat, and how
-it fires at a constant rate. By learning how every other component
-fired relative to the metronome, it might be possible to dramatically
-reduce the model size while still remaining performant.
+created was based on the idea of a metronome and how it ticks at a
+constant rate. This was mimicked in CAST by creating a component which
+published at a constant rate. By learning how every other component
+published relative to the metronome component, it was thought that it
+might be possible to dramatically reduce the model size while still
+remaining performant.
 
-To implement, this meant adding an extra component in the CAST system
-and pruning all distributions which did not have the metronome =m= in
-the $j$ position of a distribution $P_{ij}$. Performing this
-optimization example shown in figure \ref{fig:simple} resulted in a
-model $\mathcal{M}$ reduced to
+Implementation of this idea meant adding an extra component in the
+CAST system and pruning all distributions which did not have the
+metronome =m= in the $j$ position of a distribution $P_{ij}$.
+Performing this optimization example shown in figure \ref{fig:simple}
+resulted in a model $\mathcal{M}$ reduced to
 
 #+begin_latex
 \begin{equation}
@@ -737,7 +759,7 @@ P_{am} & P_{bm} & P_{cm} & P_{mm}
 \end{equation}
 #+end_latex
 
-** Asymptotic analysis                                               :DRAFT:
+** Asymptotic analysis                                               :PASS1:
 
 Implementing this technique resulted in a far smaller model. Formally,
 the space efficiency of this new model became
@@ -757,7 +779,7 @@ becomes $model(n) \in \Theta(n + 1) = 101$. The difference in space
 efficiency means that the metronome approach could scale more than the
 original implementation.
 
-** Experimental results
+** Experimental results                                              :PASS1:
 
 #+caption: Experimental results from the metronome model.
 #+attr_latex: align=|l|r|r|r|r|
@@ -774,7 +796,7 @@ original implementation.
 
 Using the same methodology from section
 \ref{subsubsec:experiment_methodology}, experiments were conducted to
-analyze the performance of the metronome-based model and table
+analyze the performance of the metronome-based model. Table
 \ref{tbl:metronome} summarizes the results. It can be seen that in all
 cases this system takes longer to detect faults. Given the massive
 reduction in model size, the trade-off is likely worth the increased
@@ -782,22 +804,24 @@ delay. It is also the case the sensitivity, specificity, and the
 Matthews correlation coefficient suffer from this change in the model.
 Given that the only change in the system is the formulation of the
 model, it is worth investigating if changes to the score and threshold
-calculation algorithms could make this approach more performant.
+calculation algorithms could make this approach more performant while
+maintaining the reduced model size.
 
-* Project management                                                  :DRAFT:
+* Project management                                                  :PASS1:
 \label{sec:management}
 
 Large projects are strenuous. Effective project management then
-becomes crucial in ensuring constant progress throughout academic
-year.
+becomes crucial in ensuring constant progress throughout the whole
+academic year. This section briefly mentions software and techniques
+that were chosen for development.
 
 Git was used rather than Subversion for one key reason: it is easy to
 maintain multiple branches of the code and move changes to all of
 them. This feature was especially important because it meant that
-multiple ideas about the model implementation could be kept in
-separate branches. In Subversion, doing the equivalent would have made
-it very difficult to make updates to all branches when bugs were found
-and fixed.
+multiple model implementations could be kept in separate branches,
+allowing code to remain clear. In Subversion, doing the equivalent
+would have made it very difficult to make updates to all branches when
+bugs were found and fixed.
 
 Because inheriting such a large code-base can be overwhelming, unit
 tests were used to create a contract of behavior for the most critical
@@ -805,17 +829,22 @@ classes in the system. And by using Jenkins as a continuous
 integration server, it was possible to know when any change to the
 code caused a test on any branch to fail. Jenkins also published the
 results of static analysis run by Maven, the build system used. Static
-analysis helped suss out potential bugs and resulted in more robust code.
+analysis helped suss out potential bugs and resulted in more robust
+code. Maven also has the benefit that rather than managing
+dependencies myself, it would download from its servers many of the
+libraries needed during development. It was not always possible
+to download these libraries but they were trivial to install in the
+local Maven repository.
 
 Perhaps the most important aspect of project management, and
 unfortunately discovered only towards the end of the project, was
-issue management. It was possible to set project milestones and attach
-the issues necessary to complete the milestone. This has the benefit
-of putting in concrete terms the steps necessary to reach a goal. So
-rather than flailing around to figure out what to do next, there was
-always a concrete task that could be done.
+issue management. Using Github Issues, it was possible to set project
+milestones and attach the tasks necessary to complete the milestone.
+This has the benefit of putting in concrete terms the steps necessary
+to reach a goal. So rather than flailing around to figure out what to
+do next, there was always a concrete task that could be done.
 
-* Project evaluation                                                  :DRAFT:
+* Project evaluation                                                  :PASS1:
 \label{sec:evaluation}
 
 This section will focus on evaluating two important aspects of a
@@ -835,13 +864,13 @@ if I did not get the desired results immediately. This fatalistic
 approach to science inhibits the discovery of all but the most trivial
 new knowledge. Additionally, I had the bad habit of accepting any of
 the data that came out of the system without understanding why those
-results had occurred. Fortunately, my supervisor Nick helped me start
+results had occurred. Fortunately, my supervisor helped me start
 to break these habits. Because he would ask me to explain why I had
 the results I had, I was forced to sit and analyze the system. By
 doing this I was able to find and fix a number of bugs in the original
 implementation and correct errors in the score calculation which did
 not match the papers describing the technique. I am very grateful to
-have to learned these lessons sooner in my science career.
+have to learned these lessons early in my science career.
 
 I also did a lot of things right during the project. As covered in
 section \ref{sec:management}, I did a lot to ease the management and
@@ -855,28 +884,27 @@ term's work.
 
 Overall, I did a lot right which made the project easier than it could
 have been. I also learned a lot about how to approach the scientific
-aspects of the project. These lessons will be useful in graduate
-school so I feel lucky for having learned them now.
+aspects of the project.
 
-* Conclusion                                                          :DRAFT:
+* Conclusion                                                          :PASS1:
 
 This dissertation presented the theory behind a new data-driven
 technique for detecting faults in event-based robotics middlewares. It
-learns a model of the predicted timespan between all pairs of event
-types. By exploiting this model, a score for a live system can be
-calculated which can be used to classify the robot as being either in
-a normal or faulty state. The original implementation was heavily
-modified to work with a different middleware than initially designed
-and experimental results for this system were presented. Asymptotic
-analysis provided motivation for the need to reduced the size of this
-learned model. Two alternative model formulations were shown with
-experimental results and asymptotic analysis. Experimentation showed
-one approach failed to work and so was discarded. Future work on this
-topic incorporate multiple models to increase flexibility.
-Additionally, models could be learned against known faults which the
-robot could utilize to perform specific actions for graceful
-degradation. This project took a lot of effort but was well worth it
-for the knowledge gained about the topic and on project management.
+learns a model of the predicted timespan between the publication all
+pairs of event types. By exploiting this model, a score for a live
+system can be calculated which can be used to classify the robot as
+being either in a normal or faulty state. The original implementation
+was heavily modified to work with a different middleware than
+initially designed and experimental results for this system were
+presented. Asymptotic analysis provided motivation for the need to
+reduce the size of this learned model. Two alternative model
+formulations were shown with experimental results and asymptotic
+analysis. Experimentation showed one approach failed to work and so
+was discarded. Future work on this topic could incorporate multiple
+models to increase flexibility. Additionally, models could be learned
+against known faults which the robot could utilize to perform specific
+actions for graceful degradation. This project took a lot of effort
+but was well worth it for the knowledge gained.
 
 \newpage
 \bibliographystyle{plain}
@@ -884,7 +912,8 @@ for the knowledge gained about the topic and on project management.
 
 
 \appendix\appendixpage\addappheadtotoc
-* Experiment graphs
+* Experiment graphs                                                   :PASS1:
+\label{appendix:graphs}
 ** Original model
 *** Linear chain
 
@@ -942,7 +971,7 @@ for the knowledge gained about the topic and on project management.
 [[file:img/metronome_nonconnected.eps]]
 #+end_center
 
-* User guide
+* User guide                                                          :DRAFT:
 ** Installation
 
 As this project depends on Java and CAST, you must have a system which
@@ -955,13 +984,9 @@ has the benefit that most libraries are automatically installed from a
 remote repository with no work on your part. Unfortunately, not all
 of the necessary Java libraries are available in the Maven
 repositories so in addition, there is a top-level folder called =lib=
-which contains additional libraries. Within =lib=, there is a script
-called =install_libs= which will install all of the libraries. It
-can be executed at the command line like so
-
-#+begin_example
-  user@machine:~/fyp/libs$ ./install_libs
-#+end_example
+which contains additional libraries. These should be installed to the
+local Maven repository by standard means. Documentation for performing
+this can be seen by running =mvn help install= at the command prompt.
 
 With of all the necessary preconditions met, building the project
 should be simple. To build the project into a =jar=, simply go to
@@ -1015,7 +1040,7 @@ Because it can be so tedious to specify Java VM options and options
 for the fault detector, there are a serious of wrapper scripts to make
 it more bearable. These can be found in the directory
 =experiment_configs=. The script =observation_collection.sh= creates a
-run the necessary components to collect an input observation stream
+run with the necessary components to collect an input observation stream
 for training, the script =experiment.sh= will run an experiment, and
 the script =convert.sh= will convert from the default classification
 XML data to a space separated CSV file for easier plotting. There is
@@ -1043,15 +1068,47 @@ display the graph to the screen.
   #+end_example
 
 To generate the plot, run the script with the command below making
-sure you enter the =-p= because it keeps the window after the script
-has terminated.
+sure you enter the =-p= to persist the window after the script terminates.
 
 #+begin_example
   gnuplt -p analysis.plt
 #+end_example
 
 More options can be found in the manpages or in the excellent online
-documentation.
+documentation [fn:2].
+
+* Directory Structure
+
+The folder contains two separate projects. One project, =aucom.sa=, is
+the set of CAST components required to communicate with the fault
+detector and run experiments. The folder =aucom= contains the bulk of
+the work. It contains the modified source based on the original
+implementation. 
+
+The structure of the =aucom= project is based on a standard Maven
+project with extra directories for experimental configurations and the
+dissertation. The folder =cast_configs= contains all of the CAST
+scripts to run the experimental setups. The folder
+=experiment_configs= contains the wrapper scripts to ease running
+experiments. The =docs= folder contains this dissertation as well as
+the proposal in \LaTeX{} form.
+
+#+begin_example 
+  ├── aucom.sa
+  │   ├── README.md
+  │   ├── build.xml
+  │   ├── config
+  │   └── src
+  └── aucom
+      ├── README.md
+      ├── cast_configs
+      ├── data
+      ├── docs
+      ├── experiment_configs
+      ├── pom.xml
+      └── src
+#+end_example
+
 
 * Graphs                                                           :NOEXPORT:
 ** Original
@@ -1383,7 +1440,7 @@ documentation.
 #+results[5710aa41772addb6164eb3ba5522bf326d7464ce]:
 [[file:img/fts.pdf]]
 
-#  LocalWords:  Virtualization subarchitecture timespan
+#  LocalWords:  Virtualization subarchitecture timespan suboptimal
 ** 10x0 system
 #+begin_src dot :exports none :file "img/10x0.pdf" :cache yes
   graph G {
@@ -1430,3 +1487,6 @@ digraph four_chain {
 * Footnotes
 
 [fn:1] [[http://www.cs.bham.ac.uk/research/projects/cosy/cast/doxygen/manual/html/man_installation.html]]
+
+[fn:2] [[http://www.gnuplot.info/docs_4.6/gnuplot.pdf]]
+#  LocalWords:  Autosub
