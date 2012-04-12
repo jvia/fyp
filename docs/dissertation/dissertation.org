@@ -14,7 +14,6 @@
 #+LATEX_HEADER: \usepackage{appendix}
 #+LATEX_HEADER: \NumberProgramstrue
 
-
 ######################################################################
 # Title page
 ######################################################################
@@ -1002,8 +1001,9 @@ then build the =jar= file.
 ** Running
 
 #+begin_example
-  user@machine:~/fyp$ java -Xmx2g \
-                           -jar target/aucom-0.0.1-jar-with-dependencies.jar
+    user@machine:~/fyp$ java -Xmx2g \
+                        -jar \
+                        target/aucom-0.0.1-jar-with-dependencies.jar
 #+end_example
 
 The following command line options are available for determine which
@@ -1058,7 +1058,7 @@ has been the program used for plotting data throughout this project
 and there are a number of example scripts scattered through the
 project directories. A simple =gnuplot= script is presented below which will
 display the graph to the screen. 
-
+ 
 #+begin_example
   reset
   set yrange [0:1]
@@ -1096,26 +1096,6 @@ the proposal in \LaTeX{} form.
 Additionally, the =src= folder of each of three model formulations is
 provided. If more up-to-date versions are desired, they can be found
 in the project repository [fn:3].
-
-#+begin_example 
-  ├── aucom.sa
-  │   ├── README.md
-  │   ├── build.xml
-  │   ├── config
-  │   └── src
-  ├── aucom
-  |   ├── README.md
-  |   ├── cast_configs
-  |   ├── data
-  |   ├── docs
-  |   ├── experiment_configs
-  |   ├── pom.xml
-  |   └── src
-  ├── connection.zip
-  ├── metronome.zip
-  └── original.zip
-#+end_example
-
 
 * Graphs                                                           :NOEXPORT:
 ** Original
@@ -1493,9 +1473,8 @@ digraph four_chain {
 
 * Footnotes
 
-[fn:1] [[http://www.cs.bham.ac.uk/research/projects/cosy/cast/doxygen/manual/html/man_installation.html]]
-
-[fn:2] [[http://www.gnuplot.info/docs_4.6/gnuplot.pdf]]
-
+[fn:1] [[http://www.cs.bham.ac.uk/research/projects/cosy/cast]]
+[fn:2] [[http://www.gnuplot.info/docs_4.6]]
 [fn:3] [[https://github.com/jvia/fyp]]
+
 #  LocalWords:  Autosub
