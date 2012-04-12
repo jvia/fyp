@@ -5,7 +5,7 @@ SUBARCHITECTURE 4x4.sa
 JAVA WM cast.architecture.SubarchitectureWorkingMemory
 JAVA TM cast.architecture.AlwaysPositiveTaskManager
 
-JAVA MG node0 experiments.Node  --start             --delay "gaussian 100 10" --fault "13000"
+JAVA MG node0 experiments.Node  --start             --delay "gaussian 100 10" --fault "3000"
 JAVA MG node1 experiments.Node  --follows "node0"   --delay "gaussian 100 10"
 JAVA MG node2 experiments.Node  --follows "node1"   --delay "gaussian 100 10"
 JAVA MG node3 experiments.Node  --follows "node2"   --delay "gaussian 100 10" --end

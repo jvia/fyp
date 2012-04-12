@@ -159,7 +159,7 @@ public class CastExperiment implements Experiment {
             }
 
 
-            errorTime = cast.getObservation(error).getTimestamp();
+            errorTime = 0;//cast.getObservation(error).getTimestamp();
             faultDetector.stop();
             cast.disconnect();
         } catch (ActionFailedException e) {
@@ -258,20 +258,20 @@ public class CastExperiment implements Experiment {
      */
     private T2GramDetector createDetector(T2GramModelI model) {
         // load the fault detector
-        MeanVarianceResult r = new MeanVarianceResult(0.0, 0.0);
-        try {
-            r = (MeanVarianceResult) new Replay(observation, model).call();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        MeanVarianceResult r = new MeanVarianceResult(0.0, 0.0);
+//        try {
+//            r = (MeanVarianceResult) new Replay(observation, model).call();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         T2GramDetector detector = new T2GramDetector();
         detector.setModel(model);
 
 
         // Create a new classifier with a mean that is a s
-        detector.setClassificator(new StatisticalAnomalyClassifier(r.getMean(), r.getVariance()));
-        detector.setSlidingWindow(new SlidingWindow(800, 400));
+        detector.setClassificator(new StatisticalAnomalyClassifier(0.2, 0.001));//new StatisticalAnomalyClassifier(r.getMean(), r.getVariance()));
+        detector.setSlidingWindow(new SlidingWindow(200, 100));
 
         System.out.printf("Classifier: %s", detector.getClassificator().getAttributes());
         return detector;
