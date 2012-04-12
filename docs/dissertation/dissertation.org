@@ -1091,7 +1091,11 @@ dissertation. The folder =cast_configs= contains all of the CAST
 scripts to run the experimental setups. The folder
 =experiment_configs= contains the wrapper scripts to ease running
 experiments. The =docs= folder contains this dissertation as well as
-the proposal in \LaTeX{} form.
+the proposal in \LaTeX{} form. 
+
+Additionally, the =src= folder of each of three model formulations is
+provided. If more up-to-date versions are desired, they can be found
+in the project repository [fn:3].
 
 #+begin_example 
   ├── aucom.sa
@@ -1099,14 +1103,17 @@ the proposal in \LaTeX{} form.
   │   ├── build.xml
   │   ├── config
   │   └── src
-  └── aucom
-      ├── README.md
-      ├── cast_configs
-      ├── data
-      ├── docs
-      ├── experiment_configs
-      ├── pom.xml
-      └── src
+  ├── aucom
+  |   ├── README.md
+  |   ├── cast_configs
+  |   ├── data
+  |   ├── docs
+  |   ├── experiment_configs
+  |   ├── pom.xml
+  |   └── src
+  ├── connection.zip
+  ├── metronome.zip
+  └── original.zip
 #+end_example
 
 
@@ -1489,4 +1496,6 @@ digraph four_chain {
 [fn:1] [[http://www.cs.bham.ac.uk/research/projects/cosy/cast/doxygen/manual/html/man_installation.html]]
 
 [fn:2] [[http://www.gnuplot.info/docs_4.6/gnuplot.pdf]]
+
+[fn:3] [[https://github.com/jvia/fyp]]
 #  LocalWords:  Autosub
