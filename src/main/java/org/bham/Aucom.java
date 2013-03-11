@@ -17,7 +17,6 @@ import java.io.File;
 public class Aucom {
 
     // The major mode options
-
     @Option(name = "-C",
             aliases = "--collection",
             usage = "Run the data collector. " +

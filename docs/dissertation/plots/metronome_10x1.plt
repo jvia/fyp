@@ -1,6 +1,6 @@
 reset
-set term postscript eps enhanced color
-set output '../img/metronome_10x1.eps'
+#set term postscript eps enhanced color
+#set output '../img/metronome_10x1.eps'
 set multiplot
 set parametric
 unset key
